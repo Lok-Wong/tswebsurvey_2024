@@ -1,0 +1,41 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: bisque;
+  }
+
+.question{
+/* flex-direction: row; */
+display: flex;
+background-color:aliceblue;
+padding: 1rem;
+margin-bottom: 10px;
+align-items:end;
+}
+
+.selectBox{
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.p{
+  max-width:5rem;
+}
+
+.checkBlock{
+  border-width: 3px;
+  border-style: solid;
+  border-color: black;
+  margin-bottom: 1rem;
+  background-color: red;
+  border-radius: 20px;
+  padding: 1rem;
+}
