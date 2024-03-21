@@ -35,7 +35,7 @@ function App() {
         <main className={styles.main}>
             <div>
                 <h1>
-                    二 住戶持有車輛資料
+                    住戶持有車輛資料
                 </h1>
             </div>
             <div className={styles.checkBlock}>
