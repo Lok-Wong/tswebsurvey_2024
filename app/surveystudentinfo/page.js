@@ -27,6 +27,10 @@ function App() {
     const [afternoonLeaveArrivalTime, setAfternoonLeaveArrivalTime] = React.useState(dayjs());
     const [afternoonbackstartTime, setAfternoonbackstartTime] = React.useState(dayjs());
     const [afternoonbackendTime, setAfternoonbackendTime] = React.useState(dayjs());
+    const [eveningLeaveSchoolTime, setEveningLeaveSchoolTime] = React.useState(dayjs());
+    const [arivalHomeTime, setArivalHomeTime] = React.useState(dayjs());
+    const [destinationBackHomeStartTime, setdestinationBackHomeStartTime] = React.useState(dayjs());
+    const [destinationBackHomeEndTime, setdestinationBackHomeEndTime] = React.useState(dayjs());
 
     const [commonTransirtationState, setCommonTransirtationState] = React.useState({
         motorcyclePassenger: false,
@@ -50,7 +54,7 @@ function App() {
       const { motorcyclePassenger, carPassenger, schoolBus,bus,lightRail,taxi,onlineTaxi,walk,other } = commonTransirtationState;
       const commonTransirtationerror = 
       [motorcyclePassenger, carPassenger, schoolBus,bus,lightRail,taxi,onlineTaxi,walk,other]
-      .filter((v) => v).length !== 3;
+      .filter((v) => v).length > 3;
 
     return(
         <main className={styles.main}>
@@ -440,7 +444,246 @@ function App() {
                 <h1>
                     2.3	一般情況下，學生下午放學的情況
                 </h1>
-                
+                <div className={styles.question}>
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="evening-leave-school-time-label">10) 離校時間（24小時制）:</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <TimePicker
+                                        ampm={false}
+                                        value={eveningLeaveSchoolTime}
+                                        onChange={(newValue) => setEveningLeaveSchoolTime(newValue)}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                    </FormControl>
+                </div>
+                <div className={styles.question}>
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="pickup-leave-school-way-label">11)	有沒有人接送:</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="pickup-leave-school-way-label"
+                            name="pickup-leave-school-way-group"
+                            >
+                            <FormControlLabel value="學生自行離校" control={<Radio />} label="學生自行離校" />
+                            <FormControlLabel value="父母" control={<Radio />} label="父母" />
+                            <FormControlLabel value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
+                            <FormControlLabel value="工人" control={<Radio />} label="工人" />
+                            <FormControlLabel value="輕補習社" control={<Radio />} label="補習社" />
+                            <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                            <Box
+                                component="form"
+                                sx={{
+                                '& > :not(style)': { m: 0.5, width: '10rem' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                <TextField id="pickup-leave-school-way-other-textfill" label="其他" variant="filled" />
+                            </Box>
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+                <div className={styles.question}>
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="back-home-dircetly-label">12)	放學是否直接回家？</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="back-home-dircetly-label"
+                            name="back-home-dircetly-group"
+                            >
+                            <FormControlLabel value="是" control={<Radio />} label="是" />
+                            <FormControlLabel value="否" control={<Radio />} label="否" />
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+
+                <div className={styles.question}>
+                    <p>/choose Yes</p>
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="arrival-home-time-label">到達家時間（24小時制）:</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <TimePicker
+                                        ampm={false}
+                                        value={arivalHomeTime}
+                                        onChange={(newValue) => setArivalHomeTime(newValue)}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel id="arrival-home-transition-label">回家主要的交通方式：</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="arrival-home-transition-label"
+                            name="arrival-home-transition-group"
+                            >
+                            <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                            <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                            <FormControlLabel value="校車" control={<Radio />} label="校車" />
+                            <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
+                            <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
+                            <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
+                            <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
+                            <FormControlLabel value="步行" control={<Radio />} label="步行" />
+                            <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                            <Box
+                                component="form"
+                                sx={{
+                                '& > :not(style)': { m: 0.5, width: '10rem' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                <TextField id="arrival-home-transition-other-textfill" label="其他" variant="filled" />
+                            </Box>
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+
+                <div className={styles.question}>
+                    <p>/choose No</p>
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="leave-shcool-arrival-destination-label">放學後去了哪裏:</FormLabel>
+                          <p>choose loaction</p>
+                          <Button>
+                            touch and choose loaction
+                          </Button>
+                        </FormControl>
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="leave-shcool-arrival-destination-time-label">到達目的地時間（24小時制）:</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <TimePicker
+                                        ampm={false}
+                                        value={arivalHomeTime}
+                                        onChange={(newValue) => setArivalHomeTime(newValue)}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel id="leave-shcool-arrival-destination-transition-label">回家主要的交通方式：</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="leave-shcool-arrival-destination-transition-label"
+                            name="leave-shcool-arrival-destination-transition-group"
+                            >
+                            <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                            <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                            <FormControlLabel value="校車" control={<Radio />} label="校車" />
+                            <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
+                            <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
+                            <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
+                            <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
+                            <FormControlLabel value="步行" control={<Radio />} label="步行" />
+                            <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                            <Box
+                                component="form"
+                                sx={{
+                                '& > :not(style)': { m: 0.5, width: '10rem' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                <TextField id="leave-shcool-arrival-destination-transition-other-textfill" label="其他" variant="filled" />
+                            </Box>
+                        </RadioGroup>
+                    </FormControl>
+
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="leave-shcool-arrival-destination-time-label">從上述地方出發回家的時間（24小時制）:</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <TimePicker
+                                        ampm={false}
+                                        value={destinationBackHomeStartTime}
+                                        onChange={(newValue) => setdestinationBackHomeStartTime(newValue)}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                    </FormControl>
+
+                    <FormControl className={styles.inlineQuestion}>
+                        <FormLabel id="leave-shcool-arrival-destination-time-label">到達家時間（24小時制）:</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <TimePicker
+                                        ampm={false}
+                                        value={destinationBackHomeEndTime}
+                                        onChange={(newValue) => setdestinationBackHomeEndTime(newValue)}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                    </FormControl>
+
+                                
+                    <FormControl>
+                        <FormLabel id="leave-shcool-and-back-home-transition-label">前目的地回家主要的交通方式：</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="leave-shcool-and-back-home-transition-label"
+                            name="leave-shcool-and-back-home-transition-group"
+                            >
+                            <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                            <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                            <FormControlLabel value="校車" control={<Radio />} label="校車" />
+                            <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
+                            <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
+                            <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
+                            <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
+                            <FormControlLabel value="步行" control={<Radio />} label="步行" />
+                            <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                            <Box
+                                component="form"
+                                sx={{
+                                '& > :not(style)': { m: 0.5, width: '10rem' },
+                                }}
+                                noValidate
+                                autoComplete="off"
+                            >
+                                <TextField id="leave-shcool-and-back-home-transition-other-textfill" label="其他" variant="filled" />
+                            </Box>
+                        </RadioGroup>
+                    </FormControl>
+                </div>
+
+                <h1>
+                    2.4 學生出行意見和建議
+                </h1>
+
+                <div className={styles.question}>
+                    <FormControl sx={{
+                        m:1, width:"100%"
+                    }}>
+                        <FormLabel id="student-suggestion-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
+                        <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m: 1, width: '60%' },
+                            }}
+                            noValidate
+                            >
+                            <TextField 
+                                id="student-suggestion-text" 
+                                label="年級" 
+                                variant="outlined" 
+                                multiline
+                            />
+                        </Box>
+                    </FormControl>
+                </div>
+
+                <div className={styles.question}>
+                    <Button href={'/surveyvehicleInfo'}>
+                        previous *need check which is previous page
+                    </Button>
+                    <Button>
+                        next
+                    </Button>
+                </div>
             </div>         
         </main>
     )
