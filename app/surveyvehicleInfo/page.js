@@ -1,26 +1,21 @@
 'use client'
 import * as React from 'react';
 import styles from "./page.module.css";
-import Link from "next/link";
 import Button from '@mui/material/Button';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';// import RadioGroup from "@mui/material";
 import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
-import FormHelperText from '@mui/material/FormHelperText';
+import { useRouter } from 'next/navigation';
+
 
 
 
 
 function App() {
+    const router = useRouter();
     const [age, setAge] = React.useState('');
     const handleChange = (event) => {
         setAge(event.target.value);
@@ -669,7 +664,7 @@ function App() {
                     </FormControl>
                 </div>
             </div>
-            <Button href={'/surveyheadholder'}>
+            <Button onClick={() => router.back()}>
                 previous
             </Button>
             <Button href={'/surveystudentinfo'}>
