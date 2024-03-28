@@ -9,7 +9,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
-import FormLabel from '@mui/material/FormLabel';// import RadioGroup from "@mui/material";
+import FormLabel from '@mui/material/FormLabel';
 import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';

@@ -42,7 +42,7 @@ function App() {
                 <Button  variant="contained" onClick={() => router.back()}>
                     上一頁
                 </Button>
-                <Button  variant="contained" href={stillHaveChild == "有" ? "/surveystudentinfo" : "/surveyfinished"}>
+                <Button  variant="contained" href={stillHaveChild == "有" ? "/surveystudentinfo" : "/surveyadultInfo"}>
                     {
                         stillHaveChild == "有" ? "下一頁" : "完成"
                     }

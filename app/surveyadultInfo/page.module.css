@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  align-items: center;
+  padding: 3rem;
+  min-height: 100vh;
+  background-color: bisque;
+}
+
+.question{
+flex-direction: row;
+/* display: flex; */
+background-color:lightgray;
+padding: 1rem;
+margin-bottom: 10px;
+}
+
+.inlineQuestion{
+margin-right: 3rem;
+margin-bottom: 1rem;
+}
+
+
