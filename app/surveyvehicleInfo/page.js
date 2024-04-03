@@ -10,41 +10,132 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { useRouter } from 'next/navigation';
 
-
-
-
-
-function App() {
+function App( ) {
     const router = useRouter();
-    const [age, setAge] = React.useState('');
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    const prevData = JSON.parse(localStorage.getItem("1"));
+
+    const [vehicelCheckState, setVehicelCheckState] = React.useState(false)
+    const [motorcycleCheckState, setMotorcycleCheckState] = React.useState(false)
+    const [truckCheckState, setTruckCheckState] = React.useState(false)
+    const [bikeCheckState, setBikeCheckState] = React.useState(false)
+
+    const handlevehicelCheckState = (event) => {
+        setVehicelCheckState(event.target.checked);
       };
-      
-    const [age1, setAge1] = React.useState('');
-    const handleChange1 = (event) => {
-        setAge1(event.target.value);
+
+    const handlemotorcycleCheckState= (event) => {
+        setMotorcycleCheckState(event.target.checked);
     };
+
+    const handletruckCheckState = (event) => {
+        setTruckCheckState(event.target.checked);
+    };
+
+    const handlebikeCheckState = (event) => {
+        setBikeCheckState(event.target.checked);
+    };
+
+    const [survey, setSurvey] = React.useState({
+        surveyvehicleInfo : {
+            vehicel:{
+                total : 999,
+                totalEV : 999,
+                park:{
+                    selfOwn:999,
+                    subsidiary:999,
+                    selfMonthly:999,
+                    publicHourly:999,
+                    publicMonthly:999,
+                    meter:999,
+                    streelParkFree: 999,
+                    other:999
+                }
+            },
+            motorcycle:{
+                total : 999,
+                totalEV : 999,
+                park:{
+                    selfOwn:999,
+                    subsidiary:999,
+                    selfMonthly:999,
+                    publicHourly:999,
+                    publicMonthly:999,
+                    meter:999,
+                    streelParkFree: 999,
+                    other:999
+                }
+            },
+            truck:{
+                total : 999,
+                totalEV : 999,
+                park:{
+                    selfOwn:999,
+                    subsidiary:999,
+                    selfMonthly:999,
+                    publicHourly:999,
+                    publicMonthly:999,
+                    meter:999,
+                    streelParkFree: 999,
+                    other:999
+                }
+            },
+            bike:{
+                total : 999,
+                totalEV : "N/A",
+                park:{
+                    selfOwn:999,
+                    subsidiary:999,
+                    selfMonthly:999,
+                    publicHourly:"N/A",
+                    publicMonthly:"N/A",
+                    meter:"N/A",
+                    streelParkFree: 999,
+                    other:999
+                }
+            }
+        }
+      })
+
+
+    React.useEffect(() => {
+        console.log( "prevData",prevData)
+        console.log("survey",survey)
+    },[prevData,survey])
 
     return (
         <main className={styles.main}>
             <div>
                 <h1>
-                    住戶持有車輛資料
+                    住戶持有車輛資料 
                 </h1>
             </div>
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                     <label>
-                        <FormControlLabel control={<Checkbox/>} label="私家車" />
+                        <FormControlLabel control={
+                        <Checkbox
+                            checked = {vehicelCheckState}
+                            onChange={handlevehicelCheckState}
+                        />
+                        } 
+                        label="私家車" /> 
                     </label>
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    onChange={(event) => {setSurvey((prevState)=>({
+                                        ...prevState,
+                                        surveyvehicleInfo:{
+                                            ...prevState.surveyvehicleInfo,
+                                            vehicel:{
+                                                ...prevState.surveyvehicleInfo.vehicel,
+                                                total : event.target.value
+                                            }
+                                        }
+                                    }))}}
+                                    disabled={!vehicelCheckState}
                                     autoWidth
                                     id="total-vehicel" 
                                     variant="outlined"
@@ -56,11 +147,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p  className={styles.p}>當中，純電動車數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="total-ev-vehicel" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -70,16 +161,15 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                 
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>自置停車位</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="self_park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -89,10 +179,10 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>附屬於車位的停車空間</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
-                                    id="total-vehicel" 
+                                    disabled={!vehicelCheckState}
+                                    id="subsidiary_park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -102,11 +192,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>私人停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="self_park_monthly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -116,11 +206,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（時鐘票）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="public_park_hourly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -129,17 +219,15 @@ function App() {
                     </FormControl>
                 </div>
 
-                <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
-                
+                <div className={styles.question}>                
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="public_park_monthly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -149,11 +237,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（咪錶）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="meter-parking" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -163,11 +251,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（免費）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="streel-park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -177,11 +265,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>其他／備註</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!vehicelCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="other-park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -193,18 +281,21 @@ function App() {
 
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                     <label>
-                        <FormControlLabel control={<Checkbox/>} label="電單車" />
+                        <FormControlLabel control={   
+                        <Checkbox
+                            checked = {motorcycleCheckState}
+                            onChange={handlemotorcycleCheckState}
+                        />} label="電單車" />
                     </label>
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="total-Motorcycle" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -214,11 +305,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>當中，純電動車數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="total-ev-Motorcycle" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -228,16 +319,15 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                 
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>自置停車位</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="self_park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -247,10 +337,10 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>附屬於車位的停車空間</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
-                                    id="total-vehicel" 
+                                    disabled = {!motorcycleCheckState}
+                                    id="subsidiary_park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -260,11 +350,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>私人停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="self_park_monthly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -274,11 +364,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（時鐘票）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="public_park_hourly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -288,16 +378,15 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                 
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="public_park_monthly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -307,11 +396,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（咪錶）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="meter-parking" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -321,11 +410,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（免費）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="streel-park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -335,11 +424,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>其他／備註</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="other-park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -351,18 +440,22 @@ function App() {
 
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                     <label>
-                        <FormControlLabel control={<Checkbox/>} label="貨車" />
+                        <FormControlLabel control={
+                          <Checkbox
+                            checked = {truckCheckState}
+                            onChange={handletruckCheckState}
+                         />
+                        } label="貨車" />
                     </label>
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="total-truck" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -372,11 +465,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>當中，純電動車數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="total-ev-truck" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -386,16 +479,15 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
-                
+               
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>自置停車位</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="self_park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -405,10 +497,10 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>附屬於車位的停車空間</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
-                                    id="total-vehicel" 
+                                    disabled={!truckCheckState}
+                                    id="subsidiary_park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -418,11 +510,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>私人停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="self_park_monthly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -432,11 +524,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（時鐘票）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="public_park_hourly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -446,16 +538,15 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                 
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="public_park_monthly" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -465,11 +556,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（咪錶）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="meter-parking" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -479,11 +570,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（免費）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="streel-park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -493,11 +584,11 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>其他／備註</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!truckCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="other-park" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -509,32 +600,21 @@ function App() {
 
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                     <label>
-                        <FormControlLabel control={<Checkbox/>} label="單車" />
+                        <FormControlLabel control={  
+                        <Checkbox
+                            checked = {bikeCheckState}
+                            onChange={handlebikeCheckState}
+                        />} label="單車" />
                     </label>
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!bikeCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>當中，純電動車數量</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
-                            <Box width={50}>
-                                <TextField 
-                                    autoWidth
-                                    id="total-vehicel" 
+                                    id="total-bike" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -544,14 +624,13 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
                 
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>自置停車位</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!bikeCheckState}
                                     autoWidth
                                     id="total-vehicel" 
                                     variant="outlined"
@@ -563,9 +642,9 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>附屬於車位的停車空間</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!bikeCheckState}
                                     id="total-vehicel" 
                                     variant="outlined"
                                     defaultValue={0}
@@ -576,23 +655,9 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>私人停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（時鐘票）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
-                            <Box width={50}>
-                                <TextField 
+                                    disabled={!bikeCheckState}
                                     autoWidth
                                     id="total-vehicel" 
                                     variant="outlined"
@@ -604,42 +669,12 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    {/* <Survey model={survey} /> */}
-                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（月租）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
-                            <Box width={50}>
-                                <TextField 
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（咪錶）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
-                            <Box width={50}>
-                                <TextField 
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（免費）</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!bikeCheckState}
                                     autoWidth
                                     id="total-vehicel" 
                                     variant="outlined"
@@ -651,9 +686,9 @@ function App() {
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>其他／備註</p>
-                            {/* <InputLabel id="total-vehicel-select-label">總數量</InputLabel> */}
                             <Box width={50}>
                                 <TextField 
+                                    disabled={!bikeCheckState}
                                     autoWidth
                                     id="total-vehicel" 
                                     variant="outlined"

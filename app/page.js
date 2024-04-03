@@ -1,12 +1,51 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
+import * as React from 'react';
+import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
+import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
+import { useLocalStorage } from "@uidotdev/usehooks";
 
-function handleClick() {
-  console.log("increment like count")
-}
+
 
 export default function Home() {
+  const router = useRouter();
+
+  async function handleNextButton() {
+    setSurvey((prevState) => ({
+      ...prevState,
+      weclomePage:{
+        ...prevState.weclomePage,
+        ip:ip,
+        uuid : uuidv4(),
+        startTime : new Date(),
+      }
+    }))
+  
+  }
+
+  const [survey, setSurvey] = React.useState({
+    weclomePage : {
+      startTime : "null",
+      ip : "null",
+      uuid : "null",
+    }
+  })
+
+  const [ip, setIP] = React.useState("");
+  const getData = async () => {
+    const res = await axios.get("https://api.ipify.org/?format=json");
+    setIP(res.data.ip);
+  };
+
+  React.useEffect(() => {
+    getData()
+    localStorage.setItem("1",JSON.stringify(survey))
+  },[ip,survey]);
+
   return (
     <main className={styles.main}>
         <div className={styles.description}>
@@ -46,11 +85,23 @@ export default function Home() {
               執行單位：澳大創科有限公司
             </a>
           </div>
+          <div>
+            <a>
+              {/* {survey.weclomePage.ip} */}
+              {survey.uuid}
+            </a>
+          </div>
         </div>
 
 
         <div>
-          <Link href={'/surveyheadholder'} className={styles.nextPageButton}>
+          <Link 
+            href={{
+              pathname : `/surveyvehicleInfo`,
+            }}
+            onClick={handleNextButton} 
+            className={styles.nextPageButton}
+          >
             開始訪問
           </Link>
         </div>      
