@@ -10,7 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import FormLabel from '@mui/material/FormLabel';
-import 'survey-core/defaultV2.min.css';
+// import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
@@ -22,8 +22,175 @@ import { useRouter } from 'next/navigation';
 
 
 
-function App() {
+function App() { 
     const [stillHaveFamily, setStillHaveFamily] = React.useState("没有");
+    const [times, setTimes] = React.useState(0)
+    const [surveyObject, setSurveyObject] = React.useState(
+        [
+            // {
+            //     times:times,
+            //     startTime:0,
+            //     endTime:10,
+            //     testimg:"test",
+            // }
+        ]
+    )
+    const [startTime, setStartTime] = React.useState(dayjs());
+
+
+    function handleRemove(id) {
+        const newList = surveyObject.filter((item) => item.id !== id);
+        setSurveyObject(newList);
+      }
+
+    function handleNextButton() {
+        setTimes((prevState) => (prevState+1))
+        setSurveyObject((prevState) => ([...prevState,{
+            startPoint : "null",
+            endPoint : "null",
+            startTime : "null",
+            endTime : "null",
+            purposeOfVisit: "null",
+            travelingTogether : "null",
+            liveTogether:"null",
+            sevenDayTrips:"null",
+            mainMode:"null",
+            motoMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                findParkingTime:"null",
+                parkingFee:"null",
+                parkingType:'null',
+                mainWay:"null",
+            },
+            carMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                findParkingTime:"null",
+                parkingFee:"null",
+                parkingType:'null',
+                mainWay:"null",
+            },
+            motoPassengerMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                liveTogetherWithDriver:"null"
+            },
+            carPassengerMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                liveTogetherWithDriver:"null"
+            },
+            busMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                route:"null",
+                fee:"null",
+                Transfer:"null",
+                TransferRoute:"null",
+                TransferStation:"null",
+            },
+            lightRailMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                route:"null",
+                fee:"null",
+            },
+            taxiMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+                taxiType:"null",
+                appointmentTime : "null",
+                fee : "null",
+                mainWay:"null",
+                callingMethod : "null",
+            },
+            staffBusMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+            },
+            schoolBusMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+            },
+            tourBusMode:{
+                walkToVehicle:"null",
+                waittingTime:"null",
+                walkToBuilding:"null",
+            },
+            walkMode:"null",
+            otherMode:"null",
+            id:times,
+            startTime:new Date(),
+            endTime:'null',
+        }
+    ]))
+        } 
+
+    const listItems = surveyObject.map((d) => 
+        <div key={d.id} style={{background:'white'}}>
+             <div style={{display:"flex"}}>
+                <button style={{backgroundColor:"#000000",marginLeft:"auto"}}  onClick={() => handleRemove(d.id)}> 
+                    X
+                </button>
+            </div>
+            <div className={styles.question}>
+                <FormControl>
+                    <FormLabel id="startPoint">1) 出行地點</FormLabel>
+                    <Button>
+                        touch and choose loaction
+                    </Button>
+                </FormControl>
+                <FormControl>
+                    <FormLabel id="startTime">2) 出發時間</FormLabel>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer className={styles.question} components={['TimePicker']}>
+                            <TimePicker
+                                ampm={false}
+                                value={startTime}
+                                onChange={(newValue) => setStartTime(newValue)}
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
+                </FormControl>
+            </div>
+            <div className={styles.question}>
+                <FormControl>
+                    <FormLabel id="endPoint">3) 出行目的地</FormLabel>
+                    <Button>
+                        touch and choose loaction
+                    </Button>
+                </FormControl>
+                <FormControl>
+                    <FormLabel id="endTime">4) 到達時間</FormLabel>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer className={styles.question} components={['TimePicker']}>
+                            <TimePicker
+                                ampm={false}
+                                value={startTime}
+                                onChange={(newValue) => setStartTime(newValue)}
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
+                </FormControl>
+            </div>
+           
+        </div>
+        );
+
+    React.useEffect(() => {
+        setTimes(times)
+        },[times]);
+
 
     return(
         <main className={styles.main}>
@@ -50,35 +217,16 @@ function App() {
             { stillHaveFamily == "有"?
                 null
                 :
-                <div  className={styles.question} >
-                    <FormControl>
-                        <FormLabel id="class-level-label">1)  就讀年級：</FormLabel>
-                        <Box
-                        component="form"
-                        sx={{
-                            '& > :not(style)': { m: 1, width: '95%' },
-                        }}
-                        noValidate
-                        >
-                        <TextField id="class-level" label="年級" variant="outlined" />
-                        </Box>
-                    </FormControl>
-
-                    <FormControl sx={{width:'50%'}}>
-                        <FormLabel id="school-name-label">2)  學校名稱：</FormLabel>
-                        <Box
-                        component="form"
-                        sx={{
-                            '& > :not(style)': { m: 1, width: '95%' },
-                        }}
-                        noValidate
-                        >
-                        <TextField id="school-name" label="學校" variant="outlined" />
-                        </Box>
-                    </FormControl>
+                <div>
+                    {listItems}
                 </div>
             }
 
+            <div>
+                <button onClick={handleNextButton}>
+                    add
+                </button>
+            </div>
             <div className={styles.buttonGroupStyle}>
                 <Button variant="contained">
                     {

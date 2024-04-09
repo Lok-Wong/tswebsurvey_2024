@@ -5,13 +5,13 @@
   align-items: center;
   padding: 3rem;
   min-height: 100vh;
-  background-color: bisque;
+  background-color: #23221B;
 }
 
 .question{
 flex-direction: row;
 /* display: flex; */
-background-color:lightgray;
+background-color:white;
 padding: 1rem;
 margin-bottom: 10px;
 }

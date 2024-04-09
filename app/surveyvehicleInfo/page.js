@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import 'survey-core/defaultV2.min.css';
+// import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
