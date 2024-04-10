@@ -7,7 +7,6 @@ import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
-import { useLocalStorage } from "@uidotdev/usehooks";
 
 
 
@@ -29,9 +28,9 @@ export default function Home() {
 
   const [survey, setSurvey] = React.useState({
     weclomePage : {
-      startTime : "null",
-      ip : "null",
-      uuid : "null",
+      startTime : 999,
+      ip : 999,
+      uuid : 999,
     }
   })
 
