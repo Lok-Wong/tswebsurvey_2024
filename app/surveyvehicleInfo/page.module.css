@@ -5,13 +5,13 @@
     align-items: center;
     padding: 2rem;
     min-height: 100vh;
-    background-color: bisque;
+    background-color: #23221B;
   }
 
 .question{
 /* flex-direction: row; */
 display: flex;
-background-color:aliceblue;
+background-color:wheat;
 padding: 1rem;
 margin-bottom: 10px;
 align-items:end;
@@ -35,7 +35,7 @@ align-items:end;
   border-style: solid;
   border-color: black;
   margin-bottom: 1rem;
-  background-color: red;
+  background-color: white;
   border-radius: 20px;
   padding: 1rem;
 }

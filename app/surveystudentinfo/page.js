@@ -1,7 +1,6 @@
 'use client'
 import * as React from 'react';
 import styles from "./page.module.css";
-import Link from "next/link";
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -10,8 +9,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
-import FormLabel from '@mui/material/FormLabel';// import RadioGroup from "@mui/material";
-import 'survey-core/defaultV2.min.css';
+import FormLabel from '@mui/material/FormLabel';
+// import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
@@ -19,8 +18,12 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { useRouter } from 'next/navigation';
+
+
 
 function App() {
+    const router = useRouter();
     const [ToSchoolstartTime, setToSchoolStartTime] = React.useState(dayjs());
     const [ToSchoolEndTime, setToSchoolEndTime] = React.useState(dayjs());
     const [afternoonLeaveTime, setAfternoonLeaveTime] = React.useState(dayjs());
@@ -31,6 +34,9 @@ function App() {
     const [arivalHomeTime, setArivalHomeTime] = React.useState(dayjs());
     const [destinationBackHomeStartTime, setdestinationBackHomeStartTime] = React.useState(dayjs());
     const [destinationBackHomeEndTime, setdestinationBackHomeEndTime] = React.useState(dayjs());
+    const [nextpageOpenState, setNextpageOpenState] = React.useState(false)
+    const nextpageOpenHandleOpen = () => setNextpageOpenState(true);
+    const nextpageOpenHandleClose = () => setNextpageOpenState(false);
 
     const [commonTransirtationState, setCommonTransirtationState] = React.useState({
         motorcyclePassenger: false,
@@ -55,6 +61,20 @@ function App() {
       const commonTransirtationerror = 
       [motorcyclePassenger, carPassenger, schoolBus,bus,lightRail,taxi,onlineTaxi,walk,other]
       .filter((v) => v).length > 3;
+
+      const nextPageModelstyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '40%',
+        height:'10%',
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        
+      };
 
     return(
         <main className={styles.main}>
@@ -677,13 +697,41 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    <Button href={'/surveyvehicleInfo'}>
+                    <Button onClick={() => router.back()}>
                         previous *need check which is previous page
                     </Button>
-                    <Button>
+                    <Button href={'/surveystudentconfirmfinshed'}>
                         next
                     </Button>
+                    {/* <Button onClick={nextpageOpenHandleOpen}>
+                        next
+                    </Button> */}
+                    {/* <Modal
+                        open={nextpageOpenState}
+                        onClose={nextpageOpenHandleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={nextPageModelstyle}>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                           注意!
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            還有其他學生家庭成員未填寫本調查問卷嗎?                        
+                        </Typography>
+                        <div className={styles.buttonGroupStyle}>
+                            <Button>
+                                有
+                            </Button>
+                            <Button >
+                                冇
+                            </Button>
+                        </div>
+                     
+                        </Box>
+                    </Modal> */}
                 </div>
+                
             </div>         
         </main>
     )

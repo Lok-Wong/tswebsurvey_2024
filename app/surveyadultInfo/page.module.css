@@ -9,11 +9,17 @@
 }
 
 .question{
-  flex-direction: row;
-  /* display: flex; */
-  background-color:#ffffff;
-  padding: 1rem;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  padding: 2%;
+flex-direction: row;
+/* display: flex; */
+background-color:white;
+padding: 1rem;
+margin-bottom: 10px;
 }
+
+.inlineQuestion{
+margin-right: 3rem;
+margin-bottom: 1rem;
+}
+
+
+ 
