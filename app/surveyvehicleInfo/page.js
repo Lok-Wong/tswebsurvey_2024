@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 
 function App( ) {
     const router = useRouter();
-    const prevData = JSON.parse(localStorage.getItem("1"));
+    const prevData = JSON.parse(localStorage.getItem("2"));
 
     const [vehicelCheckState, setVehicelCheckState] = React.useState(false)
     const [motorcycleCheckState, setMotorcycleCheckState] = React.useState(false)
@@ -98,8 +98,8 @@ function App( ) {
 
 
     React.useEffect(() => {
-        console.log( "prevData",prevData)
-        console.log("survey",survey)
+        console.log( "prevData:",prevData)
+        // console.log("survey",survey)
     },[prevData,survey])
 
     return (
@@ -160,7 +160,7 @@ function App( ) {
                     </FormControl>
                 </div>
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                 
                     <FormControl >
                         <div className={styles.selectBox} >
@@ -217,9 +217,9 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
 
-                <div className={styles.question}>                
+                {/* <div className={styles.question}>                
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>公共停車場（月租）</p>
@@ -276,7 +276,7 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
             </div>
 
             <div className={styles.checkBlock}>
@@ -318,7 +318,7 @@ function App( ) {
                     </FormControl>
                 </div>
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                 
                     <FormControl >
                         <div className={styles.selectBox} >
@@ -375,9 +375,9 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                 
                     <FormControl >
                         <div className={styles.selectBox} >
@@ -435,7 +435,7 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
             </div>
 
             <div className={styles.checkBlock}>
@@ -478,7 +478,7 @@ function App( ) {
                     </FormControl>
                 </div>
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                
                     <FormControl >
                         <div className={styles.selectBox} >
@@ -535,9 +535,9 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                 
                     <FormControl >
                         <div className={styles.selectBox} >
@@ -595,7 +595,7 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
             </div>
 
             <div className={styles.checkBlock}>
@@ -623,7 +623,7 @@ function App( ) {
                     </FormControl>
                 </div>
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                 
                     <FormControl >
                         <div className={styles.selectBox} >
@@ -666,9 +666,9 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
 
-                <div className={styles.question}>
+                {/* <div className={styles.question}>
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>路邊停車位（免費）</p>
@@ -697,7 +697,7 @@ function App( ) {
                             </Box>
                         </div>
                     </FormControl>
-                </div>
+                </div> */}
             </div>
             <Button onClick={() => router.back()}>
                 previous
