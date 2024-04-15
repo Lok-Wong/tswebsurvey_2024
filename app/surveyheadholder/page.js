@@ -20,11 +20,11 @@ function App() {
   const blanksurvey = {
     headHolder : {
       startTime : new Date(),
-      studentofRespondents: null,
-      residentPopulation: null,
-      residentPopulationStudent:null,
-      totalIncome:null,
-      vehicleCheck:null,
+      studentofRespondents: 999,
+      residentPopulation: 999,
+      residentPopulationStudent:999,
+      totalIncome:999,
+      vehicleCheck:999,
     }}
 
     const _initial_value = React.useMemo(() => {
@@ -58,19 +58,21 @@ function App() {
           // studentofRespondents : event.target.value
         }
       }
-    ))
+    )
+    
+    )
 
-    if (survey.headHolder.studentofRespondents != "其他"){
-      setSurvey((prevState) => (
-        {
-          ...prevState,
-          headHolder:{
-            ...prevState.headHolder,
-            otherOfStudentofRespondents : null
-          }
-        }
-      ))
-    }
+    // if (survey.headHolder.studentofRespondents != "其他"){
+    //   setSurvey((prevState) => (
+    //     {
+    //       ...prevState,
+    //       headHolder:{
+    //         ...prevState.headHolder,
+    //         otherOfStudentofRespondents : 999
+    //       }
+    //     }
+    //   ))
+    // }
   };
 
   const handleTextFieldChange = (event) => {
@@ -86,18 +88,33 @@ function App() {
         }
       }
     ))
-
-    
   }
 
 
   React.useEffect(()=>{
     survey && localStorage.setItem("2",JSON.stringify(survey))
+
   },[survey])
 
   React.useEffect(()=>{
+    if (survey.headHolder.studentofRespondents != "其他"){
+      setSurvey((prevState) => (
+        {
+          ...prevState,
+          headHolder:{
+            ...prevState.headHolder,
+            otherOfStudentofRespondents : otherOfStudentofRespondents == 999? null : otherOfStudentofRespondents
+          }
+        }
+      ))
+    }
     console.log("testSurvey",survey)
-  },[survey])
+
+  },[survey.headHolder.studentofRespondents])
+
+  // React.useEffect(()=>{
+  //   console.log("testSurvey",survey)
+  // },[survey])
 
 
   // React.useEffect(()=>{

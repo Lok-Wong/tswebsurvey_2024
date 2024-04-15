@@ -28,6 +28,8 @@ align-items:end;
 
 .p{
   max-width:5rem;
+  color:black;
+  
 }
 
 .checkBlock{
@@ -37,5 +39,9 @@ align-items:end;
   margin-bottom: 1rem;
   background-color: white;
   border-radius: 20px;
+  padding: 1rem;
+}
+
+.checkBlockTitle{
   padding: 1rem;
 }

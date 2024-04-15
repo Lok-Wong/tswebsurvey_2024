@@ -11,6 +11,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { useRouter } from 'next/navigation';
 import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
+import { MdDirectionsCarFilled,MdElectricCar } from "react-icons/md";
 
 
 function App( ) {
@@ -47,58 +48,17 @@ function App( ) {
             vehicel:{
                 total : 999,
                 totalEV : 999,
-                park:{
-                    selfOwn:999,
-                    subsidiary:999,
-                    selfMonthly:999,
-                    publicHourly:999,
-                    publicMonthly:999,
-                    meter:999,
-                    streelParkFree: 999,
-                    other:999
-                }
             },
             motorcycle:{
                 total : 999,
                 totalEV : 999,
-                park:{
-                    selfOwn:999,
-                    subsidiary:999,
-                    selfMonthly:999,
-                    publicHourly:999,
-                    publicMonthly:999,
-                    meter:999,
-                    streelParkFree: 999,
-                    other:999
-                }
             },
             truck:{
                 total : 999,
                 totalEV : 999,
-                park:{
-                    selfOwn:999,
-                    subsidiary:999,
-                    selfMonthly:999,
-                    publicHourly:999,
-                    publicMonthly:999,
-                    meter:999,
-                    streelParkFree: 999,
-                    other:999
-                }
             },
             bike:{
                 total : 999,
-                totalEV : "N/A",
-                park:{
-                    selfOwn:999,
-                    subsidiary:999,
-                    selfMonthly:999,
-                    publicHourly:"N/A",
-                    publicMonthly:"N/A",
-                    meter:"N/A",
-                    streelParkFree: 999,
-                    other:999
-                }
             }
         }
       })
@@ -106,7 +66,6 @@ function App( ) {
 
     React.useEffect(() => {
         console.log( "prevData:",prevData)
-        // console.log("survey",survey)
     },[prevData,survey])
 
     return (
@@ -157,26 +116,26 @@ function App( ) {
                             label="單車" /> 
                         </FormGroup> 
                     </FormControl>
-                  
-                    
-                    {/* <FormControl >
+                </div>                  
+            </div>
+
+            <div className={styles.checkBlock}>
+                <div className={styles.check}>
+                    <p className={styles.p}>
+                        私家車
+                        <MdDirectionsCarFilled/>
+                    </p>
+                </div>
+             
+                <div className={styles.question}>
+                    <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
                             <Box width={50}>
                                 <TextField 
-                                    onChange={(event) => {setSurvey((prevState)=>({
-                                        ...prevState,
-                                        surveyvehicleInfo:{
-                                            ...prevState.surveyvehicleInfo,
-                                            vehicel:{
-                                                ...prevState.surveyvehicleInfo.vehicel,
-                                                total : event.target.value
-                                            }
-                                        }
-                                    }))}}
-                                    disabled={!vehicelCheckState}
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-vehicel" 
+                                    id="total-car" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
@@ -185,142 +144,31 @@ function App( ) {
                     </FormControl>
                     <FormControl >
                         <div className={styles.selectBox} >
-                            <p  className={styles.p}>當中，純電動車數量</p>
+                            <p className={styles.p}>當中，純電動車數量</p>
                             <Box width={50}>
                                 <TextField 
-                                    disabled={!vehicelCheckState}
+                                    disabled = {!motorcycleCheckState}
                                     autoWidth
-                                    id="total-ev-vehicel" 
+                                    id="total-ev-car" 
                                     variant="outlined"
                                     defaultValue={0}
                                     />
                             </Box>
                         </div>
-                    </FormControl> */}
+                    </FormControl>
                 </div>
 
-                {/* <div className={styles.question}>
-                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>自置停車位</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="self_park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>附屬於車位的停車空間</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    id="subsidiary_park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>私人停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="self_park_monthly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（時鐘票）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="public_park_hourly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
-
-                {/* <div className={styles.question}>                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="public_park_monthly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（咪錶）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="meter-parking" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（免費）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="streel-park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>其他／備註</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!vehicelCheckState}
-                                    autoWidth
-                                    id="other-park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
             </div>
 
             <div className={styles.checkBlock}>
+                <div className={styles.check}>
+                    <p className={styles.p}>
+                        電單車
+                        <MdDirectionsCarFilled/>
+                    </p>
+                </div>
+             
                 <div className={styles.question}>
-
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
@@ -351,129 +199,16 @@ function App( ) {
                     </FormControl>
                 </div>
 
-                {/* <div className={styles.question}>
-                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>自置停車位</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="self_park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>附屬於車位的停車空間</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    id="subsidiary_park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>私人停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="self_park_monthly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（時鐘票）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="public_park_hourly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
-
-                {/* <div className={styles.question}>
-                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="public_park_monthly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（咪錶）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="meter-parking" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（免費）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="streel-park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>其他／備註</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled = {!motorcycleCheckState}
-                                    autoWidth
-                                    id="other-park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
             </div>
 
             <div className={styles.checkBlock}>
+                <div className={styles.check}>
+                    <p className={styles.p}>
+                        貨車
+                        <MdDirectionsCarFilled/>
+                    </p>
+                </div>
                 <div className={styles.question}>
-
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
@@ -503,128 +238,15 @@ function App( ) {
                         </div>
                     </FormControl>
                 </div>
-
-                {/* <div className={styles.question}>
-               
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>自置停車位</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="self_park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>附屬於車位的停車空間</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    id="subsidiary_park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>私人停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="self_park_monthly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（時鐘票）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="public_park_hourly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
-
-                {/* <div className={styles.question}>
-                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>公共停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="public_park_monthly" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（咪錶）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="meter-parking" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（免費）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="streel-park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>其他／備註</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!truckCheckState}
-                                    autoWidth
-                                    id="other-park" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
             </div>
 
             <div className={styles.checkBlock}>
+                <div className={styles.check}>
+                    <p className={styles.p}>
+                        單車
+                        <MdDirectionsCarFilled/>
+                    </p>
+                </div>
                 <div className={styles.question}>
 
                     <FormControl >
@@ -642,82 +264,6 @@ function App( ) {
                         </div>
                     </FormControl>
                 </div>
-
-                {/* <div className={styles.question}>
-                
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>自置停車位</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!bikeCheckState}
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>附屬於車位的停車空間</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!bikeCheckState}
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>私人停車場（月租）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!bikeCheckState}
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
-
-                {/* <div className={styles.question}>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>路邊停車位（免費）</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!bikeCheckState}
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                    <FormControl >
-                        <div className={styles.selectBox} >
-                            <p className={styles.p}>其他／備註</p>
-                            <Box width={50}>
-                                <TextField 
-                                    disabled={!bikeCheckState}
-                                    autoWidth
-                                    id="total-vehicel" 
-                                    variant="outlined"
-                                    defaultValue={0}
-                                    />
-                            </Box>
-                        </div>
-                    </FormControl>
-                </div> */}
             </div>
             <Button onClick={() => router.back()}>
                 previous
