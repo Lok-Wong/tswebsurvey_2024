@@ -9,31 +9,38 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { useRouter } from 'next/navigation';
+import FormLabel from '@mui/material/FormLabel';
+import FormGroup from '@mui/material/FormGroup';
+
 
 function App( ) {
     const router = useRouter();
     const prevData = JSON.parse(localStorage.getItem("2"));
-
+    
     const [vehicelCheckState, setVehicelCheckState] = React.useState(false)
     const [motorcycleCheckState, setMotorcycleCheckState] = React.useState(false)
     const [truckCheckState, setTruckCheckState] = React.useState(false)
     const [bikeCheckState, setBikeCheckState] = React.useState(false)
 
-    const handlevehicelCheckState = (event) => {
-        setVehicelCheckState(event.target.checked);
+    const [checkState, setCheckState] = React.useState(
+        {
+            car : false,
+            moto : false,
+            truck : false,
+            bike : false,
+        }
+
+    )
+
+    const handlecheckStateChange = (event) => {
+        setCheckState({
+          ...checkState,
+          [event.target.name]: event.target.checked,
+        });
       };
 
-    const handlemotorcycleCheckState= (event) => {
-        setMotorcycleCheckState(event.target.checked);
-    };
+      const { car, moto, truck, bike } = checkState;
 
-    const handletruckCheckState = (event) => {
-        setTruckCheckState(event.target.checked);
-    };
-
-    const handlebikeCheckState = (event) => {
-        setBikeCheckState(event.target.checked);
-    };
 
     const [survey, setSurvey] = React.useState({
         surveyvehicleInfo : {
@@ -111,16 +118,48 @@ function App( ) {
             </div>
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    <label>
-                        <FormControlLabel control={
-                        <Checkbox
-                            checked = {vehicelCheckState}
-                            onChange={handlevehicelCheckState}
-                        />
-                        } 
-                        label="私家車" /> 
-                    </label>
-                    <FormControl >
+                    <FormControl row>
+                        <FormLabel>
+                            請問閣下是否擁有以下車輛？
+                        </FormLabel>
+                        <FormGroup row>
+                            <FormControlLabel control={
+                                <Checkbox
+                                    checked = {car}
+                                    onChange={handlecheckStateChange}
+                                    name = "car"
+                                />
+                                } 
+                                label="私家車" /> 
+                            <FormControlLabel control={
+                                <Checkbox
+                                    checked = {moto}
+                                    onChange={handlecheckStateChange}
+                                    name = "moto"
+                                />
+                            } 
+                            label="電單車" /> 
+                            <FormControlLabel control={ 
+                                <Checkbox
+                                    checked = {truck}
+                                    onChange={handlecheckStateChange}
+                                    name = "truck"
+                                />
+                            } 
+                            label="貨車" /> 
+                            <FormControlLabel control={
+                                <Checkbox
+                                    checked = {bike}
+                                    onChange={handlecheckStateChange}
+                                    name = "bike"
+                                />
+                            } 
+                            label="單車" /> 
+                        </FormGroup> 
+                    </FormControl>
+                  
+                    
+                    {/* <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
                             <Box width={50}>
@@ -157,7 +196,7 @@ function App( ) {
                                     />
                             </Box>
                         </div>
-                    </FormControl>
+                    </FormControl> */}
                 </div>
 
                 {/* <div className={styles.question}>
@@ -281,13 +320,7 @@ function App( ) {
 
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    <label>
-                        <FormControlLabel control={   
-                        <Checkbox
-                            checked = {motorcycleCheckState}
-                            onChange={handlemotorcycleCheckState}
-                        />} label="電單車" />
-                    </label>
+
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
@@ -440,14 +473,7 @@ function App( ) {
 
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    <label>
-                        <FormControlLabel control={
-                          <Checkbox
-                            checked = {truckCheckState}
-                            onChange={handletruckCheckState}
-                         />
-                        } label="貨車" />
-                    </label>
+
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
@@ -600,13 +626,7 @@ function App( ) {
 
             <div className={styles.checkBlock}>
                 <div className={styles.question}>
-                    <label>
-                        <FormControlLabel control={  
-                        <Checkbox
-                            checked = {bikeCheckState}
-                            onChange={handlebikeCheckState}
-                        />} label="單車" />
-                    </label>
+
                     <FormControl >
                         <div className={styles.selectBox} >
                             <p className={styles.p}>總數量</p>
