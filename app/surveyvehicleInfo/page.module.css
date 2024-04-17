@@ -11,7 +11,7 @@
 .question{
 /* flex-direction: row; */
 display: flex;
-background-color:wheat;
+background-color:white;
 padding: 1rem;
 margin-bottom: 10px;
 align-items:end;

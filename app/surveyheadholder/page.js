@@ -38,11 +38,7 @@ function App() {
   }, []);
 
   const [survey, setSurvey] = React.useState(_initial_value)
-  const [studentofRespondents, setStudentofRespondents] = React.useState()
-  const [residentPopulation, setResidentPopulation] = React.useState()
-  const [residentPopulationStudent, setResidentPopulationStudent] = React.useState()
-  const [totalIncome, setTotalIncome] = React.useState()
-  const [vehicleCheck, setVehicleCheck] = React.useState()
+  
   const [otherOfStudentofRespondents,setOtherOfStudentofRespondents] = React.useState()
 
   const handleChange = (event) => {
@@ -61,18 +57,6 @@ function App() {
     )
     
     )
-
-    // if (survey.headHolder.studentofRespondents != "其他"){
-    //   setSurvey((prevState) => (
-    //     {
-    //       ...prevState,
-    //       headHolder:{
-    //         ...prevState.headHolder,
-    //         otherOfStudentofRespondents : 999
-    //       }
-    //     }
-    //   ))
-    // }
   };
 
   const handleTextFieldChange = (event) => {
@@ -93,7 +77,6 @@ function App() {
 
   React.useEffect(()=>{
     survey && localStorage.setItem("2",JSON.stringify(survey))
-
   },[survey])
 
   React.useEffect(()=>{
@@ -108,23 +91,9 @@ function App() {
         }
       ))
     }
-    console.log("testSurvey",survey)
 
   },[survey.headHolder.studentofRespondents])
 
-  // React.useEffect(()=>{
-  //   console.log("testSurvey",survey)
-  // },[survey])
-
-
-  // React.useEffect(()=>{
-  //   const data = localStorage.getItem("2");
-  //   if (!!data && data.trim() !== 'undefined') {
-  //     setSurvey(JSON.parse(data))
-  //   } else {
-  //     setSurvey(blanksurvey)
-  //   }
-  // },[])
 
   return (
     <main className={styles.main}>

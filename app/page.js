@@ -5,27 +5,19 @@ import Link from "next/link";
 import * as React from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import dayjs from 'dayjs';
-import { useRouter } from 'next/navigation';
-
-
+import Vcode from 'react-vcode';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { useRouter } from 'next/navigation'
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export default function Home() {
-  const router = useRouter();
-
-  async function handleNextButton() {
-    setSurvey((prevState) => ({
-      ...prevState,
-      weclomePage:{
-        ...prevState.weclomePage,
-        ip:ip,
-        uuid : uuidv4(),
-        startTime : new Date(),
-      }
-    }))
-  
-  }
-
+  const router = useRouter()
+  const [vCode, setVCode] = React.useState()
+  const [inputVcode, setInputVcode] = React.useState()
+  const [openAlertBar, setOpenAlertBar] = React.useState(false)
+  const [vCodeError,setVCodeError] = React.useState(false)
   const [survey, setSurvey] = React.useState({
     weclomePage : {
       startTime : 999,
@@ -35,6 +27,53 @@ export default function Home() {
   })
 
   const [ip, setIP] = React.useState("");
+  
+  async function handleNextButton(event) {
+    console.log("event",event)
+    if (!inputVcode){
+      handleAlertBarOpen()
+      setVCodeError("未填寫驗證碼哦！")
+      return
+    }
+
+    if (vCode != inputVcode){
+      handleAlertBarOpen()
+      setVCodeError("驗證碼錯誤哦！")
+      return
+    }
+
+    setSurvey((prevState) => ({
+      ...prevState,
+      weclomePage:{
+        ...prevState.weclomePage,
+        ip:ip,
+        uuid : uuidv4(),
+        startTime : new Date(),
+      }
+    }))
+    
+    if (event.target.name == "next"){
+    router.push('/surveyheadholder')
+    return
+    }
+
+    if (event.target.name == "Testing"){
+      router.push('/mapTesting')
+      return
+      }
+  }
+
+  const handleAlertBarOpen = () => {
+    setOpenAlertBar(true);
+  };
+
+  const handleAlertBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlertBar(false);
+  };
+
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     setIP(res.data.ip);
@@ -44,6 +83,7 @@ export default function Home() {
     getData()
     localStorage.setItem("1",JSON.stringify(survey))
   },[ip,survey]);
+
 
   return (
     <main className={styles.main}>
@@ -84,26 +124,65 @@ export default function Home() {
               執行單位：澳大創科有限公司
             </a>
           </div>
+        </div>
+
+        <div className={styles.verifyBlock}>
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { m: 1, width: '15rem' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField 
+              error = {vCodeError}
+              sx={{backgroundColor:"white"}} 
+              id="verify_textField" 
+              label="驗證碼" 
+              onChange={(event) => {
+                setInputVcode(event.target.value)
+              }}
+              variant="filled" />
+          </Box>
           <div>
-            <a>
-              {/* {survey.weclomePage.ip} */}
-              {survey.uuid}
-            </a>
+            <Vcode
+              id = "1"
+              length={4}
+              onChange={(v) => {setVCode(v)}}
+              options={{ codes: [ "Q",	"W",	"E",	"R",	"T",	"Y",	"U",	"I",	"P",	"A",	"S",	"D",	"F",	"G",	"H",	"J",	"K",	"L",	"Z",	"X",	"C",	"V",	"B",	"N",	"M",	"1",	"2",	"3",	"4",	"5",	"6",	"7",	"8",	"9", ] }}
+            />
+            <p style={{fontSize : "12px"}}>
+              按一下圖片更新驗證碼
+            </p>
           </div>
         </div>
 
-
         <div>
-          <Link 
-            href={{
-              pathname : `/surveyheadholder`,
-            }}
-            onClick={handleNextButton} 
-            className={styles.nextPageButton}
-          >
-            開始訪問
-          </Link>
+          <button type="button" 
+            name="next"
+            onClick={(event)=>{handleNextButton(event)}}>
+            下一頁
+          </button>
         </div>      
+        <div>
+          <button type="button" 
+            name="Testing"
+            onClick={(event)=>{handleNextButton(event)}}>
+            testing
+          </button>
+        </div>
+
+        <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>
+          <Alert
+            onClose={handleAlertBarClose}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            {vCodeError}
+          </Alert>
+      </Snackbar>
     </main>
   );
 }
