@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { Map, APILoader, ScaleControl, ToolBarControl, ControlBarControl, Geolocation } from '@uiw/react-amap';
+
 
 export default function Home() {
   const router = useRouter()
@@ -169,7 +171,7 @@ export default function Home() {
           <button type="button" 
             name="Testing"
             onClick={(event)=>{handleNextButton(event)}}>
-            testing
+            Map testin
           </button>
         </div>
 
