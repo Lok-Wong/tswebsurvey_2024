@@ -211,7 +211,7 @@ function App( ) {
                             } 
                                 label={<p style={{ color: '#000000' }}>電單車</p>}
                             /> 
-                            <FormControlLabel control={ 
+                            {/* <FormControlLabel control={ 
                                 <Checkbox
                                     checked = {survey.surveyvehicleInfo.check.truck}
                                     onChange={handlecheckStateChange}
@@ -228,7 +228,7 @@ function App( ) {
                                 />
                             } 
                                 label={<p style={{ color: '#000000' }}>單車</p>}
-                            /> 
+                            />  */}
                         </FormGroup> 
                     </FormControl>
                 </div>                  
@@ -374,7 +374,7 @@ function App( ) {
                 null
             }
 
-           {
+           {/* {
                 survey.surveyvehicleInfo.check.truck ?
                 <div className={styles.checkBlock}>
                     <div className={styles.check}>
@@ -485,7 +485,7 @@ function App( ) {
                 </div>
                 :
                 null
-           }
+           } */}
           
             <Button onClick={() => router.back()}>
                 previous

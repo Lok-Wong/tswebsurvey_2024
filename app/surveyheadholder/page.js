@@ -12,7 +12,6 @@ import FormLabel from '@mui/material/FormLabel';// import RadioGroup from "@mui/
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 
 
@@ -25,6 +24,27 @@ function App() {
       residentPopulationStudent:999,
       totalIncome:999,
       vehicleCheck:999,
+      check:{
+        car : false,
+        moto : false,
+        truck : false,
+        bike : false,
+      },
+      car:{
+          carTotal : 999,
+          carEvTotal : 999,
+      },
+      moto:{
+          motoTotal : 999,
+          motoEvTotal : 999,
+      },
+      truck:{
+          truckTotal : 999,
+          truckEvTotal : 999,
+      },
+      bike:{
+          bikeTotal : 999,
+      }
     }}
 
     const _initial_value = React.useMemo(() => {
@@ -145,11 +165,25 @@ function App() {
           </FormControl>
         </div>
 
+        <div className={styles.question}>
+          <FormControl>
+            <FormLabel id="address-label">2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</FormLabel>
+              <Box>
+                <TextField 
+                  id="studentofRespondents-other-textfill" 
+                  label="請輸入地址" 
+                  variant="filled"
+                  name = "address"
+                  />
+                </Box>
+          </FormControl>
+        </div>
+
         
 
         <div className={styles.question}>
          <FormControl>
-            <FormLabel id="resident-population-label">2)	家庭的長期固定居住人口（包括住家工人）：</FormLabel>
+            <FormLabel id="resident-population-label">3)	上述地址中，長期固定居住人口（包括留宿工人）：</FormLabel>
             <RadioGroup
               row
               aria-labelledby="resident-population-group-label"
@@ -162,7 +196,7 @@ function App() {
               <FormControlLabel sx={{color:"black"}}  value="3" control={<Radio />} label="3人" />
               <FormControlLabel sx={{color:"black"}}  value="4" control={<Radio />} label="4人" />
               <FormControlLabel sx={{color:"black"}}  value="5" control={<Radio />} label="5人" />
-              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人以上" />
+              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人或以上" />
             </RadioGroup>
           </FormControl>
         </div>
@@ -182,7 +216,7 @@ function App() {
               <FormControlLabel sx={{color:"black"}}  value="3" control={<Radio />} label="3人" />
               <FormControlLabel sx={{color:"black"}}  value="4" control={<Radio />} label="4人" />
               <FormControlLabel sx={{color:"black"}}  value="5" control={<Radio />} label="5人" />
-              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人以上" />
+              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人或以上" />
             </RadioGroup>
           </FormControl>
         </div>

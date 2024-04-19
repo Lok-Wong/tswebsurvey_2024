@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import FormLabel from '@mui/material/FormLabel';
+// import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
@@ -18,8 +19,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
-
-
 
 function App() {
     const router = useRouter();
@@ -36,7 +35,6 @@ function App() {
     const [nextpageOpenState, setNextpageOpenState] = React.useState(false)
     const nextpageOpenHandleOpen = () => setNextpageOpenState(true);
     const nextpageOpenHandleClose = () => setNextpageOpenState(false);
-    const [crossBorderCheck, setCrossBorderCheck] = React.useState();
 
     const [commonTransirtationState, setCommonTransirtationState] = React.useState({
         motorcyclePassenger: false,
@@ -62,96 +60,12 @@ function App() {
       [motorcyclePassenger, carPassenger, schoolBus,bus,lightRail,taxi,onlineTaxi,walk,other]
       .filter((v) => v).length > 3;
 
-      const handleNextButton = (event) => {
-        if (crossBorderCheck == "否"){
-            console.log("testing",crossBorderCheck)
-            router.push('/surveyNormalRd')
-        }
-      }
-
 
     return(
         <main className={styles.main}>
             <div style={{minWidth:"100%"}}>
+
                 <h1>
-                    2 學生個人資料
-                </h1>
-                <div  className={styles.question} >
-                    <FormControl>
-                        <FormLabel id="class-level-label">1)  就讀年級：</FormLabel>
-                        <Box
-                        component="form"
-                        sx={{
-                            '& > :not(style)': { m: 1, width: '95%' },
-                        }}
-                        noValidate
-                        >
-                        <TextField id="class-level" label="年級" variant="outlined" />
-                        </Box>
-                    </FormControl>
-
-                    <FormControl sx={{width:'50%'}}>
-                        <FormLabel id="school-name-label">2)  學校名稱：</FormLabel>
-                        <Box
-                        component="form"
-                        sx={{
-                            '& > :not(style)': { m: 1, width: '95%' },
-                        }}
-                        noValidate
-                        >
-                        <TextField id="school-name" label="學校" variant="outlined" />
-                        </Box>
-                    </FormControl>
-                </div>
-
-                <div className={styles.question}>
-                    <FormControl>
-                        <FormLabel id="gender-label">3)  姓別：</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="studentofRespondents-radio-buttons-group-label"
-                            name="studentofRespondents-radio-buttons-group"
-                            >
-                            <FormControlLabel value="男" control={<Radio />} label="男" />
-                            <FormControlLabel value="女" control={<Radio />} label="女" />
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-
-                <div className={styles.question}>
-                    <FormControl>
-                        <FormLabel id="age-label">4)  年齡</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="age-label"
-                            name="age-group"
-                            >
-                            <FormControlLabel value="0~4歲" control={<Radio />} label="0~4歲" />
-                            <FormControlLabel value="5~9歲" control={<Radio />} label="5~9歲" />
-                            <FormControlLabel value="10~14歲" control={<Radio />} label="10~14歲" />
-                            <FormControlLabel value="15~19歲" control={<Radio />} label="15~19歲" />
-                            <FormControlLabel value="≥20歲 " control={<Radio />} label="≥20歲" />
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-
-                <div className={styles.question}>
-                    <FormControl>
-                        <FormLabel id="cross-border-student-label">5)  學生上學及放學是否需跨境：</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="cross-border-student-label"
-                            name="cross-border-student-group"
-                            onChange={() => {setCrossBorderCheck(crossBorderCheck)}}
-                            >
-                            <FormControlLabel value="是" control={<Radio />} label="是" />
-                            <FormControlLabel value="否" control={<Radio />} label="否" />
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-
-
-                {/* <h1>
                     2.1	一般情況下，學生早上上學的情況
                 </h1>
 
@@ -500,7 +414,7 @@ function App() {
                     </FormControl>
                 </div>
 
-                <h1>
+                {/* <h1>
                     2.4 學生出行意見和建議
                 </h1>
 
@@ -528,11 +442,11 @@ function App() {
 
                 <div className={styles.question}>
                     <Button onClick={() => router.back()}>
-                        back
+                        previous *need check which is previous page
                     </Button>
-                    <button onClick={console.log("test")}>
+                    <Button href={'/surveystudentconfirmfinshed'}>
                         next
-                    </button>
+                    </Button>
                     {/* <Button onClick={nextpageOpenHandleOpen}>
                         next
                     </Button> */}
