@@ -17,24 +17,33 @@ import { useEffect } from 'react';
 
 
 function App() {
-  const router = useRouter();
-  const prevData = JSON.parse(localStorage.getItem("1"));
-  const [survey, setSurvey] = React.useState({
+  const blanksurvey = {
     headHolder : {
       startTime : new Date(),
-      studentofRespondents: null,
-      residentPopulation: null,
-      residentPopulationStudent:null,
-      totalIncome:null,
-      vehicleCheck:null,
-    }
-  })
-  const [studentofRespondents, setStudentofRespondents] = React.useState("本人")
+      studentofRespondents: 999,
+      residentPopulation: 999,
+      residentPopulationStudent:999,
+      totalIncome:999,
+      vehicleCheck:999,
+    }}
+
+    const _initial_value = React.useMemo(() => {
+      const local_storage_value_str = localStorage.getItem('2');
+      // If there is a value stored in localStorage, use that
+      if(local_storage_value_str) {
+          return JSON.parse(local_storage_value_str);
+      } 
+      // Otherwise use initial_value that was passed to the function
+      return blanksurvey;
+  }, []);
+
+  const [survey, setSurvey] = React.useState(_initial_value)
+  
+  const [otherOfStudentofRespondents,setOtherOfStudentofRespondents] = React.useState()
 
   const handleChange = (event) => {
-    setStudentofRespondents(event.target.value);
+    // setStudentofRespondents(event.target.value);
     
-    console.log("eventId", event.target)
     const objectName = event.target.name
     setSurvey((prevState) => (
       {
@@ -45,10 +54,13 @@ function App() {
           // studentofRespondents : event.target.value
         }
       }
-    ))
+    )
+    
+    )
   };
 
   const handleTextFieldChange = (event) => {
+    
       const objectName = event.target.name
         setSurvey((prevState) => (
       {
@@ -62,17 +74,26 @@ function App() {
     ))
   }
 
-  const handleNextButton = () =>{
-    setSurvey((prevState) => ({
-      ...prevState,
-        ...prevData
-    }))
-  }
 
   React.useEffect(()=>{
-    console.log("test",prevData)
-    console.log("test2",survey)
-  })
+    survey && localStorage.setItem("2",JSON.stringify(survey))
+  },[survey])
+
+  React.useEffect(()=>{
+    if (survey.headHolder.studentofRespondents != "其他"){
+      setSurvey((prevState) => (
+        {
+          ...prevState,
+          headHolder:{
+            ...prevState.headHolder,
+            otherOfStudentofRespondents : otherOfStudentofRespondents == 999? null : otherOfStudentofRespondents
+          }
+        }
+      ))
+    }
+
+  },[survey.headHolder.studentofRespondents])
+
 
   return (
     <main className={styles.main}>
@@ -88,8 +109,7 @@ function App() {
               row
               id = "studentofRespondents"
               aria-labelledby="studentofRespondents-radio-buttons-group-label"
-              defaultValue= {studentofRespondents}
-              value = {studentofRespondents}
+              value = {survey.headHolder.studentofRespondents}
               name="studentofRespondents"
               onChange={handleChange}
             >
@@ -100,7 +120,7 @@ function App() {
               <FormControlLabel sx={{color:"black"}}  value="其他" control={<Radio />} label="其他" />
 
               {
-                studentofRespondents == "其他" ? 
+                survey.headHolder.studentofRespondents == "其他" ? 
                   <Box
                     component="form"
                     sx={{
@@ -113,7 +133,8 @@ function App() {
                       id="studentofRespondents-other-textfill" 
                       label="其他" 
                       variant="filled"
-                      name = "studentofRespondents"
+                      value = {survey.headHolder.otherOfStudentofRespondents}
+                      name = "otherOfStudentofRespondents"
                       onChange = {handleTextFieldChange}
                       />
                   </Box>
@@ -129,42 +150,40 @@ function App() {
         <div className={styles.question}>
          <FormControl>
             <FormLabel id="resident-population-label">2)	家庭的長期固定居住人口（包括住家工人）：</FormLabel>
-            <Box
-              component="form"
-              sx={{
-                '& > :not(style)': { m: 1, width: '95%' },
-              }}
-              noValidate
+            <RadioGroup
+              row
+              aria-labelledby="resident-population-group-label"
+              value={survey.headHolder.residentPopulation}
+              name="residentPopulation"
+              onChange={handleChange}
             >
-              <TextField 
-                id="resident-population" 
-                label="人口" 
-                variant="outlined" 
-                name = "residentPopulation"
-                onChange = {handleTextFieldChange}
-              />
-            </Box>
+              <FormControlLabel sx={{color:"black"}}  value="1" control={<Radio />} label="1人" />
+              <FormControlLabel sx={{color:"black"}}  value="2" control={<Radio />} label="2人" />
+              <FormControlLabel sx={{color:"black"}}  value="3" control={<Radio />} label="3人" />
+              <FormControlLabel sx={{color:"black"}}  value="4" control={<Radio />} label="4人" />
+              <FormControlLabel sx={{color:"black"}}  value="5" control={<Radio />} label="5人" />
+              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人以上" />
+            </RadioGroup>
           </FormControl>
         </div>
 
         <div className={styles.question}>
           <FormControl>
             <FormLabel id="resident-population-student-label">3)  長期固定居住人口中，在澳門幼兒園、小學、中學就讀的：</FormLabel>
-            <Box
-              component="form"
-              sx={{
-                '& > :not(style)': { m: 1, width: '95%' },
-              }}
-              noValidate
+            <RadioGroup
+              row
+              aria-labelledby="resident-population-student-group-label"
+              value={survey.headHolder.residentPopulationStudent}
+              name="residentPopulationStudent"
+              onChange={handleChange}
             >
-              <TextField 
-                id="resident-population-student" 
-                label="人" 
-                variant="outlined" 
-                name = "residentPopulationStudent"
-                onChange = {handleTextFieldChange}
-                />
-            </Box>
+              <FormControlLabel sx={{color:"black"}}  value="1" control={<Radio />} label="1人" />
+              <FormControlLabel sx={{color:"black"}}  value="2" control={<Radio />} label="2人" />
+              <FormControlLabel sx={{color:"black"}}  value="3" control={<Radio />} label="3人" />
+              <FormControlLabel sx={{color:"black"}}  value="4" control={<Radio />} label="4人" />
+              <FormControlLabel sx={{color:"black"}}  value="5" control={<Radio />} label="5人" />
+              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人以上" />
+            </RadioGroup>
           </FormControl>
         </div>
 
@@ -174,7 +193,7 @@ function App() {
             <RadioGroup
               row
               aria-labelledby="total-income-radio-buttons-group-label"
-              defaultValue="本人"
+              value={survey.headHolder.totalIncome}
               name="totalIncome"
               onChange={handleChange}
             >
@@ -201,7 +220,7 @@ function App() {
             <RadioGroup
               row
               aria-labelledby="vehicle_check-radio-buttons-group-label"
-              defaultValue="本人"
+              value={survey.headHolder.vehicleCheck}
               name="vehicleCheck"
               onChange={handleChange}
             >
@@ -211,9 +230,17 @@ function App() {
           </FormControl>
         </div>
         <div className={styles.question}>
-          <button href={"/surveyvehicleInfo"} onClick={handleNextButton}>
-            Next
-          </button>
+          <Link 
+            className={
+              styles.nextPageButton
+            }
+            href={{
+              pathname : "/surveyvehicleInfo"
+            }} 
+            // onClick={handleNextButton}
+            >
+              Next
+          </Link>
         </div>
       </div>
     </main>
