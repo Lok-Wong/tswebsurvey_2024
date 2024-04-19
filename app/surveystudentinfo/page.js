@@ -19,8 +19,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
 
-
-
 function App() {
     const router = useRouter();
     const [ToSchoolstartTime, setToSchoolStartTime] = React.useState(dayjs());
@@ -68,6 +66,10 @@ function App() {
             router.push('/surveyNormalRd')
         }
       }
+
+      React.useEffect(() => {
+        console.log("testing",crossBorderCheck)
+      },[crossBorderCheck])
 
 
     return(
@@ -140,6 +142,8 @@ function App() {
                         <FormLabel id="cross-border-student-label">5)  學生上學及放學是否需跨境：</FormLabel>
                         <RadioGroup
                             row
+                            id = "crossBorderCheck"
+                            value = {crossBorderCheck}
                             aria-labelledby="cross-border-student-label"
                             name="cross-border-student-group"
                             onChange={() => {setCrossBorderCheck(crossBorderCheck)}}
@@ -530,9 +534,11 @@ function App() {
                     <Button onClick={() => router.back()}>
                         back
                     </Button>
-                    <button onClick={console.log("test")}>
-                        next
-                    </button>
+                    <div>
+                        <button>
+                            next
+                        </button>
+                    </div>
                     {/* <Button onClick={nextpageOpenHandleOpen}>
                         next
                     </Button> */}
