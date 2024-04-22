@@ -60,17 +60,55 @@ function App() {
       [motorcyclePassenger, carPassenger, schoolBus,bus,lightRail,taxi,onlineTaxi,walk,other]
       .filter((v) => v).length > 3;
 
-      const handleNextButton = (event) => {
-        if (crossBorderCheck == "否"){
-            console.log("testing",crossBorderCheck)
+      const blanksurvey = {
+        surveystudentinfo : {
+            classLevel: "",
+            schoolName: "",
+            gender : "",
+            age: "",
+            crossBorder:"",
+            startTime : new Date(),
+        }}
+
+    const _initial_value = React.useMemo(() => {
+        const local_storage_value_str = localStorage.getItem('3');
+        // If there is a value stored in localStorage, use that
+        if(local_storage_value_str) {
+            return JSON.parse(local_storage_value_str);
+        } 
+        // Otherwise use initial_value that was passed to the function
+        return blanksurvey;
+        }, []);
+    
+    const [survey, setSurvey] = React.useState(_initial_value)
+
+    const handleChange = (event) => {
+        
+        const objectName = event.target.name
+        setSurvey((prevState) => (
+          {
+            ...prevState,
+            surveystudentinfo:{
+              ...prevState.surveystudentinfo,
+              [objectName] : event.target.value
+            }
+          }
+        )
+        
+        )
+      };
+
+    React.useEffect(()=>{
+        survey && localStorage.setItem("3",JSON.stringify(survey))
+        console.log(survey)
+      },[survey])
+
+
+      const handleNextButton = () => {
+        if (survey.surveystudentinfo.crossBorder == "否"){
             router.push('/surveyNormalRd')
         }
       }
-
-      React.useEffect(() => {
-        console.log("testing",crossBorderCheck)
-      },[crossBorderCheck])
-
 
     return(
         <main className={styles.main}>
@@ -88,7 +126,14 @@ function App() {
                         }}
                         noValidate
                         >
-                        <TextField id="class-level" label="年級" variant="outlined" />
+                        <TextField 
+                            id="class-level" 
+                            label="年級" 
+                            variant="outlined" 
+                            name='classLevel'
+                            onChange={handleChange}
+                            value={survey.surveystudentinfo.classLevel}
+                        />
                         </Box>
                     </FormControl>
 
@@ -101,7 +146,14 @@ function App() {
                         }}
                         noValidate
                         >
-                        <TextField id="school-name" label="學校" variant="outlined" />
+                        <TextField 
+                            id="school-name" 
+                            label="學校" 
+                            variant="outlined" 
+                            name='schoolName'
+                            onChange={handleChange}
+                            value={survey.surveystudentinfo.schoolName}
+                        />
                         </Box>
                     </FormControl>
                 </div>
@@ -112,7 +164,9 @@ function App() {
                         <RadioGroup
                             row
                             aria-labelledby="studentofRespondents-radio-buttons-group-label"
-                            name="studentofRespondents-radio-buttons-group"
+                            name="gender"
+                            onChange={handleChange}
+                            value={survey.surveystudentinfo.gender}
                             >
                             <FormControlLabel value="男" control={<Radio />} label="男" />
                             <FormControlLabel value="女" control={<Radio />} label="女" />
@@ -126,7 +180,9 @@ function App() {
                         <RadioGroup
                             row
                             aria-labelledby="age-label"
-                            name="age-group"
+                            name="age"
+                            onChange={handleChange}
+                            value={survey.surveystudentinfo.age}
                             >
                             <FormControlLabel value="0~4歲" control={<Radio />} label="0~4歲" />
                             <FormControlLabel value="5~9歲" control={<Radio />} label="5~9歲" />
@@ -143,10 +199,11 @@ function App() {
                         <RadioGroup
                             row
                             id = "crossBorderCheck"
-                            value = {crossBorderCheck}
+                            // value = {crossBorderCheck}
                             aria-labelledby="cross-border-student-label"
-                            name="cross-border-student-group"
-                            onChange={() => {setCrossBorderCheck(crossBorderCheck)}}
+                            name="crossBorder"
+                            onChange={handleChange}
+                            value={survey.surveystudentinfo.crossBorder}
                             >
                             <FormControlLabel value="是" control={<Radio />} label="是" />
                             <FormControlLabel value="否" control={<Radio />} label="否" />
@@ -534,11 +591,9 @@ function App() {
                     <Button onClick={() => router.back()}>
                         back
                     </Button>
-                    <div>
-                        <button>
-                            next
-                        </button>
-                    </div>
+                    <Button onClick={handleNextButton}>
+                        next
+                    </Button>
                     {/* <Button onClick={nextpageOpenHandleOpen}>
                         next
                     </Button> */}

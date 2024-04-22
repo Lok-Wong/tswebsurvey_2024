@@ -38,6 +38,7 @@ function App( ) {
 
     const blanksurvey = {
         surveyvehicleInfo : {
+            startTime : new Date(),
             check:{
                 car : false,
                 moto : false,

@@ -24,37 +24,18 @@ function App() {
       residentPopulationStudent:999,
       totalIncome:999,
       vehicleCheck:999,
-      check:{
-        car : false,
-        moto : false,
-        truck : false,
-        bike : false,
-      },
-      car:{
-          carTotal : 999,
-          carEvTotal : 999,
-      },
-      moto:{
-          motoTotal : 999,
-          motoEvTotal : 999,
-      },
-      truck:{
-          truckTotal : 999,
-          truckEvTotal : 999,
-      },
-      bike:{
-          bikeTotal : 999,
-      }
+      otherOfStudentofRespondents:999,
+      address:999
     }}
 
-    const _initial_value = React.useMemo(() => {
-      const local_storage_value_str = localStorage.getItem('2');
-      // If there is a value stored in localStorage, use that
-      if(local_storage_value_str) {
-          return JSON.parse(local_storage_value_str);
-      } 
-      // Otherwise use initial_value that was passed to the function
-      return blanksurvey;
+  const _initial_value = React.useMemo(() => {
+    const local_storage_value_str = localStorage.getItem('2');
+    // If there is a value stored in localStorage, use that
+    if(local_storage_value_str) {
+        return JSON.parse(local_storage_value_str);
+    } 
+    // Otherwise use initial_value that was passed to the function
+    return blanksurvey;
   }, []);
 
   const [survey, setSurvey] = React.useState(_initial_value)
@@ -62,7 +43,6 @@ function App() {
   const [otherOfStudentofRespondents,setOtherOfStudentofRespondents] = React.useState()
 
   const handleChange = (event) => {
-    // setStudentofRespondents(event.target.value);
     
     const objectName = event.target.name
     setSurvey((prevState) => (
@@ -71,7 +51,6 @@ function App() {
         headHolder:{
           ...prevState.headHolder,
           [objectName] : event.target.value
-          // studentofRespondents : event.target.value
         }
       }
     )
@@ -94,19 +73,24 @@ function App() {
     ))
   }
 
+  const handleNextButton = (event) => {
+    
+  }
+
 
   React.useEffect(()=>{
     survey && localStorage.setItem("2",JSON.stringify(survey))
+    console.log(survey)
   },[survey])
 
   React.useEffect(()=>{
-    if (survey.headHolder.studentofRespondents != "其他"){
+    if (survey.headHolder.studentofRespondents != "其他監護人"){
       setSurvey((prevState) => (
         {
           ...prevState,
           headHolder:{
             ...prevState.headHolder,
-            otherOfStudentofRespondents : otherOfStudentofRespondents == 999? null : otherOfStudentofRespondents
+            otherOfStudentofRespondents : 999
           }
         }
       ))
@@ -135,12 +119,10 @@ function App() {
             >
               <FormControlLabel sx={{color:"black"}}  value="本人" control={<Radio />} label="本人" />
               <FormControlLabel sx={{color:"black"}}  value="父母" control={<Radio />} label="父母" />
-              <FormControlLabel sx={{color:"black"}}  value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
-              <FormControlLabel sx={{color:"black"}}  value="工人" control={<Radio />} label="工人" />
-              <FormControlLabel sx={{color:"black"}}  value="其他" control={<Radio />} label="其他" />
+              <FormControlLabel sx={{color:"black"}}  value="其他監護人" control={<Radio />} label="其他監護人" />
 
               {
-                survey.headHolder.studentofRespondents == "其他" ? 
+                survey.headHolder.studentofRespondents == "其他監護人" ? 
                   <Box
                     component="form"
                     sx={{
@@ -151,9 +133,9 @@ function App() {
                   >
                     <TextField 
                       id="studentofRespondents-other-textfill" 
-                      label="其他" 
+                      label="請輸入其他監護人名稱" 
                       variant="filled"
-                      value = {survey.headHolder.otherOfStudentofRespondents}
+                      value = {survey.headHolder.otherOfStudentofRespondents == 999? null : survey.headHolder.otherOfStudentofRespondents}
                       name = "otherOfStudentofRespondents"
                       onChange = {handleTextFieldChange}
                       />
@@ -174,6 +156,8 @@ function App() {
                   label="請輸入地址" 
                   variant="filled"
                   name = "address"
+                  value={survey.headHolder.address == 999? null : survey.headHolder.address}
+                  onChange={handleChange}
                   />
                 </Box>
           </FormControl>
@@ -264,7 +248,7 @@ function App() {
           </FormControl>
         </div>
         <div className={styles.question}>
-          <Link 
+          <Button 
             className={
               styles.nextPageButton
             }
@@ -274,7 +258,7 @@ function App() {
             // onClick={handleNextButton}
             >
               Next
-          </Link>
+          </Button>
         </div>
       </div>
     </main>

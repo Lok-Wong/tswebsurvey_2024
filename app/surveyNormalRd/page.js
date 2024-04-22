@@ -24,17 +24,11 @@ function App() {
     const router = useRouter();
     const [ToSchoolstartTime, setToSchoolStartTime] = React.useState(dayjs());
     const [ToSchoolEndTime, setToSchoolEndTime] = React.useState(dayjs());
-    const [afternoonLeaveTime, setAfternoonLeaveTime] = React.useState(dayjs());
-    const [afternoonLeaveArrivalTime, setAfternoonLeaveArrivalTime] = React.useState(dayjs());
-    const [afternoonbackstartTime, setAfternoonbackstartTime] = React.useState(dayjs());
-    const [afternoonbackendTime, setAfternoonbackendTime] = React.useState(dayjs());
+    
     const [eveningLeaveSchoolTime, setEveningLeaveSchoolTime] = React.useState(dayjs());
     const [arivalHomeTime, setArivalHomeTime] = React.useState(dayjs());
     const [destinationBackHomeStartTime, setdestinationBackHomeStartTime] = React.useState(dayjs());
     const [destinationBackHomeEndTime, setdestinationBackHomeEndTime] = React.useState(dayjs());
-    const [nextpageOpenState, setNextpageOpenState] = React.useState(false)
-    const nextpageOpenHandleOpen = () => setNextpageOpenState(true);
-    const nextpageOpenHandleClose = () => setNextpageOpenState(false);
 
     const [commonTransirtationState, setCommonTransirtationState] = React.useState({
         motorcyclePassenger: false,
@@ -47,6 +41,28 @@ function App() {
         walk:false,
         other:false
       });
+
+    const blanksurvey = {
+        surveyNormalRd : {
+            startTime : new Date(),
+            pickup: 999,
+            pickupTimeStart: 999,
+            pickupTimeEnd: 999,
+            commonTransirtation: 999,
+        }}
+
+    const _initial_value = React.useMemo(() => {
+        const local_storage_value_str = localStorage.getItem('2');
+        // If there is a value stored in localStorage, use that
+        if(local_storage_value_str) {
+            return JSON.parse(local_storage_value_str);
+        } 
+        // Otherwise use initial_value that was passed to the function
+        return blanksurvey;
+        }, []);
+
+    const [survey, setSurvey] = React.useState(_initial_value)
+
     
       const commonTransirtationStatehandleChange = (event) => {
         setCommonTransirtationState({
@@ -65,17 +81,17 @@ function App() {
         <main className={styles.main}>
             <div style={{minWidth:"100%"}}>
 
-                <h1>
-                    2.1	一般情況下，學生早上上學的情況
+                <h1  style={{color:"#ffffff"}}>
+                    3.1	一般情況下，學生早上上學的情況
                 </h1>
 
                 <div className={styles.question}>
                     <FormControl>
-                        <FormLabel id="pickup-label">5)    有沒有人接送：</FormLabel>
+                        <FormLabel id="pickup-label">1)    有沒有人接送：</FormLabel>
                         <RadioGroup
                             row
                             aria-labelledby="pickup-label"
-                            name="pickup-group"
+                            name="pickup"
                             >
                             <FormControlLabel value="學生自行上學" control={<Radio />} label="學生自行上學" />
                             <FormControlLabel value="父母" control={<Radio />} label="父母" />
@@ -97,7 +113,7 @@ function App() {
                 </div>
                 <div className={styles.question}>
                     <FormControl className={styles.inlineQuestion}>
-                        <FormLabel id="pickup-time-start-label">6)     出發時間：</FormLabel>
+                        <FormLabel id="pickup-time-start-label">2)     出發時間：</FormLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
                                 <TimePicker
@@ -110,7 +126,7 @@ function App() {
                     </FormControl>
 
                     <FormControl className={styles.inlineQuestion}>
-                        <FormLabel id="pickup-time-end-label">7)     到達時間：</FormLabel>
+                        <FormLabel id="pickup-time-end-label">3)     到達時間：</FormLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
                                 <TimePicker
@@ -131,7 +147,7 @@ function App() {
                         sx={{ m: 3 }}
                         variant="standard"
                     >
-                        <FormLabel component="commonTransiration">8)	常用的交通方式（按使用頻率排序，最多可選3個）：</FormLabel>
+                        <FormLabel component="commonTransiration">4)	常用的交通方式（最多可選3個）：</FormLabel>
                         <FormGroup row>
                             <FormControlLabel
                                 control={
@@ -205,8 +221,11 @@ function App() {
                             }
                     </FormControl>
                 </div>
-                <h1>
-                    2.3	一般情況下，學生下午放學的情況
+
+
+
+                {/* <h1 style={{color:"#ffffff"}}>
+                    3.2	一般情況下，學生下午放學的情況
                 </h1>
                 <div className={styles.question}>
                     <FormControl className={styles.inlineQuestion}>
@@ -412,7 +431,9 @@ function App() {
                             </Box>
                         </RadioGroup>
                     </FormControl>
-                </div>
+                </div> */}
+
+
 
                 {/* <h1>
                     2.4 學生出行意見和建議

@@ -5,15 +5,16 @@
     align-items: center;
     padding: 3rem;
     min-height: 100vh;
-    background-color: bisque;
+    background-color: #000000;
   }
 
 .question{
   flex-direction: row;
   /* display: flex; */
-  background-color:lightgray;
+  background-color:#ffffff;
   padding: 1rem;
   margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 .inlineQuestion{
