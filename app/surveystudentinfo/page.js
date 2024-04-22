@@ -62,11 +62,11 @@ function App() {
 
       const blanksurvey = {
         surveystudentinfo : {
-            classLevel: "",
-            schoolName: "",
-            gender : "",
-            age: "",
-            crossBorder:"",
+            classLevel: 999,
+            schoolName: 999,
+            gender : 999,
+            age: 999,
+            crossBorder:999,
             startTime : new Date(),
         }}
 

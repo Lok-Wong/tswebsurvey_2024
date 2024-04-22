@@ -42,8 +42,6 @@ function App( ) {
             check:{
                 car : false,
                 moto : false,
-                truck : false,
-                bike : false,
             },
             car:{
                 carTotal : 999,
@@ -52,13 +50,6 @@ function App( ) {
             moto:{
                 motoTotal : 999,
                 motoEvTotal : 999,
-            },
-            truck:{
-                truckTotal : 999,
-                truckEvTotal : 999,
-            },
-            bike:{
-                bikeTotal : 999,
             }
         }
     }
