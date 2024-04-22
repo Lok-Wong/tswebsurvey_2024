@@ -74,7 +74,7 @@ function App() {
   }
 
   const handleNextButton = (event) => {
-    
+
   }
 
 
@@ -248,7 +248,7 @@ function App() {
           </FormControl>
         </div>
         <div className={styles.question}>
-          <Button 
+          <Link 
             className={
               styles.nextPageButton
             }
@@ -258,7 +258,7 @@ function App() {
             // onClick={handleNextButton}
             >
               Next
-          </Button>
+          </Link>
         </div>
       </div>
     </main>
