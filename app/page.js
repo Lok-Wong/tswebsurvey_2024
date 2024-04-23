@@ -1,7 +1,6 @@
 'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
-import Link from "next/link";
 import * as React from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
@@ -11,8 +10,6 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { Map, APILoader, ScaleControl, ToolBarControl, ControlBarControl, Geolocation } from '@uiw/react-amap';
-
 
 export default function Home() {
   const router = useRouter()
@@ -55,9 +52,9 @@ export default function Home() {
     }))
     
     if (event.target.name == "next"){
-    router.push('/surveyheadholder')
-    return
-    }
+      router.push('/surveyheadholder')
+      return
+      }
 
     if (event.target.name == "Testing"){
       router.push('/mapTesting')
@@ -83,7 +80,7 @@ export default function Home() {
 
   React.useEffect(() => {
     getData()
-    localStorage.setItem("1",JSON.stringify(survey))
+    localStorage.setItem("home",JSON.stringify(survey))
   },[ip,survey]);
 
 
@@ -91,7 +88,7 @@ export default function Home() {
     <main className={styles.main}>
         <div className={styles.description}>
           <p>
-            tsWebSurvey2024_V0.1
+            tsWebSurvey2024_V0.7
           </p>
           <div>
             <a

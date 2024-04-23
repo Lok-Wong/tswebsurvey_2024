@@ -4,9 +4,7 @@ import styles from "./page.module.css";
 import Button from '@mui/material/Button';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-// import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { useRouter } from 'next/navigation';
 import FormLabel from '@mui/material/FormLabel';
@@ -14,19 +12,9 @@ import FormGroup from '@mui/material/FormGroup';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-import { MdDirectionsCarFilled,MdElectricCar } from "react-icons/md";
-
 
 function App( ) {
     const router = useRouter();
-    // const prevData = JSON.parse(localStorage.getItem("2"));
-    // const [carTotal, setCarTotal] = React.useState("999")
-    // const [carEvTotal, setCarEvTotal] = React.useState("999")
-    // const [motoTotal, setMotoTotal] = React.useState("999")
-    // const [motoEvTotal, setMotoEvTotal] = React.useState("999")
-    // const [truckTotal, setTruckTotal] = React.useState("999")
-    // const [truckEvTotal, setTruckEvTotal] = React.useState("999")
-    // const [bikeTotal, setBikeTotal] = React.useState("999")
     const [checkState, setCheckState] = React.useState(
         {
             car : false,
@@ -55,7 +43,7 @@ function App( ) {
     }
     
         const _initial_value = React.useMemo(() => {
-          const local_storage_value_str = localStorage.getItem('3');
+          const local_storage_value_str = localStorage.getItem('vehicleInfo');
           // If there is a value stored in localStorage, use that
           if(local_storage_value_str) {
               return JSON.parse(local_storage_value_str);
@@ -104,7 +92,7 @@ function App( ) {
     },[survey])
 
     React.useEffect(() => {
-       survey && localStorage.setItem("3",JSON.stringify(survey))
+       survey && localStorage.setItem("vehicleInfo",JSON.stringify(survey))
     },[survey])
 
     React.useEffect(() => {
@@ -136,45 +124,14 @@ function App( ) {
                 }
             }) 
             )
-        }
-
-        if (!survey.surveyvehicleInfo.check.truck){
-            setSurvey( (prevState) => ({
-                ...prevState,
-                surveyvehicleInfo:{
-                    ...prevState.surveyvehicleInfo,
-                    truck:{
-                        ...prevState.surveyvehicleInfo.truck,
-                         truckTotal:999,
-                         truckEvTotal:999
-                    }
-                }
-            }) 
-            )
-        }
-
-        if (!survey.surveyvehicleInfo.check.bike){
-            setSurvey( (prevState) => ({
-                ...prevState,
-                surveyvehicleInfo:{
-                    ...prevState.surveyvehicleInfo,
-                    bike:{
-                        ...prevState.surveyvehicleInfo.bike,
-                        bikeTotal:999,
-                    }
-                }
-            }) 
-            )
-        }
-
-        
+        }       
 
     },[survey.surveyvehicleInfo.check.car,survey.surveyvehicleInfo.check.moto,survey.surveyvehicleInfo.check.truck,survey.surveyvehicleInfo.check.bike])
 
     return (
         <main className={styles.main}>
             <div>
-                <h1>
+                <h1 style={{color:"#ffffff"}}>
                     住戶持有車輛資料 
                 </h1>
             </div>
@@ -187,7 +144,7 @@ function App( ) {
                         <FormGroup row>
                             <FormControlLabel control={
                                 <Checkbox
-                                    checked = {survey.surveyvehicleInfo.check.car}
+                                    checked = {survey.surveyvehicleInfo.check.car == 999? false : survey.surveyvehicleInfo.check.car}
                                     onChange={handlecheckStateChange}
                                     name = "car"
                                 />
@@ -196,7 +153,7 @@ function App( ) {
                                 /> 
                             <FormControlLabel control={
                                 <Checkbox
-                                    checked = {survey.surveyvehicleInfo.check.moto}
+                                    checked = {survey.surveyvehicleInfo.check.moto == 999? false : survey.surveyvehicleInfo.check.moto}
                                     onChange={handlecheckStateChange}
                                     name = "moto"
                                 />

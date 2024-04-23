@@ -106,6 +106,10 @@
     margin-top: 0%;
     padding-left: 10%;
     padding-right: 10%;
+    background-color: #ffffff;
+    padding: 2rem;
+    width: 80%;
+    border-radius: 10px;
   }
   
   .startbutton{

@@ -16,6 +16,8 @@ import { useRouter } from 'next/navigation';
 
 
 function App() {
+  const router = useRouter()
+
   const blanksurvey = {
     headHolder : {
       startTime : new Date(),
@@ -29,7 +31,7 @@ function App() {
     }}
 
   const _initial_value = React.useMemo(() => {
-    const local_storage_value_str = localStorage.getItem('2');
+    const local_storage_value_str = localStorage.getItem('headHolder');
     // If there is a value stored in localStorage, use that
     if(local_storage_value_str) {
         return JSON.parse(local_storage_value_str);
@@ -39,8 +41,6 @@ function App() {
   }, []);
 
   const [survey, setSurvey] = React.useState(_initial_value)
-  
-  const [otherOfStudentofRespondents,setOtherOfStudentofRespondents] = React.useState()
 
   const handleChange = (event) => {
     
@@ -74,12 +74,38 @@ function App() {
   }
 
   const handleNextButton = (event) => {
+    if (survey.headHolder.vehicleCheck == "有"){
+      router.push('/surveyvehicleInfo')
+      return
+    }
 
+    if (survey.headHolder.vehicleCheck == "無"){
+     const blankvehicleInfo = {
+        surveyvehicleInfo : {
+          startTime : new Date(),
+          check:{
+              car : 999,
+              moto : 999,
+          },
+          car:{
+              carTotal : 999,
+              carEvTotal : 999,
+          },
+          moto:{
+              motoTotal : 999,
+              motoEvTotal : 999,
+          }
+      }
+      }
+      localStorage.setItem("vehicleInfo",JSON.stringify(blankvehicleInfo))
+      router.push('/surveystudentinfo')
+      return
+    }
   }
 
 
   React.useEffect(()=>{
-    survey && localStorage.setItem("2",JSON.stringify(survey))
+    survey && localStorage.setItem("headHolder",JSON.stringify(survey))
     console.log(survey)
   },[survey])
 
@@ -103,7 +129,7 @@ function App() {
     <main className={styles.main}>
       <div>
         {/* <Survey model={survey} /> */}
-        <h1>
+        <h1 style={{color:"#ffffff"}}>
         1.	學生家庭住戶資料
         </h1>
         <div className={styles.question}>
@@ -247,18 +273,15 @@ function App() {
             </RadioGroup>
           </FormControl>
         </div>
-        <div className={styles.question}>
-          <Link 
+        <div>
+          <button 
             className={
               styles.nextPageButton
             }
-            href={{
-              pathname : "/surveyvehicleInfo"
-            }} 
-            // onClick={handleNextButton}
+            onClick={handleNextButton}
             >
               Next
-          </Link>
+          </button>
         </div>
       </div>
     </main>

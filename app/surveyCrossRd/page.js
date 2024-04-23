@@ -5,7 +5,10 @@ import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
 import FormLabel from '@mui/material/FormLabel';
 // import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
@@ -19,7 +22,6 @@ import { useRouter } from 'next/navigation';
 
 function App() {
     const router = useRouter();
-    
     const blanksurvey = {
         surveyNormalRd : {
             startTime : new Date(),
@@ -30,17 +32,9 @@ function App() {
             commonTransirtation: 999,
             otherOfCommonTransirtation: 999,
         }}
-    
-    const _studentNum = React.useMemo(() => {
-        const local_storage_studentNum = localStorage.getItem('studentNum');
-        if (local_storage_studentNum){
-            return local_storage_studentNum
-        }
-        return 0;
-    },[])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = localStorage.getItem(('normalRd'+_studentNum));
+        const local_storage_value_str = localStorage.getItem('5');
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -79,7 +73,7 @@ function App() {
       };
 
       React.useEffect(()=>{
-        survey && localStorage.setItem(("normalRd"+_studentNum),JSON.stringify(survey))
+        survey && localStorage.setItem("5",JSON.stringify(survey))
         console.log(survey)
       },[survey])
 
@@ -116,10 +110,12 @@ function App() {
     return(
         <main className={styles.main}>
             <div style={{minWidth:"100%"}}>
-
                 <h1  style={{color:"#ffffff"}}>
-                    3.1	一般情況下，學生早上上學的情況
-                </h1>
+                    4.	跨境上學及放學出行
+                </h1> 
+                <h2  style={{color:"#ffffff"}}>
+                    4.1	一般情況下，學生早上上學的情況
+                </h2>
 
                 <div className={styles.question}>
                     <FormControl>
