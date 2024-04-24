@@ -43,7 +43,7 @@ function App( ) {
     }
     
         const _initial_value = React.useMemo(() => {
-          const local_storage_value_str = localStorage.getItem('vehicleInfo');
+          const local_storage_value_str = sessionStorage.getItem('vehicleInfo');
           // If there is a value stored in localStorage, use that
           if(local_storage_value_str) {
               return JSON.parse(local_storage_value_str);
@@ -92,7 +92,7 @@ function App( ) {
     },[survey])
 
     React.useEffect(() => {
-       survey && localStorage.setItem("vehicleInfo",JSON.stringify(survey))
+       survey && sessionStorage.setItem("vehicleInfo",JSON.stringify(survey))
     },[survey])
 
     React.useEffect(() => {

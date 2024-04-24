@@ -44,7 +44,7 @@ function App() {
             }
         }
     const _studentNum = React.useMemo(() => {
-        const local_storage_studentNum = localStorage.getItem('studentNum');
+        const local_storage_studentNum = sessionStorage.getItem('studentNum');
         if (local_storage_studentNum){
             return local_storage_studentNum
         }
@@ -52,7 +52,7 @@ function App() {
     },[])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = localStorage.getItem(('normalRd2'+_studentNum));
+        const local_storage_value_str = sessionStorage.getItem(('normalRd2'+_studentNum));
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -199,7 +199,7 @@ function App() {
     }
 
     React.useEffect(()=>{
-    survey && localStorage.setItem(('normalRd2'+_studentNum),JSON.stringify(survey))
+    survey && sessionStorage.setItem(('normalRd2'+_studentNum),JSON.stringify(survey))
     console.log(survey)
     },[survey])
 

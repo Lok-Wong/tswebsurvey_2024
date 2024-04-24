@@ -80,7 +80,7 @@ export default function Home() {
 
   React.useEffect(() => {
     getData()
-    localStorage.setItem("home",JSON.stringify(survey))
+    sessionStorage.setItem("home",JSON.stringify(survey))
   },[ip,survey]);
 
 

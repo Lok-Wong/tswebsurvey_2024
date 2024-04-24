@@ -7,18 +7,33 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-// import 'survey-core/defaultV2.min.css';
 import { useRouter } from 'next/navigation';
 
 
 function App() {
     const router = useRouter();
     const [stillHaveChild, setStillHaveChild] = React.useState('有');
+    const _studentNum = React.useMemo(() => {
+        const local_storage_studentNum = sessionStorage.getItem('studentNum');
+        if (local_storage_studentNum){
+            return local_storage_studentNum
+        }
+        return 0;
+    },[])
+
+    const handleNextButton = () => {
+        sessionStorage.setItem("studentNum",(parseInt(_studentNum)+1))
+    };
+
+    React.useEffect(()=>{
+        const items = {...sessionStorage}
+        console.log("sessionKey",Object.keys(items))
+    },[])
 
  return(
     <main className={styles.main}>
         <div>
-            <h1>
+            <h1 style={{color:"#ffffff"}}>
                 最後確認
             </h1>
             <FormControl>
@@ -41,7 +56,14 @@ function App() {
                 <Button  variant="contained" onClick={() => router.back()}>
                     上一頁
                 </Button>
-                <Button  variant="contained" href={stillHaveChild == "有" ? "/surveystudentinfo" : "/surveyadultInfo"}>
+                <Button  
+                    onClick={() => handleNextButton()}
+                    variant="contained" 
+                    href={stillHaveChild == "有" ? 
+                    "/surveystudentinfo" 
+                    : 
+                    "/surveyadultInfo"
+                    }>
                     {
                         stillHaveChild == "有" ? "下一頁" : "完成"
                     }

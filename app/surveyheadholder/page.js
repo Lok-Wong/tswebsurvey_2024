@@ -31,7 +31,7 @@ function App() {
     }}
 
   const _initial_value = React.useMemo(() => {
-    const local_storage_value_str = localStorage.getItem('headHolder');
+    const local_storage_value_str = sessionStorage.getItem('headHolder');
     // If there is a value stored in localStorage, use that
     if(local_storage_value_str) {
         return JSON.parse(local_storage_value_str);
@@ -97,7 +97,7 @@ function App() {
           }
       }
       }
-      localStorage.setItem("vehicleInfo",JSON.stringify(blankvehicleInfo))
+      sessionStorage.setItem("vehicleInfo",JSON.stringify(blankvehicleInfo))
       router.push('/surveystudentinfo')
       return
     }
@@ -105,7 +105,7 @@ function App() {
 
 
   React.useEffect(()=>{
-    survey && localStorage.setItem("headHolder",JSON.stringify(survey))
+    survey && sessionStorage.setItem("headHolder",JSON.stringify(survey))
     console.log(survey)
   },[survey])
 

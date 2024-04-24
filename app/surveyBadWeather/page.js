@@ -9,11 +9,6 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
 
 function App() {
@@ -28,7 +23,7 @@ function App() {
           }
         }
     const _studentNum = React.useMemo(() => {
-        const local_storage_studentNum = localStorage.getItem('studentNum');
+        const local_storage_studentNum = sessionStorage.getItem('studentNum');
         if (local_storage_studentNum){
             return local_storage_studentNum
         }
@@ -36,7 +31,7 @@ function App() {
     },[])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = localStorage.getItem(('bedWeather'+_studentNum));
+        const local_storage_value_str = sessionStorage.getItem(('bedWeather'+_studentNum));
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -47,89 +42,6 @@ function App() {
 
     const [survey, setSurvey] = React.useState(_initial_value)
     
-    const handleChangeBackHomeTime = (event,name) => {
-        if (survey.surveyNormalRd2.directToHomeState == "是"){
-            setSurvey((prevState) => (
-                {
-                ...prevState,
-                surveyNormalRd2:{
-                    ...prevState.surveyNormalRd2,
-                    directToHomeYes:{
-                        ...prevState.surveyNormalRd2.directToHomeYes,
-                        [name] : event.$d
-                    }
-                }
-                }
-            )
-            )
-        };
-
-        if (survey.surveyNormalRd2.directToHomeState == "否"){
-            setSurvey((prevState) => (
-                {
-                ...prevState,
-                surveyNormalRd2:{
-                    ...prevState.surveyNormalRd2,
-                    directToHomeNo:{
-                        ...prevState.surveyNormalRd2.directToHomeNo,
-                        [name] : event.$d
-                        }
-                    }
-                }
-                )
-                )
-        };
-    }
-    
-    const handleChangeBackHome = (event) => {
-        if (survey.surveyNormalRd2.directToHomeState == "是"){
-            setSurvey((prevState) => (
-                {
-                ...prevState,
-                surveyNormalRd2:{
-                    ...prevState.surveyNormalRd2,
-                    directToHomeYes:{
-                        ...prevState.surveyNormalRd2.directToHomeYes,
-                        [event.target.name] : event.target.value
-                    }
-                }
-                }
-            )
-            )
-        };
-
-        if (survey.surveyNormalRd2.directToHomeState == "否"){
-            setSurvey((prevState) => (
-                {
-                ...prevState,
-                surveyNormalRd2:{
-                    ...prevState.surveyNormalRd2,
-                    directToHomeNo:{
-                        ...prevState.surveyNormalRd2.directToHomeNo,
-                        [event.target.name] : event.target.value
-                        }
-                    }
-                }
-                )
-                )
-        };
-    }
-
-    const handleChange = (event) => {
-    const objectName = event.target.name
-    setSurvey((prevState) => (
-        {
-        ...prevState,
-        surveyNormalRd2:{
-            ...prevState.surveyNormalRd2,
-            [objectName] : event.target.value
-        }
-        }
-    )
-    
-    )
-    };
-
     const handleTimeChange = (event,name) => {
     setSurvey((prevState) => ({
         ...prevState,
@@ -141,114 +53,15 @@ function App() {
     )
     };
 
-    const clearbackHomeData = () => {
-        if (survey.surveyNormalRd2.directToHomeState == "否"){
-            setSurvey((prevState) => (
-                {
-                ...prevState,
-                surveyNormalRd2:{
-                    ...prevState.surveyNormalRd2,
-                    directToHomeYes:{
-                        arivalHomeTime:999,
-                        arivalHomeTransition:999,
-                        otherarivalHomeTransition:999
-                    }
-                }
-                }
-            )
-            )
-        };
-
-        if (survey.surveyNormalRd2.directToHomeState == "是"){
-            setSurvey((prevState) => (
-                {
-                ...prevState,
-                surveyNormalRd2:{
-                    ...prevState.surveyNormalRd2,
-                    directToHomeNo:{
-                        leaveDestination:999,
-                        leaveDestinationTime:999,
-                        leaveDestinationTransition:999,
-                        otherLeaveDestinationTransition:999,
-                        destinationBackHomeStartTime:999,
-                        destinationBackHomeEndTime:999,
-                        leaveDestinationBackHomeTransition:999,
-                        otherLeaveDestinationBackHomeTransition:999
-                    }
-                }
-                }
-            )
-            )
-        }
-    }
-
     React.useEffect(()=>{
-    survey && localStorage.setItem(('bedWeather'+_studentNum),JSON.stringify(survey))
+    survey && sessionStorage.setItem(('bedWeather'+_studentNum),JSON.stringify(survey))
     console.log(survey)
     },[survey])
 
-    React.useEffect(()=>{
-        clearbackHomeData()
-    },[survey.surveyNormalRd2.directToHomeState])
 
-    React.useEffect(()=>{
-    if (survey.surveyNormalRd2.leavePickUp != "其他"){
-        setSurvey((prevState) => (
-        {
-            ...prevState,
-            surveyNormalRd2:{
-            ...prevState.surveyNormalRd2,
-            otherleavePickUp : 999
-            }
-        }
-        ))
-    };
-
-    if (survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition != "其他"){
-        setSurvey((prevState) => (
-        {
-            ...prevState,
-            surveyNormalRd2:{
-            ...prevState.surveyNormalRd2,
-            directToHomeYes:{
-                ...prevState.surveyNormalRd2.directToHomeYes,
-                otherarivalHomeTransition : 999
-            }
-            }
-        }
-        ))
-    };
-
-    if (survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition != "其他"){
-        setSurvey((prevState) => (
-        {
-            ...prevState,
-            surveyNormalRd2:{
-            ...prevState.surveyNormalRd2,
-            directToHomeNo:{
-                ...prevState.surveyNormalRd2.directToHomeNo,
-                otherLeaveDestinationTransition : 999
-            }
-            }
-        }
-        ))
-    };
-
-    if (survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition != "其他"){
-        setSurvey((prevState) => (
-        {
-            ...prevState,
-            surveyNormalRd2:{
-            ...prevState.surveyNormalRd2,
-            directToHomeNo:{
-                ...prevState.surveyNormalRd2.directToHomeNo,
-                otherLeaveDestinationBackHomeTransition : 999
-            }
-            }
-        }
-        ))
-    };
-    },[survey.surveyNormalRd2.leavePickUp,survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition,survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition,survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition])
+    // React.useEffect(()=>{
+   
+    // },[])
 
 
 
@@ -269,15 +82,11 @@ function App() {
                             row
                             aria-labelledby="arrival-home-transition-label"
                             name="badWeatherPickUp"
-                            onChange={handleChangeBackHome}
-                            value={survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition}
                             >
                             <FormControlLabel value="學生自行上（放）學 " control={<Radio />} label="學生自行上（放）學 " />
                             <FormControlLabel value="父母" control={<Radio />} label="父母" />
                             <FormControlLabel value="工人" control={<Radio />} label="工人" />
                             <FormControlLabel value="其他監護人" control={<Radio />} label="其他監護人" />
-                            {
-                                survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition == "其他監護人" ?
                                 <Box
                                     component="form"
                                     sx={{
@@ -290,14 +99,9 @@ function App() {
                                         id="arrival-home-transition-other-textfill" 
                                         label="其他" 
                                         variant="filled" 
-                                        onChange={handleChangeBackHome}
                                         name = "otherarivalHomeTransition"
-                                        value={survey.surveyNormalRd2.directToHomeYes.otherarivalHomeTransition == 999 ? "" : survey.surveyNormalRd2.directToHomeYes.otherarivalHomeTransition}
                                     />
                                 </Box>
-                                :
-                                null
-                             }
                         </RadioGroup>
                     </FormControl>
                 </div>
@@ -308,9 +112,7 @@ function App() {
                         <RadioGroup
                             row
                             aria-labelledby="arrival-home-transition-label"
-                            name="arivalHomeTransition"
-                            onChange={handleChangeBackHome}
-                            value={survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition}
+                            name="badWeatherTransition"
                             >
                             <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
                             <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
@@ -321,8 +123,7 @@ function App() {
                             <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
                             <FormControlLabel value="步行" control={<Radio />} label="步行" />
                             <FormControlLabel value="其他" control={<Radio />} label="其他" />
-                            {
-                                survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition == "其他" ?
+                            
                                 <Box
                                     component="form"
                                     sx={{
@@ -335,14 +136,11 @@ function App() {
                                         id="arrival-home-transition-other-textfill" 
                                         label="其他" 
                                         variant="filled" 
-                                        onChange={handleChangeBackHome}
                                         name = "otherarivalHomeTransition"
-                                        value={survey.surveyNormalRd2.directToHomeYes.otherarivalHomeTransition == 999 ? "" : survey.surveyNormalRd2.directToHomeYes.otherarivalHomeTransition}
                                     />
                                 </Box>
-                                :
-                                null
-                             }
+                                
+                              
                         </RadioGroup>
                     </FormControl>
                 </div>
@@ -363,6 +161,7 @@ function App() {
                                 id="student-suggestion-text" 
                                 label="請輸入您的意見" 
                                 variant="outlined" 
+                                name='comment'
                                 multiline
                             />
                         </Box>
@@ -371,7 +170,7 @@ function App() {
 
                 <div className={styles.question}>
                     <Button onClick={() => router.back()}>
-                        previous *need check which is previous page
+                        back
                     </Button>
                     <Button href={'/surveystudentconfirmfinshed'}>
                         next

@@ -34,7 +34,7 @@ function App() {
         }}
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = localStorage.getItem('5');
+        const local_storage_value_str = sessionStorage.getItem('5');
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -73,7 +73,7 @@ function App() {
       };
 
       React.useEffect(()=>{
-        survey && localStorage.setItem("5",JSON.stringify(survey))
+        survey && sessionStorage.setItem("5",JSON.stringify(survey))
         console.log(survey)
       },[survey])
 

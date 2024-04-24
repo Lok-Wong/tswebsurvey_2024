@@ -25,7 +25,7 @@ function App() {
         }}
     
     const _studentNum = React.useMemo(() => {
-        const local_storage_studentNum = localStorage.getItem('studentNum');
+        const local_storage_studentNum = sessionStorage.getItem('studentNum');
         if (local_storage_studentNum){
             return local_storage_studentNum
         }
@@ -34,7 +34,7 @@ function App() {
     },[])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = localStorage.getItem(('studentInfo'+_studentNum));
+        const local_storage_value_str = sessionStorage.getItem(('studentInfo'+_studentNum));
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -62,7 +62,7 @@ function App() {
       };
 
     React.useEffect(()=>{
-        survey && localStorage.setItem(("studentInfo"+_studentNum),JSON.stringify(survey))
+        survey && sessionStorage.setItem(("studentInfo"+_studentNum),JSON.stringify(survey))
         console.log(survey)
       },[survey])
 
@@ -70,11 +70,11 @@ function App() {
       const handleNextButton = () => {
 
         if (survey.surveystudentinfo.crossBorder == "否"){
-            localStorage.setItem("studentNum",_studentNum)
+            sessionStorage.setItem("studentNum",_studentNum)
             router.push('/surveyNormalRd')
         }
         if (survey.surveystudentinfo.crossBorder == "是"){
-            localStorage.setItem("studentNum",_studentNum)
+            sessionStorage.setItem("studentNum",_studentNum)
             router.push('/surveyCrossRd')
         }
 
@@ -182,9 +182,14 @@ function App() {
                 </div>
 
                 <div className={styles.question}>
-                    <Button onClick={() => router.back()}>
+                    {   _studentNum == "0" ?
+                        <Button onClick={() => router.back()}>
                         back
-                    </Button>
+                        </Button>
+                        :
+                        null
+                    }
+                    
                     <Button onClick={handleNextButton}>
                         next
                     </Button>
