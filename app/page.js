@@ -52,7 +52,7 @@ export default function Home() {
     }))
     
     if (event.target.name == "next"){
-      router.push('/surveyheadholder')
+      router.push('/surveyMain')
       return
       }
 

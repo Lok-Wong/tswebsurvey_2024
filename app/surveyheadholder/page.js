@@ -22,16 +22,26 @@ function App() {
     headHolder : {
       startTime : new Date(),
       studentofRespondents: 999,
-      residentPopulation: 999,
+      // residentPopulation: 999,
       residentPopulationStudent:999,
-      totalIncome:999,
-      vehicleCheck:999,
+      // totalIncome:999,
+      // vehicleCheck:999,
       otherOfStudentofRespondents:999,
-      address:999
+      address:999,
+      vehicle:999
     }}
 
+  const _studentNum = React.useMemo(() => {
+    const local_storage_studentNum = sessionStorage.getItem('studentNum');
+    if (local_storage_studentNum){
+        return local_storage_studentNum
+    }
+
+    return 0;
+  },[])
+
   const _initial_value = React.useMemo(() => {
-    const local_storage_value_str = sessionStorage.getItem('headHolder');
+    const local_storage_value_str = sessionStorage.getItem(_studentNum+'headHolder');
     // If there is a value stored in localStorage, use that
     if(local_storage_value_str) {
         return JSON.parse(local_storage_value_str);
@@ -74,38 +84,42 @@ function App() {
   }
 
   const handleNextButton = (event) => {
-    if (survey.headHolder.vehicleCheck == "有"){
-      router.push('/surveyvehicleInfo')
-      return
-    }
+    sessionStorage.setItem("totalStudentNum",survey.headHolder.residentPopulationStudent)
 
-    if (survey.headHolder.vehicleCheck == "無"){
-     const blankvehicleInfo = {
-        surveyvehicleInfo : {
-          startTime : new Date(),
-          check:{
-              car : 999,
-              moto : 999,
-          },
-          car:{
-              carTotal : 999,
-              carEvTotal : 999,
-          },
-          moto:{
-              motoTotal : 999,
-              motoEvTotal : 999,
-          }
-      }
-      }
-      sessionStorage.setItem("vehicleInfo",JSON.stringify(blankvehicleInfo))
-      router.push('/surveystudentinfo')
-      return
-    }
+    router.push('/surveystudentinfo')
+    // if (survey.headHolder.vehicleCheck == "有"){
+    //   router.push('/surveyvehicleInfo')
+    //   return
+    // }
+
+    // if (survey.headHolder.vehicleCheck == "無"){
+    //  const blankvehicleInfo = {
+    //     surveyvehicleInfo : {
+    //       startTime : new Date(),
+    //       check:{
+    //           car : 999,
+    //           moto : 999,
+    //       },
+    //       car:{
+    //           carTotal : 999,
+    //           carEvTotal : 999,
+    //       },
+    //       moto:{
+    //           motoTotal : 999,
+    //           motoEvTotal : 999,
+    //       }
+    //   }
+    //   }
+    //   sessionStorage.setItem("vehicleInfo",JSON.stringify(blankvehicleInfo))
+    //   router.push('/surveystudentinfo')
+    //   return
+    // }
   }
 
 
   React.useEffect(()=>{
-    survey && sessionStorage.setItem("headHolder",JSON.stringify(survey))
+    survey && sessionStorage.setItem(_studentNum+"headHolder",JSON.stringify(survey))
+
     console.log(survey)
   },[survey])
 
@@ -191,7 +205,7 @@ function App() {
 
         
 
-        <div className={styles.question}>
+        {/* <div className={styles.question}>
          <FormControl>
             <FormLabel id="resident-population-label">3)	上述地址中，長期固定居住人口（包括留宿工人）：</FormLabel>
             <RadioGroup
@@ -209,11 +223,11 @@ function App() {
               <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人或以上" />
             </RadioGroup>
           </FormControl>
-        </div>
+        </div> */}
 
         <div className={styles.question}>
           <FormControl>
-            <FormLabel id="resident-population-student-label">3)  長期固定居住人口中，在澳門幼兒園、小學、中學就讀的：</FormLabel>
+            <FormLabel id="resident-population-student-label">3) 長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</FormLabel>
             <RadioGroup
               row
               aria-labelledby="resident-population-student-group-label"
@@ -231,7 +245,7 @@ function App() {
           </FormControl>
         </div>
 
-        <div className={styles.question}>
+        {/* <div className={styles.question}>
           <FormControl>
             <FormLabel id="total-income-radio-buttons-group-label">4) 家庭總月收入是（每月可處置的收入總和，但不含住戶成員間的贈與，如生活費、零用等）：</FormLabel>
             <RadioGroup
@@ -257,19 +271,22 @@ function App() {
               <FormControlLabel sx={{color:"black"}}  value="不清楚" control={<Radio />} label="不清楚" />
             </RadioGroup>
           </FormControl>
-        </div>
+        </div> */}
         <div className={styles.question}>
           <FormControl>
-            <FormLabel id="vehicle_check-radio-buttons-group-label">5)	所有家庭成員有沒有私人車輛?：</FormLabel>
+            <FormLabel id="vehicle-radio-buttons-group-label">4)	所有家庭成員有沒有私家車或電單車：</FormLabel>
             <RadioGroup
               row
-              aria-labelledby="vehicle_check-radio-buttons-group-label"
-              value={survey.headHolder.vehicleCheck}
-              name="vehicleCheck"
+              aria-labelledby="vehicle-radio-buttons-group-label"
+              value={survey.headHolder.vehicle}
+              name="vehicle"
               onChange={handleChange}
             >
-              <FormControlLabel sx={{color:"black"}}  value="有" control={<Radio />} label="有" />
-              <FormControlLabel sx={{color:"black"}}  value="無" control={<Radio />} label="無" />
+              <FormControlLabel sx={{color:"black"}}  value="都有" control={<Radio />} label="都有" />
+              <FormControlLabel sx={{color:"black"}}  value="私家車" control={<Radio />} label="私家車" />
+              <FormControlLabel sx={{color:"black"}}  value="電單車" control={<Radio />} label="電單車" />
+              <FormControlLabel sx={{color:"black"}}  value="都没有" control={<Radio />} label="都没有" />
+
             </RadioGroup>
           </FormControl>
         </div>

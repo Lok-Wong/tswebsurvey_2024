@@ -20,6 +20,7 @@
     "@uiw/react-amap": "^6.0.3",
     "@uiw/react-amap-api-loader": "^6.0.3",
     "@uiw/react-amap-map": "^6.0.3",
+    "antd": "^5.16.4",
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "next": "14.1.3",

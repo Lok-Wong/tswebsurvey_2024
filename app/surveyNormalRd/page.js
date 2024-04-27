@@ -7,7 +7,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-// import 'survey-core/defaultV2.min.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
@@ -40,7 +39,7 @@ function App() {
     },[])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = sessionStorage.getItem(('normalRd'+_studentNum));
+        const local_storage_value_str = sessionStorage.getItem((_studentNum + 'normalRd'));
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -79,7 +78,7 @@ function App() {
       };
 
       React.useEffect(()=>{
-        survey && sessionStorage.setItem(("normalRd"+_studentNum),JSON.stringify(survey))
+        survey && sessionStorage.setItem(( _studentNum + "normalRd"),JSON.stringify(survey))
         console.log(survey)
       },[survey])
 

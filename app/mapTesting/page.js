@@ -4,95 +4,85 @@ import styles from "./page.module.css";
 import AMapLoader from '@amap/amap-jsapi-loader';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Map, APILoader, ScaleControl, ToolBarControl, ControlBarControl, Geolocation } from '@uiw/react-amap';
+import Autocomplete from '@mui/material/Autocomplete';
 
-const Demo = () => (
-    <div>
-      <Map style={{ height: 300}}>
-        <ScaleControl offset={[16, 30]} position="LB" />
-        <ToolBarControl offset={[16, 10]} position="RB" />
-        <ControlBarControl offset={[16, 180]} position="RB" />
-        <Geolocation
-          maximumAge={100000}
-          borderRadius="5px"
-          position="RB"
-          offset={[16, 80]}
-          zoomToAccuracy={true}
-          showCircle={true}
-        />
-      </Map>
-      <Map style={{ height: 300 }}>
-        {({ AMap, map, container }) => {
-          return;
-        }}
-      </Map>
-    </div>
-  );
+// acafdf9063b0476ecb3d2f5dc6345158
+window._AMapSecurityConfig = {
+  securityJsCode : "5a70a60f476d153b9b6caa45864b605f"
+};
+
+function App() {
+
+  // React.useEffect(() => initMap(), []);
+  React.useEffect(() => search(), []);
+
+  const options = ['Option 1', 'Option 2'];
+  const [Mvalues, setValues] = React.useState(null);
+
+  // const initMap = () => {
+  //   AMapLoader.load({
+  //     key : "b92a5dfebcf8e5ba5cce62051141de74",
+  //     version : "2.0",
+  //     plugins : ['AMap.Riding','AMap.DrivingPolicy.LEAST_FEE', 'AMap.LngLat', 'AMap.Map', 'AMap.Polyline', 'AMap.PolylineEditor'],
+  //   }).then((AMap,log) => {
+  //     let map = new AMap.Map("container", {
+  //       center: [116.397428, 39.90923],
+  //       zoom:14
+  //     });
+  //     var ridingOption = {
+  //       map: map,
+  //       panel: "panel",
+  //       policy: 2,
+  //       hideMarkers: false, 
+  //       isOutline: true,
+  //       outlineColor: 'blue',
+  //       autoFitView: true,
+  //     }
+  //     var riding = new AMap.Riding(ridingOption);
+  //     const zupOne = new AMap.LngLat(116.397428, 39.90923);
+  //     const zupTwo = new AMap.LngLat(116.297228, 39.90933);
+  //      riding.search(zupOne,zupTwo,function(status,result){
+  //       console.log("result",result)
+  //      });
+  //   }).catch(e => {
+  //     console.log("e",e);
+  //   });
+  // }
+
+  const search = () => {
+    AMapLoader.load({
+      key : "b92a5dfebcf8e5ba5cce62051141de74",
+      version : "2.0",
+      plugins : ['AMap.AutoComplete'], function () {
+        var autoOptions = {
+          city : "澳门",
+          input : "tipinput"
+        };
+        var autoComplete = new AMap.AutoComplete(autoOptions);
+        autoComplete.search(Mvalues, function(status, result) {
+          console.log("result2",result);
+        });
+      }
+    })
+  }
+
   
-  const Mount = () => (
-    <div className={styles.MapContainer}>
-        <APILoader version="2.0" akey="acafdf9063b0476ecb3d2f5dc6345158">
-                <Demo />
-        </APILoader>
-    </div>
+  return (
+    <>
+      <div id="container" style={{ width: '100%', height: '400px' }}>
+      </div>
+      {/* <div id="panel"></div> */}
+      <div>
+        <input 
+          id='tipinput' 
+          type="text"
+           name='text' 
+           style={{ width: 100, height: 30 }} 
+           onChange={e => setValues(e.target.value)}
+        />
+      </div>
+    </>
+  );
+}
 
-  )
-  export default Mount
-
-// function App() { 
-//     let map = null;
-
-//     React.useEffect(() => {
-//         AMapLoader.load({
-//             key:"acafdf9063b0476ecb3d2f5dc6345158",                     // 申请好的Web端开发者Key，首次调用 load 时必填
-//             version:"2.0",              // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-//             plugins:['AMap.ToolBar','AMap.MapType','AMap.Driving','AMap.AutoComplete','AMap.PlaceSearch'],               // 需要使用的的插件列表，如比例尺'AMap.Scale'等
-//           }).then((AMap)=>{
-//             this.map = new AMap.Map("container",{ //设置地图容器id
-//               viewMode:"2D",         //是否为3D地图模式
-//               zoom:13,                //初始化地图级别
-//               center:[113.565598,22.156584], //初始化地图中心点位置
-//             });
-//           }).catch(e=>{
-//             console.log(e);
-//           });
-
-//           return () => {
-//             map?.destroy();
-//           };
-//       },[]);
-
-//     return(
-//         <div className={styles.MapContainer}>
-//             <div>
-//             <Box
-//                 component="form"
-//                 sx={{
-//                 '& > :not(style)': { m: 1, width: '15rem' },
-//                 }}
-//                 noValidate
-//                 autoComplete="off"
-//             >
-//                 <TextField 
-//                     sx={{backgroundColor:"white"}} 
-//                     id="verify_textField" 
-//                     label="Start" 
-//                     variant="filled" />
-
-//                 <TextField 
-//                     sx={{backgroundColor:"white"}} 
-//                     id="verify_textField" 
-//                     label="End" 
-//                     variant="filled" />
-//             </Box>
-//             </div>
-//             <div 
-//                 id="container" 
-//                 className={styles.container} 
-//                 style={{ height: '45rem' }} > 
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default App
+export default App;

@@ -1,14 +1,13 @@
 .main {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-evenly; */
-  align-items: center;
   padding: 3rem;
   min-height: 100vh;
   background-color: #23221B;
 }
 
 .question{
+  display: flex;
   flex-direction: row;
   /* display: flex; */
   background-color:#ffffff;
@@ -16,6 +15,7 @@
   margin-bottom: 10px;
   border-radius: 10px;
   padding: 2%;
+  width: 100%;
 }
 
 .nextPageButton{
