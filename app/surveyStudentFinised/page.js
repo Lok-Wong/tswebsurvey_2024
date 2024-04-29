@@ -53,16 +53,15 @@ function App() {
                 </div>
             </FormControl>
             <div className={styles.question}>
-                <Button  variant="contained" onClick={() => router.back()}>
+                <Button  onClick={() => router.back()}>
                     上一頁
                 </Button>
                 <Button  
                     onClick={() => handleNextButton()}
-                    variant="contained" 
                     href={stillHaveChild == "有" ? 
                     "/surveystudentinfo" 
                     : 
-                    "/surveyadultInfo"
+                    "/surveyFinished"
                     }>
                     {
                         stillHaveChild == "有" ? "下一頁" : "完成"

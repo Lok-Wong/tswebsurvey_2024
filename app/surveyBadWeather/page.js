@@ -15,22 +15,17 @@ function App() {
     const router = useRouter();
 
     const blanksurvey = {
-        bedWeather : {
+        badWeather : {
             startTime : new Date(),
             badWeatherPickup: 999,
-            badWeatherransition:999,
+            otherbadWeatherPickup : 999,
+            badWeatherTransition:999,
+            otherbadWeatherTransition:999,
             comment:999,
           }
         }
 
-    const _totalStudentNum = React.useMemo(() => {
-        const local_storage_studentNum = sessionStorage.getItem('studentNum');
-        if (local_storage_studentNum){
-            return local_storage_studentNum
-        }
-        return 0;
-    },[])
-    
+   
     const _studentNum = React.useMemo(() => {
         const local_storage_studentNum = sessionStorage.getItem('studentNum');
         if (local_storage_studentNum){
@@ -40,7 +35,7 @@ function App() {
     },[])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = sessionStorage.getItem((_studentNum + 'bedWeather'));
+        const local_storage_value_str = sessionStorage.getItem((_studentNum + 'badWeather'));
         // If there is a value stored in localStorage, use that
         if(local_storage_value_str) {
             return JSON.parse(local_storage_value_str);
@@ -50,7 +45,22 @@ function App() {
         }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
-    
+
+    const handleChange = (event) => {
+        const objectName = event.target.name
+        setSurvey((prevState) => (
+          {
+            ...prevState,
+            badWeather:{
+              ...prevState.badWeather,
+              [objectName] : event.target.value
+            }
+          }
+        )
+        
+        )
+      };
+
     const handleTimeChange = (event,name) => {
     setSurvey((prevState) => ({
         ...prevState,
@@ -67,14 +77,38 @@ function App() {
     // }
 
     React.useEffect(()=>{
-    survey && sessionStorage.setItem((_studentNum + 'bedWeather'),JSON.stringify(survey))
+    survey && sessionStorage.setItem((_studentNum + 'badWeather'),JSON.stringify(survey))
     console.log(survey)
     },[survey])
 
+    React.useEffect(()=>{
+        if (survey.badWeather.badWeatherPickup != "其他監護人"){
+          setSurvey((prevState) => (
+            {
+              ...prevState,
+              badWeather:{
+                ...prevState.badWeather,
+                otherbadWeatherPickup : 999
+              }
+            }
+          ))
+        }
 
-    // React.useEffect(()=>{
-   
-    // },[])
+        if (survey.badWeather.badWeatherTransition != "其他"){
+            setSurvey((prevState) => (
+              {
+                ...prevState,
+                badWeather:{
+                  ...prevState.badWeather,
+                  otherbadWeatherTransition : 999
+                }
+              }
+            ))
+          }
+  
+    
+      },[survey.badWeather.badWeatherPickup,
+        survey.badWeather.badWeatherTransition])
 
 
 
@@ -90,16 +124,21 @@ function App() {
 
                 <div className={styles.question}>
                     <FormControl>
-                        <FormLabel id="arrival-home-transition-label">1) 有沒有人接送：</FormLabel>
+                        <FormLabel id="badWeatherPickup-label">1) 有沒有人接送：</FormLabel>
                         <RadioGroup
                             row
-                            aria-labelledby="arrival-home-transition-label"
-                            name="badWeatherPickUp"
+                            aria-labelledby="badWeatherPickup-label"
+                            name="badWeatherPickup"
+                            value={survey.badWeather.badWeatherPickup}
+                            onChange={handleChange}
                             >
                             <FormControlLabel value="學生自行上（放）學 " control={<Radio />} label="學生自行上（放）學 " />
                             <FormControlLabel value="父母" control={<Radio />} label="父母" />
                             <FormControlLabel value="工人" control={<Radio />} label="工人" />
                             <FormControlLabel value="其他監護人" control={<Radio />} label="其他監護人" />
+                               {
+                                survey.badWeather.badWeatherPickup == "其他監護人" ?
+                               
                                 <Box
                                     component="form"
                                     sx={{
@@ -109,23 +148,30 @@ function App() {
                                     autoComplete="off"
                                 >
                                     <TextField 
-                                        id="arrival-home-transition-other-textfill" 
+                                        id="otherbadWeatherPickup-textfill" 
                                         label="其他" 
                                         variant="filled" 
-                                        name = "otherarivalHomeTransition"
+                                        onChange={handleChange}
+                                        value={survey.badWeather.otherbadWeatherPickup == 999 ? null : survey.badWeather.otherbadWeatherPickup}
+                                        name = "otherbadWeatherPickup"
                                     />
                                 </Box>
+                                :
+                                null
+                                } 
                         </RadioGroup>
                     </FormControl>
                 </div>
 
                 <div className={styles.question}>
                     <FormControl>
-                        <FormLabel id="arrival-home-transition-label">2) 主要使用的交通工具:</FormLabel>
+                        <FormLabel id="badWeatherransition-label">2) 主要使用的交通工具:</FormLabel>
                         <RadioGroup
                             row
-                            aria-labelledby="arrival-home-transition-label"
+                            aria-labelledby="badWeathertransition-label"
                             name="badWeatherTransition"
+                            value={survey.badWeather.badWeatherTransition}
+                            onChange={handleChange}
                             >
                             <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
                             <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
@@ -137,6 +183,9 @@ function App() {
                             <FormControlLabel value="步行" control={<Radio />} label="步行" />
                             <FormControlLabel value="其他" control={<Radio />} label="其他" />
                             
+                            {
+                                survey.badWeather.badWeatherTransition == "其他" ?
+                            
                                 <Box
                                     component="form"
                                     sx={{
@@ -146,13 +195,17 @@ function App() {
                                     autoComplete="off"
                                 >
                                     <TextField 
-                                        id="arrival-home-transition-other-textfill" 
+                                        id="otherbadWeatherTransition-textfill" 
                                         label="其他" 
                                         variant="filled" 
-                                        name = "otherarivalHomeTransition"
+                                        name = "otherbadWeatherTransition"
+                                        onChange={handleChange}
+                                        value={survey.badWeather.otherbadWeatherTransition == 999 ? null : survey.badWeather.otherbadWeatherTransition}
                                     />
                                 </Box>
-                                
+                                :
+                                null
+                            }
                               
                         </RadioGroup>
                     </FormControl>
@@ -162,7 +215,7 @@ function App() {
                     <FormControl sx={{
                         m:1, width:"100%"
                     }}>
-                        <FormLabel id="student-suggestion-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
+                        <FormLabel id="comment-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
                         <Box
                             component="form"
                             sx={{
@@ -171,11 +224,13 @@ function App() {
                             noValidate
                             >
                             <TextField 
-                                id="student-suggestion-text" 
+                                id="comment-text" 
                                 label="請輸入您的意見" 
                                 variant="outlined" 
                                 name='comment'
                                 multiline
+                                value={survey.badWeather.comment == 999 ? null : survey.badWeather.comment}
+                                onChange={handleChange}
                             />
                         </Box>
                     </FormControl>

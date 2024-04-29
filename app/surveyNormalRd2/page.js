@@ -568,7 +568,7 @@ function App() {
 
                 <div className={styles.question}>
                     <Button onClick={() => router.back()}>
-                        previous *need check which is previous page
+                        back
                     </Button>
                     <Button href={'/surveyBadWeather'}>
                         next

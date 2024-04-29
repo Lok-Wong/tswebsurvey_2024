@@ -72,7 +72,7 @@ function App( ) {
     const handleNextButton = () => {
         if (survey.surveyMain.fillAlready == "是"){
             sessionStorage.setItem("studentNum",_studentNum)
-            router.push('/surveyfished')
+            router.push('/surveyFinished')
         }
         if (survey.surveyMain.fillAlready == "否"){
             sessionStorage.setItem("studentNum",_studentNum)
@@ -118,15 +118,13 @@ function App( ) {
                 </div>                  
             </div>
 
-          
-            {/* <Button onClick={() => router.back()}>
-                上一頁
-            </Button> */}
-            <Button onClick={handleNextButton}>
-                {
-                    survey.surveyMain.fillAlready == "否" ? "下一頁" : "完成"
-                }
-            </Button>
+            <div className={styles.question}>
+                <Button onClick={handleNextButton}>
+                    {
+                        survey.surveyMain.fillAlready == "否" ? "下一頁" : "完成"
+                    }
+                </Button>
+            </div>
 
         </main>
 

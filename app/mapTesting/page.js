@@ -53,7 +53,14 @@ function App() {
     AMapLoader.load({
       key : "b92a5dfebcf8e5ba5cce62051141de74",
       version : "2.0",
-      plugins : ['AMap.AutoComplete'], function () {
+      plugins : ['AMap.AutoComplete']
+      .then((AMap,log) => {
+        let map = new AMap.Map("container", {
+          center: [116.397428, 39.90923],
+          zoom:14
+        });
+      })
+      , function () {
         var autoOptions = {
           city : "澳门",
           input : "tipinput"

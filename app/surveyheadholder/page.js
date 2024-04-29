@@ -87,33 +87,7 @@ function App() {
     sessionStorage.setItem("totalStudentNum",survey.headHolder.residentPopulationStudent)
 
     router.push('/surveystudentinfo')
-    // if (survey.headHolder.vehicleCheck == "有"){
-    //   router.push('/surveyvehicleInfo')
-    //   return
-    // }
-
-    // if (survey.headHolder.vehicleCheck == "無"){
-    //  const blankvehicleInfo = {
-    //     surveyvehicleInfo : {
-    //       startTime : new Date(),
-    //       check:{
-    //           car : 999,
-    //           moto : 999,
-    //       },
-    //       car:{
-    //           carTotal : 999,
-    //           carEvTotal : 999,
-    //       },
-    //       moto:{
-    //           motoTotal : 999,
-    //           motoEvTotal : 999,
-    //       }
-    //   }
-    //   }
-    //   sessionStorage.setItem("vehicleInfo",JSON.stringify(blankvehicleInfo))
-    //   router.push('/surveystudentinfo')
-    //   return
-    // }
+    
   }
 
 
@@ -290,15 +264,15 @@ function App() {
             </RadioGroup>
           </FormControl>
         </div>
-        <div>
-          <button 
-            className={
-              styles.nextPageButton
-            }
+        <div className={styles.question}>
+          <Button 
+            // className={
+            //   styles.nextPageButton
+            // }
             onClick={handleNextButton}
             >
               Next
-          </button>
+          </Button>
         </div>
       </div>
     </main>
