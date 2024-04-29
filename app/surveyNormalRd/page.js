@@ -15,273 +15,348 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
+import FormHelperText from '@mui/material/FormHelperText';
 
 function App() {
     const router = useRouter();
-    
+
     const blanksurvey = {
-        surveyNormalRd : {
-            startTime : new Date(),
+        surveyNormalRd: {
+            startTime: new Date(),
             pickup: 999,
-            otherOfPickup:999,
+            otherOfPickup: 999,
             pickupTimeStart: 999,
             pickupTimeEnd: 999,
             commonTransirtation: 999,
             otherOfCommonTransirtation: 999,
-        }}
-    
+        }
+    }
+
+    const blankHelpText = {
+        pickup: null,
+        otherOfPickup: null,
+        pickupTimeStart: null,
+        pickupTimeEnd: null,
+        commonTransirtation: null,
+        otherOfCommonTransirtation: null,
+    }
+
     const _studentNum = React.useMemo(() => {
-        const local_storage_studentNum = sessionStorage.getItem('studentNum');
-        if (local_storage_studentNum){
-            return local_storage_studentNum
+        if (typeof window !== 'undefined') {
+
+            const local_storage_studentNum = sessionStorage.getItem('studentNum');
+            if (local_storage_studentNum) {
+                return local_storage_studentNum
+            }
         }
         return 0;
-    },[])
+    }, [])
 
     const _initial_value = React.useMemo(() => {
-        const local_storage_value_str = sessionStorage.getItem((_studentNum + 'normalRd'));
-        // If there is a value stored in localStorage, use that
-        if(local_storage_value_str) {
-            return JSON.parse(local_storage_value_str);
-        } 
+        if (typeof window !== 'undefined') {
+
+            const local_storage_value_str = sessionStorage.getItem((_studentNum + 'normalRd'));
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str);
+            }
+        }
         // Otherwise use initial_value that was passed to the function
         return blanksurvey;
-        }, []);
+    }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
- 
+    const [helpText, setHelpText] = React.useState(blankHelpText)
 
-      const handleChange = (event) => {
-        const objectName = event.target.name
-        setSurvey((prevState) => (
+
+    const handleHelpText = (eventName, errorText) => {
+        const objectName = eventName
+        setHelpText((prevState) => (
           {
             ...prevState,
-            surveyNormalRd:{
-              ...prevState.surveyNormalRd,
-              [objectName] : event.target.value
-            }
+            [objectName]: errorText
           }
-        )
-        
-        )
-      };
+        ))
+      }
 
-      const handleTimeChange = (event,name) => {
+    const handleChange = (event) => {
+        const objectName = event.target.name
+        setSurvey((prevState) => (
+            {
+                ...prevState,
+                surveyNormalRd: {
+                    ...prevState.surveyNormalRd,
+                    [objectName]: event.target.value
+                }
+            }
+        )
+
+        )
+    };
+
+    const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-            surveyNormalRd:{
+            surveyNormalRd: {
                 ...prevState.surveyNormalRd,
-                [name] : event.$d
+                [name]: event.$d
             }
         })
         )
-      };
+    };
 
-      React.useEffect(()=>{
-        survey && sessionStorage.setItem(( _studentNum + "normalRd"),JSON.stringify(survey))
-        console.log(survey)
-      },[survey])
+    const handleNextButton = () => {
 
-      React.useEffect(()=>{
-        if (survey.surveyNormalRd.pickup != "其他"){
-          setSurvey((prevState) => (
-            {
-              ...prevState,
-              surveyNormalRd:{
-                ...prevState.surveyNormalRd,
-                otherOfPickup : 999
-              }
-            }
-          ))
+        if (survey.surveyNormalRd.pickup == "999") {
+            handleHelpText("pickup", "請選擇一個選項")
+            return
         }
 
-        if (survey.surveyNormalRd.commonTransirtation != "其他"){
+        if (survey.surveyNormalRd.pickup == "其他"){
+            if (survey.surveyNormalRd.otherOfPickup == "999" || survey.surveyNormalRd.otherOfPickup == ""){
+                handleHelpText("pickup", "請填寫其他")
+                return
+            }
+        }
+
+        if ((survey.surveyNormalRd.pickupTimeStart > survey.surveyNormalRd.pickupTimeEnd) || (survey.surveyNormalRd.pickupTimeEnd < survey.surveyNormalRd.pickupTimeStart) ) {
+            handleHelpText("pickupTimeStart", "出發時間不能大於到達時間")
+            handleHelpText("pickupTimeEnd", "到達時間不能小於出發時間")
+            return
+        }       
+
+        if (survey.surveyNormalRd.commonTransirtation == "999") {
+            handleHelpText("commonTransirtation", "請選擇一個選項")
+            return
+        }
+
+        if (survey.surveyNormalRd.commonTransirtation == "其他") {
+            if(survey.surveyNormalRd.otherOfCommonTransirtation == "999" || survey.surveyNormalRd.otherOfCommonTransirtation == ""){
+                handleHelpText("commonTransirtation", "請填寫其他")
+                return
+            }
+        }
+
+        router.push('/surveyNormalRd2')
+    }
+
+    const [isClient, setIsClient] = React.useState(false)
+
+    React.useEffect(() => {
+        setIsClient(true)
+    }, [])
+
+    React.useEffect(() => {
+        survey && sessionStorage.setItem((_studentNum + "normalRd"), JSON.stringify(survey))
+        setHelpText(blankHelpText)
+        console.log(survey)
+    }, [survey])
+
+    React.useEffect(() => {
+        if (survey.surveyNormalRd.pickup != "其他") {
             setSurvey((prevState) => (
-              {
-                ...prevState,
-                surveyNormalRd:{
-                  ...prevState.surveyNormalRd,
-                  otherOfCommonTransirtation : 999
+                {
+                    ...prevState,
+                    surveyNormalRd: {
+                        ...prevState.surveyNormalRd,
+                        otherOfPickup: 999
+                    }
                 }
-              }
             ))
-          }
-      
-    
-      },[survey.surveyNormalRd.pickup,survey.surveyNormalRd.commonTransirtation])
+        }
+
+        if (survey.surveyNormalRd.commonTransirtation != "其他") {
+            setSurvey((prevState) => (
+                {
+                    ...prevState,
+                    surveyNormalRd: {
+                        ...prevState.surveyNormalRd,
+                        otherOfCommonTransirtation: 999
+                    }
+                }
+            ))
+        }
+
+
+    }, [survey.surveyNormalRd.pickup, survey.surveyNormalRd.commonTransirtation])
 
 
 
-    return(
+    return (
         <main className={styles.main}>
-            <div style={{minWidth:"100%"}}>
+            {
+                isClient ?
 
-                <h1  style={{color:"#ffffff"}}>
-                    3.1	一般情況下，學生早上上學的情況
-                </h1>
+                    <div style={{ minWidth: "100%" }}>
 
-                <div className={styles.question}>
-                    <FormControl>
-                        <FormLabel id="pickup-label">1)    有沒有人接送：</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="pickup-label"
-                            name="pickup"
-                            value={survey.surveyNormalRd.pickup}
-                            onChange={handleChange}
-                            >
-                            <FormControlLabel value="學生自行上學" control={<Radio />} label="學生自行上學" />
-                            <FormControlLabel value="父母" control={<Radio />} label="父母" />
-                            <FormControlLabel value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
-                            <FormControlLabel value="工人" control={<Radio />} label="工人" />
-                            <FormControlLabel value="其他" control={<Radio />} label="其他" />
-                            {survey.surveyNormalRd.pickup === "其他" ?
-                                <Box
-                                    component="form"
-                                    sx={{
-                                    '& > :not(style)': { m: 0.5, width: '10rem' },
-                                    }}
-                                    noValidate
-                                    autoComplete="off"
+                        <h1 style={{ color: "#ffffff" }}>
+                            3.1	一般情況下，學生早上上學的情況
+                        </h1>
+
+                        <div className={styles.question}>
+                            <FormControl>
+                                <FormLabel id="pickup-label">1)    有沒有人接送：</FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="pickup-label"
+                                    name="pickup"
+                                    value={survey.surveyNormalRd.pickup}
+                                    onChange={handleChange}
                                 >
-                                    <TextField 
-                                        name='otherOfPickup' 
-                                        id="pickup-other-textfill"
-                                        label="其他" 
-                                        variant="filled" 
-                                        onChange={handleChange}
-                                        value={survey.surveyNormalRd.otherOfPickup == 999 ? null : survey.surveyNormalRd.otherOfPickup}
-                                    />
-                                </Box>
-                                :
-                                null
-                            }
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-                <div className={styles.question}>
-                    <FormControl className={styles.inlineQuestion}>
-                        <FormLabel id="pickup-time-start-label">2)     出發時間：</FormLabel>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer className={styles.question} components={['TimePicker']}>
-                                <TimePicker
-                                    ampm={false}
-                                    value={dayjs(survey.surveyNormalRd.pickupTimeStart)}
-                                    onChange={(event) => handleTimeChange(event,"pickupTimeStart")}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </FormControl>
-
-                    <FormControl className={styles.inlineQuestion}>
-                        <FormLabel id="pickup-time-end-label">3)     到達時間：</FormLabel>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer className={styles.question} components={['TimePicker']}>
-                                <TimePicker
-                                    ampm={false}
-                                    value={dayjs(survey.surveyNormalRd.pickupTimeEnd)}
-                                    onChange={(event) => handleTimeChange(event,"pickupTimeEnd")}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </FormControl>
-                </div>
-
-                <div className={styles.question}>
-                    <FormControl
-                        required
-                        sx={{ m: 3 }}
-                        variant="standard"
-                    >
-                        <FormLabel component="commonTransiration">4)	常用的交通方式：</FormLabel>
-                        <RadioGroup 
-                            row
-                            name='commonTransirtation'
-                            value={survey.surveyNormalRd.commonTransirtation}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel
-                                control={
-                                <Radio value="電單車（乘客）" />
-                                }
-                                label="電單車（乘客）"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="私家車（乘客）" />
-                                }
-                                label="私家車（乘客）"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="校車" />
-                                }
-                                label="校車"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="巴士" />
-                                }
-                                label="巴士"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="輕軌" />
-                                }
-                                label="輕軌"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="一般的士" />
-                                }
-                                label="一般的士"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio  value="電召的士" />
-                                }
-                                label="電召的士"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="步行" />
-                                }
-                                label="步行"
-                            />
-                            <FormControlLabel
-                                control={
-                                <Radio value="其他" />
-                                }
-                                label="其他"
-                            />
-                            { survey.surveyNormalRd.commonTransirtation === "其他" ?
-                                <Box
-                                    component="form"
-                                    sx={{
-                                    '& > :not(style)': { m: 0.5, width: '10rem' },
-                                    }}
-                                    noValidate
-                                    autoComplete="off"
-                                    >
-                                    <TextField 
-                                        id="commonTransiration-other-textfill" 
-                                        label="其他" 
-                                        variant="filled"
-                                        name='otherOfCommonTransirtation'
-                                        onChange={handleChange}
-                                        value={survey.surveyNormalRd.otherOfCommonTransirtation == 999 ? null : survey.surveyNormalRd.otherOfCommonTransirtation} 
+                                    <FormControlLabel value="學生自行上學" control={<Radio />} label="學生自行上學" />
+                                    <FormControlLabel value="父母" control={<Radio />} label="父母" />
+                                    <FormControlLabel value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
+                                    <FormControlLabel value="工人" control={<Radio />} label="工人" />
+                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                    {survey.surveyNormalRd.pickup === "其他" ?
+                                        <Box
+                                            component="form"
+                                            sx={{
+                                                '& > :not(style)': { m: 0.5, width: '10rem' },
+                                            }}
+                                            noValidate
+                                            autoComplete="off"
+                                        >
+                                            <TextField
+                                                name='otherOfPickup'
+                                                id="pickup-other-textfill"
+                                                label="其他"
+                                                variant="filled"
+                                                onChange={handleChange}
+                                                value={survey.surveyNormalRd.otherOfPickup == 999 ? null : survey.surveyNormalRd.otherOfPickup}
+                                            />
+                                        </Box>
+                                        :
+                                        null
+                                    }
+                                </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.pickup}</FormHelperText>
+                            </FormControl>
+                        </div>
+                        <div className={styles.question}>
+                            <FormControl className={styles.inlineQuestion}>
+                                <FormLabel id="pickup-time-start-label">2)     出發時間：</FormLabel>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer className={styles.question} components={['TimePicker']}>
+                                        <TimePicker
+                                            ampm={false}
+                                            value={dayjs(survey.surveyNormalRd.pickupTimeStart)}
+                                            onChange={(event) => handleTimeChange(event, "pickupTimeStart")}
                                         />
-                                </Box>
-                                :
-                                null
-                            }
-                              
-                            </RadioGroup>
-                          
-                    </FormControl>
-                </div>
+                                    </DemoContainer>
+                                </LocalizationProvider>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeStart}</FormHelperText>
+                            </FormControl>
 
-                {/* <h1>
+                            <FormControl className={styles.inlineQuestion}>
+                                <FormLabel id="pickup-time-end-label">3)     到達時間：</FormLabel>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DemoContainer className={styles.question} components={['TimePicker']}>
+                                        <TimePicker
+                                            ampm={false}
+                                            value={dayjs(survey.surveyNormalRd.pickupTimeEnd)}
+                                            onChange={(event) => handleTimeChange(event, "pickupTimeEnd")}
+                                        />
+                                    </DemoContainer>
+                                    <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeEnd}</FormHelperText>
+                                </LocalizationProvider>
+                            </FormControl>
+                        </div>
+
+                        <div className={styles.question}>
+                            <FormControl
+                                required
+                                sx={{ m: 3 }}
+                                variant="standard"
+                            >
+                                <FormLabel component="commonTransiration">4)	常用的交通方式：</FormLabel>
+                                <RadioGroup
+                                    row
+                                    name='commonTransirtation'
+                                    value={survey.surveyNormalRd.commonTransirtation}
+                                    onChange={handleChange}
+                                >
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="電單車（乘客）" />
+                                        }
+                                        label="電單車（乘客）"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="私家車（乘客）" />
+                                        }
+                                        label="私家車（乘客）"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="校車" />
+                                        }
+                                        label="校車"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="巴士" />
+                                        }
+                                        label="巴士"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="輕軌" />
+                                        }
+                                        label="輕軌"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="一般的士" />
+                                        }
+                                        label="一般的士"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="電召的士" />
+                                        }
+                                        label="電召的士"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="步行" />
+                                        }
+                                        label="步行"
+                                    />
+                                    <FormControlLabel
+                                        control={
+                                            <Radio value="其他" />
+                                        }
+                                        label="其他"
+                                    />
+                                    {survey.surveyNormalRd.commonTransirtation === "其他" ?
+                                        <Box
+                                            component="form"
+                                            sx={{
+                                                '& > :not(style)': { m: 0.5, width: '10rem' },
+                                            }}
+                                            noValidate
+                                            autoComplete="off"
+                                        >
+                                            <TextField
+                                                id="commonTransiration-other-textfill"
+                                                label="其他"
+                                                variant="filled"
+                                                name='otherOfCommonTransirtation'
+                                                onChange={handleChange}
+                                                value={survey.surveyNormalRd.otherOfCommonTransirtation == 999 ? null : survey.surveyNormalRd.otherOfCommonTransirtation}
+                                            />
+                                        </Box>
+                                        :
+                                        null
+                                    }
+                                </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransirtation}</FormHelperText>
+                            </FormControl>
+                        </div>
+
+                        {/* <h1>
                     2.4 學生出行意見和建議
                 </h1>
 
@@ -307,16 +382,19 @@ function App() {
                     </FormControl>
                 </div> */}
 
-                <div className={styles.question}>
-                    <Button onClick={() => router.back()}>
-                        back
-                    </Button>
-                    <Button href={'/surveyNormalRd2'}>
-                        next
-                    </Button>
-                </div>
-                
-            </div>         
+                        <div className={styles.question}>
+                            <Button onClick={() => router.back()}>
+                                back
+                            </Button>
+                            <Button onClick={handleNextButton}>
+                                next
+                            </Button>
+                        </div>
+
+                    </div>
+                    :
+                    null
+            }
         </main>
     )
 
