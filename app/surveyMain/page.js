@@ -19,7 +19,6 @@ function App() {
         }
     }
 
-
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
             const local_storage_studentNum = sessionStorage.getItem('studentNum')
@@ -29,8 +28,6 @@ function App() {
         }
         return 0;
     }, [])
-
-    // const _studentNum = useSessionStorage('studentNum') ? null : useSessionStorage('studentNum')
 
     const _initial_value = React.useMemo(() => {
         if (typeof window !== 'undefined') {
@@ -43,20 +40,6 @@ function App() {
         // Otherwise use initial_value that was passed to the function
         return blanksurvey;
     }, []);
-
-    const handleSelectStateChange = (event, type) => {
-        setSurvey((prevState) => ({
-            ...prevState,
-            surveyvehicleInfo: {
-                ...prevState.surveyvehicleInfo,
-                [type]: {
-                    ...prevState.surveyvehicleInfo[type],
-                    [event.target.name]: event.target.value
-                }
-            }
-        })
-        )
-    }
 
     const [survey, setSurvey] = React.useState(_initial_value)
 
@@ -78,6 +61,7 @@ function App() {
         if (survey.surveyMain.fillAlready == "是") {
             sessionStorage.setItem("studentNum", _studentNum)
             router.push('/surveyFinished')
+
         }
         if (survey.surveyMain.fillAlready == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
@@ -99,6 +83,30 @@ function App() {
         setIsClient(true)
     }, [])
 
+    // const [finishStatus, setfinishStatus] = React.useState(false);
+
+    // const onBackButtonEvent = (e) => {
+    //     e.preventDefault();
+    //     if (!finishStatus) {
+    //         if (window.confirm("Do you want to go back ?")) {
+    //             setfinishStatus(true)
+    //             // your logic
+    //             router.back();
+    //         } else {
+    //             window.history.pushState(null, null, window.location.pathname);
+    //             setfinishStatus(false)
+    //         }
+    //     }
+    // }
+
+    // React.useEffect(() => {
+    //     window.history.pushState(null, null, window.location.pathname);
+    //     window.addEventListener('popstate', onBackButtonEvent);
+    //     return () => {
+    //         window.removeEventListener('popstate', onBackButtonEvent);
+    //     };
+    // }, [router]);
+
     return (
         <main className={styles.main}>
             {
@@ -107,13 +115,13 @@ function App() {
                         <div className={styles.checkBlock}>
                             <div className={styles.question}>
                                 <FormControl
-                                    row
+                                    row="true"
                                 >
                                     <FormLabel>
                                         閣下是否已填寫過「澳門學生出行調查」問卷？
                                     </FormLabel>
                                     <RadioGroup
-                                        row
+                                        row="true"
                                         name="fillAlready"
                                         onChange={handleChange}
                                         value={survey.surveyMain.fillAlready}
