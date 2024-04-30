@@ -46,7 +46,7 @@ function App() {
 
     const _initial_value = React.useMemo(() => {
         if (typeof window !== 'undefined') {
-            const local_storage_value_str = sessionStorage.getItem(_studentNum + 'crossRd1');
+            const local_storage_value_str = sessionStorage.getItem(_studentNum + 'crossRd');
             // If there is a value stored in localStorage, use that
             if (local_storage_value_str) {
                 return JSON.parse(local_storage_value_str);
@@ -92,7 +92,7 @@ function App() {
     }, [])
 
     React.useEffect(() => {
-        survey && sessionStorage.setItem(_studentNum + 'crossRd1', JSON.stringify(survey))
+        survey && sessionStorage.setItem(_studentNum + 'crossRd', JSON.stringify(survey))
         console.log(survey)
     }, [survey])
 

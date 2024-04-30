@@ -127,7 +127,7 @@ function App() {
                 isClient ?
                     <div style={{ minWidth: "100%" }}>
                         <h1 style={{ color: "#000000" }}>
-                            五，惡劣天氣情況下，學生上學及放學出行情況
+                            五、惡劣天氣情況下，學生上學及放學出行情況
                         </h1>
 
                         <div className={styles.question}>

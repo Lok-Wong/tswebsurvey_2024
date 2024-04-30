@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import styled from '@mui/material/styles/styled';
+import Button from '@mui/material/Button';
 export default function Home() {
   const router = useRouter()
   const [vCode, setVCode] = React.useState()
@@ -27,31 +27,38 @@ export default function Home() {
 
   const [ip, setIP] = React.useState("");
 
-  const StyledTextField = styled(TextField)({
-    "& .MuiInputLabel-root": {
-      right: 0,
-      textAlign: "center"
-    },
-    "& .MuiInputLabel-shrink": {
-      margin: "0 auto",
-      position: "absolute",
-      right: "0",
-      left: "0",
-      top: "-3px",
-      width: "150px", // Need to give it a width so the positioning will work
-       // Add a white background as below we remove the legend that had the background so text is not meshing with the border
-      // display: "none" //if you want to hide it completly
-    },
-    "& .MuiOutlinedInput-root.Mui-focused": {
-      "& legend ": {
-        display: "none"
+
+  const enterToNext = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      if (!inputVcode){
+        handleAlertBarOpen()
+        setVCodeError("未填寫驗證碼哦！")
+        return
       }
+  
+      if (vCode != inputVcode){
+        handleAlertBarOpen()
+        setVCodeError("驗證碼錯誤哦！")
+        return
+      }
+  
+      setSurvey((prevState) => ({
+        ...prevState,
+        weclomePage:{
+          ...prevState.weclomePage,
+          ip:ip,
+          uuid : uuidv4(),
+          startTime : new Date(),
+        }
+      }))
+  
+      router.push('/surveyMain')
     }
-  });
+  }
   
   
   async function handleNextButton(event) {
-    console.log("event",event)
     if (!inputVcode){
       handleAlertBarOpen()
       setVCodeError("未填寫驗證碼哦！")
@@ -73,7 +80,6 @@ export default function Home() {
         startTime : new Date(),
       }
     }))
-    
     if (event.target.name == "next"){
       router.push('/surveyMain')
       return
@@ -163,14 +169,10 @@ export default function Home() {
               sx={{backgroundColor:"white"}} 
               id="verify_textField" 
               label="驗證碼" 
-              InputProps={{
-                inputProps: {
-                  style: { textAlign: "center" }
-                }
-              }}
               onChange={(event) => {
                 setInputVcode(event.target.value)
               }}
+              onKeyDown={(event) => {enterToNext(event)}}
               />
           </Box>
           <div>
@@ -187,16 +189,17 @@ export default function Home() {
         </div>
 
         <div>
-          <button type="button" 
+          <Button 
             name="next"
+            onKeyDown={(event) => {enterToNext(event)}}
             onClick={(event)=>{handleNextButton(event)}}>
             下一頁
-          </button>
-          <button type="button" 
+          </Button>
+          <Button type="button" 
             name="Testing"
             onClick={(event)=>{handleNextButton(event)}}>
             Map testin
-          </button>
+          </Button>
         </div>      
 
         <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>

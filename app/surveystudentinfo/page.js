@@ -26,6 +26,74 @@ function App() {
         }
     }
 
+    const blankSurveyCrd = {
+        surveyCrossRd: {
+            startTime: 999,
+            pickup: 999,
+            otherOfPickup: 999,
+            TimeStartFromHome: 999,
+            portForShcool: 999,
+            otherOfpPortForShcool: 999,
+            TimeEndToMacau: 999,
+            commonTransirtation: 999,
+            otherOfCommonTransirtation: 999,
+            arrivalTimeToSchool: 999,
+        }
+    }
+
+    const blankSurveyCrd2 = {
+        surveyCrossRd2: {
+            startTime: 999,
+            leaveShcoolTime: 999,
+            pickup: 999,
+            otherOfPickup: 999,
+            directToPort: 999,
+            portForHome: 999,
+            otherOfportForHome: 999,
+            commonTransirtation: 999,
+            otherOfCommonTransirtation: 999,
+            arrivalPortTime: 999,
+            arrivalHomeTime: 999,
+        }
+    }
+
+    const blanksurveyRd = {
+        surveyNormalRd: {
+            startTime: 999,
+            pickup: 999,
+            otherOfPickup: 999,
+            pickupTimeStart: 999,
+            pickupTimeEnd: 999,
+            commonTransirtation: 999,
+            otherOfCommonTransirtation: 999,
+        }
+    }
+
+    const blanksurveyRd2 = {
+        surveyNormalRd2: {
+            startTime: 999,
+            leaveSchoolTime: 999,
+            otherleavePickUp: 999,
+            leavePickUp: 999,
+            directToHomeState: 999,
+            directToHomeYes: {
+                arivalHomeTime: 999,
+                arivalHomeTransition: 999,
+                otherarivalHomeTransition: 999
+            },
+            directToHomeNo: {
+                leaveDestination: 999,
+                leaveDestinationTime: 999,
+                leaveDestinationTransition: 999,
+                otherLeaveDestinationTransition: 999,
+                destinationBackHomeStartTime: 999,
+                destinationBackHomeEndTime: 999,
+                leaveDestinationBackHomeTransition: 999,
+                otherLeaveDestinationBackHomeTransition: 999
+            }
+        }
+    }
+
     const blankHelpText = {
         classLevel: null,
         schoolName: null,
@@ -134,10 +202,15 @@ function App() {
 
         if (survey.surveystudentinfo.crossBorder == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
+            sessionStorage.setItem((_studentNum + "crossRd"), JSON.stringify(blankSurveyCrd))
+            sessionStorage.setItem((_studentNum + "crossRd2"), JSON.stringify(blankSurveyCrd2))
             router.push('/surveyNormalRd')
         }
         if (survey.surveystudentinfo.crossBorder == "是") {
             sessionStorage.setItem("studentNum", _studentNum)
+            sessionStorage.setItem((_studentNum + "normalRd"), JSON.stringify(blanksurveyRd))
+            sessionStorage.setItem((_studentNum + "normalRd2"), JSON.stringify(blanksurveyRd2))
+
             router.push('/surveyCrossRd')
         }
 
