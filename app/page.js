@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import styled from '@mui/material/styles/styled';
 export default function Home() {
   const router = useRouter()
   const [vCode, setVCode] = React.useState()
@@ -26,6 +26,29 @@ export default function Home() {
   })
 
   const [ip, setIP] = React.useState("");
+
+  const StyledTextField = styled(TextField)({
+    "& .MuiInputLabel-root": {
+      right: 0,
+      textAlign: "center"
+    },
+    "& .MuiInputLabel-shrink": {
+      margin: "0 auto",
+      position: "absolute",
+      right: "0",
+      left: "0",
+      top: "-3px",
+      width: "150px", // Need to give it a width so the positioning will work
+       // Add a white background as below we remove the legend that had the background so text is not meshing with the border
+      // display: "none" //if you want to hide it completly
+    },
+    "& .MuiOutlinedInput-root.Mui-focused": {
+      "& legend ": {
+        display: "none"
+      }
+    }
+  });
+  
   
   async function handleNextButton(event) {
     console.log("event",event)
@@ -110,8 +133,8 @@ export default function Home() {
 
         <div className={styles.startLetter}>
           <a className={styles.letterText}>
-            親愛的先生／女士，您好：<br />
-    　　    歡迎您參加『澳門線上學生出行調查』。這次調查的主要目的是想了解澳門中小學及幼兒園學生的出行習慣，以及使用交通服務的情况。您的寶貴資料和意見對這個研究非常重要，同時對學校周邊交通建設和澳門未來的交通規劃、管理、改善都有非常大的幫助。問卷填寫每人約只需要用五分鐘的時間，懇請您抽空作答。您所填寫的個人資料只會用於研究分析，絕不對外公開，請您安心回答。感謝閣下的支持與協助。
+            親愛的先生／女士，您好：<br /><br />
+            　　歡迎您參加『澳門線上學生出行調查』。這次調查的主要目的是想了解澳門中小學及幼兒園學生的出行習慣，以及使用交通服務的情况。您的寶貴資料和意見對這個研究非常重要，同時對學校周邊交通建設和澳門未來的交通規劃、管理、改善都有非常大的幫助。問卷填寫每人約只需要用五分鐘的時間，懇請您抽空作答。您所填寫的個人資料只會用於研究分析，絕不對外公開，請您安心回答。感謝閣下的支持與協助。
     　　    <br /><br />敬祝您　　身體健康
           </a>
           <a>
@@ -134,15 +157,21 @@ export default function Home() {
             noValidate
             autoComplete="off"
           >
+
             <TextField 
               error = {vCodeError}
               sx={{backgroundColor:"white"}} 
               id="verify_textField" 
               label="驗證碼" 
+              InputProps={{
+                inputProps: {
+                  style: { textAlign: "center" }
+                }
+              }}
               onChange={(event) => {
                 setInputVcode(event.target.value)
               }}
-              variant="filled" />
+              />
           </Box>
           <div>
             <Vcode
@@ -151,7 +180,7 @@ export default function Home() {
               onChange={(v) => {setVCode(v)}}
               options={{ codes: [ "Q",	"W",	"E",	"R",	"T",	"Y",	"U",	"I",	"P",	"A",	"S",	"D",	"F",	"G",	"H",	"J",	"K",	"L",	"Z",	"X",	"C",	"V",	"B",	"N",	"M",	"1",	"2",	"3",	"4",	"5",	"6",	"7",	"8",	"9", ] }}
             />
-            <p style={{fontSize : "12px",color:"white"}}>
+            <p style={{fontSize : "12px",color:"#000000"}}>
               按一下圖片更新驗證碼
             </p>
           </div>

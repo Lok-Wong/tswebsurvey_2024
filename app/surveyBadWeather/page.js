@@ -126,18 +126,14 @@ function App() {
             {
                 isClient ?
                     <div style={{ minWidth: "100%" }}>
-                        <h1 style={{ color: "#ffffff" }}>
-
-                        </h1>
-                        <h1 style={{ color: "#ffffff" }}>
-                            5.	惡劣天氣情況下，學生上學及放學出行情況
+                        <h1 style={{ color: "#000000" }}>
+                            五，惡劣天氣情況下，學生上學及放學出行情況
                         </h1>
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="badWeatherPickup-label">1) 有沒有人接送：</FormLabel>
+                                <FormLabel id="badWeatherPickup-label"><h3>1) 有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="badWeatherPickup-label"
                                     name="badWeatherPickup"
                                     value={survey.badWeather.badWeatherPickup}
@@ -176,9 +172,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="badWeatherransition-label">2) 主要使用的交通工具:</FormLabel>
+                                <FormLabel id="badWeatherransition-label"><h3>2) 主要使用的交通工具:</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="badWeathertransition-label"
                                     name="badWeatherTransition"
                                     value={survey.badWeather.badWeatherTransition}
@@ -226,11 +221,11 @@ function App() {
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
+                                <FormLabel id="comment-label"><h3>3)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
-                                        '& > :not(style)': { m: 1, width: '80%' },
+                                        '& > :not(style)': {  width: '80%' },
                                     }}
                                     noValidate
                                 >

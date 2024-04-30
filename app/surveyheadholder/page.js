@@ -170,15 +170,14 @@ function App() {
         isClient ?
           <div>
             {/* <Survey model={survey} /> */}
-            <h1 style={{ color: "#ffffff" }}>
-              1.	學生家庭住戶資料
+            <h1 style={{ color: "#000000"}}>
+              一、學生家庭住戶資料
             </h1>
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="studentofRespondents-radio-buttons-group-label">1) 你是學生（的）：</FormLabel>
+                <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1) 你是學生（的）：</h3></FormLabel>
                 <RadioGroup
                   required
-                  row
                   id="studentofRespondents"
                   aria-labelledby="studentofRespondents-radio-buttons-group-label"
                   value={survey.headHolder.studentofRespondents}
@@ -218,7 +217,7 @@ function App() {
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="address-label">2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</FormLabel>
+                <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
                 <Box>
                   <TextField
                     id="studentofRespondents-other-textfill"
@@ -257,9 +256,8 @@ function App() {
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="resident-population-student-label">3) 長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</FormLabel>
+                <FormLabel id="resident-population-student-label"><h3>3) 長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</h3></FormLabel>
                 <RadioGroup
-                  row
                   aria-labelledby="resident-population-student-group-label"
                   value={survey.headHolder.residentPopulationStudent}
                   name="residentPopulationStudent"
@@ -305,7 +303,7 @@ function App() {
         </div> */}
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="vehicle-radio-buttons-group-label">4)	所有家庭成員有沒有私家車或電單車：</FormLabel>
+                <FormLabel id="vehicle-radio-buttons-group-label"><h3>4)	所有家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
                   row
                   aria-labelledby="vehicle-radio-buttons-group-label"
@@ -313,7 +311,7 @@ function App() {
                   name="vehicle"
                   onChange={handleChange}
                 >
-                  <FormControlLabel sx={{ color: "black" }} value="都有" control={<Radio />} label="都有" />
+                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單" />
                   <FormControlLabel sx={{ color: "black" }} value="私家車" control={<Radio />} label="私家車" />
                   <FormControlLabel sx={{ color: "black" }} value="電單車" control={<Radio />} label="電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="都没有" control={<Radio />} label="都没有" />
@@ -324,6 +322,11 @@ function App() {
 
             </div>
             <div className={styles.question}>
+            <Button
+                onClick={()=>router.back()}
+              >
+                back
+              </Button>
               <Button
                 onClick={handleNextButton}
               >

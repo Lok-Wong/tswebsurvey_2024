@@ -24,7 +24,15 @@ function App() {
     }, [])
 
     const handleNextButton = () => {
-        sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
+        if (stillHaveChild == "有") {
+            router.push('/surveystudentinfo')
+            sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
+            return
+        } 
+        if (stillHaveChild == "没有") {
+            router.push('/surveyFinished')
+            return
+        }
     };
 
     React.useEffect(() => {
@@ -42,15 +50,14 @@ function App() {
             {
                 isClient ?
                     <div>
-                        <h1 style={{ color: "#ffffff" }}>
+                        <h1 style={{ color: "#000000" }}>
                             最後確認
                         </h1>
-                        <FormControl>
-                            <div className={styles.question} >
-                                <FormLabel id="still-have-other-child-label">還有其他學生家庭成員未填寫本調查問卷嗎?</FormLabel>
+                        <div className={styles.question} >
+                            <FormControl>
+                                <FormLabel id="still-have-other-child-label"><h3>還有其他學生家庭成員未填寫本調查問卷嗎?</h3></FormLabel>
                                 <RadioGroup
                                     defaultValue={stillHaveChild}
-                                    row
                                     aria-labelledby="still-have-other-child-label"
                                     name="still-have-other-child-group"
                                     value={stillHaveChild}
@@ -59,19 +66,15 @@ function App() {
                                     <FormControlLabel value="有" control={<Radio />} label="有" />
                                     <FormControlLabel value="没有" control={<Radio />} label="没有" />
                                 </RadioGroup>
-                            </div>
-                        </FormControl>
+                            </FormControl>
+                        </div>
+
                         <div className={styles.question}>
                             <Button onClick={() => router.back()}>
                                 上一頁
                             </Button>
                             <Button
-                                onClick={() => handleNextButton()}
-                                href={stillHaveChild == "有" ?
-                                    "/surveystudentinfo"
-                                    :
-                                    "/surveyFinished"
-                                }>
+                                onClick={handleNextButton}>
                                 {
                                     stillHaveChild == "有" ? "下一頁" : "完成"
                                 }

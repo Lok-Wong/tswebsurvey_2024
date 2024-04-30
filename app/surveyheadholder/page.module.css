@@ -1,9 +1,9 @@
 .main {
   display: flex;
   flex-direction: column;
-  padding: 3rem;
+  padding: 1rem;
   min-height: 100vh;
-  background-color: #23221B;
+  background-color: #e9e9cf;
 }
 
 .question{
@@ -14,8 +14,8 @@
   padding: 1rem;
   margin-bottom: 10px;
   border-radius: 10px;
-  padding: 2%;
   width: 100%;
+  justify-content: space-between;
 }
 
 .nextPageButton{

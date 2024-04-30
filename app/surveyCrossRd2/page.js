@@ -148,13 +148,13 @@ function App() {
                 isClient ?
 
                     <div style={{ minWidth: "100%" }}>
-                        <h2 style={{ color: "#ffffff" }}>
+                        <h2 style={{ color: "#000000" }}>
                             4.2	一般情況下，學生下午放學的情況
                         </h2>
 
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="leaveShcoolTime-label">14)	離校時間（24小時制）：</FormLabel>
+                                <FormLabel id="leaveShcoolTime-label"><h3>7)	離校時間（24小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker
@@ -169,9 +169,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label">15)    有沒有人接送：</FormLabel>
+                                <FormLabel id="pickup-label"><h3>8)    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="pickup-label"
                                     name="pickup"
                                     value={survey.surveyCrossRd2.pickup}
@@ -209,9 +208,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="directToPort-label">16)	放學是否直接前往通關口岸？</FormLabel>
+                                <FormLabel id="directToPort-label"><h3>9)	放學是否直接前往通關口岸？</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="directToPort-label"
                                     name="directToPort"
                                     value={survey.surveyCrossRd2.directToPort}
@@ -226,9 +224,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="portForHome-label">17)	回家使用的通關口岸：</FormLabel>
+                                <FormLabel id="portForHome-label"><h3>10)	回家使用的通關口岸：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="portForHome-label"
                                     name="portForHome"
                                     value={survey.surveyCrossRd2.portForHome}
@@ -270,9 +267,8 @@ function App() {
                             <FormControl
                             >
                                 <FormLabel
-                                    component="commonTransiration">18)	過關後，前往學校的主要交通方式：</FormLabel>
+                                    component="commonTransiration"><h3>11)	過關後，前往學校的主要交通方式：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     name='commonTransirtation'
                                     value={survey.surveyCrossRd2.commonTransirtation}
                                     onChange={handleChange}
@@ -360,7 +356,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="arrivalPortTime-label">19)	到達口岸的時間（24小時制）</FormLabel>
+                                <FormLabel id="arrivalPortTime-label"><h3>12)	到達口岸的時間（24小時制）</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker
@@ -375,7 +371,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="arrivalHomeTime-label">20)	回到家的時間（24小時制）：</FormLabel>
+                                <FormLabel id="arrivalHomeTime-label"><h3>13)	回到家的時間（24小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker

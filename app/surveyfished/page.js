@@ -46,15 +46,14 @@ function App() {
                 isClient ?
 
                     <div>
-                        <h1 style={{ color: "#ffffff" }}>
+                        <h1 style={{ color: "#000000" }}>
                             最後確認
                         </h1>
                         <FormControl>
                             <div className={styles.question} >
-                                <FormLabel id="still-have-other-child-label">還有其他學生家庭成員未填寫本調查問卷嗎?</FormLabel>
+                                <FormLabel id="still-have-other-child-label"><h3>還有其他學生家庭成員未填寫本調查問卷嗎?</h3></FormLabel>
                                 <RadioGroup
                                     defaultValue={stillHaveChild}
-                                    row
                                     aria-labelledby="still-have-other-child-label"
                                     name="still-have-other-child-group"
                                     value={stillHaveChild}

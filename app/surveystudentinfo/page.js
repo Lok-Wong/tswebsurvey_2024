@@ -62,12 +62,12 @@ function App() {
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
-          {
-            ...prevState,
-            [objectName]: errorText
-          }
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
         ))
-      }
+    }
 
     const handleChange = (event) => {
 
@@ -112,22 +112,22 @@ function App() {
             return
         }
 
-        if (survey.surveystudentinfo.schoolName == "999" || survey.surveystudentinfo.schoolName == "") {    
+        if (survey.surveystudentinfo.schoolName == "999" || survey.surveystudentinfo.schoolName == "") {
             handleHelpText("schoolName", "請填寫學校名稱")
             return
         }
 
-        if (survey.surveystudentinfo.gender == "999"){
+        if (survey.surveystudentinfo.gender == "999") {
             handleHelpText('gender', "請選擇性別")
             return
         }
 
-        if (survey.surveystudentinfo.age == "999"){
+        if (survey.surveystudentinfo.age == "999") {
             handleHelpText('age', "請選擇年齡")
             return
         }
 
-        if (survey.surveystudentinfo.crossBorder == "999"){
+        if (survey.surveystudentinfo.crossBorder == "999") {
             handleHelpText('crossBorder', "請選擇是否需跨境")
             return
         }
@@ -147,17 +147,17 @@ function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div style={{ minWidth: "100%" }}>
-                        <h1 style={{ color: "#ffffff" }}>
-                            2 學生個人資料
+                    <div>
+                        <h1 style={{ color: "#000000" }}>
+                            二、學生個人資料
                         </h1>
                         <div className={styles.question} >
                             <FormControl>
-                                <FormLabel id="class-level-label">1)  就讀年級：</FormLabel>
+                                <FormLabel id="class-level-label"><h3>1)  就讀年級：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
-                                        '& > :not(style)': { m: 1, width: '95%' },
+                                        '& > :not(style)': { m: 1, width: '50%' },
                                     }}
                                     noValidate
                                 >
@@ -172,13 +172,15 @@ function App() {
                                 </Box>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
                             </FormControl>
+                            </div>
+                            <div className={styles.question}>
 
-                            <FormControl sx={{ width: '50%' }}>
-                                <FormLabel id="school-name-label">2)  學校名稱：</FormLabel>
+                            <FormControl>
+                                <FormLabel id="school-name-label"><h3>2)  學校名稱：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
-                                        '& > :not(style)': { m: 1, width: '95%' },
+                                        '& > :not(style)': { m: 1, width: '100%' },
                                     }}
                                     noValidate
                                 >
@@ -197,9 +199,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="gender-label">3)  姓別：</FormLabel>
+                                <FormLabel id="gender-label"><h3>3)  姓別：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="studentofRespondents-radio-buttons-group-label"
                                     name="gender"
                                     onChange={handleChange}
@@ -214,9 +215,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="age-label">4)  年齡</FormLabel>
+                                <FormLabel id="age-label"><h3>4)  年齡</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="age-label"
                                     name="age"
                                     onChange={handleChange}
@@ -234,11 +234,9 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="cross-border-student-label">5)  學生上學及放學是否需跨境：</FormLabel>
+                                <FormLabel id="cross-border-student-label"><h3>5)  學生上學及放學是否需跨境：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     id="crossBorderCheck"
-                                    // value = {crossBorderCheck}
                                     aria-labelledby="cross-border-student-label"
                                     name="crossBorder"
                                     onChange={handleChange}
@@ -252,13 +250,9 @@ function App() {
                         </div>
 
                         <div className={styles.question}>
-                            {_studentNum == "0" ?
-                                <Button onClick={() => router.back()}>
-                                    back
-                                </Button>
-                                :
-                                null
-                            }
+                            <Button onClick={() => router.back()}>
+                                back
+                            </Button>
 
                             <Button onClick={handleNextButton}>
                                 next

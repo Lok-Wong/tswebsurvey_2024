@@ -146,18 +146,17 @@ function App() {
                 isClient ?
 
                     <div style={{ minWidth: "100%" }}>
-                        <h1 style={{ color: "#ffffff" }}>
-                            4.	跨境上學及放學出行
+                        <h1 style={{ color: "#000000" }}>
+                            四、跨境上學及放學出行
                         </h1>
-                        <h2 style={{ color: "#ffffff" }}>
-                            4.1	一般情況下，學生早上上學的情況
+                        <h2 style={{ color: "#000000" }}>
+                            a)一般情況下，學生早上上學的情況
                         </h2>
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label">1)    有沒有人接送：</FormLabel>
+                                <FormLabel id="pickup-label"><h3>1.    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="pickup-label"
                                     name="pickup"
                                     value={survey.surveyCrossRd.pickup}
@@ -193,7 +192,7 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="TimeStartFromHome-label">2) 從家出發時間：</FormLabel>
+                                <FormLabel id="TimeStartFromHome-label"><h3>2) 從家出發時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker
@@ -208,9 +207,8 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="portForShcool-label">10) 前往學校的通關口岸：</FormLabel>
+                                <FormLabel id="portForShcool-label"><h3>3) 前往學校的通關口岸：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="portForShcool-label"
                                     name="portForShcool"
                                     value={survey.surveyCrossRd.portForShcool}
@@ -250,7 +248,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="TimeEndToMacau-label">過關後，到達澳門時間：</FormLabel>
+                                <FormLabel id="TimeEndToMacau-label"><h3>4)過關後，到達澳門時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker
@@ -265,13 +263,10 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl
-                                required
-                                sx={{ m: 3 }}
                                 variant="standard"
                             >
-                                <FormLabel component="commonTransiration">12)	過關後，前往學校的主要交通方式：</FormLabel>
+                                <FormLabel component="commonTransiration"><h3>5)	過關後，前往學校的主要交通方式：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     name='commonTransirtation'
                                     value={survey.surveyCrossRd.commonTransirtation}
                                     onChange={handleChange}
@@ -358,7 +353,7 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="arrivalTimeToSchool-label">13)	到達學校時間（24小時制）</FormLabel>
+                                <FormLabel id="arrivalTimeToSchool-label"><h3>6)	到達學校時間（24小時制）</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker

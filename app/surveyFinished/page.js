@@ -36,7 +36,7 @@ function App() {
             {
                 isClient ?
                     <div>
-                        <h1 style={{ color: "#ffffff" }}>
+                        <h1 style={{ color: "#000000" }}>
                             完成問卷
                         </h1>
                     </div>

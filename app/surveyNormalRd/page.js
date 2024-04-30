@@ -189,15 +189,14 @@ function App() {
 
                     <div style={{ minWidth: "100%" }}>
 
-                        <h1 style={{ color: "#ffffff" }}>
-                            3.1	一般情況下，學生早上上學的情況
+                        <h1 style={{ color: "#000000" }}>
+                            三、一般情況下，學生早上上學的情況
                         </h1>
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label">1)    有沒有人接送：</FormLabel>
+                                <FormLabel id="pickup-label"><h3>1)    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     aria-labelledby="pickup-label"
                                     name="pickup"
                                     value={survey.surveyNormalRd.pickup}
@@ -235,7 +234,7 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="pickup-time-start-label">2)     出發時間：</FormLabel>
+                                <FormLabel id="pickup-time-start-label"><h3>2)     出發時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker
@@ -247,9 +246,11 @@ function App() {
                                 </LocalizationProvider>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeStart}</FormHelperText>
                             </FormControl>
+                            </div>
+                            <div className={styles.question}>
 
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="pickup-time-end-label">3)     到達時間：</FormLabel>
+                                <FormLabel id="pickup-time-end-label"><h3>3)     到達時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <TimePicker
@@ -265,13 +266,10 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl
-                                required
-                                sx={{ m: 3 }}
                                 variant="standard"
                             >
-                                <FormLabel component="commonTransiration">4)	常用的交通方式：</FormLabel>
+                                <FormLabel component="commonTransiration"><h3>4)	常用的交通方式：</h3></FormLabel>
                                 <RadioGroup
-                                    row
                                     name='commonTransirtation'
                                     value={survey.surveyNormalRd.commonTransirtation}
                                     onChange={handleChange}
