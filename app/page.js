@@ -129,7 +129,7 @@ export default function Home() {
           <Box
             component="form"
             sx={{
-              '& > :not(style)': { m: 1, width: '15rem' },
+              '& > :not(style)': { m: 1, width: '8rem' },
             }}
             noValidate
             autoComplete="off"
@@ -151,7 +151,7 @@ export default function Home() {
               onChange={(v) => {setVCode(v)}}
               options={{ codes: [ "Q",	"W",	"E",	"R",	"T",	"Y",	"U",	"I",	"P",	"A",	"S",	"D",	"F",	"G",	"H",	"J",	"K",	"L",	"Z",	"X",	"C",	"V",	"B",	"N",	"M",	"1",	"2",	"3",	"4",	"5",	"6",	"7",	"8",	"9", ] }}
             />
-            <p style={{fontSize : "12px"}}>
+            <p style={{fontSize : "12px",color:"white"}}>
               按一下圖片更新驗證碼
             </p>
           </div>
@@ -163,14 +163,12 @@ export default function Home() {
             onClick={(event)=>{handleNextButton(event)}}>
             下一頁
           </button>
-        </div>      
-        <div>
           <button type="button" 
             name="Testing"
             onClick={(event)=>{handleNextButton(event)}}>
             Map testin
           </button>
-        </div>
+        </div>      
 
         <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>
           <Alert
