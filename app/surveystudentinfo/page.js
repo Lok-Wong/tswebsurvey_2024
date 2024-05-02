@@ -17,6 +17,14 @@ import {data,school_type,region} from '../schoolData'
 function App() {
     const router = useRouter();
 
+    const [stValue, setStValue] = React.useState()
+    const [stInputValue, setStInputValue] = React.useState()
+
+    React.useEffect(() => {
+        console.log("stValue",stValue)
+        console.log("stInputValue",stInputValue)
+    },[stValue,stInputValue])
+
     const blanksurvey = {
         surveystudentinfo: {
             schoolType:999,
@@ -300,10 +308,15 @@ function App() {
                                     <Autocomplete
                                         freeSolo
                                         id="school-type"
-                                        label="學校"
-                                        variant="outlined"
                                         name='schoolType'
-                                        onChange={handleChange}
+                                        value={stValue}
+                                        inputValue={stInputValue}
+                                        onChange={(event,newValue) => {
+                                            setStValue(newValue)
+                                        }}
+                                        onInputChange={(event,newInputValue) => {
+                                            setStInputValue(newInputValue)
+                                        }}
                                         options={school_types}
                                         renderInput={(params) => 
                                             <TextField {...params}></TextField>
