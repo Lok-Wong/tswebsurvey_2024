@@ -58,6 +58,18 @@ function App() {
         return blanksurvey;
     }, []);
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+          // If there is a value stored in localStorage, use that
+          if (local_storage_path_list) {
+            return (local_storage_path_list);
+          }
+        }
+      }, []);
+
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
+
     const [survey, setSurvey] = React.useState(_initial_value)
 
 
@@ -87,10 +99,18 @@ function App() {
         )
     };
 
+    const handleNextButton = (event) => {
+        sessionStorage.setItem("pathList", storedPathList)
+        router.push('/surveyBadWeather')
+    }
+
+    
+
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
         setIsClient(true)
+        setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
 
     React.useEffect(() => {
@@ -139,6 +159,50 @@ function App() {
     }, [survey.surveyCrossRd2.pickup,
     survey.surveyCrossRd2.commonTransirtation,
     survey.surveyCrossRd2.otherOfportForHome])
+
+    React.useEffect(() => {
+        if (storedPathList != null) {
+        console.log("storedPathList12", storedPathList)
+        setStoredPathList([...storedPathList, window.location.pathname])
+        }
+      }, [])
+
+      React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+          router.replace("./")
+          return
+        }
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyCrossRd") {
+          router.replace("./")
+        }
+      }, [])
+
+      const [finishStatus, setfinishStatus] = React.useState(false);
+
+      const onBackButtonEvent = (e) => {
+        e.preventDefault();
+      //   if (!finishStatus) {
+      //       if (window.confirm("Do you want to go back ?")) {
+      //         setfinishStatus(true)
+              const copyArr = [...storedPathList]
+              const prevPath = copyArr[copyArr.length - 1]
+              copyArr.splice(-1)
+              sessionStorage.setItem('pathList',copyArr)
+              router.back()
+      //       } else {
+      //           window.history.pushState(null, null, window.location.pathname);
+      //           setfinishStatus(false)
+      //       }
+      //   }
+      }
+    
+      React.useEffect(() => {
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', onBackButtonEvent);
+        return () => {
+          window.removeEventListener('popstate', onBackButtonEvent);  
+        };
+      }, []);
 
 
 
@@ -422,7 +486,7 @@ function App() {
                             <Button onClick={() => router.back()}>
                                 back
                             </Button>
-                            <Button href={'/surveyBadWeather'}>
+                            <Button onClick={handleNextButton}>
                                 next
                             </Button>
                         </div>

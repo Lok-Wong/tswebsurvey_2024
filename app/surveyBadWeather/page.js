@@ -48,7 +48,18 @@ function App() {
         return blanksurvey;
     }, []);
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+          // If there is a value stored in localStorage, use that
+          if (local_storage_path_list) {
+            return (local_storage_path_list);
+          }
+        }
+      }, []);
+
     const [survey, setSurvey] = React.useState(_initial_value)
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const handleChange = (event) => {
         const objectName = event.target.name
@@ -65,24 +76,17 @@ function App() {
         )
     };
 
-    const handleTimeChange = (event, name) => {
-        setSurvey((prevState) => ({
-            ...prevState,
-            surveyNormalRd2: {
-                ...prevState.surveyNormalRd2,
-                [name]: event.$d
-            }
-        })
-        )
-    };
+    const handleNextButton = () => {
+        sessionStorage.setItem("pathList", storedPathList)
+        router.push("/surveyStudentFinised")
+    }
 
-    // const handleNextButton = () => {
-    //     sessionStorage.getItem("totalStudentNum",_studentNum)
-    // }
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
         setIsClient(true)
+        setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
+
     }, [])
 
     React.useEffect(() => {
@@ -119,7 +123,54 @@ function App() {
     }, [survey.badWeather.badWeatherPickup,
     survey.badWeather.badWeatherTransition])
 
+    React.useEffect(() => {
+        if (storedPathList != null) {
+        console.log("storedPathList12", storedPathList)
+        setStoredPathList([...storedPathList, window.location.pathname])
+        }
+      }, [])
 
+      React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+          router.replace("./")
+          return
+        }
+        if (_initial_pathListe[_initial_pathListe.length - 1] == "/surveyNormalRd2" 
+            ||
+            _initial_pathListe[_initial_pathListe.length - 1] == "/surveyCrossRd2"  ) {
+          return
+        } else {
+            router.replace("./")
+            return
+        }
+      }, [])
+
+      const [finishStatus, setfinishStatus] = React.useState(false);
+
+      const onBackButtonEvent = (e) => {
+        e.preventDefault();
+      //   if (!finishStatus) {
+      //       if (window.confirm("Do you want to go back ?")) {
+      //         setfinishStatus(true)
+              const copyArr = [...storedPathList]
+              const prevPath = copyArr[copyArr.length - 1]
+              copyArr.splice(-1)
+              sessionStorage.setItem('pathList',copyArr)
+              router.back()
+      //       } else {
+      //           window.history.pushState(null, null, window.location.pathname);
+      //           setfinishStatus(false)
+      //       }
+      //   }
+      }
+    
+      React.useEffect(() => {
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', onBackButtonEvent);
+        return () => {
+          window.removeEventListener('popstate', onBackButtonEvent);  
+        };
+      }, []);
 
     return (
         <main className={styles.main}>
@@ -246,7 +297,7 @@ function App() {
                             <Button onClick={() => router.back()}>
                                 back
                             </Button>
-                            <Button href={'/surveyStudentFinised'}>
+                            <Button onClick={handleNextButton}>
                                 next
                             </Button>
 

@@ -11,12 +11,15 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
+import Autocomplete from '@mui/material/Autocomplete';
+import {data,school_type,region} from '../schoolData'
 
 function App() {
     const router = useRouter();
 
     const blanksurvey = {
         surveystudentinfo: {
+            schoolType:999,
             classLevel: 999,
             schoolName: 999,
             gender: 999,
@@ -126,17 +129,20 @@ function App() {
 
     const _initial_pathListe = React.useMemo(() => {
         if (typeof window !== 'undefined') {
-          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
-          // If there is a value stored in localStorage, use that
-          if (local_storage_path_list) {
-            return (local_storage_path_list);
-          }
+            const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
         }
-      }, []);
+    }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
+    const [schoolData, setSchoolData] = React.useState(data)
+    const [school_types, setSchool_types] = React.useState(school_type)
+    const [regions, setReginos] = React.useState(region)
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -173,20 +179,24 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-        console.log("storedPathList12", storedPathList)
-        setStoredPathList([...storedPathList, window.location.pathname])
+            console.log("storedPathList12", storedPathList)
+            setStoredPathList([...storedPathList, window.location.pathname])
         }
-      }, [])
+    }, [])
 
-      React.useEffect(() => {
+    React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-          router.push("./")
-          return
+            router.replace("./")
+            return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyheadholder") {
-          router.push("./")
+        if ((_initial_pathListe[_initial_pathListe.length - 1] == "/surveyheadholder"
+            ||
+            _initial_pathListe[_initial_pathListe.length - 1] == "/surveyStudentFinised")) {
+            return
+        } else {
+            router.replace("./")
         }
-      }, [])
+    }, [])
 
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + "studentInfo"), JSON.stringify(survey))
@@ -197,36 +207,30 @@ function App() {
     const [finishStatus, setfinishStatus] = React.useState(false);
 
     const onBackButtonEvent = (e) => {
-      e.preventDefault();
-      if (!finishStatus) {
-          if (window.confirm("Do you want to go back ?")) {
-            setfinishStatus(true)
-            const copyArr = [...storedPathList]
-            const prevPath = copyArr[copyArr.length - 1]
-            copyArr.splice(-1)
-            sessionStorage.setItem('pathList',copyArr)
-            router.push(prevPath)
-          } else {
-              window.history.pushState(null, null, window.location.pathname);
-              setfinishStatus(false)
-          }
-      }
+        e.preventDefault();
+        //   if (!finishStatus) {
+        //       if (window.confirm("Do you want to go back ?")) {
+        //         setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList', copyArr)
+        router.back()
+        //       } else {
+        //           window.history.pushState(null, null, window.location.pathname);
+        //           setfinishStatus(false)
+        //       }
+        //   }
     }
-  
+
     React.useEffect(() => {
-      window.history.pushState(null, null, window.location.pathname);
-      window.addEventListener('popstate', onBackButtonEvent);
-      return () => {
-        window.removeEventListener('popstate', onBackButtonEvent);  
-      };
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', onBackButtonEvent);
+        return () => {
+            window.removeEventListener('popstate', onBackButtonEvent);
+        };
     }, []);
 
-    //   React.useEffect(()=>{
-    //     history.pushState(null, null, location.href);
-    //     window.onpopstate = function(event) {
-    //         history.go(1);
-    //     };
-    //   },[history]);
 
 
     const handleNextButton = () => {
@@ -282,30 +286,36 @@ function App() {
                         <h1 style={{ color: "#000000" }}>
                             二、學生個人資料
                         </h1>
-                        <div className={styles.question} >
+
+                        <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="class-level-label"><h3>1)  就讀年級：</h3></FormLabel>
+                                <FormLabel id="school-type-label"><h3>1.)  教育類型：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
-                                        '& > :not(style)': { m: 1, width: '50%' },
+                                        '& > :not(style)': { m: 1, width: '100%' },
                                     }}
                                     noValidate
                                 >
-                                    <TextField
-                                        id="class-level"
-                                        label="年級"
+                                    <Autocomplete
+                                        freeSolo
+                                        id="school-type"
+                                        label="學校"
                                         variant="outlined"
-                                        name='classLevel'
+                                        name='schoolType'
                                         onChange={handleChange}
-                                        value={survey.surveystudentinfo.classLevel == 999 ? null : survey.surveystudentinfo.classLevel}
+                                        options={school_types}
+                                        renderInput={(params) => 
+                                            <TextField {...params}></TextField>
+                                        }
+                                        // value={survey.surveystudentinfo.schoolType}
                                     />
                                 </Box>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
                             </FormControl>
-                            </div>
-                            <div className={styles.question}>
+                        </div>
 
+                        <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-name-label"><h3>2)  學校名稱：</h3></FormLabel>
                                 <Box
@@ -327,6 +337,30 @@ function App() {
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
                             </FormControl>
                         </div>
+
+                        <div className={styles.question} >
+                            <FormControl>
+                                <FormLabel id="class-level-label"><h3>1)  就讀年級：</h3></FormLabel>
+                                <Box
+                                    component="form"
+                                    sx={{
+                                        '& > :not(style)': { m: 1, width: '50%' },
+                                    }}
+                                    noValidate
+                                >
+                                    <TextField
+                                        id="class-level"
+                                        label="年級"
+                                        variant="outlined"
+                                        name='classLevel'
+                                        onChange={handleChange}
+                                        value={survey.surveystudentinfo.classLevel == 999 ? null : survey.surveystudentinfo.classLevel}
+                                    />
+                                </Box>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
+                            </FormControl>
+                        </div>
+
 
                         <div className={styles.question}>
                             <FormControl>

@@ -109,38 +109,41 @@ function App() {
 
     React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-            router.push("./")
+            router.replace("./")
             return
         }
         let shouldPath = sessionStorage.getItem('pathList'.split(","))
         if (shouldPath != "/") {
-            router.push("./")
+            router.replace("./")
         }
     }, [])
 
-    // const [finishStatus, setfinishStatus] = React.useState(false);
+    const [finishStatus, setfinishStatus] = React.useState(false);
 
-    // const onBackButtonEvent = (e) => {
-    //     e.preventDefault();
-    //     if (!finishStatus) {
-    //         if (window.confirm("Do you want to go back ?")) {
-    //             setfinishStatus(true)
-    //             // your logic
-    //             router.back();
-    //         } else {
-    //             window.history.pushState(null, null, window.location.pathname);
-    //             setfinishStatus(false)
-    //         }
-    //     }
-    // }
-
-    // React.useEffect(() => {
-    //     window.history.pushState(null, null, window.location.pathname);
-    //     window.addEventListener('popstate', onBackButtonEvent);
-    //     return () => {
-    //         window.removeEventListener('popstate', onBackButtonEvent);
-    //     };
-    // }, [router]);
+    const onBackButtonEvent = (e) => {
+      e.preventDefault();
+      if (!finishStatus) {
+          if (window.confirm("Do you want to go back ?")) {
+            setfinishStatus(true)
+            const copyArr = [...storedPathList]
+            const prevPath = copyArr[copyArr.length - 1]
+            copyArr.splice(-1)
+            sessionStorage.setItem('pathList',copyArr)
+            router.back()
+          } else {
+              window.history.pushState(null, null, window.location.pathname);
+              setfinishStatus(false)
+          }
+      }
+    }
+  
+    React.useEffect(() => {
+      window.history.pushState(null, null, window.location.pathname);
+      window.addEventListener('popstate', onBackButtonEvent);
+      return () => {
+        window.removeEventListener('popstate', onBackButtonEvent);  
+      };
+    }, []);
 
     return (
         <main className={styles.main}>

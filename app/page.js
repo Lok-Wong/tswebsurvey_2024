@@ -27,7 +27,6 @@ export default function Home() {
 
   const [ip, setIP] = React.useState("");
 
-
   const enterToNext = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
@@ -118,6 +117,7 @@ export default function Home() {
   },[ip,survey]);
 
 
+
   return (
     <main className={styles.main}>
         <div className={styles.description}>
@@ -155,6 +155,7 @@ export default function Home() {
             <a >
             <br />
               執行單位：澳大創科有限公司
+              {}
             </a>
           </div>
         </div>

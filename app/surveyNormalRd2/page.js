@@ -304,11 +304,11 @@ function App() {
 
       React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-          router.push("./")
+          router.replace("./")
           return
         }
         if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyNormalRd") {
-          router.push("./")
+          router.replace("./")
         }
       }, [])
 
@@ -316,19 +316,19 @@ function App() {
 
       const onBackButtonEvent = (e) => {
         e.preventDefault();
-        if (!finishStatus) {
-            if (window.confirm("Do you want to go back ?")) {
-              setfinishStatus(true)
+      //   if (!finishStatus) {
+      //       if (window.confirm("Do you want to go back ?")) {
+      //         setfinishStatus(true)
               const copyArr = [...storedPathList]
               const prevPath = copyArr[copyArr.length - 1]
               copyArr.splice(-1)
               sessionStorage.setItem('pathList',copyArr)
-              router.push(prevPath)
-            } else {
-                window.history.pushState(null, null, window.location.pathname);
-                setfinishStatus(false)
-            }
-        }
+              router.back()
+      //       } else {
+      //           window.history.pushState(null, null, window.location.pathname);
+      //           setfinishStatus(false)
+      //       }
+      //   }
       }
     
       React.useEffect(() => {

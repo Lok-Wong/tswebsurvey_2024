@@ -189,11 +189,11 @@ function App() {
 
   React.useEffect(() => {
     if (sessionStorage.getItem('pathList') === null) {
-      router.push("./")
+      router.replace("./")
       return
     }
     if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyMain") {
-      router.push("./")
+      router.replace("./")
     }
   }, [])
 
@@ -201,29 +201,28 @@ function App() {
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    if (!finishStatus) {
-      if (window.confirm("Do you want to go back ?")) {
-        setfinishStatus(true)
-        const copyArr = [...storedPathList]
-        const prevPath = copyArr[copyArr.length - 1]
-        copyArr.splice(-1)
-        sessionStorage.setItem('pathList',copyArr)
-        router.push(prevPath)
-      } else {
-        window.history.pushState(null, null, window.location.pathname);
-        setfinishStatus(false)
-      }
-    }
+  //   if (!finishStatus) {
+  //       if (window.confirm("Do you want to go back ?")) {
+  //         setfinishStatus(true)
+          const copyArr = [...storedPathList]
+          const prevPath = copyArr[copyArr.length - 1]
+          copyArr.splice(-1)
+          sessionStorage.setItem('pathList',copyArr)
+          router.back()
+  //       } else {
+  //           window.history.pushState(null, null, window.location.pathname);
+  //           setfinishStatus(false)
+  //       }
+  //   }
   }
 
   React.useEffect(() => {
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener('popstate', onBackButtonEvent);
     return () => {
-      window.removeEventListener('popstate', onBackButtonEvent);
+      window.removeEventListener('popstate', onBackButtonEvent);  
     };
   }, []);
-
   return (
     <main className={styles.main}>
       {
