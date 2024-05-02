@@ -65,8 +65,19 @@ function App() {
         return blanksurvey;
     }, []);
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+          // If there is a value stored in localStorage, use that
+          if (local_storage_path_list) {
+            return (local_storage_path_list);
+          }
+        }
+      }, []);
+
     const [survey, setSurvey] = React.useState(_initial_value)
     const [helpText, setHelpText] = React.useState(blankHelpText)
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
 
     const handleHelpText = (eventName, errorText) => {
@@ -137,6 +148,7 @@ function App() {
             }
         }
 
+        sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyNormalRd2')
     }
 
@@ -144,6 +156,7 @@ function App() {
 
     React.useEffect(() => {
         setIsClient(true)
+        setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
 
     React.useEffect(() => {
@@ -151,6 +164,50 @@ function App() {
         setHelpText(blankHelpText)
         console.log(survey)
     }, [survey])
+
+    React.useEffect(() => {
+        if (storedPathList != null) {
+        console.log("storedPathList12", storedPathList)
+        setStoredPathList([...storedPathList, window.location.pathname])
+        }
+      }, [])
+
+      React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+          router.push("./")
+          return
+        }
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveystudentinfo") {
+          router.push("./")
+        }
+      }, [])
+
+      const [finishStatus, setfinishStatus] = React.useState(false);
+
+      const onBackButtonEvent = (e) => {
+        e.preventDefault();
+        if (!finishStatus) {
+            if (window.confirm("Do you want to go back ?")) {
+              setfinishStatus(true)
+              const copyArr = [...storedPathList]
+              const prevPath = copyArr[copyArr.length - 1]
+              copyArr.splice(-1)
+              sessionStorage.setItem('pathList',copyArr)
+              router.push(prevPath)
+            } else {
+                window.history.pushState(null, null, window.location.pathname);
+                setfinishStatus(false)
+            }
+        }
+      }
+    
+      React.useEffect(() => {
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', onBackButtonEvent);
+        return () => {
+          window.removeEventListener('popstate', onBackButtonEvent);  
+        };
+      }, []);
 
     React.useEffect(() => {
         if (survey.surveyNormalRd.pickup != "其他") {
@@ -202,11 +259,11 @@ function App() {
                                     value={survey.surveyNormalRd.pickup}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="學生自行上學" control={<Radio />} label="學生自行上學" />
-                                    <FormControlLabel value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
-                                    <FormControlLabel value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                    <FormControlLabel sx={{ color: "black" }} value="學生自行上學" control={<Radio />} label="學生自行上學" />
+                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                     {survey.surveyNormalRd.pickup === "其他" ?
                                         <Box
                                             component="form"
@@ -275,6 +332,7 @@ function App() {
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel
+                                        sx={{ color: "black" }}
                                         control={
                                             <Radio value="電單車（乘客）" />
                                         }
@@ -285,48 +343,56 @@ function App() {
                                             <Radio value="私家車（乘客）" />
                                         }
                                         label="私家車（乘客）"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="校車" />
                                         }
                                         label="校車"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="巴士" />
                                         }
                                         label="巴士"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="輕軌" />
                                         }
                                         label="輕軌"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="一般的士" />
                                         }
                                         label="一般的士"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="電召的士" />
                                         }
                                         label="電召的士"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="步行" />
                                         }
                                         label="步行"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="其他" />
                                         }
                                         label="其他"
+                                        sx={{ color: "black" }}
                                     />
                                     {survey.surveyNormalRd.commonTransirtation === "其他" ?
                                         <Box

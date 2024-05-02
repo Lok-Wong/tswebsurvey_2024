@@ -52,7 +52,8 @@ export default function Home() {
           startTime : new Date(),
         }
       }))
-  
+      sessionStorage.setItem('pathList',window.location.pathname)
+
       router.push('/surveyMain')
     }
   }
@@ -81,11 +82,15 @@ export default function Home() {
       }
     }))
     if (event.target.name == "next"){
+      sessionStorage.setItem('pathList',window.location.pathname)
+
       router.push('/surveyMain')
       return
       }
 
     if (event.target.name == "Testing"){
+      sessionStorage.setItem('pathList',window.location.pathname)
+
       router.push('/mapTesting')
       return
       }

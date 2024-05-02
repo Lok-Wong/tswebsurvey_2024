@@ -124,8 +124,19 @@ function App() {
         return blanksurvey;
     }, []);
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+          // If there is a value stored in localStorage, use that
+          if (local_storage_path_list) {
+            return (local_storage_path_list);
+          }
+        }
+      }, []);
+
     const [survey, setSurvey] = React.useState(_initial_value)
     const [helpText, setHelpText] = React.useState(blankHelpText)
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -157,13 +168,58 @@ function App() {
 
     React.useEffect(() => {
         setIsClient(true)
+        setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
+
+    React.useEffect(() => {
+        if (storedPathList != null) {
+        console.log("storedPathList12", storedPathList)
+        setStoredPathList([...storedPathList, window.location.pathname])
+        }
+      }, [])
+
+      React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+          router.push("./")
+          return
+        }
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyheadholder") {
+          router.push("./")
+        }
+      }, [])
 
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + "studentInfo"), JSON.stringify(survey))
         setHelpText(blankHelpText)
         console.log(survey)
     }, [survey])
+
+    const [finishStatus, setfinishStatus] = React.useState(false);
+
+    const onBackButtonEvent = (e) => {
+      e.preventDefault();
+      if (!finishStatus) {
+          if (window.confirm("Do you want to go back ?")) {
+            setfinishStatus(true)
+            const copyArr = [...storedPathList]
+            const prevPath = copyArr[copyArr.length - 1]
+            copyArr.splice(-1)
+            sessionStorage.setItem('pathList',copyArr)
+            router.push(prevPath)
+          } else {
+              window.history.pushState(null, null, window.location.pathname);
+              setfinishStatus(false)
+          }
+      }
+    }
+  
+    React.useEffect(() => {
+      window.history.pushState(null, null, window.location.pathname);
+      window.addEventListener('popstate', onBackButtonEvent);
+      return () => {
+        window.removeEventListener('popstate', onBackButtonEvent);  
+      };
+    }, []);
 
     //   React.useEffect(()=>{
     //     history.pushState(null, null, location.href);
@@ -202,12 +258,14 @@ function App() {
 
         if (survey.surveystudentinfo.crossBorder == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
+            sessionStorage.setItem("pathList", storedPathList)
             sessionStorage.setItem((_studentNum + "crossRd"), JSON.stringify(blankSurveyCrd))
             sessionStorage.setItem((_studentNum + "crossRd2"), JSON.stringify(blankSurveyCrd2))
             router.push('/surveyNormalRd')
         }
         if (survey.surveystudentinfo.crossBorder == "是") {
             sessionStorage.setItem("studentNum", _studentNum)
+            sessionStorage.setItem("pathList", storedPathList)
             sessionStorage.setItem((_studentNum + "normalRd"), JSON.stringify(blanksurveyRd))
             sessionStorage.setItem((_studentNum + "normalRd2"), JSON.stringify(blanksurveyRd2))
 
@@ -279,8 +337,8 @@ function App() {
                                     onChange={handleChange}
                                     value={survey.surveystudentinfo.gender}
                                 >
-                                    <FormControlLabel value="男" control={<Radio />} label="男" />
-                                    <FormControlLabel value="女" control={<Radio />} label="女" />
+                                    <FormControlLabel sx={{ color: "black" }} value="男" control={<Radio />} label="男" />
+                                    <FormControlLabel sx={{ color: "black" }} value="女" control={<Radio />} label="女" />
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.gender}</FormHelperText>
                             </FormControl>
@@ -295,11 +353,11 @@ function App() {
                                     onChange={handleChange}
                                     value={survey.surveystudentinfo.age}
                                 >
-                                    <FormControlLabel value="0~4歲" control={<Radio />} label="0~4歲" />
-                                    <FormControlLabel value="5~9歲" control={<Radio />} label="5~9歲" />
-                                    <FormControlLabel value="10~14歲" control={<Radio />} label="10~14歲" />
-                                    <FormControlLabel value="15~19歲" control={<Radio />} label="15~19歲" />
-                                    <FormControlLabel value="≥20歲 " control={<Radio />} label="≥20歲" />
+                                    <FormControlLabel sx={{ color: "black" }} value="0~4歲" control={<Radio />} label="0~4歲" />
+                                    <FormControlLabel sx={{ color: "black" }} value="5~9歲" control={<Radio />} label="5~9歲" />
+                                    <FormControlLabel sx={{ color: "black" }} value="10~14歲" control={<Radio />} label="10~14歲" />
+                                    <FormControlLabel sx={{ color: "black" }} value="15~19歲" control={<Radio />} label="15~19歲" />
+                                    <FormControlLabel sx={{ color: "black" }} value="≥20歲 " control={<Radio />} label="≥20歲" />
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.age}</FormHelperText>
                             </FormControl>
@@ -315,8 +373,8 @@ function App() {
                                     onChange={handleChange}
                                     value={survey.surveystudentinfo.crossBorder}
                                 >
-                                    <FormControlLabel value="是" control={<Radio />} label="是" />
-                                    <FormControlLabel value="否" control={<Radio />} label="否" />
+                                    <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
+                                    <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.crossBorder}</FormHelperText>
                             </FormControl>

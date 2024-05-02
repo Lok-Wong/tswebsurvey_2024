@@ -63,8 +63,8 @@ function App() {
                                     value={stillHaveChild}
                                     onChange={(event) => { setStillHaveChild(event.target.value) }}
                                 >
-                                    <FormControlLabel value="有" control={<Radio />} label="有" />
-                                    <FormControlLabel value="没有" control={<Radio />} label="没有" />
+                                    <FormControlLabel sx={{ color: "black" }} value="有" control={<Radio />} label="有" />
+                                    <FormControlLabel sx={{ color: "black" }} value="没有" control={<Radio />} label="没有" />
                                 </RadioGroup>
                             </FormControl>
                         </div>

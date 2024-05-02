@@ -67,7 +67,18 @@ function App() {
         return blanksurvey;
     }, []);
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+          // If there is a value stored in localStorage, use that
+          if (local_storage_path_list) {
+            return (local_storage_path_list);
+          }
+        }
+      }, []);
+
     const [survey, setSurvey] = React.useState(_initial_value)
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const handleChangeBackHomeTime = (event, name) => {
         if (survey.surveyNormalRd2.directToHomeState == "是") {
@@ -163,6 +174,11 @@ function App() {
         )
     };
 
+    const handleNextButton = () => {
+        sessionStorage.setItem("pathList", storedPathList)
+        router.push('/surveyBadWeather')
+    }
+
     const clearbackHomeData = () => {
         if (survey.surveyNormalRd2.directToHomeState == "否") {
             setSurvey((prevState) => (
@@ -208,6 +224,7 @@ function App() {
 
     React.useEffect(() => {
         setIsClient(true)
+        setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
 
     React.useEffect(() => {
@@ -278,7 +295,49 @@ function App() {
         };
     }, [survey.surveyNormalRd2.leavePickUp, survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition, survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition, survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition])
 
+    React.useEffect(() => {
+        if (storedPathList != null) {
+        console.log("storedPathList12", storedPathList)
+        setStoredPathList([...storedPathList, window.location.pathname])
+        }
+      }, [])
 
+      React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+          router.push("./")
+          return
+        }
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyNormalRd") {
+          router.push("./")
+        }
+      }, [])
+
+      const [finishStatus, setfinishStatus] = React.useState(false);
+
+      const onBackButtonEvent = (e) => {
+        e.preventDefault();
+        if (!finishStatus) {
+            if (window.confirm("Do you want to go back ?")) {
+              setfinishStatus(true)
+              const copyArr = [...storedPathList]
+              const prevPath = copyArr[copyArr.length - 1]
+              copyArr.splice(-1)
+              sessionStorage.setItem('pathList',copyArr)
+              router.push(prevPath)
+            } else {
+                window.history.pushState(null, null, window.location.pathname);
+                setfinishStatus(false)
+            }
+        }
+      }
+    
+      React.useEffect(() => {
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', onBackButtonEvent);
+        return () => {
+          window.removeEventListener('popstate', onBackButtonEvent);  
+        };
+      }, []);
 
     return (
         <main className={styles.main}>
@@ -312,12 +371,12 @@ function App() {
                                     value={survey.surveyNormalRd2.leavePickUp}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="學生自行離校" control={<Radio />} label="學生自行離校" />
-                                    <FormControlLabel value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
-                                    <FormControlLabel value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel value="補習社" control={<Radio />} label="補習社" />
-                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                    <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="學生自行離校" />
+                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="補習社" control={<Radio />} label="補習社" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                     {survey.surveyNormalRd2.leavePickUp == "其他" ?
                                         <Box
                                             component="form"
@@ -351,8 +410,8 @@ function App() {
                                     onChange={handleChange}
                                     value={survey.surveyNormalRd2.directToHomeState}
                                 >
-                                    <FormControlLabel value="是" control={<Radio />} label="是" />
-                                    <FormControlLabel value="否" control={<Radio />} label="否" />
+                                    <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
+                                    <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
@@ -383,15 +442,15 @@ function App() {
                                                 onChange={handleChangeBackHome}
                                                 value={survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition}
                                             >
-                                                <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
-                                                <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
-                                                <FormControlLabel value="校車" control={<Radio />} label="校車" />
-                                                <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
-                                                <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
-                                                <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
-                                                <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
-                                                <FormControlLabel value="步行" control={<Radio />} label="步行" />
-                                                <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                                <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                                                <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                                                <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
+                                                <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
+                                                <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
+                                                <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
+                                                <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
+                                                <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
+                                                <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                 {
                                                     survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition == "其他" ?
                                                         <Box
@@ -453,15 +512,15 @@ function App() {
                                                     onChange={handleChangeBackHome}
                                                     value={survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition}
                                                 >
-                                                    <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
-                                                    <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
-                                                    <FormControlLabel value="校車" control={<Radio />} label="校車" />
-                                                    <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
-                                                    <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
-                                                    <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
-                                                    <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
-                                                    <FormControlLabel value="步行" control={<Radio />} label="步行" />
-                                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                     {
                                                         survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition == "其他" ?
                                                             <Box
@@ -525,15 +584,15 @@ function App() {
                                                     value={survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition}
                                                     onChange={handleChangeBackHome}
                                                 >
-                                                    <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
-                                                    <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
-                                                    <FormControlLabel value="校車" control={<Radio />} label="校車" />
-                                                    <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
-                                                    <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
-                                                    <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
-                                                    <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
-                                                    <FormControlLabel value="步行" control={<Radio />} label="步行" />
-                                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                     {
                                                         survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition == "其他" ?
                                                             <Box
@@ -596,7 +655,7 @@ function App() {
                             <Button onClick={() => router.back()}>
                                 back
                             </Button>
-                            <Button href={'/surveyBadWeather'}>
+                            <Button onClick={handleNextButton}>
                                 next
                             </Button>
 

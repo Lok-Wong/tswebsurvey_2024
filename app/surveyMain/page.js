@@ -9,6 +9,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
+
 function App() {
     const router = useRouter();
 
@@ -41,7 +42,20 @@ function App() {
         return blanksurvey;
     }, []);
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_path_list = sessionStorage.getItem('pathList');
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
+        }
+    }, []);
+
     const [survey, setSurvey] = React.useState(_initial_value)
+
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
+
 
     const handleChange = (event) => {
         const objectName = event.target.name
@@ -58,18 +72,27 @@ function App() {
     }
 
     const handleNextButton = () => {
+
         if (survey.surveyMain.fillAlready == "是") {
+            console.log("setList",storedPathList)
             sessionStorage.setItem("studentNum", _studentNum)
+            sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyFinished')
 
         }
         if (survey.surveyMain.fillAlready == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
+            sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyheadholder')
         }
     }
 
+
     const [isClient, setIsClient] = React.useState(false)
+
+    React.useEffect(() => {
+        setStoredPathList([...storedPathList,window.location.pathname])
+    },[isClient])
 
     React.useEffect(() => {
         console.log("survey:", survey)
@@ -81,6 +104,18 @@ function App() {
 
     React.useEffect(() => {
         setIsClient(true)
+        setStoredPathList(sessionStorage.getItem("pathList")? sessionStorage.getItem("pathList").split(",") : null)
+    }, [])
+
+    React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+            router.push("./")
+            return
+        }
+        let shouldPath = sessionStorage.getItem('pathList'.split(","))
+        if (shouldPath != "/") {
+            router.push("./")
+        }
     }, [])
 
     // const [finishStatus, setfinishStatus] = React.useState(false);
@@ -117,7 +152,7 @@ function App() {
                                 <FormControl
                                     row="true"
                                 >
-                                    <FormLabel>
+                                    <FormLabel sx={{ color: "black" }}>
                                         閣下是否已填寫過「澳門學生出行調查」問卷？
                                     </FormLabel>
                                     <RadioGroup
@@ -126,8 +161,8 @@ function App() {
                                         onChange={handleChange}
                                         value={survey.surveyMain.fillAlready}
                                     >
-                                        <FormControlLabel value="是" control={<Radio />} label="是" />
-                                        <FormControlLabel value="否" control={<Radio />} label="否" />
+                                        <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
+                                        <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
                                     </RadioGroup>
                                 </FormControl>
                             </div>

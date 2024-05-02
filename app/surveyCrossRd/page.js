@@ -162,10 +162,10 @@ function App() {
                                     value={survey.surveyCrossRd.pickup}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="學生自行上學" control={<Radio />} label="學生自行上學" />
-                                    <FormControlLabel value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel value="其他監護人" control={<Radio />} label="其他監護人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="學生自行上學" control={<Radio />} label="學生自行上學" />
+                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
                                     {survey.surveyCrossRd.pickup === "其他監護人" ?
                                         <Box
                                             component="form"
@@ -214,12 +214,12 @@ function App() {
                                     value={survey.surveyCrossRd.portForShcool}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="關閘" control={<Radio />} label="關閘" />
-                                    <FormControlLabel value="青茂" control={<Radio />} label="青茂" />
-                                    <FormControlLabel value="港珠澳" control={<Radio />} label="港珠澳" />
-                                    <FormControlLabel value="橫琴" control={<Radio />} label="橫琴" />
-                                    <FormControlLabel value="內港" control={<Radio />} label="內港" />
-                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                    <FormControlLabel sx={{ color: "black" }} value="關閘" control={<Radio />} label="關閘" />
+                                    <FormControlLabel sx={{ color: "black" }} value="青茂" control={<Radio />} label="青茂" />
+                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳" control={<Radio />} label="港珠澳" />
+                                    <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" />
+                                    <FormControlLabel sx={{ color: "black" }} value="內港" control={<Radio />} label="內港" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
 
                                     {survey.surveyCrossRd.portForShcool === "其他" ?
                                         <Box
@@ -276,54 +276,63 @@ function App() {
                                             <Radio value="電單車（乘客）" />
                                         }
                                         label="電單車（乘客）"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="私家車（乘客）" />
                                         }
                                         label="私家車（乘客）"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="校車" />
                                         }
                                         label="校車"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="巴士" />
                                         }
                                         label="巴士"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="輕軌" />
                                         }
                                         label="輕軌"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="一般的士" />
                                         }
                                         label="一般的士"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="電召的士" />
                                         }
                                         label="電召的士"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="步行" />
                                         }
                                         label="步行"
+                                        sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
                                         control={
                                             <Radio value="其他" />
                                         }
                                         label="其他"
+                                        sx={{ color: "black" }}
                                     />
                                     {survey.surveyCrossRd.commonTransirtation === "其他" ?
                                         <Box

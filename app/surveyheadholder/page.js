@@ -58,8 +58,19 @@ function App() {
     return blanksurvey;
   }, []);
 
+  const _initial_pathListe = React.useMemo(() => {
+    if (typeof window !== 'undefined') {
+      const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+      // If there is a value stored in localStorage, use that
+      if (local_storage_path_list) {
+        return (local_storage_path_list);
+      }
+    }
+  }, []);
+
   const [survey, setSurvey] = React.useState(_initial_value)
   const [helpText, setHelpText] = React.useState(blankHelpText)
+  const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
   const handleHelpText = (eventName, errorText) => {
     const objectName = eventName
@@ -131,6 +142,10 @@ function App() {
     }
 
     sessionStorage.setItem("totalStudentNum", survey.headHolder.residentPopulationStudent)
+    sessionStorage.setItem("shouldPath", "/surveystudentinfo")
+    sessionStorage.setItem("prevPath", "/surveyheadholder")
+    console.log("setList", storedPathList)
+    sessionStorage.setItem("pathList", storedPathList)
     router.push('/surveystudentinfo')
 
   }
@@ -162,7 +177,52 @@ function App() {
 
   React.useEffect(() => {
     setIsClient(true)
+    setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
   }, [])
+
+  React.useEffect(() => {
+    if (storedPathList != null) {
+    console.log("storedPathList12", storedPathList)
+    setStoredPathList([...storedPathList, window.location.pathname])
+    }
+  }, [])
+
+  React.useEffect(() => {
+    if (sessionStorage.getItem('pathList') === null) {
+      router.push("./")
+      return
+    }
+    if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyMain") {
+      router.push("./")
+    }
+  }, [])
+
+  const [finishStatus, setfinishStatus] = React.useState(false);
+
+  const onBackButtonEvent = (e) => {
+    e.preventDefault();
+    if (!finishStatus) {
+      if (window.confirm("Do you want to go back ?")) {
+        setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList',copyArr)
+        router.push(prevPath)
+      } else {
+        window.history.pushState(null, null, window.location.pathname);
+        setfinishStatus(false)
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener('popstate', onBackButtonEvent);
+    return () => {
+      window.removeEventListener('popstate', onBackButtonEvent);
+    };
+  }, []);
 
   return (
     <main className={styles.main}>
@@ -170,7 +230,7 @@ function App() {
         isClient ?
           <div>
             {/* <Survey model={survey} /> */}
-            <h1 style={{ color: "#000000"}}>
+            <h1 style={{ color: "#000000" }}>
               一、學生家庭住戶資料
             </h1>
             <div className={styles.question}>
@@ -322,8 +382,8 @@ function App() {
 
             </div>
             <div className={styles.question}>
-            <Button
-                onClick={()=>router.back()}
+              <Button
+                onClick={() => router.back()}
               >
                 back
               </Button>

@@ -139,10 +139,10 @@ function App() {
                                     value={survey.badWeather.badWeatherPickup}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="學生自行上（放）學 " control={<Radio />} label="學生自行上（放）學 " />
-                                    <FormControlLabel value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel value="其他監護人" control={<Radio />} label="其他監護人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="學生自行上（放）學 " control={<Radio />} label="學生自行上（放）學 " />
+                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
                                     {
                                         survey.badWeather.badWeatherPickup == "其他監護人" ?
 
@@ -179,15 +179,15 @@ function App() {
                                     value={survey.badWeather.badWeatherTransition}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
-                                    <FormControlLabel value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
-                                    <FormControlLabel value="校車" control={<Radio />} label="校車" />
-                                    <FormControlLabel value="巴士" control={<Radio />} label="巴士" />
-                                    <FormControlLabel value="輕軌" control={<Radio />} label="輕軌" />
-                                    <FormControlLabel value="一般的士" control={<Radio />} label="一般的士" />
-                                    <FormControlLabel value="電召的士" control={<Radio />} label="電召的士" />
-                                    <FormControlLabel value="步行" control={<Radio />} label="步行" />
-                                    <FormControlLabel value="其他" control={<Radio />} label="其他" />
+                                    <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
+                                    <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
+                                    <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
+                                    <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
+                                    <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
+                                    <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
+                                    <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
+                                    <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
 
                                     {
                                         survey.badWeather.badWeatherTransition == "其他" ?
