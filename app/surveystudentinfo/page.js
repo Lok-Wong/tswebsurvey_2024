@@ -12,23 +12,29 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import Autocomplete from '@mui/material/Autocomplete';
-import {data,school_type,region} from '../schoolData'
+import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType } from '../schoolData'
 
 function App() {
     const router = useRouter();
 
-    const [stValue, setStValue] = React.useState()
-    const [stInputValue, setStInputValue] = React.useState()
-
-    React.useEffect(() => {
-        console.log("stValue",stValue)
-        console.log("stInputValue",stInputValue)
-    },[stValue,stInputValue])
+    const [stValue, setStValue] = React.useState('')
+    const [stInputValue, setStInputValue] = React.useState('')
+    const [rgValue, setRgValue] = React.useState('')
+    const [rgInputValue, setRgInputValue] = React.useState('')
+    const [shValue, setShValue] = React.useState('')
+    const [shInputValue, setShInputValue] = React.useState('')
+    const [slValue, setSlValue] = React.useState('')
+    const [slInputValue, setSlInputValue] = React.useState('')
+    const [sltValue, setSltValue] = React.useState('')
+    const [sltInputValue, setSltInputValue] = React.useState('')
 
     const blanksurvey = {
         surveystudentinfo: {
-            schoolType:999,
+            schoolType: 999,
+            schoolArea: 999,
+            schoolName: 999,
             classLevel: 999,
+            LevelType: 999,
             schoolName: 999,
             gender: 999,
             age: 999,
@@ -148,9 +154,12 @@ function App() {
     const [survey, setSurvey] = React.useState(_initial_value)
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
-    const [schoolData, setSchoolData] = React.useState(data)
+    const [schoolData, setSchoolData] = React.useState(schoolName)
     const [school_types, setSchool_types] = React.useState(school_type)
     const [regions, setReginos] = React.useState(region)
+    const [adress, setAdress] = React.useState(schoolAddress)
+    const [schoolLevels, setSchoolLevels] = React.useState(schoolLevel)
+    const [levelTypes, setLevelTypes] = React.useState(levelType)
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -187,7 +196,6 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-            console.log("storedPathList12", storedPathList)
             setStoredPathList([...storedPathList, window.location.pathname])
         }
     }, [])
@@ -209,7 +217,6 @@ function App() {
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + "studentInfo"), JSON.stringify(survey))
         setHelpText(blankHelpText)
-        console.log(survey)
     }, [survey])
 
     const [finishStatus, setfinishStatus] = React.useState(false);
@@ -239,7 +246,54 @@ function App() {
         };
     }, []);
 
+    React.useEffect(() => {
+        setRgValue("")
+        setRgInputValue("")
+    }, [stValue, stInputValue])
 
+    React.useEffect(() => {
+        setShValue("")
+        setShInputValue("")
+    }, [rgValue, rgInputValue])
+
+    React.useEffect(() => {
+        setSlValue("")
+        setSlInputValue("")
+    }, [shValue, shInputValue])
+
+    React.useEffect(() => {
+        setSltValue("")
+        setSltInputValue("")
+    }, [slValue, slInputValue])
+
+    const getSchoolObject = (stValue, rgValue) => {
+        let type
+        let area
+        if (stValue && rgValue) {
+            switch (stValue) {
+                case "正規教育":
+                    type = "fromal"
+                    break;
+                case "回歸教育":
+                    type = "unfromal"
+                    break;
+            }
+
+            switch (rgValue) {
+                case "澳門":
+                    area = "macau";
+                    break;
+                case "氹仔":
+                    area = "taipa";
+                    break;
+                case "路環":
+                    area = "colane";
+                    break;
+            }
+
+            return schoolData[type][area];
+        }
+    }
 
     const handleNextButton = () => {
 
@@ -298,86 +352,210 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-type-label"><h3>1.)  教育類型：</h3></FormLabel>
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 1, width: '100%' },
-                                    }}
-                                    noValidate
+                                <RadioGroup
+                                    id="school-type"
+                                    aria-labelledby="school-type-label"
+                                    name="schoolType"
+                                    onChange={(event) => { setStValue(event.target.value) }}
+                                    value={stValue}
                                 >
-                                    <Autocomplete
-                                        freeSolo
-                                        id="school-type"
-                                        name='schoolType'
-                                        value={stValue}
-                                        inputValue={stInputValue}
-                                        onChange={(event,newValue) => {
-                                            setStValue(newValue)
-                                        }}
-                                        onInputChange={(event,newInputValue) => {
-                                            setStInputValue(newInputValue)
-                                        }}
-                                        options={school_types}
-                                        renderInput={(params) => 
-                                            <TextField {...params}></TextField>
-                                        }
-                                        // value={survey.surveystudentinfo.schoolType}
-                                    />
-                                </Box>
+                                    <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="正規教育" />
+                                    <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="回歸教育" />
+                                </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
                             </FormControl>
                         </div>
 
+                        {
+                            stValue ?
+
+                                <div className={styles.question}>
+                                    <FormControl>
+                                        <FormLabel id="school-area-label"><h3>2.)  學校所屬地區：</h3></FormLabel>
+                                        <RadioGroup
+                                            id="school-area"
+                                            aria-labelledby="school-area-label"
+                                            name="schoolArea"
+                                            onChange={(event) => { setRgValue(event.target.value) }}
+                                            value={rgValue}
+                                        >
+                                            <FormControlLabel sx={{ color: "black" }} value="澳門" control={<Radio />} label="澳門" />
+                                            <FormControlLabel sx={{ color: "black" }} value="氹仔" control={<Radio />} label="氹仔" />
+                                            <FormControlLabel sx={{ color: "black" }} value="路環" control={<Radio />} label="路環" />
+                                            <FormControlLabel sx={{ color: "black" }} value="棋琴" control={<Radio />} label="棋琴" />
+                                        </RadioGroup>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
+                                    </FormControl>
+                                </div>
+                                :
+                                null
+                        }
+
+                        {
+                            (stValue && rgValue) ?
+
+                                <div className={styles.question}>
+                                    <FormControl>
+                                        <FormLabel id="school-name-label"><h3>3.)  學校名稱：　　　　　　　　</h3></FormLabel>
+                                        {/* <Box
+                                            component="form"
+                                            sx={{
+                                                '& > :not(style)': { m: 1, width: '100%', maxWidth: '100%', minWidth: '100%' },
+                                            }}
+                                            noValidate
+                                        > */}
+                                        <Autocomplete
+                                            sx={{
+                                                m: 1
+                                            }}
+                                            freeSolo
+                                            id="schoolName"
+                                            name='schoolName'
+                                            value={shValue}
+                                            inputValue={shInputValue}
+                                            onChange={(event, newValue) => {
+                                                setShValue(newValue)
+                                            }}
+                                            onInputChange={(event, newInputValue) => {
+                                                setShInputValue(newInputValue)
+                                            }}
+                                            options={getSchoolObject(stValue, rgValue) ? getSchoolObject(stValue, rgValue) : []}
+                                            renderInput={(params) =>
+                                                <TextField {...params}></TextField>
+                                            }
+                                        />
+                                        {/* </Box> */}
+                                        <p>
+                                            {adress[shInputValue] ?
+                                                "地址：" + adress[shInputValue]
+                                                :
+                                                null
+                                            }
+                                        </p>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
+                                    </FormControl>
+                                </div>
+                                :
+                                null
+                        }
+
+                        {
+                            shValue || shInputValue ?
+                                <div className={styles.question} >
+                                    <FormControl>
+                                        <FormLabel id="class-level-label"><h3>4)  就讀學級：</h3></FormLabel>
+                                        {/* <Box
+                                            component="form"
+                                            sx={{
+                                                '& > :not(style)': { m: 1, width: '150%' },
+                                            }}
+                                            noValidate
+                                        >
+                                            <Autocomplete
+                                                id="class-level"
+                                                label="年級"
+                                                name='classLevel'
+                                                freeSolo
+                                                value={slValue}
+                                                inputValue={slInputValue}
+                                                onChange={(event, newValue) => {
+                                                    setSlValue(newValue)
+                                                }}
+                                                onInputChange={(event, newInputValue) => {
+                                                    setSlInputValue(newInputValue)
+                                                }}
+                                                options={schoolLevels[shInputValue] ? schoolLevels[shInputValue] : []}
+                                                renderInput={(params) =>
+                                                    <TextField {...params}></TextField>
+                                                }
+                                            />
+                                        </Box> */}
+                                        <RadioGroup
+                                            id="class-level"
+                                            aria-labelledby="class-level-label"
+                                            name="classLevel"
+                                            onChange={(event) => { setSlValue(event.target.value) }}
+                                            value={slValue}
+                                        >
+                                            {
+                                                schoolLevels[shInputValue] ?
+                                                    schoolLevels[shInputValue].map((item, index) => {
+                                                        return (
+                                                            <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
+                                                        )
+                                                    })
+                                                    :
+                                                    <TextField onChange={(event) => {setSlValue(event.target.value)}} sx={{m:1}} label={"請輸入"}></TextField>
+                                            }
+                                        </RadioGroup>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
+                                    </FormControl>
+                                </div>
+                                :
+                                null
+                        }
+
+                        {
+                            slValue ?
+
+                                <div className={styles.question} >
+                                    <FormControl>
+                                        <FormLabel id="level-type-label"><h3>5)  就讀年級：</h3></FormLabel>
+                                        {/* <Box
+                                            component="form"
+                                            sx={{
+                                                '& > :not(style)': { m: 1, width: '150%' },
+                                            }}
+                                            noValidate
+                                        >
+                                            <Autocomplete
+                                                id="level-type"
+                                                label="年級"
+                                                name='leveltype'
+                                                freeSolo
+                                                value={sltValue}
+                                                inputValue={sltInputValue}
+                                                onChange={(event, newValue) => {
+                                                    setSltValue(newValue)
+                                                }}
+                                                onInputChange={(event, newInputValue) => {
+                                                    setSltInputValue(newInputValue)
+                                                }}
+                                                options={levelTypes[slValue] ? levelTypes[slValue] : []}
+                                                renderInput={(params) =>
+                                                    <TextField {...params}></TextField>
+                                                }
+                                            />
+                                        </Box> */}
+                                        <RadioGroup
+                                            id="level-type"
+                                            aria-labelledby="level-type-label"
+                                            name="leveltype"
+                                            onChange={(event) => { setSltValue(event.target.value) }}
+                                            value={sltValue}
+                                        >
+                                            {
+                                                levelTypes[slValue] ?
+                                                levelTypes[slValue].map((item, index) => {
+                                                        return (
+                                                            <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
+                                                        )
+                                                    })
+                                                    :
+                                                    <TextField onChange={(event) => {setSltValue(event.target.value)}} sx={{m:1}} label={"請輸入"}></TextField>
+                                            }
+                                        </RadioGroup>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
+                                    </FormControl>
+                                </div>
+                                :
+                                null
+                        }
+
+
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="school-name-label"><h3>2)  學校名稱：</h3></FormLabel>
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 1, width: '100%' },
-                                    }}
-                                    noValidate
-                                >
-                                    <TextField
-                                        id="school-name"
-                                        label="學校"
-                                        variant="outlined"
-                                        name='schoolName'
-                                        onChange={handleChange}
-                                        value={survey.surveystudentinfo.schoolName == 999 ? null : survey.surveystudentinfo.schoolName}
-                                    />
-                                </Box>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
-                            </FormControl>
-                        </div>
-
-                        <div className={styles.question} >
-                            <FormControl>
-                                <FormLabel id="class-level-label"><h3>1)  就讀年級：</h3></FormLabel>
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 1, width: '50%' },
-                                    }}
-                                    noValidate
-                                >
-                                    <TextField
-                                        id="class-level"
-                                        label="年級"
-                                        variant="outlined"
-                                        name='classLevel'
-                                        onChange={handleChange}
-                                        value={survey.surveystudentinfo.classLevel == 999 ? null : survey.surveystudentinfo.classLevel}
-                                    />
-                                </Box>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
-                            </FormControl>
-                        </div>
-
-
-                        <div className={styles.question}>
-                            <FormControl>
-                                <FormLabel id="gender-label"><h3>3)  姓別：</h3></FormLabel>
+                                <FormLabel id="gender-label"><h3>6)  姓別：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="studentofRespondents-radio-buttons-group-label"
                                     name="gender"
@@ -393,7 +571,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="age-label"><h3>4)  年齡</h3></FormLabel>
+                                <FormLabel id="age-label"><h3>7)  年齡</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="age-label"
                                     name="age"
@@ -412,7 +590,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="cross-border-student-label"><h3>5)  學生上學及放學是否需跨境：</h3></FormLabel>
+                                <FormLabel id="cross-border-student-label"><h3>8)  學生上學及放學是否需跨境：</h3></FormLabel>
                                 <RadioGroup
                                     id="crossBorderCheck"
                                     aria-labelledby="cross-border-student-label"
