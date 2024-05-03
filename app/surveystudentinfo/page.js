@@ -297,30 +297,30 @@ function App() {
 
     const handleNextButton = () => {
 
-        if (survey.surveystudentinfo.classLevel == "999" || survey.surveystudentinfo.classLevel == "") {
-            handleHelpText("classLevel", "請選擇年級")
-            return
-        }
+        // if (survey.surveystudentinfo.classLevel == "999" || survey.surveystudentinfo.classLevel == "") {
+        //     handleHelpText("classLevel", "請選擇年級")
+        //     return
+        // }
 
-        if (survey.surveystudentinfo.schoolName == "999" || survey.surveystudentinfo.schoolName == "") {
-            handleHelpText("schoolName", "請填寫學校名稱")
-            return
-        }
+        // if (survey.surveystudentinfo.schoolName == "999" || survey.surveystudentinfo.schoolName == "") {
+        //     handleHelpText("schoolName", "請填寫學校名稱")
+        //     return
+        // }
 
-        if (survey.surveystudentinfo.gender == "999") {
-            handleHelpText('gender', "請選擇性別")
-            return
-        }
+        // if (survey.surveystudentinfo.gender == "999") {
+        //     handleHelpText('gender', "請選擇性別")
+        //     return
+        // }
 
-        if (survey.surveystudentinfo.age == "999") {
-            handleHelpText('age', "請選擇年齡")
-            return
-        }
+        // if (survey.surveystudentinfo.age == "999") {
+        //     handleHelpText('age', "請選擇年齡")
+        //     return
+        // }
 
-        if (survey.surveystudentinfo.crossBorder == "999") {
-            handleHelpText('crossBorder', "請選擇是否需跨境")
-            return
-        }
+        // if (survey.surveystudentinfo.crossBorder == "999") {
+        //     handleHelpText('crossBorder', "請選擇是否需跨境")
+        //     return
+        // }
 
         if (survey.surveystudentinfo.crossBorder == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
