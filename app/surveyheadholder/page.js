@@ -364,13 +364,12 @@ function App() {
               <FormControl>
                 <FormLabel id="vehicle-radio-buttons-group-label"><h3>4)	所有家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
-                  row
                   aria-labelledby="vehicle-radio-buttons-group-label"
                   value={survey.headHolder.vehicle}
                   name="vehicle"
                   onChange={handleChange}
                 >
-                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單" />
+                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="私家車" control={<Radio />} label="私家車" />
                   <FormControlLabel sx={{ color: "black" }} value="電單車" control={<Radio />} label="電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="都没有" control={<Radio />} label="都没有" />

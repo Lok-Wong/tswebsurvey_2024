@@ -382,7 +382,7 @@ function App() {
                                             <FormControlLabel sx={{ color: "black" }} value="澳門" control={<Radio />} label="澳門" />
                                             <FormControlLabel sx={{ color: "black" }} value="氹仔" control={<Radio />} label="氹仔" />
                                             <FormControlLabel sx={{ color: "black" }} value="路環" control={<Radio />} label="路環" />
-                                            <FormControlLabel sx={{ color: "black" }} value="棋琴" control={<Radio />} label="棋琴" />
+                                            <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" />
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
                                     </FormControl>
@@ -425,7 +425,7 @@ function App() {
                                             }
                                         />
                                         {/* </Box> */}
-                                        <p>
+                                        <p style={{color:"#000000"}}>
                                             {adress[shInputValue] ?
                                                 "地址：" + adress[shInputValue]
                                                 :
