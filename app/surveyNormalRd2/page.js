@@ -13,36 +13,40 @@ import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import FormHelperText from '@mui/material/FormHelperText';
 
 function App() {
     const router = useRouter();
 
     const blanksurvey = {
-        surveyNormalRd2: {
             startTime: new Date(),
-            leaveSchoolTime: 999,
+            leaveSchoolTime: "",
             otherleavePickUp: 999,
             leavePickUp: 999,
             directToHomeState: 999,
             directToHomeYes: {
-                arivalHomeTime: 999,
+                arivalHomeTime: "",
                 arivalHomeTransition: 999,
                 otherarivalHomeTransition: 999
             },
             directToHomeNo: {
                 leaveDestination: 999,
-                leaveDestinationTime: 999,
+                leaveDestinationTime: "",
                 leaveDestinationTransition: 999,
                 otherLeaveDestinationTransition: 999,
-                destinationBackHomeStartTime: 999,
-                destinationBackHomeEndTime: 999,
+                destinationBackHomeStartTime: "",
+                destinationBackHomeEndTime: "",
                 leaveDestinationBackHomeTransition: 999,
                 otherLeaveDestinationBackHomeTransition: 999
             }
-        }
     }
+
+    const blankHelpText = {}
+
+    const [helpText, setHelpText] = React.useState(blankHelpText)
+
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
 
@@ -80,34 +84,38 @@ function App() {
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
+    const handleHelpText = (eventName, errorText) => {
+        const objectName = eventName
+        setHelpText((prevState) => (
+          {
+            ...prevState,
+            [objectName]: errorText
+          }
+        ))
+      }
+
     const handleChangeBackHomeTime = (event, name) => {
-        if (survey.surveyNormalRd2.directToHomeState == "是") {
+        if (survey.directToHomeState == "是") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeYes: {
-                            ...prevState.surveyNormalRd2.directToHomeYes,
+                            ...prevState.directToHomeYes,
                             [name]: event.$d
                         }
-                    }
                 }
             )
             )
         };
 
-        if (survey.surveyNormalRd2.directToHomeState == "否") {
+        if (survey.directToHomeState == "否") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeNo: {
-                            ...prevState.surveyNormalRd2.directToHomeNo,
+                            ...prevState.directToHomeNo,
                             [name]: event.$d
                         }
-                    }
                 }
             )
             )
@@ -115,33 +123,27 @@ function App() {
     }
 
     const handleChangeBackHome = (event) => {
-        if (survey.surveyNormalRd2.directToHomeState == "是") {
+        if (survey.directToHomeState == "是") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeYes: {
-                            ...prevState.surveyNormalRd2.directToHomeYes,
+                            ...prevState.directToHomeYes,
                             [event.target.name]: event.target.value
                         }
-                    }
                 }
             )
             )
         };
 
-        if (survey.surveyNormalRd2.directToHomeState == "否") {
+        if (survey.directToHomeState == "否") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeNo: {
-                            ...prevState.surveyNormalRd2.directToHomeNo,
+                            ...prevState.directToHomeNo,
                             [event.target.name]: event.target.value
                         }
-                    }
                 }
             )
             )
@@ -153,11 +155,8 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                surveyNormalRd2: {
-                    ...prevState.surveyNormalRd2,
                     [objectName]: event.target.value
                 }
-            }
         )
 
         )
@@ -166,54 +165,98 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-            surveyNormalRd2: {
-                ...prevState.surveyNormalRd2,
                 [name]: event.$d
-            }
         })
         )
     };
 
     const handleNextButton = () => {
+        if (survey.leaveSchoolTime == ""){
+            handleHelpText("leaveSchoolTime", "請填寫離校時間")
+            return
+        }
+
+        if (survey.leavePickUp == 999) {
+            handleHelpText("leavePickUp", "請選擇接送人")
+            return
+        }
+
+        if (survey.directToHomeState == 999) {
+            handleHelpText("directToHomeState", "請選擇是否直接回家")
+            return
+        }
+
+        if (survey.directToHomeState == "是") {
+            if (survey.directToHomeYes.arivalHomeTime == "") {
+                handleHelpText("arivalHomeTime", "請填寫到達家時間")
+                return
+            }
+
+            if (survey.directToHomeYes.arivalHomeTransition == 999) {
+                handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
+                return
+            }
+        }
+
+        if (survey.directToHomeState == "否") {
+            if (survey.directToHomeNo.leaveDestinationTime == "") {
+                handleHelpText("leaveDestinationTime", "請填寫到達目的地時間")
+                return
+            }
+
+            if (survey.directToHomeNo.leaveDestinationTransition == 999) {
+                handleHelpText("leaveDestinationTransition", "請選擇回家主要的交通方式")
+                return
+            }
+
+            if (survey.directToHomeNo.destinationBackHomeStartTime == "") {
+                handleHelpText("destinationBackHomeStartTime", "請填寫從上述地方出發回家的時間")
+                return
+            }
+
+            if (survey.directToHomeNo.destinationBackHomeEndTime == "") {
+                handleHelpText("destinationBackHomeEndTime", "請填寫到達家時間")
+                return
+            }
+
+            if (survey.directToHomeNo.leaveDestinationBackHomeTransition == 999) {
+                handleHelpText("leaveDestinationBackHomeTransition", "請選擇前目的地回家主要的交通方式")
+                return
+            }
+        }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyBadWeather')
     }
 
     const clearbackHomeData = () => {
-        if (survey.surveyNormalRd2.directToHomeState == "否") {
+        if (survey.directToHomeState == "否") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeYes: {
-                            arivalHomeTime: 999,
+                            arivalHomeTime: "",
                             arivalHomeTransition: 999,
                             otherarivalHomeTransition: 999
                         }
-                    }
                 }
             )
             )
         };
 
-        if (survey.surveyNormalRd2.directToHomeState == "是") {
+        if (survey.directToHomeState == "是") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeNo: {
                             leaveDestination: 999,
-                            leaveDestinationTime: 999,
+                            leaveDestinationTime: "",
                             leaveDestinationTransition: 999,
                             otherLeaveDestinationTransition: 999,
-                            destinationBackHomeStartTime: 999,
-                            destinationBackHomeEndTime: 999,
+                            destinationBackHomeStartTime: "",
+                            destinationBackHomeEndTime: "",
                             leaveDestinationBackHomeTransition: 999,
                             otherLeaveDestinationBackHomeTransition: 999
                         }
-                    }
                 }
             )
             )
@@ -229,71 +272,60 @@ function App() {
 
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + 'normalRd2'), JSON.stringify(survey))
+        setHelpText(blankHelpText)
         console.log(survey)
     }, [survey])
 
     React.useEffect(() => {
         clearbackHomeData()
-    }, [survey.surveyNormalRd2.directToHomeState])
+    }, [survey.directToHomeState])
 
     React.useEffect(() => {
-        if (survey.surveyNormalRd2.leavePickUp != "其他") {
+        if (survey.leavePickUp != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         otherleavePickUp: 999
                     }
-                }
             ))
         };
 
-        if (survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition != "其他") {
+        if (survey.directToHomeYes.arivalHomeTransition != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeYes: {
-                            ...prevState.surveyNormalRd2.directToHomeYes,
+                            ...prevState.directToHomeYes,
                             otherarivalHomeTransition: 999
-                        }
                     }
                 }
             ))
         };
 
-        if (survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition != "其他") {
+        if (survey.directToHomeNo.leaveDestinationTransition != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeNo: {
-                            ...prevState.surveyNormalRd2.directToHomeNo,
+                            ...prevState.directToHomeNo,
                             otherLeaveDestinationTransition: 999
-                        }
                     }
                 }
             ))
         };
 
-        if (survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition != "其他") {
+        if (survey.directToHomeNo.leaveDestinationBackHomeTransition != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd2: {
-                        ...prevState.surveyNormalRd2,
                         directToHomeNo: {
-                            ...prevState.surveyNormalRd2.directToHomeNo,
+                            ...prevState.directToHomeNo,
                             otherLeaveDestinationBackHomeTransition: 999
-                        }
                     }
                 }
             ))
         };
-    }, [survey.surveyNormalRd2.leavePickUp, survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition, survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition, survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition])
+    }, [survey.leavePickUp, survey.directToHomeYes.arivalHomeTransition, survey.directToHomeNo.leaveDestinationTransition, survey.directToHomeNo.leaveDestinationBackHomeTransition])
 
     React.useEffect(() => {
         if (storedPathList != null) {
@@ -353,13 +385,14 @@ function App() {
                                 <FormLabel id="evening-leave-school-time-label"><h3>5) 離校時間（24小時制）:</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <TimePicker
+                                        <DesktopTimePicker
                                             ampm={false}
-                                            value={dayjs(survey.surveyNormalRd2.leaveSchoolTime)}
+                                            value={dayjs(survey.leaveSchoolTime)}
                                             onChange={(event) => handleTimeChange(event, "leaveSchoolTime")}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.leaveSchoolTime}</FormHelperText>
                             </FormControl>
                         </div>
                         <div className={styles.question}>
@@ -368,7 +401,7 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="pickup-leave-school-way-label"
                                     name="leavePickUp"
-                                    value={survey.surveyNormalRd2.leavePickUp}
+                                    value={survey.leavePickUp}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="學生自行離校" />
@@ -377,7 +410,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社" control={<Radio />} label="補習社" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
-                                    {survey.surveyNormalRd2.leavePickUp == "其他" ?
+                                    {survey.leavePickUp == "其他" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -392,13 +425,15 @@ function App() {
                                                 variant="filled"
                                                 onChange={handleChange}
                                                 name="otherleavePickUp"
-                                                value={survey.surveyNormalRd2.otherleavePickUp == 999 ? "" : survey.surveyNormalRd2.otherleavePickUp}
+                                                value={survey.otherleavePickUp == 999 ? "" : survey.otherleavePickUp}
                                             />
                                         </Box>
                                         :
                                         null
                                     }
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.leavePickUp}</FormHelperText>
+
                             </FormControl>
                         </div>
                         <div className={styles.question}>
@@ -408,30 +443,34 @@ function App() {
                                     aria-labelledby="back-home-dircetly-label"
                                     name="directToHomeState"
                                     onChange={handleChange}
-                                    value={survey.surveyNormalRd2.directToHomeState}
+                                    value={survey.directToHomeState}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
                                     <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.directToHomeState}</FormHelperText>
                             </FormControl>
+
                         </div>
 
                         {
-                            survey.surveyNormalRd2.directToHomeState == "是" ?
+                            survey.directToHomeState == "是" ?
                                 <div>
                                     <div className={styles.question}>
                                         <FormControl className={styles.inlineQuestion}>
                                             <FormLabel id="arrival-home-time-label"><h3>到達家時間（24小時制）:</h3></FormLabel>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DemoContainer className={styles.question} components={['TimePicker']}>
-                                                    <TimePicker
+                                                    <DesktopTimePicker
                                                         ampm={false}
-                                                        value={dayjs(survey.surveyNormalRd2.directToHomeYes.arivalHomeTime)}
+                                                        value={dayjs(survey.directToHomeYes.arivalHomeTime)}
                                                         onChange={(event) => handleChangeBackHomeTime(event, "arivalHomeTime")}
                                                     />
                                                 </DemoContainer>
                                             </LocalizationProvider>
+                                            <FormHelperText sx={{ color: 'red' }}>{helpText.arivalHomeTime}</FormHelperText>
                                         </FormControl>
+
                                     </div>
                                     <div className={styles.question}>
                                         <FormControl>
@@ -440,7 +479,7 @@ function App() {
                                                 aria-labelledby="arrival-home-transition-label"
                                                 name="arivalHomeTransition"
                                                 onChange={handleChangeBackHome}
-                                                value={survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition}
+                                                value={survey.directToHomeYes.arivalHomeTransition}
                                             >
                                                 <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
                                                 <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
@@ -452,7 +491,7 @@ function App() {
                                                 <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
                                                 <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                 {
-                                                    survey.surveyNormalRd2.directToHomeYes.arivalHomeTransition == "其他" ?
+                                                    survey.directToHomeYes.arivalHomeTransition == "其他" ?
                                                         <Box
                                                             component="form"
                                                             sx={{
@@ -467,18 +506,20 @@ function App() {
                                                                 variant="filled"
                                                                 onChange={handleChangeBackHome}
                                                                 name="otherarivalHomeTransition"
-                                                                value={survey.surveyNormalRd2.directToHomeYes.otherarivalHomeTransition == 999 ? "" : survey.surveyNormalRd2.directToHomeYes.otherarivalHomeTransition}
+                                                                value={survey.directToHomeYes.otherarivalHomeTransition == 999 ? "" : survey.directToHomeYes.otherarivalHomeTransition}
                                                             />
                                                         </Box>
                                                         :
                                                         null
                                                 }
                                             </RadioGroup>
+                                            <FormHelperText sx={{ color: 'red' }}>{helpText.arivalHomeTransition}</FormHelperText>
                                         </FormControl>
+
                                     </div>
                                 </div>
                                 :
-                                survey.surveyNormalRd2.directToHomeState == "否" ?
+                                survey.directToHomeState == "否" ?
                                     <div>
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
@@ -487,21 +528,25 @@ function App() {
                                                 <Button>
                                                     touch and choose loaction
                                                 </Button>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.arivalHomeTransition}</FormHelperText>
                                             </FormControl>
+
                                         </div>
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
                                                 <FormLabel id="leave-shcool-arrival-destination-time-label"><h3>到達目的地時間（24小時制）:</h3></FormLabel>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                                        <TimePicker
+                                                        <DesktopTimePicker
                                                             ampm={false}
-                                                            value={dayjs(survey.surveyNormalRd2.directToHomeNo.leaveDestinationTime)}
+                                                            value={dayjs(survey.directToHomeNo.leaveDestinationTime)}
                                                             onChange={(event) => handleChangeBackHomeTime(event, "leaveDestinationTime")}
                                                         />
                                                     </DemoContainer>
                                                 </LocalizationProvider>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.leaveDestinationTime}</FormHelperText>
                                             </FormControl>
+
                                         </div>
                                         <div className={styles.question}>
                                             <FormControl>
@@ -510,7 +555,7 @@ function App() {
                                                     aria-labelledby="leave-shcool-arrival-destination-transition-label"
                                                     name="leaveDestinationTransition"
                                                     onChange={handleChangeBackHome}
-                                                    value={survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition}
+                                                    value={survey.directToHomeNo.leaveDestinationTransition}
                                                 >
                                                     <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
                                                     <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
@@ -522,7 +567,7 @@ function App() {
                                                     <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
                                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                     {
-                                                        survey.surveyNormalRd2.directToHomeNo.leaveDestinationTransition == "其他" ?
+                                                        survey.directToHomeNo.leaveDestinationTransition == "其他" ?
                                                             <Box
                                                                 component="form"
                                                                 sx={{
@@ -537,42 +582,48 @@ function App() {
                                                                     variant="filled"
                                                                     onChange={handleChangeBackHome}
                                                                     name="otherLeaveDestinationTransition"
-                                                                    value={survey.surveyNormalRd2.directToHomeNo.otherLeaveDestinationTransition == 999 ? "" : survey.surveyNormalRd2.directToHomeNo.otherLeaveDestinationTransition}
+                                                                    value={survey.directToHomeNo.otherLeaveDestinationTransition == 999 ? "" : survey.directToHomeNo.otherLeaveDestinationTransition}
                                                                 />
                                                             </Box>
                                                             :
                                                             null
                                                     }
                                                 </RadioGroup>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.leaveDestinationTransition}</FormHelperText>
                                             </FormControl>
+
                                         </div>
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
                                                 <FormLabel id="leave-shcool-arrival-destination-time-label"><h3>從上述地方出發回家的時間（24小時制）:</h3></FormLabel>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                                        <TimePicker
+                                                        <DesktopTimePicker
                                                             ampm={false}
-                                                            value={dayjs(survey.surveyNormalRd2.directToHomeNo.destinationBackHomeStartTime)}
+                                                            value={dayjs(survey.directToHomeNo.destinationBackHomeStartTime)}
                                                             onChange={(event) => handleChangeBackHomeTime(event, "destinationBackHomeStartTime")}
                                                         />
                                                     </DemoContainer>
                                                 </LocalizationProvider>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.destinationBackHomeStartTime}</FormHelperText>
                                             </FormControl>
+
                                         </div>
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
                                                 <FormLabel id="leave-shcool-arrival-destination-time-label"><h3>到達家時間（24小時制）:</h3></FormLabel>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                                        <TimePicker
+                                                        <DesktopTimePicker
                                                             ampm={false}
-                                                            value={dayjs(survey.surveyNormalRd2.directToHomeNo.destinationBackHomeEndTime)}
+                                                            value={dayjs(survey.directToHomeNo.destinationBackHomeEndTime)}
                                                             onChange={(event) => { handleChangeBackHomeTime(event, "destinationBackHomeEndTime") }}
                                                         />
                                                     </DemoContainer>
                                                 </LocalizationProvider>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.destinationBackHomeEndTime}</FormHelperText>
                                             </FormControl>
+
                                         </div>
                                         <div className={styles.question}>
 
@@ -581,7 +632,7 @@ function App() {
                                                 <RadioGroup
                                                     aria-labelledby="leave-shcool-and-back-home-transition-label"
                                                     name="leaveDestinationBackHomeTransition"
-                                                    value={survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition}
+                                                    value={survey.directToHomeNo.leaveDestinationBackHomeTransition}
                                                     onChange={handleChangeBackHome}
                                                 >
                                                     <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
@@ -594,7 +645,7 @@ function App() {
                                                     <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
                                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                     {
-                                                        survey.surveyNormalRd2.directToHomeNo.leaveDestinationBackHomeTransition == "其他" ?
+                                                        survey.directToHomeNo.leaveDestinationBackHomeTransition == "其他" ?
                                                             <Box
                                                                 component="form"
                                                                 sx={{
@@ -607,7 +658,7 @@ function App() {
                                                                     id="leave-shcool-and-back-home-transition-other-textfill"
                                                                     label="其他"
                                                                     variant="filled"
-                                                                    value={survey.surveyNormalRd2.directToHomeNo.otherLeaveDestinationBackHomeTransition == 999 ? "" : survey.surveyNormalRd2.directToHomeNo.otherLeaveDestinationBackHomeTransition}
+                                                                    value={survey.directToHomeNo.otherLeaveDestinationBackHomeTransition == 999 ? "" : survey.directToHomeNo.otherLeaveDestinationBackHomeTransition}
                                                                     name='otherLeaveDestinationBackHomeTransition'
                                                                     onChange={handleChangeBackHome}
                                                                 />
@@ -616,47 +667,20 @@ function App() {
                                                             null
                                                     }
                                                 </RadioGroup>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.leaveDestinationBackHomeTransition}</FormHelperText>
                                             </FormControl>
+
                                         </div>
                                     </div>
                                     :
                                     null
                         }
-
-
-
-                        {/* <h1>
-                    2.4 學生出行意見和建議
-                </h1>
-
-                <div className={styles.question}>
-                    <FormControl sx={{
-                        m:1, width:"100%"
-                    }}>
-                        <FormLabel id="student-suggestion-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 1, width: '60%' },
-                            }}
-                            noValidate
-                            >
-                            <TextField 
-                                id="student-suggestion-text" 
-                                label="年級" 
-                                variant="outlined" 
-                                multiline
-                            />
-                        </Box>
-                    </FormControl>
-                </div> */}
-
                         <div className={styles.question}>
                             <Button onClick={() => router.back()}>
-                                back
+                                上一頁
                             </Button>
                             <Button onClick={handleNextButton}>
-                                next
+                                下一頁  
                             </Button>
 
                         </div>

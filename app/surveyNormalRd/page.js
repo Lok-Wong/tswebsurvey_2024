@@ -13,23 +13,21 @@ import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 
 function App() {
     const router = useRouter();
 
     const blanksurvey = {
-        surveyNormalRd: {
             startTime: new Date(),
             pickup: 999,
             otherOfPickup: 999,
-            pickupTimeStart: 999,
-            pickupTimeEnd: 999,
+            pickupTimeStart: "",
+            pickupTimeEnd: "",
             commonTransirtation: 999,
             otherOfCommonTransirtation: 999,
-        }
     }
 
     const blankHelpText = {
@@ -95,10 +93,7 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                surveyNormalRd: {
-                    ...prevState.surveyNormalRd,
                     [objectName]: event.target.value
-                }
             }
         )
 
@@ -108,41 +103,52 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-            surveyNormalRd: {
-                ...prevState.surveyNormalRd,
                 [name]: event.$d
-            }
         })
         )
     };
 
     const handleNextButton = () => {
 
-        if (survey.surveyNormalRd.pickup == "999") {
+        if (survey.pickup == "999") {
             handleHelpText("pickup", "請選擇一個選項")
             return
         }
 
-        if (survey.surveyNormalRd.pickup == "其他"){
-            if (survey.surveyNormalRd.otherOfPickup == "999" || survey.surveyNormalRd.otherOfPickup == ""){
+        if (survey.pickup == "其他"){
+            if (survey.otherOfPickup == "999" || survey.otherOfPickup == ""){
                 handleHelpText("pickup", "請填寫其他")
                 return
             }
         }
 
-        if ((survey.surveyNormalRd.pickupTimeStart > survey.surveyNormalRd.pickupTimeEnd) || (survey.surveyNormalRd.pickupTimeEnd < survey.surveyNormalRd.pickupTimeStart) ) {
-            handleHelpText("pickupTimeStart", "出發時間不能大於到達時間")
-            handleHelpText("pickupTimeEnd", "到達時間不能小於出發時間")
+        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart) ) {
+            handleHelpText("pickupTimeStart", "出發時間不能晚過到達時間")
+            handleHelpText("pickupTimeEnd", "到達時間不能早過出發時間")
             return
         }       
 
-        if (survey.surveyNormalRd.commonTransirtation == "999") {
+        if (survey.pickupTimeStart == survey.pickupTimeEnd) {
+            handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
+            handleHelpText("pickupTimeEnd", "到達時間不能等於出發時間")
+
+        }
+
+        if (survey.pickupTimeStart == "") {
+            handleHelpText("pickupTimeStart", "請選擇出發時間")
+        }
+
+        if (survey.pickupTimeEnd == "") {
+            handleHelpText("pickupTimeEnd", "請選擇到達時間")
+        }
+
+        if (survey.commonTransirtation == "999") {
             handleHelpText("commonTransirtation", "請選擇一個選項")
             return
         }
 
-        if (survey.surveyNormalRd.commonTransirtation == "其他") {
-            if(survey.surveyNormalRd.otherOfCommonTransirtation == "999" || survey.surveyNormalRd.otherOfCommonTransirtation == ""){
+        if (survey.commonTransirtation == "其他") {
+            if(survey.otherOfCommonTransirtation == "999" || survey.otherOfCommonTransirtation == ""){
                 handleHelpText("commonTransirtation", "請填寫其他")
                 return
             }
@@ -210,32 +216,26 @@ function App() {
       }, []);
 
     React.useEffect(() => {
-        if (survey.surveyNormalRd.pickup != "其他") {
+        if (survey.pickup != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd: {
-                        ...prevState.surveyNormalRd,
                         otherOfPickup: 999
-                    }
                 }
             ))
         }
 
-        if (survey.surveyNormalRd.commonTransirtation != "其他") {
+        if (survey.commonTransirtation != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyNormalRd: {
-                        ...prevState.surveyNormalRd,
                         otherOfCommonTransirtation: 999
-                    }
                 }
             ))
         }
 
 
-    }, [survey.surveyNormalRd.pickup, survey.surveyNormalRd.commonTransirtation])
+    }, [survey.pickup, survey.commonTransirtation])
 
 
 
@@ -256,7 +256,7 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
-                                    value={survey.surveyNormalRd.pickup}
+                                    value={survey.pickup}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行上學" control={<Radio />} label="學生自行上學" />
@@ -264,7 +264,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
-                                    {survey.surveyNormalRd.pickup === "其他" ?
+                                    {survey.pickup === "其他" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -279,7 +279,7 @@ function App() {
                                                 label="其他"
                                                 variant="filled"
                                                 onChange={handleChange}
-                                                value={survey.surveyNormalRd.otherOfPickup == 999 ? null : survey.surveyNormalRd.otherOfPickup}
+                                                value={survey.otherOfPickup == 999 ? null : survey.otherOfPickup}
                                             />
                                         </Box>
                                         :
@@ -294,9 +294,9 @@ function App() {
                                 <FormLabel id="pickup-time-start-label"><h3>2)     出發時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <TimePicker
+                                        <DesktopTimePicker 
                                             ampm={false}
-                                            value={dayjs(survey.surveyNormalRd.pickupTimeStart)}
+                                            value={dayjs(survey.pickupTimeStart)}
                                             onChange={(event) => handleTimeChange(event, "pickupTimeStart")}
                                         />
                                     </DemoContainer>
@@ -310,9 +310,9 @@ function App() {
                                 <FormLabel id="pickup-time-end-label"><h3>3)     到達時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <TimePicker
+                                        <DesktopTimePicker
                                             ampm={false}
-                                            value={dayjs(survey.surveyNormalRd.pickupTimeEnd)}
+                                            value={dayjs(survey.pickupTimeEnd)}
                                             onChange={(event) => handleTimeChange(event, "pickupTimeEnd")}
                                         />
                                     </DemoContainer>
@@ -328,7 +328,7 @@ function App() {
                                 <FormLabel component="commonTransiration"><h3>4)	常用的交通方式：</h3></FormLabel>
                                 <RadioGroup
                                     name='commonTransirtation'
-                                    value={survey.surveyNormalRd.commonTransirtation}
+                                    value={survey.commonTransirtation}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel
@@ -394,7 +394,7 @@ function App() {
                                         label="其他"
                                         sx={{ color: "black" }}
                                     />
-                                    {survey.surveyNormalRd.commonTransirtation === "其他" ?
+                                    {survey.commonTransirtation === "其他" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -409,7 +409,7 @@ function App() {
                                                 variant="filled"
                                                 name='otherOfCommonTransirtation'
                                                 onChange={handleChange}
-                                                value={survey.surveyNormalRd.otherOfCommonTransirtation == 999 ? null : survey.surveyNormalRd.otherOfCommonTransirtation}
+                                                value={survey.otherOfCommonTransirtation == 999 ? null : survey.otherOfCommonTransirtation}
                                             />
                                         </Box>
                                         :

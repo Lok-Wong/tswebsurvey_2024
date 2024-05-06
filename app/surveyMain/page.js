@@ -14,10 +14,8 @@ function App() {
     const router = useRouter();
 
     const blanksurvey = {
-        surveyMain: {
             startTime: new Date(),
             fillAlready: 999,
-        }
     }
 
     const _studentNum = React.useMemo(() => {
@@ -62,10 +60,7 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                surveyMain: {
-                    ...prevState.surveyMain,
-                    [objectName]: event.target.value
-                }
+                [objectName]: event.target.value
             }
         )
         )
@@ -73,14 +68,14 @@ function App() {
 
     const handleNextButton = () => {
 
-        if (survey.surveyMain.fillAlready == "是") {
+        if (survey.fillAlready == "是") {
             console.log("setList",storedPathList)
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyFinished')
 
         }
-        if (survey.surveyMain.fillAlready == "否") {
+        if (survey.fillAlready == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyheadholder')
@@ -162,7 +157,7 @@ function App() {
                                         row="true"
                                         name="fillAlready"
                                         onChange={handleChange}
-                                        value={survey.surveyMain.fillAlready}
+                                        value={survey.fillAlready}
                                     >
                                         <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
                                         <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
@@ -174,7 +169,7 @@ function App() {
                         <div className={styles.question}>
                             <Button onClick={handleNextButton}>
                                 {
-                                    survey.surveyMain.fillAlready == "否" ? "下一頁" : "完成"
+                                    survey.fillAlready == "否" ? "下一頁" : "完成"
                                 }
                             </Button>
                         </div>

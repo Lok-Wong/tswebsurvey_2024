@@ -10,20 +10,21 @@ import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
+import FormHelperText from '@mui/material/FormHelperText';
 
 function App() {
     const router = useRouter();
 
     const blanksurvey = {
-        badWeather: {
             startTime: new Date(),
             badWeatherPickup: 999,
             otherbadWeatherPickup: 999,
             badWeatherTransition: 999,
             otherbadWeatherTransition: 999,
             comment: 999,
-        }
     }
+    const blankHelpText = {}
+    const [helpText, setHelpText] = React.useState(blankHelpText)
 
 
     const _studentNum = React.useMemo(() => {
@@ -66,17 +67,34 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                badWeather: {
-                    ...prevState.badWeather,
                     [objectName]: event.target.value
-                }
+
             }
         )
 
         )
     };
 
+    const handleHelpText = (eventName, errorText) => {
+        const objectName = eventName
+        setHelpText((prevState) => (
+          {
+            ...prevState,
+            [objectName]: errorText
+          }
+        ))
+      }
+
     const handleNextButton = () => {
+        if (survey.Pickup == 999) {
+            handleHelpText("badWeatherPickup", "請選擇選項")
+            return
+        }
+
+        if (survey.Transition == 999) {
+            handleHelpText("badWeatherTransition", "請選擇主要使用的交通工具")
+            return
+        }
         sessionStorage.setItem("pathList", storedPathList)
         router.push("/surveyStudentFinised")
     }
@@ -91,37 +109,32 @@ function App() {
 
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + 'badWeather'), JSON.stringify(survey))
+        setHelpText(blankHelpText)
         console.log(survey)
     }, [survey])
 
     React.useEffect(() => {
-        if (survey.badWeather.badWeatherPickup != "其他監護人") {
+        if (survey.Pickup != "其他監護人") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    badWeather: {
-                        ...prevState.badWeather,
                         otherbadWeatherPickup: 999
-                    }
                 }
             ))
         }
 
-        if (survey.badWeather.badWeatherTransition != "其他") {
+        if (survey.Transition != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    badWeather: {
-                        ...prevState.badWeather,
                         otherbadWeatherTransition: 999
-                    }
                 }
             ))
         }
 
 
-    }, [survey.badWeather.badWeatherPickup,
-    survey.badWeather.badWeatherTransition])
+    }, [survey.badWeatherPickup,
+    survey.badWeatherTransition])
 
     React.useEffect(() => {
         if (storedPathList != null) {
@@ -187,7 +200,7 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="badWeatherPickup-label"
                                     name="badWeatherPickup"
-                                    value={survey.badWeather.badWeatherPickup}
+                                    value={survey.badWeatherPickup}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行上（放）學 " control={<Radio />} label="學生自行上（放）學 " />
@@ -195,7 +208,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
                                     {
-                                        survey.badWeather.badWeatherPickup == "其他監護人" ?
+                                        survey.badWeatherPickup == "其他監護人" ?
 
                                             <Box
                                                 component="form"
@@ -210,7 +223,7 @@ function App() {
                                                     label="其他"
                                                     variant="filled"
                                                     onChange={handleChange}
-                                                    value={survey.badWeather.otherbadWeatherPickup == 999 ? null : survey.badWeather.otherbadWeatherPickup}
+                                                    value={survey.otherbadWeatherPickup == 999 ? null : survey.otherbadWeatherPickup}
                                                     name="otherbadWeatherPickup"
                                                 />
                                             </Box>
@@ -218,6 +231,7 @@ function App() {
                                             null
                                     }
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.Pickup}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -227,7 +241,7 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="badWeathertransition-label"
                                     name="badWeatherTransition"
-                                    value={survey.badWeather.badWeatherTransition}
+                                    value={survey.badWeatherTransition}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
@@ -241,7 +255,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
 
                                     {
-                                        survey.badWeather.badWeatherTransition == "其他" ?
+                                        survey.badWeatherTransition == "其他" ?
 
                                             <Box
                                                 component="form"
@@ -257,7 +271,7 @@ function App() {
                                                     variant="filled"
                                                     name="otherbadWeatherTransition"
                                                     onChange={handleChange}
-                                                    value={survey.badWeather.otherbadWeatherTransition == 999 ? null : survey.badWeather.otherbadWeatherTransition}
+                                                    value={survey.otherbadWeatherTransition == 999 ? null : survey.otherbadWeatherTransition}
                                                 />
                                             </Box>
                                             :
@@ -265,6 +279,7 @@ function App() {
                                     }
 
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.Transition}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -281,12 +296,13 @@ function App() {
                                     noValidate
                                 >
                                     <TextField
+                                        sx={{marginTop: "1rem"}}
                                         id="comment-text"
                                         label="請輸入您的意見"
                                         variant="outlined"
                                         name='comment'
                                         multiline
-                                        value={survey.badWeather.comment == 999 ? null : survey.badWeather.comment}
+                                        value={survey.comment == 999 ? null : survey.comment}
                                         onChange={handleChange}
                                     />
                                 </Box>
@@ -295,10 +311,10 @@ function App() {
 
                         <div className={styles.question}>
                             <Button onClick={() => router.back()}>
-                                back
+                                上一頁
                             </Button>
                             <Button onClick={handleNextButton}>
-                                next
+                                下一頁
                             </Button>
 
                         </div>

@@ -17,34 +17,28 @@ import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType 
 function App() {
     const router = useRouter();
 
+   
+    const [slValue, setSlValue] = React.useState('')
+    const [sltValue, setSltValue] = React.useState('')
     const [stValue, setStValue] = React.useState('')
-    const [stInputValue, setStInputValue] = React.useState('')
     const [rgValue, setRgValue] = React.useState('')
-    const [rgInputValue, setRgInputValue] = React.useState('')
     const [shValue, setShValue] = React.useState('')
     const [shInputValue, setShInputValue] = React.useState('')
-    const [slValue, setSlValue] = React.useState('')
-    const [slInputValue, setSlInputValue] = React.useState('')
-    const [sltValue, setSltValue] = React.useState('')
-    const [sltInputValue, setSltInputValue] = React.useState('')
 
     const blanksurvey = {
-        surveystudentinfo: {
             schoolType: 999,
             schoolArea: 999,
             schoolName: 999,
             classLevel: 999,
-            LevelType: 999,
+            levelType: 999,
             schoolName: 999,
             gender: 999,
             age: 999,
             crossBorder: 999,
             startTime: new Date(),
-        }
     }
 
     const blankSurveyCrd = {
-        surveyCrossRd: {
             startTime: 999,
             pickup: 999,
             otherOfPickup: 999,
@@ -55,11 +49,9 @@ function App() {
             commonTransirtation: 999,
             otherOfCommonTransirtation: 999,
             arrivalTimeToSchool: 999,
-        }
     }
 
     const blankSurveyCrd2 = {
-        surveyCrossRd2: {
             startTime: 999,
             leaveShcoolTime: 999,
             pickup: 999,
@@ -71,11 +63,10 @@ function App() {
             otherOfCommonTransirtation: 999,
             arrivalPortTime: 999,
             arrivalHomeTime: 999,
-        }
+
     }
 
     const blanksurveyRd = {
-        surveyNormalRd: {
             startTime: 999,
             pickup: 999,
             otherOfPickup: 999,
@@ -83,11 +74,9 @@ function App() {
             pickupTimeEnd: 999,
             commonTransirtation: 999,
             otherOfCommonTransirtation: 999,
-        }
     }
 
     const blanksurveyRd2 = {
-        surveyNormalRd2: {
             startTime: 999,
             leaveSchoolTime: 999,
             otherleavePickUp: 999,
@@ -108,7 +97,6 @@ function App() {
                 leaveDestinationBackHomeTransition: 999,
                 otherLeaveDestinationBackHomeTransition: 999
             }
-        }
     }
 
     const blankHelpText = {
@@ -177,10 +165,8 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                surveystudentinfo: {
-                    ...prevState.surveystudentinfo,
-                    [objectName]: event.target.value
-                }
+                [objectName]: event.target.value
+                
             }
         )
 
@@ -188,7 +174,7 @@ function App() {
     };
 
     const [isClient, setIsClient] = React.useState(false)
-
+   
     React.useEffect(() => {
         setIsClient(true)
         setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
@@ -248,25 +234,37 @@ function App() {
 
     React.useEffect(() => {
         setRgValue("")
-        setRgInputValue("")
-    }, [stValue, stInputValue])
+    }, [stValue])
 
     React.useEffect(() => {
         setShValue("")
         setShInputValue("")
-    }, [rgValue, rgInputValue])
+    }, [rgValue])
 
     React.useEffect(() => {
         setSlValue("")
-        setSlInputValue("")
     }, [shValue, shInputValue])
 
     React.useEffect(() => {
         setSltValue("")
-        setSltInputValue("")
-    }, [slValue, slInputValue])
+    }, [slValue])
+
+    React.useEffect(() => {
+        setSurvey((prevState) => (
+            {
+                ...prevState,
+                    schoolName: shInputValue
+            }
+        )
+
+        )
+    },[shValue,shInputValue])
 
     const getSchoolObject = (stValue, rgValue) => {
+        if (stValue == "999" || rgValue == "999" ) {
+            return
+        }
+
         let type
         let area
         if (stValue && rgValue) {
@@ -297,39 +295,54 @@ function App() {
 
     const handleNextButton = () => {
 
-        // if (survey.surveystudentinfo.classLevel == "999" || survey.surveystudentinfo.classLevel == "") {
-        //     handleHelpText("classLevel", "請選擇年級")
-        //     return
-        // }
+        if (survey.schoolType == "999") {
+            handleHelpText('schoolType', "請選擇教育類型")
+            return
+        }
 
-        // if (survey.surveystudentinfo.schoolName == "999" || survey.surveystudentinfo.schoolName == "") {
-        //     handleHelpText("schoolName", "請填寫學校名稱")
-        //     return
-        // }
+        if (survey.schoolArea == "999") {
+            handleHelpText('schoolArea', "請選擇學校所屬地區")
+            return
+        }
 
-        // if (survey.surveystudentinfo.gender == "999") {
-        //     handleHelpText('gender', "請選擇性別")
-        //     return
-        // }
+        if (survey.schoolName == "999" || survey.schoolName == "") {
+            handleHelpText('schoolName', "請選擇學校名稱")
+            return
+        }
 
-        // if (survey.surveystudentinfo.age == "999") {
-        //     handleHelpText('age', "請選擇年齡")
-        //     return
-        // }
+        if (survey.classLevel == "999" || survey.classLevel == "") {
+            handleHelpText('classLevel', "請選擇就讀程度")
+            return
+        }
 
-        // if (survey.surveystudentinfo.crossBorder == "999") {
-        //     handleHelpText('crossBorder', "請選擇是否需跨境")
-        //     return
-        // }
+        if (survey.levelType == "999" || survey.levelType == "") {
+            handleHelpText('levelType', "請選擇就讀年級")
+            return
+        }
 
-        if (survey.surveystudentinfo.crossBorder == "否") {
+        if (survey.gender == "999") {
+            handleHelpText('gender', "請選擇性別")
+            return
+        }
+
+        if (survey.age == "999") {
+            handleHelpText('age', "請選擇年齡")
+            return
+        }
+
+        if (survey.crossBorder == "999") {
+            handleHelpText('crossBorder', "請選擇是否需跨境")
+            return
+        }
+
+        if (survey.crossBorder == "否") {
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             sessionStorage.setItem((_studentNum + "crossRd"), JSON.stringify(blankSurveyCrd))
             sessionStorage.setItem((_studentNum + "crossRd2"), JSON.stringify(blankSurveyCrd2))
             router.push('/surveyNormalRd')
         }
-        if (survey.surveystudentinfo.crossBorder == "是") {
+        if (survey.crossBorder == "是") {
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             sessionStorage.setItem((_studentNum + "normalRd"), JSON.stringify(blanksurveyRd))
@@ -339,6 +352,13 @@ function App() {
         }
 
     }
+
+
+
+    React.useEffect(() => {
+        console.log(survey);
+        console.log(stValue);
+    }, [survey])
 
     return (
         <main className={styles.main}>
@@ -356,18 +376,21 @@ function App() {
                                     id="school-type"
                                     aria-labelledby="school-type-label"
                                     name="schoolType"
-                                    onChange={(event) => { setStValue(event.target.value) }}
-                                    value={stValue}
+                                    onChange={(event) => { 
+                                        setStValue(event.target.value);
+                                        handleChange(event);
+                                    }}
+                                    value={survey.schoolType}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="正規教育" />
                                     <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="回歸教育" />
                                 </RadioGroup>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.schoolType}</FormHelperText>
                             </FormControl>
                         </div>
 
                         {
-                            stValue ?
+                            stValue || survey.schoolType ?
 
                                 <div className={styles.question}>
                                     <FormControl>
@@ -376,15 +399,18 @@ function App() {
                                             id="school-area"
                                             aria-labelledby="school-area-label"
                                             name="schoolArea"
-                                            onChange={(event) => { setRgValue(event.target.value) }}
-                                            value={rgValue}
+                                            onChange={(event) => { 
+                                                setRgValue(event.target.value);
+                                                handleChange(event);
+                                            }}
+                                            value={survey.schoolArea}
                                         >
                                             <FormControlLabel sx={{ color: "black" }} value="澳門" control={<Radio />} label="澳門" />
                                             <FormControlLabel sx={{ color: "black" }} value="氹仔" control={<Radio />} label="氹仔" />
                                             <FormControlLabel sx={{ color: "black" }} value="路環" control={<Radio />} label="路環" />
                                             <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" />
                                         </RadioGroup>
-                                        <FormHelperText sx={{ color: 'red' }}>{helpText.schoolName}</FormHelperText>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.schoolArea}</FormHelperText>
                                     </FormControl>
                                 </div>
                                 :
@@ -392,11 +418,11 @@ function App() {
                         }
 
                         {
-                            (stValue && rgValue) ?
+                            survey.schoolArea ?
 
                                 <div className={styles.question}>
                                     <FormControl>
-                                        <FormLabel id="school-name-label"><h3>3.)  學校名稱：　　　　　　　　</h3></FormLabel>
+                                        <FormLabel id="school-name-label"><h3>3.)  學校名稱：(*如無合適選項，請輸入學校名稱。)</h3></FormLabel>
                                         {/* <Box
                                             component="form"
                                             sx={{
@@ -417,11 +443,11 @@ function App() {
                                                 setShValue(newValue)
                                             }}
                                             onInputChange={(event, newInputValue) => {
-                                                setShInputValue(newInputValue)
+                                                setShInputValue(newInputValue);
                                             }}
-                                            options={getSchoolObject(stValue, rgValue) ? getSchoolObject(stValue, rgValue) : []}
+                                            options={getSchoolObject(survey.schoolType, survey.schoolArea) ? getSchoolObject(survey.schoolType, survey.schoolArea) : []}
                                             renderInput={(params) =>
-                                                <TextField {...params}></TextField>
+                                                <TextField name='schoolName' {...params}></TextField>
                                             }
                                         />
                                         {/* </Box> */}
@@ -443,38 +469,15 @@ function App() {
                             shValue || shInputValue ?
                                 <div className={styles.question} >
                                     <FormControl>
-                                        <FormLabel id="class-level-label"><h3>4)  就讀學級：</h3></FormLabel>
-                                        {/* <Box
-                                            component="form"
-                                            sx={{
-                                                '& > :not(style)': { m: 1, width: '150%' },
-                                            }}
-                                            noValidate
-                                        >
-                                            <Autocomplete
-                                                id="class-level"
-                                                label="年級"
-                                                name='classLevel'
-                                                freeSolo
-                                                value={slValue}
-                                                inputValue={slInputValue}
-                                                onChange={(event, newValue) => {
-                                                    setSlValue(newValue)
-                                                }}
-                                                onInputChange={(event, newInputValue) => {
-                                                    setSlInputValue(newInputValue)
-                                                }}
-                                                options={schoolLevels[shInputValue] ? schoolLevels[shInputValue] : []}
-                                                renderInput={(params) =>
-                                                    <TextField {...params}></TextField>
-                                                }
-                                            />
-                                        </Box> */}
+                                        <FormLabel id="class-level-label"><h3>4)  就讀程度：</h3></FormLabel>
                                         <RadioGroup
                                             id="class-level"
                                             aria-labelledby="class-level-label"
                                             name="classLevel"
-                                            onChange={(event) => { setSlValue(event.target.value) }}
+                                            onChange={(event) => { 
+                                                setSlValue(event.target.value);
+                                                handleChange(event);
+                                             }}
                                             value={slValue}
                                         >
                                             {
@@ -485,7 +488,10 @@ function App() {
                                                         )
                                                     })
                                                     :
-                                                    <TextField onChange={(event) => {setSlValue(event.target.value)}} sx={{m:1}} label={"請輸入"}></TextField>
+                                                    <TextField onChange={(event) => {
+                                                        setSlValue(event.target.value);
+                                                        handleChange(event);
+                                                    }} sx={{m:1}} label={"請輸入"}></TextField>
                                             }
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
@@ -528,10 +534,13 @@ function App() {
                                             />
                                         </Box> */}
                                         <RadioGroup
-                                            id="level-type"
+                                            id="level-Type"
                                             aria-labelledby="level-type-label"
-                                            name="leveltype"
-                                            onChange={(event) => { setSltValue(event.target.value) }}
+                                            name="levelType"
+                                            onChange={(event) => { 
+                                                setSltValue(event.target.value) 
+                                                handleChange(event);
+                                            }}
                                             value={sltValue}
                                         >
                                             {
@@ -542,10 +551,13 @@ function App() {
                                                         )
                                                     })
                                                     :
-                                                    <TextField onChange={(event) => {setSltValue(event.target.value)}} sx={{m:1}} label={"請輸入"}></TextField>
+                                                    <TextField onChange={(event) => {
+                                                        setSltValue(event.target.value);
+                                                        handleChange(event);
+                                                    }} sx={{m:1}} label={"請輸入"}></TextField>
                                             }
                                         </RadioGroup>
-                                        <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
                                     </FormControl>
                                 </div>
                                 :
@@ -560,7 +572,7 @@ function App() {
                                     aria-labelledby="studentofRespondents-radio-buttons-group-label"
                                     name="gender"
                                     onChange={handleChange}
-                                    value={survey.surveystudentinfo.gender}
+                                    value={survey.gender}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="男" control={<Radio />} label="男" />
                                     <FormControlLabel sx={{ color: "black" }} value="女" control={<Radio />} label="女" />
@@ -576,7 +588,7 @@ function App() {
                                     aria-labelledby="age-label"
                                     name="age"
                                     onChange={handleChange}
-                                    value={survey.surveystudentinfo.age}
+                                    value={survey.age}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="0~4歲" control={<Radio />} label="0~4歲" />
                                     <FormControlLabel sx={{ color: "black" }} value="5~9歲" control={<Radio />} label="5~9歲" />
@@ -596,7 +608,7 @@ function App() {
                                     aria-labelledby="cross-border-student-label"
                                     name="crossBorder"
                                     onChange={handleChange}
-                                    value={survey.surveystudentinfo.crossBorder}
+                                    value={survey.crossBorder}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
                                     <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />

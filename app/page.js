@@ -18,11 +18,9 @@ export default function Home() {
   const [openAlertBar, setOpenAlertBar] = React.useState(false)
   const [vCodeError,setVCodeError] = React.useState(false)
   const [survey, setSurvey] = React.useState({
-    weclomePage : {
       startTime : 999,
       ip : 999,
       uuid : 999,
-    }
   })
 
   const [ip, setIP] = React.useState("");
@@ -36,7 +34,7 @@ export default function Home() {
         return
       }
   
-      if (vCode != inputVcode){
+      if (vCode != inputVcode.toLocaleUpperCase()){
         handleAlertBarOpen()
         setVCodeError("驗證碼錯誤哦！")
         return
@@ -44,12 +42,9 @@ export default function Home() {
   
       setSurvey((prevState) => ({
         ...prevState,
-        weclomePage:{
-          ...prevState.weclomePage,
           ip:ip,
           uuid : uuidv4(),
           startTime : new Date(),
-        }
       }))
       sessionStorage.setItem('pathList',window.location.pathname)
 
@@ -65,7 +60,7 @@ export default function Home() {
       return
     }
 
-    if (vCode != inputVcode){
+    if (vCode != inputVcode.toLocaleUpperCase()){
       handleAlertBarOpen()
       setVCodeError("驗證碼錯誤哦！")
       return
@@ -73,12 +68,9 @@ export default function Home() {
 
     setSurvey((prevState) => ({
       ...prevState,
-      weclomePage:{
-        ...prevState.weclomePage,
         ip:ip,
         uuid : uuidv4(),
         startTime : new Date(),
-      }
     }))
     if (event.target.name == "next"){
       sessionStorage.setItem('pathList',window.location.pathname)
@@ -175,6 +167,7 @@ export default function Home() {
               sx={{backgroundColor:"white"}} 
               id="verify_textField" 
               label="驗證碼" 
+              inputProps={{ style: { textTransform: "uppercase" } }}
               onChange={(event) => {
                 setInputVcode(event.target.value)
               }}

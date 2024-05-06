@@ -2,10 +2,12 @@
 import * as React from 'react';
 import styles from "./page.module.css";
 import { useRouter } from 'next/navigation';
+import Button from '@mui/material/Button';
 
 
 function App() {
     const router = useRouter();
+    const [totalObj, setTotalObj] = React.useState()
     const [stillHaveChild, setStillHaveChild] = React.useState('有');
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
@@ -16,6 +18,7 @@ function App() {
         }
         return 0;
     }, [])
+    const items = { ...sessionStorage }
 
     const handleNextButton = () => {
         sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
@@ -26,19 +29,39 @@ function App() {
         setIsClient(true)
     }, [])
 
+    const combineObj = (objarray) => {
+        objarray.map((key,index) => {
+            console.log('key', key,":",items[key])
+            setTotalObj((prev) => ({
+                ...prev,
+                [key]: items[key]
+            }))
+        })
+    }
+
     React.useEffect(() => {
-        const items = { ...sessionStorage }
-        console.log("sessionKey", Object.keys(items))
-    }, [])
+        console.log('totalObj', totalObj)
+    },[totalObj])
 
     return (
         <main className={styles.main}>
             {
                 isClient ?
                     <div>
+                        <Button onClick={()=>
+                            combineObj(Object.keys(items))
+                            }>
+                            click
+                        </Button>
                         <h1 style={{ color: "#000000" }}>
                             完成問卷
                         </h1>
+                        {
+                                    <div>
+                                       {totalObj&& totalObj["0crossRd2"]}
+                                    </div>
+                                
+                        }
                     </div>
                     :
                     null

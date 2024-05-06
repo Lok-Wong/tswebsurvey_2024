@@ -13,15 +13,15 @@ import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useRouter } from 'next/navigation';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import FormHelperText from '@mui/material/FormHelperText';
 
 function App() {
     const router = useRouter();
     const blanksurvey = {
-        surveyCrossRd2: {
             startTime: new Date(),
-            leaveShcoolTime: 999,
+            leaveShcoolTime: "",
             pickup: 999,
             otherOfPickup: 999,
             directToPort: 999,
@@ -29,9 +29,20 @@ function App() {
             otherOfportForHome: 999,
             commonTransirtation: 999,
             otherOfCommonTransirtation: 999,
-            arrivalPortTime: 999,
-            arrivalHomeTime: 999,
-        }
+            arrivalPortTime: "",
+            arrivalHomeTime: "",
+    }
+
+    const blankHelpText = {}
+    const [helpText, setHelpText] = React.useState(blankHelpText)
+    const handleHelpText = (eventName, errorText) => {
+        const objectName = eventName
+        setHelpText((prevState) => (
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
+        ))
     }
 
     const _studentNum = React.useMemo(() => {
@@ -78,10 +89,7 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                surveyCrossRd2: {
-                    ...prevState.surveyCrossRd2,
                     [objectName]: event.target.value
-                }
             }
         )
 
@@ -91,15 +99,77 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-            surveyCrossRd2: {
-                ...prevState.surveyCrossRd2,
                 [name]: event.$d
-            }
         })
         )
     };
 
     const handleNextButton = (event) => {
+        if (survey.leaveShcoolTime == "") {
+            handleHelpText("leaveShcoolTime", "請選擇離校時間")
+            return
+        }
+        if (survey.pickup == 999) {
+            handleHelpText("pickup", "請選擇是否有人接送")
+            return
+        }
+        if (survey.pickup == "其他監護人" && survey.otherOfPickup == 999) {
+            handleHelpText("pickup", "請填寫其他監護人")
+            return
+        }
+        if (survey.directToPort == 999) {
+            handleHelpText("directToPort", "請選擇是否直接前往通關口岸")
+            return
+        }
+        if (survey.portForHome == 999) {
+            handleHelpText("portForHome", "請選擇回家使用的通關口岸")
+            return
+        }
+        if (survey.portForHome == "其他" && survey.otherOfportForHome == 999) {
+            handleHelpText("portForHome", "請填寫其他通關口岸")
+            return
+        }
+        if (survey.commonTransirtation == 999) {
+            handleHelpText("commonTransirtation", "請選擇過關後，前往學校的主要交通方式")
+            return
+        }
+        if (survey.commonTransirtation == "其他" && survey.otherOfCommonTransirtation == 999) {
+            handleHelpText("commonTransirtation", "請填寫其他交通方式")
+            return
+        }
+        if (survey.arrivalPortTime == "") {
+            handleHelpText("TimeEndToMacau", "請選擇到達口岸的時間")
+            return
+        }
+        if (survey.arrivalHomeTime == "") {
+            handleHelpText("arrivalHomeTime", "請選擇回到家的時間")
+            return
+        }
+        if (survey.leaveShcoolTime == survey.arrivalPortTime) {
+            handleHelpText("leaveShcoolTime", "離校時間與到達口岸時間不可相同")
+            handleHelpText("arrivalPortTime", "到達口岸時間與離校時間不可相同")
+            return
+        }
+        if (survey.arrivalPortTime == survey.arrivalHomeTime) {
+            handleHelpText("arrivalPortTime", "到達口岸時間與回到家時間不可相同")
+            handleHelpText("arrivalHomeTime", "回到家時間與到達口岸時間不可相同")
+            return
+        }
+        if (survey.leaveShcoolTime > survey.arrivalPortTime) {
+            handleHelpText("leaveShcoolTime", "離校時間不可晚於到達口岸時間")
+            handleHelpText("arrivalPortTime", "到達口岸時間不可早於離校時間")
+            return
+        }
+        if (survey.leaveShcoolTime > survey.arrivalHomeTime) {
+            handleHelpText("leaveShcoolTime", "離校時間不可晚於到達家時間")
+            handleHelpText("arrivalHomeTime", "回到家時間不可早於離校時間")
+            return
+        }
+        if (survey.arrivalPortTime > survey.arrivalHomeTime) {
+            handleHelpText("arrivalPortTime", "到達口岸時間不可晚於回到家時間")
+            handleHelpText("arrivalHomeTime", "回到家時間不可早於離校時間")
+            return
+        }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyBadWeather')
     }
@@ -115,50 +185,42 @@ function App() {
 
     React.useEffect(() => {
         survey && sessionStorage.setItem(_studentNum + 'crossRd2', JSON.stringify(survey))
+        setHelpText(blankHelpText)
         console.log(survey)
     }, [survey])
 
     React.useEffect(() => {
-        if (survey.surveyCrossRd2.pickup != "其他監護人") {
+        if (survey.pickup != "其他監護人") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyCrossRd2: {
-                        ...prevState.surveyCrossRd2,
                         otherOfPickup: 999
-                    }
                 }
             ))
         }
 
-        if (survey.surveyCrossRd2.commonTransirtation != "其他") {
+        if (survey.commonTransirtation != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyCrossRd2: {
-                        ...prevState.surveyCrossRd2,
                         otherOfCommonTransirtation: 999
-                    }
                 }
             ))
         }
 
-        if (survey.surveyCrossRd2.otherOfportForHome != "其他") {
+        if (survey.otherOfportForHome != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                    surveyCrossRd2: {
-                        ...prevState.surveyCrossRd2,
                         otherOfportForHome: 999
                     }
-                }
             ))
         }
 
 
-    }, [survey.surveyCrossRd2.pickup,
-    survey.surveyCrossRd2.commonTransirtation,
-    survey.surveyCrossRd2.otherOfportForHome])
+    }, [survey.pickup,
+    survey.commonTransirtation,
+    survey.otherOfportForHome])
 
     React.useEffect(() => {
         if (storedPathList != null) {
@@ -221,13 +283,14 @@ function App() {
                                 <FormLabel id="leaveShcoolTime-label"><h3>7)	離校時間（24小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <TimePicker
+                                        <DesktopTimePicker
                                             ampm={false}
-                                            value={dayjs(survey.surveyCrossRd2.leaveShcoolTime)}
+                                            value={dayjs(survey.leaveShcoolTime)}
                                             onChange={(event) => handleTimeChange(event, "leaveShcoolTime")}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.leaveShcoolTime}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -237,7 +300,7 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
-                                    value={survey.surveyCrossRd2.pickup}
+                                    value={survey.pickup}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="學生自行上學" />
@@ -245,7 +308,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社" control={<Radio />} label="補習社" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
-                                    {survey.surveyCrossRd2.pickup === "其他監護人" ?
+                                    {survey.pickup === "其他監護人" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -260,13 +323,14 @@ function App() {
                                                 label="其他"
                                                 variant="filled"
                                                 onChange={handleChange}
-                                                value={survey.surveyCrossRd2.otherOfPickup == 999 ? null : survey.surveyCrossRd2.otherOfPickup}
+                                                value={survey.otherOfPickup == 999 ? null : survey.otherOfPickup}
                                             />
                                         </Box>
                                         :
                                         null
                                     }
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.pickup}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -276,13 +340,14 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="directToPort-label"
                                     name="directToPort"
-                                    value={survey.surveyCrossRd2.directToPort}
+                                    value={survey.directToPort}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
                                     <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
 
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.directToPort}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -292,7 +357,7 @@ function App() {
                                 <RadioGroup
                                     aria-labelledby="portForHome-label"
                                     name="portForHome"
-                                    value={survey.surveyCrossRd2.portForHome}
+                                    value={survey.portForHome}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="關閘" control={<Radio />} label="關閘" />
@@ -302,7 +367,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="內港" control={<Radio />} label="內港" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
 
-                                    {survey.surveyCrossRd2.portForHome === "其他" ?
+                                    {survey.portForHome === "其他" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -317,13 +382,14 @@ function App() {
                                                 label="其他"
                                                 variant="filled"
                                                 onChange={handleChange}
-                                                value={survey.surveyCrossRd2.portForHome == 999 ? null : survey.surveyCrossRd2.portForHome}
+                                                value={survey.portForHome == 999 ? null : survey.portForHome}
                                             />
                                         </Box>
                                         :
                                         null
                                     }
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.portForHome}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -334,7 +400,7 @@ function App() {
                                     component="commonTransiration"><h3>11)	過關後，前往學校的主要交通方式：</h3></FormLabel>
                                 <RadioGroup
                                     name='commonTransirtation'
-                                    value={survey.surveyCrossRd2.commonTransirtation}
+                                    value={survey.commonTransirtation}
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel
@@ -400,7 +466,7 @@ function App() {
                                         label="其他"
                                         sx={{ color: "black" }}
                                     />
-                                    {survey.surveyCrossRd2.commonTransirtation === "其他" ?
+                                    {survey.commonTransirtation === "其他" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -415,7 +481,7 @@ function App() {
                                                 variant="filled"
                                                 name='otherOfCommonTransirtation'
                                                 onChange={handleChange}
-                                                value={survey.surveyCrossRd2.otherOfCommonTransirtation == 999 ? null : survey.surveyCrossRd2.otherOfCommonTransirtation}
+                                                value={survey.otherOfCommonTransirtation == 999 ? null : survey.otherOfCommonTransirtation}
                                             />
                                         </Box>
                                         :
@@ -423,7 +489,7 @@ function App() {
                                     }
 
                                 </RadioGroup>
-
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransirtation}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -432,13 +498,14 @@ function App() {
                                 <FormLabel id="arrivalPortTime-label"><h3>12)	到達口岸的時間（24小時制）</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <TimePicker
+                                        <DesktopTimePicker
                                             ampm={false}
-                                            value={dayjs(survey.surveyCrossRd2.TimeEndToMacau)}
+                                            value={dayjs(survey.arrivalPortTime)}
                                             onChange={(event) => handleTimeChange(event, "arrivalPortTime")}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.arrivalPortTime}</FormHelperText>
                             </FormControl>
                         </div>
 
@@ -447,47 +514,22 @@ function App() {
                                 <FormLabel id="arrivalHomeTime-label"><h3>13)	回到家的時間（24小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <TimePicker
+                                        <DesktopTimePicker
                                             ampm={false}
-                                            value={dayjs(survey.surveyCrossRd2.arrivalTimeToSchool)}
+                                            value={dayjs(survey.arrivalHomeTime)}
                                             onChange={(event) => handleTimeChange(event, "arrivalHomeTime")}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.arrivalHomeTime}</FormHelperText>
                             </FormControl>
                         </div>
-                        {/* <h1>
-                    2.4 學生出行意見和建議
-                </h1>
-
-                <div className={styles.question}>
-                    <FormControl sx={{
-                        m:1, width:"100%"
-                    }}>
-                        <FormLabel id="student-suggestion-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 1, width: '60%' },
-                            }}
-                            noValidate
-                            >
-                            <TextField 
-                                id="student-suggestion-text" 
-                                label="年級" 
-                                variant="outlined" 
-                                multiline
-                            />
-                        </Box>
-                    </FormControl>
-                </div> */}
-
                         <div className={styles.question}>
                             <Button onClick={() => router.back()}>
-                                back
+                                上一頁
                             </Button>
                             <Button onClick={handleNextButton}>
-                                next
+                                下一頁
                             </Button>
                         </div>
 

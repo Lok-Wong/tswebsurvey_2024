@@ -18,14 +18,12 @@ function App() {
   const router = useRouter()
 
   const blanksurvey = {
-    headHolder: {
       startTime: new Date(),
       studentofRespondents: 999,
       residentPopulationStudent: 999,
       otherOfStudentofRespondents: 999,
       address: 999,
       vehicle: 999
-    }
   }
 
   const blankHelpText = {
@@ -88,10 +86,8 @@ function App() {
     setSurvey((prevState) => (
       {
         ...prevState,
-        headHolder: {
-          ...prevState.headHolder,
           [objectName]: event.target.value
-        }
+
       }
     )
     )
@@ -103,48 +99,43 @@ function App() {
     setSurvey((prevState) => (
       {
         ...prevState,
-        headHolder: {
-          ...prevState.headHolder,
           [objectName]: event.target.value
           // studentofRespondents : event.target.value
-        }
+
       }
     ))
   }
 
   const handleNextButton = () => {
 
-    if (survey.headHolder.studentofRespondents == 999) {
+    if (survey.studentofRespondents == 999) {
       handleHelpText("studentofRespondents", "請選擇一個選項")
       return
     }
 
-    if (survey.headHolder.studentofRespondents == "其他監護人") {
-      if (survey.headHolder.otherOfStudentofRespondents == "999" || survey.headHolder.otherOfStudentofRespondents == "") {
+    if (survey.studentofRespondents == "其他監護人") {
+      if (survey.otherOfStudentofRespondents == "999" || survey.otherOfStudentofRespondents == "") {
         handleHelpText("studentofRespondents", "請填寫其他監護人名稱")
         return
       }
     }
 
-    if (survey.headHolder.address == "999" || survey.headHolder.address == "") {
+    if (survey.address == "999" || survey.address == "") {
       handleHelpText("address", "請填寫地址")
       return
     }
 
-    if (survey.headHolder.residentPopulationStudent == "999") {
+    if (survey.residentPopulationStudent == "999") {
       handleHelpText("residentPopulationStudent", "請選擇一個選項")
       return
     }
 
-    if (survey.headHolder.vehicle == "999") {
+    if (survey.vehicle == "999") {
       handleHelpText("vehicle", "請選擇一個選項")
       return
     }
 
-    sessionStorage.setItem("totalStudentNum", survey.headHolder.residentPopulationStudent)
-    sessionStorage.setItem("shouldPath", "/surveystudentinfo")
-    sessionStorage.setItem("prevPath", "/surveyheadholder")
-    console.log("setList", storedPathList)
+    sessionStorage.setItem("totalStudentNum", survey.residentPopulationStudent)
     sessionStorage.setItem("pathList", storedPathList)
     router.push('/surveystudentinfo')
 
@@ -155,23 +146,21 @@ function App() {
   React.useEffect(() => {
     survey && sessionStorage.setItem(_studentNum + "headHolder", JSON.stringify(survey));
     setHelpText(blankHelpText)
-    console.log(survey)
   }, [survey])
 
   React.useEffect(() => {
-    if (survey.headHolder.studentofRespondents != "其他監護人") {
+    if (survey.studentofRespondents != "其他監護人") {
       setSurvey((prevState) => (
         {
           ...prevState,
-          headHolder: {
-            ...prevState.headHolder,
+
             otherOfStudentofRespondents: 999
-          }
+
         }
       ))
     }
 
-  }, [survey.headHolder.studentofRespondents])
+  }, [survey.studentofRespondents])
 
   const [isClient, setIsClient] = React.useState(false)
 
@@ -182,18 +171,17 @@ function App() {
 
   React.useEffect(() => {
     if (storedPathList != null) {
-    console.log("storedPathList12", storedPathList)
     setStoredPathList([...storedPathList, window.location.pathname])
     }
   }, [])
 
   React.useEffect(() => {
     if (sessionStorage.getItem('pathList') === null) {
-      router.replace("./")
+      router.push("./")
       return
     }
     if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyMain") {
-      router.replace("./")
+      router.push("./")
     }
   }, [])
 
@@ -201,28 +189,29 @@ function App() {
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-  //   if (!finishStatus) {
-  //       if (window.confirm("Do you want to go back ?")) {
-  //         setfinishStatus(true)
-          const copyArr = [...storedPathList]
-          const prevPath = copyArr[copyArr.length - 1]
-          copyArr.splice(-1)
-          sessionStorage.setItem('pathList',copyArr)
-          router.back()
-  //       } else {
-  //           window.history.pushState(null, null, window.location.pathname);
-  //           setfinishStatus(false)
-  //       }
-  //   }
+    if (!finishStatus) {
+      if (window.confirm("Do you want to go back ?")) {
+        setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList',copyArr)
+        router.push(prevPath)
+      } else {
+        window.history.pushState(null, null, window.location.pathname);
+        setfinishStatus(false)
+      }
+    }
   }
 
   React.useEffect(() => {
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener('popstate', onBackButtonEvent);
     return () => {
-      window.removeEventListener('popstate', onBackButtonEvent);  
+      window.removeEventListener('popstate', onBackButtonEvent);
     };
   }, []);
+
   return (
     <main className={styles.main}>
       {
@@ -239,7 +228,7 @@ function App() {
                   required
                   id="studentofRespondents"
                   aria-labelledby="studentofRespondents-radio-buttons-group-label"
-                  value={survey.headHolder.studentofRespondents}
+                  value={survey.studentofRespondents}
                   name="studentofRespondents"
                   onChange={handleChange}
                 >
@@ -248,7 +237,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
 
                   {
-                    survey.headHolder.studentofRespondents == "其他監護人" ?
+                    survey.studentofRespondents == "其他監護人" ?
                       <Box
                         component="form"
                         sx={{
@@ -261,7 +250,7 @@ function App() {
                           id="studentofRespondents-other-textfill"
                           label="請輸入其他監護人名稱"
                           variant="filled"
-                          value={survey.headHolder.otherOfStudentofRespondents == 999 ? null : survey.headHolder.otherOfStudentofRespondents}
+                          value={survey.otherOfStudentofRespondents == 999 ? null : survey.otherOfStudentofRespondents}
                           name="otherOfStudentofRespondents"
                           onChange={handleTextFieldChange}
                         />
@@ -283,7 +272,7 @@ function App() {
                     label="請輸入地址"
                     variant="filled"
                     name="address"
-                    value={survey.headHolder.address == 999 ? null : survey.headHolder.address}
+                    value={survey.address == 999 ? null : survey.address}
                     onChange={handleChange}
                   />
                 </Box>
@@ -318,7 +307,7 @@ function App() {
                 <FormLabel id="resident-population-student-label"><h3>3) 長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="resident-population-student-group-label"
-                  value={survey.headHolder.residentPopulationStudent}
+                  value={survey.residentPopulationStudent}
                   name="residentPopulationStudent"
                   onChange={handleChange}
                 >
@@ -364,12 +353,13 @@ function App() {
               <FormControl>
                 <FormLabel id="vehicle-radio-buttons-group-label"><h3>4)	所有家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
+                  row
                   aria-labelledby="vehicle-radio-buttons-group-label"
-                  value={survey.headHolder.vehicle}
+                  value={survey.vehicle}
                   name="vehicle"
                   onChange={handleChange}
                 >
-                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單車" />
+                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單" />
                   <FormControlLabel sx={{ color: "black" }} value="私家車" control={<Radio />} label="私家車" />
                   <FormControlLabel sx={{ color: "black" }} value="電單車" control={<Radio />} label="電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="都没有" control={<Radio />} label="都没有" />
@@ -383,12 +373,12 @@ function App() {
               <Button
                 onClick={() => router.back()}
               >
-                back
+                上一頁
               </Button>
               <Button
                 onClick={handleNextButton}
               >
-                Next
+                下一頁
               </Button>
             </div>
           </div>
