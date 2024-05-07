@@ -9,6 +9,7 @@ function App() {
     const router = useRouter();
     const [totalObj, setTotalObj] = React.useState()
     const [stillHaveChild, setStillHaveChild] = React.useState('有');
+    const [items, setItems] = React.useState()
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
             const local_storage_studentNum = sessionStorage.getItem('studentNum');
@@ -18,7 +19,6 @@ function App() {
         }
         return 0;
     }, [])
-    const items = { ...sessionStorage }
 
     const handleNextButton = () => {
         sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
@@ -27,6 +27,7 @@ function App() {
     const [isClient, setIsClient] = React.useState(false)
     React.useEffect(() => {
         setIsClient(true)
+        setItems({ ...sessionStorage })
     }, [])
 
     const combineObj = (objarray) => {
@@ -43,6 +44,8 @@ function App() {
         console.log('totalObj', totalObj)
     },[totalObj])
 
+
+
     return (
         <main className={styles.main}>
             {
@@ -58,7 +61,7 @@ function App() {
                         </h1>
                         {
                                     <div>
-                                       {totalObj&& totalObj["0crossRd2"]}
+                                       {totalObj&& totalObj["studentNum"]}
                                     </div>
                                 
                         }
