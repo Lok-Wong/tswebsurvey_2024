@@ -4,7 +4,6 @@ import styles from "./page.module.css";
 import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 
-
 function App() {
     const router = useRouter();
     const [totalObj, setTotalObj] = React.useState()

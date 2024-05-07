@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+
 export default function Home() {
   const router = useRouter()
   const [vCode, setVCode] = React.useState()
@@ -107,8 +108,6 @@ export default function Home() {
     getData()
     sessionStorage.setItem("home",JSON.stringify(survey))
   },[ip,survey]);
-
-
 
   return (
     <main className={styles.main}>
