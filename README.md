@@ -4,6 +4,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 First, run the development server:
 
+Make Sure You have following Packages installed: 
+-@mui/material/
+-@emotion/styled
+-@emotion/react
+-@mui/x-date-pickers
+-dayjs
+
+If not installed, recommand you use npm install command to install these packages.
+
 ```bash
 npm run dev
 # or
