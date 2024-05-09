@@ -1,10 +1,12 @@
-'use client'
+"use client"
 import * as React from 'react';
 import styles from "./page.module.css";
 import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 
-function App() {
+export default function App() {
+    // const fs = require('fs');
+    // const path = require('path');
     const router = useRouter();
     const [totalObj, setTotalObj] = React.useState()
     const [stillHaveChild, setStillHaveChild] = React.useState('有');
@@ -19,6 +21,7 @@ function App() {
         return 0;
     }, [])
 
+
     const handleNextButton = () => {
         sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
     };
@@ -29,6 +32,8 @@ function App() {
         setItems({ ...sessionStorage })
     }, [])
 
+    React.useEffect(() => {items && combineObj(Object.keys(items))}, [items])
+
     const combineObj = (objarray) => {
         objarray.map((key,index) => {
             console.log('key', key,":",items[key])
@@ -38,6 +43,28 @@ function App() {
             }))
         })
     }
+
+    const handleSubmit = async (e) => {
+        // e.preventDefault()
+        const submitData = {"data" : totalObj}
+    
+        try {
+          const res = await fetch('http://localhost:3000/api/handleform',{
+            method: 'POST',
+            body: JSON.stringify(submitData),
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+          if(res.ok){
+            console.log("Yeai!")
+          }else{
+            console.log("Oops! Something is wrong.",res)
+          }
+        } catch (error) {
+            console.log(error)
+        }
+      }
 
     React.useEffect(() => {
         console.log('totalObj', totalObj)
@@ -51,7 +78,8 @@ function App() {
                 isClient ?
                     <div>
                         <Button onClick={()=>
-                            combineObj(Object.keys(items))
+                            // combineObj(Object.keys(items));
+                            handleSubmit()
                             }>
                             click
                         </Button>
@@ -73,5 +101,3 @@ function App() {
 
     )
 }
-
-export default App;
