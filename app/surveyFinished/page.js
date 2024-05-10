@@ -49,7 +49,7 @@ export default function App() {
         const submitData = {"data" : totalObj}
     
         try {
-          const res = await fetch('http://localhost:3000/api/handleform',{
+          const res = await fetch('http://8.138.93.45:3000/api/handleform',{
             method: 'POST',
             body: JSON.stringify(submitData),
             headers: {
