@@ -32,43 +32,50 @@ export default function App() {
         setItems({ ...sessionStorage })
     }, [])
 
-    React.useEffect(() => {items && combineObj(Object.keys(items))}, [items])
+    React.useEffect(() => { items && combineObj(Object.keys(items)) }, [items])
 
     const combineObj = (objarray) => {
-        objarray.map((key,index) => {
-            console.log('key', key,":",items[key])
-            setTotalObj((prev) => ({
-                ...prev,
-                [key]: items[key]
-            }))
+        objarray.map((key, index) => {
+            if (key == "pathList" || key == "studnetNum" || key == "totalStudentNum") {
+                setTotalObj((prev) => ({
+                    ...prev,
+                    [key]: items[key]
+                }))
+            } else {
+                setTotalObj((prev) => ({
+                    ...prev,
+                    [key]: JSON.parse(items[key])
+                }))
+            }
         })
     }
 
     const handleSubmit = async (e) => {
         // e.preventDefault()
-        const submitData = {"data" : totalObj}
-    
+        const submitData = { "data": totalObj }
+        // 'http://8.138.93.45:3000/api/handleform'
+        console.log('env',process.env.NEXT_PUBLIC_LOCAL_LINK)
         try {
-          const res = await fetch('http://8.138.93.45:3000/api/handleform',{
-            method: 'POST',
-            body: JSON.stringify(submitData),
-            headers: {
-              'content-type': 'application/json'
+            const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
+                method: 'POST',
+                body: JSON.stringify(submitData),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            if (res.ok) {
+                console.log("Yeai!")
+            } else {
+                console.log("Oops! Something is wrong.", res)
             }
-          })
-          if(res.ok){
-            console.log("Yeai!")
-          }else{
-            console.log("Oops! Something is wrong.",res)
-          }
         } catch (error) {
             console.log(error)
         }
-      }
+    }
 
     React.useEffect(() => {
         console.log('totalObj', totalObj)
-    },[totalObj])
+    }, [totalObj])
 
 
 
@@ -77,20 +84,21 @@ export default function App() {
             {
                 isClient ?
                     <div>
-                        <Button onClick={()=>
-                            // combineObj(Object.keys(items));
-                            handleSubmit()
-                            }>
-                            click
-                        </Button>
+
                         <h1 style={{ color: "#000000" }}>
                             完成問卷
                         </h1>
                         {
-                                    <div>
-                                       {totalObj&& totalObj["studentNum"]}
-                                    </div>
-                                
+                            <div className={styles.question}>
+                                 <Button onClick={() =>
+                                // combineObj(Object.keys(items));
+                                handleSubmit()
+                            }>
+                                提交
+                            </Button>
+                            </div>
+
+                           
                         }
                     </div>
                     :

@@ -196,7 +196,8 @@ function App() {
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList',copyArr)
-        router.push(prevPath)
+        // router.push(prevPath)
+        router.back()
       } else {
         window.history.pushState(null, null, window.location.pathname);
         setfinishStatus(false)

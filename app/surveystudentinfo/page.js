@@ -354,12 +354,6 @@ function App() {
     }
 
 
-
-    React.useEffect(() => {
-        console.log(survey);
-        console.log(stValue);
-    }, [survey])
-
     return (
         <main className={styles.main}>
             {

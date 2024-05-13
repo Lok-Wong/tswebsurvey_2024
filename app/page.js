@@ -146,7 +146,6 @@ export default function Home() {
             <a >
             <br />
               執行單位：澳大創科有限公司
-              {}
             </a>
           </div>
         </div>
@@ -155,7 +154,7 @@ export default function Home() {
           <Box
             component="form"
             sx={{
-              '& > :not(style)': { m: 1, width: '8rem' },
+              '& > :not(style)': { m: 1, width: '6rem' },
             }}
             noValidate
             autoComplete="off"

@@ -316,7 +316,6 @@ function App() {
                             <Button onClick={handleNextButton}>
                                 下一頁
                             </Button>
-
                         </div>
 
                     </div>

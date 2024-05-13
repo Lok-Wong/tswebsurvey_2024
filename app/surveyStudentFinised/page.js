@@ -44,7 +44,7 @@ function App() {
             return
         } 
         if (stillHaveChild == "没有") {
-            router.push('/surveyFinished')
+            router.push('/surveyPhoneNum')
             sessionStorage.setItem("pathList", storedPathList)
             return
         }
