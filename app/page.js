@@ -153,9 +153,10 @@ export default function Home() {
         <div className={styles.verifyBlock}>
           <Box
             component="form"
-            sx={{
-              '& > :not(style)': { m: 1, width: '6rem' },
-            }}
+            // sx={{
+            //   '& > :not(style)': { m: 1, width: '6rem' },
+            // }}
+            className={styles.verifyText} 
             noValidate
             autoComplete="off"
           >

@@ -80,6 +80,12 @@
     position: relative;
   }
 
+  .verifyText{
+    margin: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
   .verifyBlock{
     width: 50%;
     display: flex;
