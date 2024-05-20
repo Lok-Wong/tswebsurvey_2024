@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
+import MapComponent from '@/app/mapTesting/page';
 
 
 
@@ -18,12 +19,12 @@ function App() {
   const router = useRouter()
 
   const blanksurvey = {
-      startTime: new Date(),
-      studentofRespondents: 999,
-      residentPopulationStudent: 999,
-      otherOfStudentofRespondents: 999,
-      address: 999,
-      vehicle: 999
+    startTime: new Date(),
+    studentofRespondents: 999,
+    residentPopulationStudent: 999,
+    otherOfStudentofRespondents: 999,
+    address: 999,
+    vehicle: 999
   }
 
   const blankHelpText = {
@@ -58,7 +59,7 @@ function App() {
 
   const _initial_pathListe = React.useMemo(() => {
     if (typeof window !== 'undefined') {
-      const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
+      const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
       // If there is a value stored in localStorage, use that
       if (local_storage_path_list) {
         return (local_storage_path_list);
@@ -69,6 +70,7 @@ function App() {
   const [survey, setSurvey] = React.useState(_initial_value)
   const [helpText, setHelpText] = React.useState(blankHelpText)
   const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
+  const [mapSelectText, setMapSelectText] = React.useState()
 
   const handleHelpText = (eventName, errorText) => {
     const objectName = eventName
@@ -86,7 +88,7 @@ function App() {
     setSurvey((prevState) => (
       {
         ...prevState,
-          [objectName]: event.target.value
+        [objectName]: event.target.value
 
       }
     )
@@ -99,12 +101,22 @@ function App() {
     setSurvey((prevState) => (
       {
         ...prevState,
-          [objectName]: event.target.value
-          // studentofRespondents : event.target.value
+        [objectName]: event.target.value
+        // studentofRespondents : event.target.value
 
       }
     ))
   }
+
+  const mapInputhandleChange = (data,vName) => {
+    setSurvey((prevState) => (
+      {
+        ...prevState,
+        [vName]: data
+        // studentofRespondents : event.target.value
+
+      }
+    ))  }
 
   const handleNextButton = () => {
 
@@ -154,7 +166,7 @@ function App() {
         {
           ...prevState,
 
-            otherOfStudentofRespondents: 999
+          otherOfStudentofRespondents: 999
 
         }
       ))
@@ -171,7 +183,7 @@ function App() {
 
   React.useEffect(() => {
     if (storedPathList != null) {
-    setStoredPathList([...storedPathList, window.location.pathname])
+      setStoredPathList([...storedPathList, window.location.pathname])
     }
   }, [])
 
@@ -185,6 +197,10 @@ function App() {
     }
   }, [])
 
+  React.useEffect(() => {
+    console.log("survey", survey)
+  }, [survey])
+
   const [finishStatus, setfinishStatus] = React.useState(false);
 
   const onBackButtonEvent = (e) => {
@@ -195,7 +211,7 @@ function App() {
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
-        sessionStorage.setItem('pathList',copyArr)
+        sessionStorage.setItem('pathList', copyArr)
         // router.push(prevPath)
         router.back()
       } else {
@@ -268,15 +284,21 @@ function App() {
               <FormControl>
                 <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
                 <Box>
-                  <TextField
-                    id="studentofRespondents-other-textfill"
-                    label="請輸入地址"
-                    variant="filled"
-                    name="address"
-                    value={survey.address == 999 ? null : survey.address}
-                    onChange={handleChange}
-                  />
+                  <p className={styles.mapHitText}>
+                    {
+                      mapSelectText ? "已選擇目的地： "+ mapSelectText : "*請在以下地圖點選目的地或輸入相關地址"
+                    }
+                  </p>
+
+
                 </Box>
+                {/* <Button>
+                  按下打開地圖
+                </Button> */}
+                <div>
+                  <MapComponent mapInputhandleChange={mapInputhandleChange} />
+                </div>
+
                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
               </FormControl>
             </div>

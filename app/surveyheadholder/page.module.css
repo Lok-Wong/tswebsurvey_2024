@@ -27,3 +27,8 @@
   border-width: 1px;
   box-shadow: 1px 1px;
 }
+
+.mapHitText{
+  font-weight: bold;
+  color: rgb(5, 5, 170);
+}
