@@ -16,31 +16,32 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useRouter } from 'next/navigation';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import FormHelperText from '@mui/material/FormHelperText';
+import MapComponent from '@/app/mapTesting/page';
 
 function App() {
     const router = useRouter();
 
     const blanksurvey = {
-            startTime: new Date(),
-            leaveSchoolTime: "",
-            otherleavePickUp: 999,
-            leavePickUp: 999,
-            directToHomeState: 999,
-            directToHomeYes: {
-                arivalHomeTime: "",
-                arivalHomeTransition: 999,
-                otherarivalHomeTransition: 999
-            },
-            directToHomeNo: {
-                leaveDestination: 999,
-                leaveDestinationTime: "",
-                leaveDestinationTransition: 999,
-                otherLeaveDestinationTransition: 999,
-                destinationBackHomeStartTime: "",
-                destinationBackHomeEndTime: "",
-                leaveDestinationBackHomeTransition: 999,
-                otherLeaveDestinationBackHomeTransition: 999
-            }
+        startTime: new Date(),
+        leaveSchoolTime: "",
+        otherleavePickUp: 999,
+        leavePickUp: 999,
+        directToHomeState: 999,
+        directToHomeYes: {
+            arivalHomeTime: "",
+            arivalHomeTransition: 999,
+            otherarivalHomeTransition: 999
+        },
+        directToHomeNo: {
+            address: 999,
+            leaveDestinationTime: "",
+            leaveDestinationTransition: 999,
+            otherLeaveDestinationTransition: 999,
+            destinationBackHomeStartTime: "",
+            destinationBackHomeEndTime: "",
+            leaveDestinationBackHomeTransition: 999,
+            otherLeaveDestinationBackHomeTransition: 999
+        }
     }
 
     const blankHelpText = {}
@@ -73,13 +74,13 @@ function App() {
 
     const _initial_pathListe = React.useMemo(() => {
         if (typeof window !== 'undefined') {
-          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
-          // If there is a value stored in localStorage, use that
-          if (local_storage_path_list) {
-            return (local_storage_path_list);
-          }
+            const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
         }
-      }, []);
+    }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
@@ -87,22 +88,22 @@ function App() {
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
-          {
-            ...prevState,
-            [objectName]: errorText
-          }
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
         ))
-      }
+    }
 
     const handleChangeBackHomeTime = (event, name) => {
         if (survey.directToHomeState == "是") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeYes: {
-                            ...prevState.directToHomeYes,
-                            [name]: event.$d
-                        }
+                    directToHomeYes: {
+                        ...prevState.directToHomeYes,
+                        [name]: event.$d
+                    }
                 }
             )
             )
@@ -112,10 +113,10 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeNo: {
-                            ...prevState.directToHomeNo,
-                            [name]: event.$d
-                        }
+                    directToHomeNo: {
+                        ...prevState.directToHomeNo,
+                        [name]: event.$d
+                    }
                 }
             )
             )
@@ -127,10 +128,10 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeYes: {
-                            ...prevState.directToHomeYes,
-                            [event.target.name]: event.target.value
-                        }
+                    directToHomeYes: {
+                        ...prevState.directToHomeYes,
+                        [event.target.name]: event.target.value
+                    }
                 }
             )
             )
@@ -140,10 +141,10 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeNo: {
-                            ...prevState.directToHomeNo,
-                            [event.target.name]: event.target.value
-                        }
+                    directToHomeNo: {
+                        ...prevState.directToHomeNo,
+                        [event.target.name]: event.target.value
+                    }
                 }
             )
             )
@@ -155,8 +156,8 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                    [objectName]: event.target.value
-                }
+                [objectName]: event.target.value
+            }
         )
 
         )
@@ -165,13 +166,58 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-                [name]: event.$d
+            [name]: event.$d
         })
         )
     };
 
+    const mapInputhandleChange = (data,vName,type) => {
+        setSurvey((prevState) => (
+          {
+            ...prevState,
+                directToHomeNo : {
+                ...prevState.directToHomeNo,
+                [vName]:data
+            }
+            // studentofRespondents : event.target.value
+          }
+        )    
+      )    
+    
+      setSurvey((prevState) => (
+        {
+          ...prevState,
+          directToHomeNo: {
+            ...prevState.directToHomeNo,
+            [vName] : {
+                ...prevState.directToHomeNo[vName],
+                method : type
+            }
+          }
+          // studentofRespondents : event.target.value
+        }
+      )    
+    )    
+    }
+
+    const getMapSelectedText = () => {
+        if (survey.directToHomeNo.address.method == "click") {
+          return (
+            survey.directToHomeNo.address.regeocode.formattedAddress
+          )
+        }
+    
+        if (survey.directToHomeNo.address.method == "autoComplete"){
+          return (
+            survey.directToHomeNo.address.poi.name
+          )
+        }
+    
+        return null
+      }
+
     const handleNextButton = () => {
-        if (survey.leaveSchoolTime == ""){
+        if (survey.leaveSchoolTime == "") {
             handleHelpText("leaveSchoolTime", "請填寫離校時間")
             return
         }
@@ -233,11 +279,11 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeYes: {
-                            arivalHomeTime: "",
-                            arivalHomeTransition: 999,
-                            otherarivalHomeTransition: 999
-                        }
+                    directToHomeYes: {
+                        arivalHomeTime: "",
+                        arivalHomeTransition: 999,
+                        otherarivalHomeTransition: 999
+                    }
                 }
             )
             )
@@ -247,16 +293,16 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeNo: {
-                            leaveDestination: 999,
-                            leaveDestinationTime: "",
-                            leaveDestinationTransition: 999,
-                            otherLeaveDestinationTransition: 999,
-                            destinationBackHomeStartTime: "",
-                            destinationBackHomeEndTime: "",
-                            leaveDestinationBackHomeTransition: 999,
-                            otherLeaveDestinationBackHomeTransition: 999
-                        }
+                    directToHomeNo: {
+                        leaveDestination: 999,
+                        leaveDestinationTime: "",
+                        leaveDestinationTransition: 999,
+                        otherLeaveDestinationTransition: 999,
+                        destinationBackHomeStartTime: "",
+                        destinationBackHomeEndTime: "",
+                        leaveDestinationBackHomeTransition: 999,
+                        otherLeaveDestinationBackHomeTransition: 999
+                    }
                 }
             )
             )
@@ -285,8 +331,8 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherleavePickUp: 999
-                    }
+                    otherleavePickUp: 999
+                }
             ))
         };
 
@@ -294,9 +340,9 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeYes: {
-                            ...prevState.directToHomeYes,
-                            otherarivalHomeTransition: 999
+                    directToHomeYes: {
+                        ...prevState.directToHomeYes,
+                        otherarivalHomeTransition: 999
                     }
                 }
             ))
@@ -306,9 +352,9 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeNo: {
-                            ...prevState.directToHomeNo,
-                            otherLeaveDestinationTransition: 999
+                    directToHomeNo: {
+                        ...prevState.directToHomeNo,
+                        otherLeaveDestinationTransition: 999
                     }
                 }
             ))
@@ -318,9 +364,9 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        directToHomeNo: {
-                            ...prevState.directToHomeNo,
-                            otherLeaveDestinationBackHomeTransition: 999
+                    directToHomeNo: {
+                        ...prevState.directToHomeNo,
+                        otherLeaveDestinationBackHomeTransition: 999
                     }
                 }
             ))
@@ -329,47 +375,47 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-        console.log("storedPathList12", storedPathList)
-        setStoredPathList([...storedPathList, window.location.pathname])
+            console.log("storedPathList12", storedPathList)
+            setStoredPathList([...storedPathList, window.location.pathname])
         }
-      }, [])
+    }, [])
 
-      React.useEffect(() => {
+    React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-          router.replace("./")
-          return
+            router.replace("./")
+            return
         }
         if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyNormalRd") {
-          router.replace("./")
+            router.replace("./")
         }
-      }, [])
+    }, [])
 
-      const [finishStatus, setfinishStatus] = React.useState(false);
+    const [finishStatus, setfinishStatus] = React.useState(false);
 
-      const onBackButtonEvent = (e) => {
+    const onBackButtonEvent = (e) => {
         e.preventDefault();
-      //   if (!finishStatus) {
-      //       if (window.confirm("Do you want to go back ?")) {
-      //         setfinishStatus(true)
-              const copyArr = [...storedPathList]
-              const prevPath = copyArr[copyArr.length - 1]
-              copyArr.splice(-1)
-              sessionStorage.setItem('pathList',copyArr)
-              router.back()
-      //       } else {
-      //           window.history.pushState(null, null, window.location.pathname);
-      //           setfinishStatus(false)
-      //       }
-      //   }
-      }
-    
-      React.useEffect(() => {
+        //   if (!finishStatus) {
+        //       if (window.confirm("Do you want to go back ?")) {
+        //         setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList', copyArr)
+        router.back()
+        //       } else {
+        //           window.history.pushState(null, null, window.location.pathname);
+        //           setfinishStatus(false)
+        //       }
+        //   }
+    }
+
+    React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
         return () => {
-          window.removeEventListener('popstate', onBackButtonEvent);  
+            window.removeEventListener('popstate', onBackButtonEvent);
         };
-      }, []);
+    }, []);
 
     return (
         <main className={styles.main}>
@@ -522,15 +568,26 @@ function App() {
                                 survey.directToHomeState == "否" ?
                                     <div>
                                         <div className={styles.question}>
-                                            <FormControl className={styles.inlineQuestion}>
-                                                <FormLabel id="leave-shcool-arrival-destination-label"><h3>放學後去了哪裏:</h3></FormLabel>
-                                                <p>choose loaction</p>
-                                                <Button>
-                                                    touch and choose loaction
-                                                </Button>
-                                                <FormHelperText sx={{ color: 'red' }}>{helpText.arivalHomeTransition}</FormHelperText>
-                                            </FormControl>
+                                            <FormControl>
+                                                <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
+                                                <Box>
+                                                    <p className={styles.mapHitText}>
+                                                        {
+                                                            getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址"
+                                                        }
+                                                    </p>
 
+
+                                                </Box>
+                                                {/* <Button>
+                                                    按下打開地圖
+                                                    </Button> */}
+                                                <div>
+                                                    <MapComponent mapInputhandleChange={mapInputhandleChange} />
+                                                </div>
+
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
+                                            </FormControl>
                                         </div>
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
@@ -680,7 +737,7 @@ function App() {
                                 上一頁
                             </Button>
                             <Button onClick={handleNextButton}>
-                                下一頁  
+                                下一頁
                             </Button>
 
                         </div>

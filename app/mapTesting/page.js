@@ -10,8 +10,8 @@ function MapComponent({mapInputhandleChange}) {
   const [selectedLocal, setSelectedLocal] = useState(null)
   let maps = null
 
-  const sendDataToParentOnClick = (data,vName) => {
-    mapInputhandleChange(data,vName)
+  const sendDataToParentOnClick = (data,vName,type) => {
+    mapInputhandleChange(data,vName,type)
   }
 
   useEffect(() => {
@@ -44,14 +44,12 @@ function MapComponent({mapInputhandleChange}) {
               citylimit: true
             })
             maps.on('click', (e) => {
-              console.log("clickEvent", e)
               let lnglat = [e.lnglat.lng, e.lnglat.lat]
               setAutoData(null)
               setMapClickData(e.lnglat)
               geocoder.getAddress(lnglat, function (status, result) {
                 setSelectedLocal(result.regeocode.formattedAddress)
-                sendDataToParentOnClick(result,'address')
-                console.log("delocation", result)
+                sendDataToParentOnClick(result,'address',"click")
               })
             })
 
@@ -72,9 +70,8 @@ function MapComponent({mapInputhandleChange}) {
             function select(e) {
               setMapClickData(null)
               setAutoData(e)
-              console.log("autocomplete", e)
               setSelectedLocal(e.poi.name)
-              sendDataToParentOnClick(e,'address')
+              sendDataToParentOnClick(e,'address',"autoComplete")
               placeSearchContiner.current.search(e.poi.name)
               placeSearchContiner.current.setCity(e.poi.adcode)
             }
@@ -107,24 +104,23 @@ function MapComponent({mapInputhandleChange}) {
         isClient ?
           <div>
               <input id="input_test" style={{
-                height: "5vh",
+                height: "3.5vh",
                 width: "80vw",
                 border: "3px solid #000",
                 borderRadius: "5px",
-                lineHeight: "5vh",
                 color: "#282828",
                 fontSize: "1em",
                 padding: "0 6px",
                 focus: { border: "3px solid #5551ff" }
               }} />
-            <div id="container" style={{ height: "50vh", width: "80vw" }} />
-            <div style={{ position: "absolute", backgroundColor: "#ffffff", bottom: 40 }}>
+            <div id="container" style={{ height: "40vh", width: "80vw" }} />
+            {/* <div style={{ position: "absolute", backgroundColor: "#ffffff", bottom: 40 }}>
               <p>
                 {selectedLocal ? selectedLocal : "selectedLocal no data"}<br></br>
                 {mapClickData ? JSON.stringify(mapClickData) : "mapClickData no data"}<br></br>
                 {autoData ? JSON.stringify(autoData.poi.location) : "autoData no data"}<br></br>
               </p>
-            </div>
+            </div> */}
           </div>
           :
           null

@@ -72,6 +72,22 @@ function App() {
   const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
   const [mapSelectText, setMapSelectText] = React.useState()
 
+  const getMapSelectedText = () => {
+    if (survey.address.method == "click") {
+      return (
+        survey.address.regeocode.formattedAddress
+      )
+    }
+
+    if (survey.address.method == "autoComplete"){
+      return (
+        survey.address.poi.name
+      )
+    }
+
+    return null
+  }
+
   const handleHelpText = (eventName, errorText) => {
     const objectName = eventName
     setHelpText((prevState) => (
@@ -108,15 +124,28 @@ function App() {
     ))
   }
 
-  const mapInputhandleChange = (data,vName) => {
+  const mapInputhandleChange = (data,vName,type) => {
     setSurvey((prevState) => (
       {
         ...prevState,
         [vName]: data
         // studentofRespondents : event.target.value
-
       }
-    ))  }
+    )    
+  )    
+
+  setSurvey((prevState) => (
+    {
+      ...prevState,
+      [vName]: {
+        ...prevState[vName],
+        method : type
+      }
+      // studentofRespondents : event.target.value
+    }
+  )    
+)    
+}
 
   const handleNextButton = () => {
 
@@ -286,7 +315,7 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      mapSelectText ? "已選擇目的地： "+ mapSelectText : "*請在以下地圖點選目的地或輸入相關地址"
+                      getMapSelectedText() ? "已選擇目的地： "+ getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址"
                     }
                   </p>
 

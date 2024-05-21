@@ -33,3 +33,8 @@
 .titleStyle{
     color:#ffffff,
 }
+
+.mapHitText{
+  font-weight: bold;
+  color: rgb(5, 5, 170);
+}
