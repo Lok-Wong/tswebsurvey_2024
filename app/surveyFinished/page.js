@@ -53,7 +53,6 @@ export default function App() {
     const handleSubmit = async (e) => {
         // e.preventDefault()
         const submitData = { "data": totalObj }
-        // 'http://8.138.93.45:3000/api/handleform'
         console.log('env',process.env.NEXT_PUBLIC_LOCAL_LINK)
         try {
             const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
