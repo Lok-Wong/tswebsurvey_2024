@@ -95,7 +95,7 @@ function MapComponent({mapInputhandleChange}) {
         })
       })
     }
-  }, [])
+  })
 
 
   return (

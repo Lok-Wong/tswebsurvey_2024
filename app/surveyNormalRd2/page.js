@@ -294,7 +294,7 @@ function App() {
                 {
                     ...prevState,
                     directToHomeNo: {
-                        leaveDestination: 999,
+                        address: 999,
                         leaveDestinationTime: "",
                         leaveDestinationTransition: 999,
                         otherLeaveDestinationTransition: 999,
