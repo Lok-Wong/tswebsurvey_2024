@@ -84,7 +84,7 @@ function App() {
 
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
-
+    const [key, setKey] = React.useState(0)
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
@@ -390,6 +390,10 @@ function App() {
         }
     }, [])
 
+    React.useEffect(() => {
+        setKey((k) => k + 1)
+    },[])
+
     const [finishStatus, setfinishStatus] = React.useState(false);
 
     const onBackButtonEvent = (e) => {
@@ -415,7 +419,7 @@ function App() {
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
-    }, []);
+    }, [survey.directToHomeState]);
 
     return (
         <main className={styles.main}>
@@ -582,7 +586,7 @@ function App() {
                                                 {/* <Button>
                                                     按下打開地圖
                                                     </Button> */}
-                                                <div>
+                                                <div key={key}>
                                                     <MapComponent mapInputhandleChange={mapInputhandleChange} />
                                                 </div>
 

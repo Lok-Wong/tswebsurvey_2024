@@ -76,26 +76,10 @@ function MapComponent({mapInputhandleChange}) {
               placeSearchContiner.current.setCity(e.poi.adcode)
             }
           })
-
-          // maps.addListener(autoCompleteContiner.current,'select',(e) => {
-          //   placeSearchContiner.current.search(e.poi.name)
-          // })
-          // AMap.plugin('AMap.Geocoder',function(){
-          //   var geocoder = new AMap.Geocoder({
-          //     city:"1853"
-          //   })
-          //   maps.on('click', (e) => {
-          //     console.log("e", e)
-          //     let lnglat = [e.lnglat.lng, e.lnglat.lat]
-          //     geocoder.getAddress(lnglat, function(status, result) {
-          //       console.log("result", result)
-          //     })
-          //   })
-          // })
         })
       })
     }
-  })
+  },[])
 
 
   return (
