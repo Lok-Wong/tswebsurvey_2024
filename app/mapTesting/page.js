@@ -70,7 +70,7 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
             autoCompleteContiner.current = new AMap.Autocomplete({
               city: "1853",
               input: "input_test",
-              citylimit: true
+              citylimit: true,
             });
 
 
@@ -104,11 +104,13 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
           <div>
             <div>
               <input id="input_test" style={{
+                textDecorationColor:'#000000',
+                backgroundColor:"#ffffff",
+                color:"#000000",
                 height: "3.5vh",
                 width: "62vw",
                 border: "3px solid #000",
                 borderRadius: "5px",
-                color: "#282828",
                 fontSize: "1em",
                 padding: "0 6px",
                 focus: { border: "3px solid #5551ff" },              
