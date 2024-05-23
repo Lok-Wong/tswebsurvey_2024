@@ -55,6 +55,7 @@
   
   .startTextcompany{
     text-align:right;
+    color:#000000;
     /* width: inherit; */
   }
   
@@ -86,13 +87,52 @@
     margin-right: 0.5rem;
   }
 
-  .verifyBlock{
+  .block{
+    background-color: #ffffff;
     width: 50%;
+    border-radius: 10px;
+    margin-top: 1vh;
+  }
+
+  .verifyBlock{
     display: flex;
     align-items: center;
-    border-radius: 10px;
     justify-content: space-evenly;
+    flex-direction: row;
+  }
+
+  .signBlock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .linkText{
+    color: #6900ff;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .linkText:hover{
+    color:#FF0000;
+    text-decoration: none;
+  }
+
+  .signContentBox{
     background-color: #ffffff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vh;
+    overflow: scroll;
+    padding:5%
+  }
+
+  .signContentText{
+    color: #000000;
   }
   /* Enable hover only on non-touch devices */
   @media (hover: hover) and (pointer: fine) {
@@ -114,6 +154,12 @@
   
   /* Mobile */
   @media (max-width: 700px){
+    .block{
+      background-color: #ffffff;
+      width: 90%;
+      border-radius: 10px;
+    }
+
     .startLetter{
       margin-top: 0%;
       padding-left: 5%;
@@ -125,11 +171,18 @@
     }
 
     .verifyBlock{
-      width: 90%;
       display: flex;
       align-items: center;
       border-radius: 10px;
       justify-content: space-evenly;
+      background-color: #ffffff;
+    }
+
+    .signBlock{
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      justify-content: center;
       background-color: #ffffff;
     }
   }
