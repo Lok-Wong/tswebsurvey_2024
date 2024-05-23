@@ -375,7 +375,6 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-            console.log("storedPathList12", storedPathList)
             setStoredPathList([...storedPathList, window.location.pathname])
         }
     }, [])
@@ -570,7 +569,7 @@ function App() {
                                 </div>
                                 :
                                 survey.directToHomeState == "否" ?
-                                    <div>
+                                    <div  key={key}>
                                         <div className={styles.question}>
                                             <FormControl>
                                                 <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
@@ -583,10 +582,10 @@ function App() {
 
 
                                                 </Box>
-                                                {/* <Button>
-                                                    按下打開地圖
-                                                    </Button> */}
-                                                <div key={key}>
+                                                    <Button onClick={()=>setKey((k) => k + 1)}>
+                                                        按下打開地圖
+                                                    </Button>
+                                                <div>
                                                     <MapComponent mapInputhandleChange={mapInputhandleChange} />
                                                 </div>
 

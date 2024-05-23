@@ -1,18 +1,32 @@
 'use client'
+import { Button } from 'antd';
 import { useRef, useState, useEffect } from 'react';
 
-function MapComponent({mapInputhandleChange}) {
+function MapComponent({mapInputhandleChange,handleCustomAddress}) {
   const [autoData, setAutoData] = useState(null);
   const [mapClickData, setMapClickData] = useState(null)
   const autoCompleteContiner = useRef(null)
   const placeSearchContiner = useRef(null)
   const [isClient, setIsClient] = useState(false)
   const [selectedLocal, setSelectedLocal] = useState(null)
+  const [customAddress, setCustomAddress] = useState(null)
   let maps = null
 
-  const sendDataToParentOnClick = (data,vName,type) => {
-    mapInputhandleChange(data,vName,type)
+  const sendDataToParentOnClick = (data,vName,type,lnglat) => {
+    mapInputhandleChange(data,vName,type,lnglat)
   }
+
+  const sendCustomAddress = (address,type) => {
+    handleCustomAddress(address,type)
+  }
+
+  const [key, setKey] = useState(0)
+
+  useEffect(() => {
+    setKey((k) => k + 1)
+},[])
+
+
 
   useEffect(() => {
     setIsClient(true)
@@ -49,7 +63,7 @@ function MapComponent({mapInputhandleChange}) {
               setMapClickData(e.lnglat)
               geocoder.getAddress(lnglat, function (status, result) {
                 setSelectedLocal(result.regeocode.formattedAddress)
-                sendDataToParentOnClick(result,'address',"click")
+                sendDataToParentOnClick(result,'address',"click",lnglat)
               })
             })
 
@@ -71,7 +85,7 @@ function MapComponent({mapInputhandleChange}) {
               setMapClickData(null)
               setAutoData(e)
               setSelectedLocal(e.poi.name)
-              sendDataToParentOnClick(e,'address',"autoComplete")
+              sendDataToParentOnClick(e,'address',"autoComplete",null)
               placeSearchContiner.current.search(e.poi.name)
               placeSearchContiner.current.setCity(e.poi.adcode)
             }
@@ -82,21 +96,32 @@ function MapComponent({mapInputhandleChange}) {
   },[])
 
 
+
   return (
-    <main>
+    <main  key={key}>
       {
         isClient ?
           <div>
+            <div>
               <input id="input_test" style={{
                 height: "3.5vh",
-                width: "80vw",
+                width: "62vw",
                 border: "3px solid #000",
                 borderRadius: "5px",
                 color: "#282828",
                 fontSize: "1em",
                 padding: "0 6px",
-                focus: { border: "3px solid #5551ff" }
-              }} />
+                focus: { border: "3px solid #5551ff" },              
+              }} 
+                onChange={(text) => {setCustomAddress(text.target.value)}}
+              />
+              <Button 
+                style={{marginLeft:"1vw"}}
+                onClick={()=>sendCustomAddress(customAddress,"byInput")}
+                >
+                送出
+              </Button>
+            </div>
             <div id="container" style={{ height: "40vh", width: "80vw" }} />
             {/* <div style={{ position: "absolute", backgroundColor: "#ffffff", bottom: 40 }}>
               <p>

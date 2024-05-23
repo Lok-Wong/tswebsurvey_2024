@@ -73,13 +73,20 @@ function App() {
   const [mapSelectText, setMapSelectText] = React.useState()
 
   const getMapSelectedText = () => {
+
+    if (survey.address.method == "byInput") {
+      return (
+        survey.address.location
+      )
+    }
+
     if (survey.address.method == "click") {
       return (
         survey.address.regeocode.formattedAddress
       )
     }
 
-    if (survey.address.method == "autoComplete"){
+    if (survey.address.method == "autoComplete") {
       return (
         survey.address.poi.name
       )
@@ -124,28 +131,53 @@ function App() {
     ))
   }
 
-  const mapInputhandleChange = (data,vName,type) => {
+  const handleCustomAddress = (address,type) => {
+    setSurvey((prevState) => ({
+      ...prevState,
+        address : {
+          ...prevState.address,
+          location:address,
+          method:type
+        }
+    }))
+  }
+
+  const mapInputhandleChange = (data, vName, type, lnglat) => {
     setSurvey((prevState) => (
       {
         ...prevState,
         [vName]: data
         // studentofRespondents : event.target.value
       }
-    )    
-  )    
+    )
+    )
 
-  setSurvey((prevState) => (
-    {
-      ...prevState,
-      [vName]: {
-        ...prevState[vName],
-        method : type
+    setSurvey((prevState) => (
+      {
+        ...prevState,
+        [vName]: {
+          ...prevState[vName],
+          method: type
+        }
+        // studentofRespondents : event.target.value
       }
-      // studentofRespondents : event.target.value
+    )
+    )
+
+    if (lnglat != null) {
+      console.log(lnglat)
+      setSurvey((prevState) => ({
+        ...prevState,
+        [vName]: {
+          ...prevState[vName],
+          regeocode: {
+            ...prevState[vName].regeocode,
+            location: lnglat
+          }
+        }
+      }))
     }
-  )    
-)    
-}
+  }
 
   const handleNextButton = () => {
 
@@ -244,7 +276,7 @@ function App() {
         // router.push(prevPath)
         router.back()
       } else {
-        window.history.pushState(null, null, window.location.pathname);
+        // window.history.pushState(null, null, window.location.pathname);
         setfinishStatus(false)
       }
     }
@@ -264,7 +296,7 @@ function App() {
         isClient ?
           <div>
             {/* <Survey model={survey} /> */}
-            <h1 style={{ color: "#000000" }}>
+            <h1 className={styles.title}>
               一、學生家庭住戶資料
             </h1>
             <div className={styles.question}>
@@ -315,7 +347,7 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇目的地： "+ getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址"
+                      getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址"
                     }
                   </p>
 
@@ -325,7 +357,7 @@ function App() {
                   按下打開地圖
                 </Button> */}
                 <div>
-                  <MapComponent mapInputhandleChange={mapInputhandleChange} />
+                  <MapComponent mapInputhandleChange={mapInputhandleChange} handleCustomAddress={handleCustomAddress}/>
                 </div>
 
                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
@@ -405,13 +437,12 @@ function App() {
               <FormControl>
                 <FormLabel id="vehicle-radio-buttons-group-label"><h3>4)	所有家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
-                  row
                   aria-labelledby="vehicle-radio-buttons-group-label"
                   value={survey.vehicle}
                   name="vehicle"
                   onChange={handleChange}
                 >
-                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單" />
+                  <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="私家車" control={<Radio />} label="私家車" />
                   <FormControlLabel sx={{ color: "black" }} value="電單車" control={<Radio />} label="電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="都没有" control={<Radio />} label="都没有" />
@@ -421,23 +452,27 @@ function App() {
               </FormControl>
 
             </div>
-            <div className={styles.question}>
+          </div>
+          :
+          null
+      }
+        <div className={styles.buttonGroup}>
               <Button
+                className={styles.buttonStyle}
                 onClick={() => router.back()}
               >
                 上一頁
               </Button>
+              
               <Button
+                className={styles.buttonStyle}
                 onClick={handleNextButton}
               >
                 下一頁
               </Button>
             </div>
-          </div>
-          :
-          null
-      }
     </main>
+    
 
   );
 }
