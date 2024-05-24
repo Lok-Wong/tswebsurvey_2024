@@ -10,6 +10,9 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
   const [isClient, setIsClient] = useState(false)
   const [selectedLocal, setSelectedLocal] = useState(null)
   const [customAddress, setCustomAddress] = useState(null)
+  const [inputValue, setInputVale] = useState(null)
+  const [mapData, setMapData] = useState(null)
+  const [collectMethod, setCollectMethod] = useState(null)
   let maps = null
 
   const sendDataToParentOnClick = (data,vName,type,lnglat) => {
@@ -63,6 +66,9 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
               setMapClickData(e.lnglat)
               geocoder.getAddress(lnglat, function (status, result) {
                 setSelectedLocal(result.regeocode.formattedAddress)
+                setInputVale(result.regeocode.formattedAddress)
+                setCollectMethod('click')
+                setMapData((result))
                 sendDataToParentOnClick(result,'address',"click",lnglat)
               })
             })
@@ -85,6 +91,9 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
               setMapClickData(null)
               setAutoData(e)
               setSelectedLocal(e.poi.name)
+              setMapData(e)
+              setInputVale(e.poi.name)
+              setCollectMethod("autoComplete")
               sendDataToParentOnClick(e,'address',"autoComplete",null)
               placeSearchContiner.current.search(e.poi.name)
               placeSearchContiner.current.setCity(e.poi.adcode)
@@ -103,7 +112,10 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
         isClient ?
           <div>
             <div>
-              <input id="input_test" style={{
+              <input 
+                id="input_test" 
+                value={inputValue}
+                style={{
                 textDecorationColor:'#000000',
                 backgroundColor:"#ffffff",
                 color:"#000000",
@@ -115,11 +127,12 @@ function MapComponent({mapInputhandleChange,handleCustomAddress}) {
                 padding: "0 6px",
                 focus: { border: "3px solid #5551ff" },              
               }} 
-                onChange={(text) => {setCustomAddress(text.target.value)}}
+                // onChange={(text) => {setCustomAddress(text.target.value)}}
+                onChange={(e) => {setInputVale(e.target.value),setCollectMethod("input"),setMapData(e.target.value)}}
               />
               <Button 
                 style={{marginLeft:"1vw"}}
-                onClick={()=>sendCustomAddress(customAddress,"byInput")}
+                onClick={()=>sendCustomAddress(mapData,collectMethod)}
                 >
                 送出
               </Button>

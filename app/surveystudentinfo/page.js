@@ -613,11 +613,11 @@ function App() {
 
                         <div className={styles.question}>
                             <Button onClick={() => router.back()}>
-                                back
+                            上一頁
                             </Button>
 
                             <Button onClick={handleNextButton}>
-                                next
+                            下一頁
                             </Button>
                         </div>
 

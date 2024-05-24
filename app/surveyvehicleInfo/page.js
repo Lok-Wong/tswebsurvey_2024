@@ -452,10 +452,10 @@ function App() {
            } */}
 
                         <Button onClick={() => router.back()}>
-                            previous
+                        上一頁
                         </Button>
                         <Button href={'/surveystudentinfo'}>
-                            next
+                        下一頁
                         </Button>
                     </div>
                     :
