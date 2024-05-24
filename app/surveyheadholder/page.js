@@ -310,7 +310,7 @@ function App() {
     return () => {
       window.removeEventListener('popstate', onBackButtonEvent);
     };
-  }, [window]);
+  }, []);
 
   return (
     <main className={styles.main}>
