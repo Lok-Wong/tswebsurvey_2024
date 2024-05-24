@@ -74,9 +74,9 @@ function App() {
 
   const getMapSelectedText = () => {
 
-    if (survey.address.method == "byInput") {
+    if (survey.address.method == "input") {
       return (
-        survey.address.location
+        survey.address.name
       )
     }
 
@@ -131,55 +131,74 @@ function App() {
     ))
   }
 
-  const handleCustomAddress = (address,type) => {
-    
-    console.log("address",address,type)
+  const handleCustomAddress = (address, type) => {
     setSurvey((prevState) => ({
       ...prevState,
-        address : {
+      address: null
+    }))
+
+    if (type == "input") {
+      setSurvey((prevState) => ({
+        ...prevState,
+        address: {
           ...prevState.address,
-          location:address,
-          method:type
+          name: address,
+          method: type
         }
+      }))
+      return
+    }
+
+    setSurvey((prevState) => ({
+      ...prevState,
+      address: address,
+    }))
+
+    setSurvey((prevState) => ({
+      ...prevState,
+      address: {
+        ...prevState.address,
+        method: type
+      }
     }))
   }
 
-  const mapInputhandleChange = (data, vName, type, lnglat) => {
-    setSurvey((prevState) => (
-      {
-        ...prevState,
-        [vName]: data
-        // studentofRespondents : event.target.value
-      }
-    )
-    )
+  // const mapInputhandleChange = (data, vName, type, lnglat) => {
+  //   setSurvey((prevState) => (
+  //     {
+  //       ...prevState,
+  //       [vName]: data
+  //       // studentofRespondents : event.target.value
+  //     }
+  //   )
+  //   )
 
-    setSurvey((prevState) => (
-      {
-        ...prevState,
-        [vName]: {
-          ...prevState[vName],
-          method: type
-        }
-        // studentofRespondents : event.target.value
-      }
-    )
-    )
+  //   setSurvey((prevState) => (
+  //     {
+  //       ...prevState,
+  //       [vName]: {
+  //         ...prevState[vName],
+  //         method: type
+  //       }
+  //       // studentofRespondents : event.target.value
+  //     }
+  //   )
+  //   )
 
-    if (lnglat != null) {
-      console.log(lnglat)
-      setSurvey((prevState) => ({
-        ...prevState,
-        [vName]: {
-          ...prevState[vName],
-          regeocode: {
-            ...prevState[vName].regeocode,
-            location: lnglat
-          }
-        }
-      }))
-    }
-  }
+  //   if (lnglat != null) {
+  //     console.log(lnglat)
+  //     setSurvey((prevState) => ({
+  //       ...prevState,
+  //       [vName]: {
+  //         ...prevState[vName],
+  //         regeocode: {
+  //           ...prevState[vName].regeocode,
+  //           location: lnglat
+  //         }
+  //       }
+  //     }))
+  //   }
+  // }
 
   const handleNextButton = () => {
 
@@ -285,19 +304,19 @@ function App() {
   }
 
   React.useEffect(() => {
+    console.log("popup")
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener('popstate', onBackButtonEvent);
     return () => {
       window.removeEventListener('popstate', onBackButtonEvent);
     };
-  }, []);
+  }, [window]);
 
   return (
     <main className={styles.main}>
       {
         isClient ?
           <div>
-            {/* <Survey model={survey} /> */}
             <h1 className={styles.title}>
               一、學生家庭住戶資料
             </h1>
@@ -349,7 +368,7 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址"
+                      getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
                     }
                   </p>
 
@@ -359,7 +378,7 @@ function App() {
                   按下打開地圖
                 </Button> */}
                 <div>
-                  <MapComponent mapInputhandleChange={mapInputhandleChange} handleCustomAddress={handleCustomAddress}/>
+                  <MapComponent handleCustomAddress={handleCustomAddress} />
                 </div>
 
                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
@@ -458,23 +477,23 @@ function App() {
           :
           null
       }
-        <div className={styles.buttonGroup}>
-              <Button
-                className={styles.buttonStyle}
-                onClick={() => router.back()}
-              >
-                上一頁
-              </Button>
-              
-              <Button
-                className={styles.buttonStyle}
-                onClick={handleNextButton}
-              >
-                下一頁
-              </Button>
-            </div>
+      <div className={styles.buttonGroup}>
+        <Button
+          className={styles.buttonStyle}
+          onClick={() => router.back()}
+        >
+          上一頁
+        </Button>
+
+        <Button
+          className={styles.buttonStyle}
+          onClick={handleNextButton}
+        >
+          下一頁
+        </Button>
+      </div>
     </main>
-    
+
 
   );
 }

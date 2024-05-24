@@ -14,8 +14,8 @@ function App() {
     const router = useRouter();
 
     const blanksurvey = {
-            startTime: new Date(),
-            fillAlready: 999,
+        startTime: new Date(),
+        fillAlready: 999,
     }
 
     const _studentNum = React.useMemo(() => {
@@ -69,7 +69,7 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.fillAlready == "是") {
-            console.log("setList",storedPathList)
+            console.log("setList", storedPathList)
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyFinished')
@@ -86,8 +86,8 @@ function App() {
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
-        setStoredPathList([...storedPathList,window.location.pathname])
-    },[isClient])
+        setStoredPathList([...storedPathList, window.location.pathname])
+    }, [isClient])
 
     React.useEffect(() => {
         console.log("survey:", survey)
@@ -99,7 +99,7 @@ function App() {
 
     React.useEffect(() => {
         setIsClient(true)
-        setStoredPathList(sessionStorage.getItem("pathList")? sessionStorage.getItem("pathList").split(",") : null)
+        setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
 
     React.useEffect(() => {
@@ -116,29 +116,29 @@ function App() {
     const [finishStatus, setfinishStatus] = React.useState(false);
 
     const onBackButtonEvent = (e) => {
-      e.preventDefault();
-      if (!finishStatus) {
-          if (window.confirm("Do you want to go back ?")) {
-            setfinishStatus(true)
-            const copyArr = [...storedPathList]
-            const prevPath = copyArr[copyArr.length - 1]
-            copyArr.splice(-1)
-            sessionStorage.setItem('pathList',copyArr)
-            // router.back()
-            router.back()
-          } else {
-              window.history.pushState(null, null, window.location.pathname);
-              setfinishStatus(false)
-          }
-      }
+        e.preventDefault();
+        if (!finishStatus) {
+            if (window.confirm("Do you want to go back ?")) {
+                setfinishStatus(true)
+                const copyArr = [...storedPathList]
+                const prevPath = copyArr[copyArr.length - 1]
+                copyArr.splice(-1)
+                sessionStorage.setItem('pathList', copyArr)
+                // router.back()
+                router.back()
+            } else {
+                window.history.pushState(null, null, window.location.pathname);
+                setfinishStatus(false)
+            }
+        }
     }
-  
+
     React.useEffect(() => {
-      window.history.pushState(null, null, window.location.pathname);
-      window.addEventListener('popstate', onBackButtonEvent);
-      return () => {
-        window.removeEventListener('popstate', onBackButtonEvent);  
-      };
+        // window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', onBackButtonEvent);
+        return () => {
+            window.removeEventListener('popstate', onBackButtonEvent);
+        };
     }, []);
 
     return (
@@ -166,14 +166,6 @@ function App() {
                                 </FormControl>
                             </div>
                         </div>
-
-                        <div className={styles.question}>
-                            <Button onClick={handleNextButton}>
-                                {
-                                    survey.fillAlready == "否" ? "下一頁" : "完成"
-                                }
-                            </Button>
-                        </div>
                     </div>
                     :
                     null
@@ -184,7 +176,13 @@ function App() {
                 </h1>
             </div> */}
 
-
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    {
+                        survey.fillAlready == "否" ? "下一頁" : "完成"
+                    }
+                </Button>
+            </div>
         </main>
 
 

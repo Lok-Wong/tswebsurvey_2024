@@ -16,12 +16,12 @@ function App() {
     const router = useRouter();
 
     const blanksurvey = {
-            startTime: new Date(),
-            badWeatherPickup: 999,
-            otherbadWeatherPickup: 999,
-            badWeatherTransition: 999,
-            otherbadWeatherTransition: 999,
-            comment: 999,
+        startTime: new Date(),
+        badWeatherPickup: 999,
+        otherbadWeatherPickup: 999,
+        badWeatherTransition: 999,
+        otherbadWeatherTransition: 999,
+        comment: 999,
     }
     const blankHelpText = {}
     const [helpText, setHelpText] = React.useState(blankHelpText)
@@ -51,13 +51,13 @@ function App() {
 
     const _initial_pathListe = React.useMemo(() => {
         if (typeof window !== 'undefined') {
-          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
-          // If there is a value stored in localStorage, use that
-          if (local_storage_path_list) {
-            return (local_storage_path_list);
-          }
+            const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
         }
-      }, []);
+    }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
@@ -67,7 +67,7 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                    [objectName]: event.target.value
+                [objectName]: event.target.value
 
             }
         )
@@ -78,12 +78,12 @@ function App() {
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
-          {
-            ...prevState,
-            [objectName]: errorText
-          }
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
         ))
-      }
+    }
 
     const handleNextButton = () => {
         if (survey.Pickup == 999) {
@@ -118,7 +118,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherbadWeatherPickup: 999
+                    otherbadWeatherPickup: 999
                 }
             ))
         }
@@ -127,7 +127,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherbadWeatherTransition: 999
+                    otherbadWeatherTransition: 999
                 }
             ))
         }
@@ -138,58 +138,58 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-        console.log("storedPathList12", storedPathList)
-        setStoredPathList([...storedPathList, window.location.pathname])
+            console.log("storedPathList12", storedPathList)
+            setStoredPathList([...storedPathList, window.location.pathname])
         }
-      }, [])
+    }, [])
 
-      React.useEffect(() => {
+    React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-          router.replace("./")
-          return
+            router.replace("./")
+            return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] == "/surveyNormalRd2" 
+        if (_initial_pathListe[_initial_pathListe.length - 1] == "/surveyNormalRd2"
             ||
-            _initial_pathListe[_initial_pathListe.length - 1] == "/surveyCrossRd2"  ) {
-          return
+            _initial_pathListe[_initial_pathListe.length - 1] == "/surveyCrossRd2") {
+            return
         } else {
             router.replace("./")
             return
         }
-      }, [])
+    }, [])
 
-      const [finishStatus, setfinishStatus] = React.useState(false);
+    const [finishStatus, setfinishStatus] = React.useState(false);
 
-      const onBackButtonEvent = (e) => {
+    const onBackButtonEvent = (e) => {
         e.preventDefault();
-      //   if (!finishStatus) {
-      //       if (window.confirm("Do you want to go back ?")) {
-      //         setfinishStatus(true)
-              const copyArr = [...storedPathList]
-              const prevPath = copyArr[copyArr.length - 1]
-              copyArr.splice(-1)
-              sessionStorage.setItem('pathList',copyArr)
-              router.back()
-      //       } else {
-      //           window.history.pushState(null, null, window.location.pathname);
-      //           setfinishStatus(false)
-      //       }
-      //   }
-      }
-    
-      React.useEffect(() => {
+        //   if (!finishStatus) {
+        //       if (window.confirm("Do you want to go back ?")) {
+        //         setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList', copyArr)
+        router.back()
+        //       } else {
+        //           window.history.pushState(null, null, window.location.pathname);
+        //           setfinishStatus(false)
+        //       }
+        //   }
+    }
+
+    React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
         return () => {
-          window.removeEventListener('popstate', onBackButtonEvent);  
+            window.removeEventListener('popstate', onBackButtonEvent);
         };
-      }, []);
+    }, []);
 
     return (
         <main className={styles.main}>
             {
                 isClient ?
-                    <div style={{ minWidth: "100%" }}>
+                    <div>
                         <h1 style={{ color: "#000000" }}>
                             五、惡劣天氣情況下，學生上學及放學出行情況
                         </h1>
@@ -291,12 +291,12 @@ function App() {
                                 <Box
                                     component="form"
                                     sx={{
-                                        '& > :not(style)': {  width: '80%' },
+                                        '& > :not(style)': { width: '80%' },
                                     }}
                                     noValidate
                                 >
                                     <TextField
-                                        sx={{marginTop: "1rem"}}
+                                        sx={{ marginTop: "1rem" }}
                                         id="comment-text"
                                         label="請輸入您的意見"
                                         variant="outlined"
@@ -309,20 +309,20 @@ function App() {
                             </FormControl>
                         </div>
 
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                                上一頁
-                            </Button>
-                            <Button onClick={handleNextButton}>
-                                下一頁
-                            </Button>
-                        </div>
-
                     </div>
                     :
                     null
             }
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                    上一頁
+                </Button>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
         </main>
+
     )
 
 }

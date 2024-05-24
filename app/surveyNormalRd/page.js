@@ -21,13 +21,13 @@ function App() {
     const router = useRouter();
 
     const blanksurvey = {
-            startTime: new Date(),
-            pickup: 999,
-            otherOfPickup: 999,
-            pickupTimeStart: "",
-            pickupTimeEnd: "",
-            commonTransirtation: 999,
-            otherOfCommonTransirtation: 999,
+        startTime: new Date(),
+        pickup: 999,
+        otherOfPickup: 999,
+        pickupTimeStart: "",
+        pickupTimeEnd: "",
+        commonTransirtation: 999,
+        otherOfCommonTransirtation: 999,
     }
 
     const blankHelpText = {
@@ -65,13 +65,13 @@ function App() {
 
     const _initial_pathListe = React.useMemo(() => {
         if (typeof window !== 'undefined') {
-          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
-          // If there is a value stored in localStorage, use that
-          if (local_storage_path_list) {
-            return (local_storage_path_list);
-          }
+            const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
         }
-      }, []);
+    }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
     const [helpText, setHelpText] = React.useState(blankHelpText)
@@ -81,19 +81,19 @@ function App() {
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
-          {
-            ...prevState,
-            [objectName]: errorText
-          }
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
         ))
-      }
+    }
 
     const handleChange = (event) => {
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
                 ...prevState,
-                    [objectName]: event.target.value
+                [objectName]: event.target.value
             }
         )
 
@@ -103,7 +103,7 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-                [name]: event.$d
+            [name]: event.$d
         })
         )
     };
@@ -115,18 +115,18 @@ function App() {
             return
         }
 
-        if (survey.pickup == "其他"){
-            if (survey.otherOfPickup == "999" || survey.otherOfPickup == ""){
+        if (survey.pickup == "其他") {
+            if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
                 handleHelpText("pickup", "請填寫其他")
                 return
             }
         }
 
-        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart) ) {
+        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
             handleHelpText("pickupTimeStart", "出發時間不能晚過到達時間")
             handleHelpText("pickupTimeEnd", "到達時間不能早過出發時間")
             return
-        }       
+        }
 
         if (survey.pickupTimeStart == survey.pickupTimeEnd) {
             handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
@@ -148,7 +148,7 @@ function App() {
         }
 
         if (survey.commonTransirtation == "其他") {
-            if(survey.otherOfCommonTransirtation == "999" || survey.otherOfCommonTransirtation == ""){
+            if (survey.otherOfCommonTransirtation == "999" || survey.otherOfCommonTransirtation == "") {
                 handleHelpText("commonTransirtation", "請填寫其他")
                 return
             }
@@ -173,54 +173,54 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-        console.log("storedPathList12", storedPathList)
-        setStoredPathList([...storedPathList, window.location.pathname])
+            console.log("storedPathList12", storedPathList)
+            setStoredPathList([...storedPathList, window.location.pathname])
         }
-      }, [])
+    }, [])
 
-      React.useEffect(() => {
+    React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-          router.replace("./")
-          return
+            router.replace("./")
+            return
         }
         if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveystudentinfo") {
-          router.replace("./")
+            router.replace("./")
         }
-      }, [])
+    }, [])
 
-      const [finishStatus, setfinishStatus] = React.useState(false);
+    const [finishStatus, setfinishStatus] = React.useState(false);
 
-      const onBackButtonEvent = (e) => {
+    const onBackButtonEvent = (e) => {
         e.preventDefault();
-      //   if (!finishStatus) {
-      //       if (window.confirm("Do you want to go back ?")) {
-      //         setfinishStatus(true)
-              const copyArr = [...storedPathList]
-              const prevPath = copyArr[copyArr.length - 1]
-              copyArr.splice(-1)
-              sessionStorage.setItem('pathList',copyArr)
-              router.back()
-      //       } else {
-      //           window.history.pushState(null, null, window.location.pathname);
-      //           setfinishStatus(false)
-      //       }
-      //   }
-      }
-    
-      React.useEffect(() => {
+        //   if (!finishStatus) {
+        //       if (window.confirm("Do you want to go back ?")) {
+        //         setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList', copyArr)
+        router.back()
+        //       } else {
+        //           window.history.pushState(null, null, window.location.pathname);
+        //           setfinishStatus(false)
+        //       }
+        //   }
+    }
+
+    React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
         return () => {
-          window.removeEventListener('popstate', onBackButtonEvent);  
+            window.removeEventListener('popstate', onBackButtonEvent);
         };
-      }, []);
+    }, []);
 
     React.useEffect(() => {
         if (survey.pickup != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfPickup: 999
+                    otherOfPickup: 999
                 }
             ))
         }
@@ -229,7 +229,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfCommonTransirtation: 999
+                    otherOfCommonTransirtation: 999
                 }
             ))
         }
@@ -244,7 +244,7 @@ function App() {
             {
                 isClient ?
 
-                    <div style={{ minWidth: "100%" }}>
+                    <div>
 
                         <h1 style={{ color: "#000000" }}>
                             三、一般情況下，學生早上上學的情況
@@ -294,7 +294,7 @@ function App() {
                                 <FormLabel id="pickup-time-start-label"><h3>2)     出發時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
-                                        <DesktopTimePicker 
+                                        <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.pickupTimeStart)}
                                             onChange={(event) => handleTimeChange(event, "pickupTimeStart")}
@@ -303,8 +303,8 @@ function App() {
                                 </LocalizationProvider>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeStart}</FormHelperText>
                             </FormControl>
-                            </div>
-                            <div className={styles.question}>
+                        </div>
+                        <div className={styles.question}>
 
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="pickup-time-end-label"><h3>3)     到達時間：</h3></FormLabel>
@@ -445,20 +445,18 @@ function App() {
                         </Box>
                     </FormControl>
                 </div> */}
-
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                            上一頁
-                            </Button>
-                            <Button onClick={handleNextButton}>
-                            下一頁
-                            </Button>
-                        </div>
-
                     </div>
                     :
                     null
             }
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                    上一頁
+                </Button>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
         </main>
     )
 

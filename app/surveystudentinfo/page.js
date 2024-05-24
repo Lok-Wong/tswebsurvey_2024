@@ -7,7 +7,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -17,7 +16,7 @@ import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType 
 function App() {
     const router = useRouter();
 
-   
+
     const [slValue, setSlValue] = React.useState('')
     const [sltValue, setSltValue] = React.useState('')
     const [stValue, setStValue] = React.useState('')
@@ -26,77 +25,77 @@ function App() {
     const [shInputValue, setShInputValue] = React.useState('')
 
     const blanksurvey = {
-            schoolType: 999,
-            schoolArea: 999,
-            schoolName: 999,
-            classLevel: 999,
-            levelType: 999,
-            schoolName: 999,
-            gender: 999,
-            age: 999,
-            crossBorder: 999,
-            startTime: new Date(),
+        schoolType: 999,
+        schoolArea: 999,
+        schoolName: 999,
+        classLevel: 999,
+        levelType: 999,
+        schoolName: 999,
+        gender: 999,
+        age: 999,
+        crossBorder: 999,
+        startTime: new Date(),
     }
 
     const blankSurveyCrd = {
-            startTime: 999,
-            pickup: 999,
-            otherOfPickup: 999,
-            TimeStartFromHome: 999,
-            portForShcool: 999,
-            otherOfpPortForShcool: 999,
-            TimeEndToMacau: 999,
-            commonTransirtation: 999,
-            otherOfCommonTransirtation: 999,
-            arrivalTimeToSchool: 999,
+        startTime: 999,
+        pickup: 999,
+        otherOfPickup: 999,
+        TimeStartFromHome: 999,
+        portForShcool: 999,
+        otherOfpPortForShcool: 999,
+        TimeEndToMacau: 999,
+        commonTransirtation: 999,
+        otherOfCommonTransirtation: 999,
+        arrivalTimeToSchool: 999,
     }
 
     const blankSurveyCrd2 = {
-            startTime: 999,
-            leaveShcoolTime: 999,
-            pickup: 999,
-            otherOfPickup: 999,
-            directToPort: 999,
-            portForHome: 999,
-            otherOfportForHome: 999,
-            commonTransirtation: 999,
-            otherOfCommonTransirtation: 999,
-            arrivalPortTime: 999,
-            arrivalHomeTime: 999,
+        startTime: 999,
+        leaveShcoolTime: 999,
+        pickup: 999,
+        otherOfPickup: 999,
+        directToPort: 999,
+        portForHome: 999,
+        otherOfportForHome: 999,
+        commonTransirtation: 999,
+        otherOfCommonTransirtation: 999,
+        arrivalPortTime: 999,
+        arrivalHomeTime: 999,
 
     }
 
     const blanksurveyRd = {
-            startTime: 999,
-            pickup: 999,
-            otherOfPickup: 999,
-            pickupTimeStart: 999,
-            pickupTimeEnd: 999,
-            commonTransirtation: 999,
-            otherOfCommonTransirtation: 999,
+        startTime: 999,
+        pickup: 999,
+        otherOfPickup: 999,
+        pickupTimeStart: 999,
+        pickupTimeEnd: 999,
+        commonTransirtation: 999,
+        otherOfCommonTransirtation: 999,
     }
 
     const blanksurveyRd2 = {
-            startTime: 999,
-            leaveSchoolTime: 999,
-            otherleavePickUp: 999,
-            leavePickUp: 999,
-            directToHomeState: 999,
-            directToHomeYes: {
-                arivalHomeTime: 999,
-                arivalHomeTransition: 999,
-                otherarivalHomeTransition: 999
-            },
-            directToHomeNo: {
-                leaveDestination: 999,
-                leaveDestinationTime: 999,
-                leaveDestinationTransition: 999,
-                otherLeaveDestinationTransition: 999,
-                destinationBackHomeStartTime: 999,
-                destinationBackHomeEndTime: 999,
-                leaveDestinationBackHomeTransition: 999,
-                otherLeaveDestinationBackHomeTransition: 999
-            }
+        startTime: 999,
+        leaveSchoolTime: 999,
+        otherleavePickUp: 999,
+        leavePickUp: 999,
+        directToHomeState: 999,
+        directToHomeYes: {
+            arivalHomeTime: 999,
+            arivalHomeTransition: 999,
+            otherarivalHomeTransition: 999
+        },
+        directToHomeNo: {
+            leaveDestination: 999,
+            leaveDestinationTime: 999,
+            leaveDestinationTransition: 999,
+            otherLeaveDestinationTransition: 999,
+            destinationBackHomeStartTime: 999,
+            destinationBackHomeEndTime: 999,
+            leaveDestinationBackHomeTransition: 999,
+            otherLeaveDestinationBackHomeTransition: 999
+        }
     }
 
     const blankHelpText = {
@@ -166,7 +165,7 @@ function App() {
             {
                 ...prevState,
                 [objectName]: event.target.value
-                
+
             }
         )
 
@@ -174,7 +173,7 @@ function App() {
     };
 
     const [isClient, setIsClient] = React.useState(false)
-   
+
     React.useEffect(() => {
         setIsClient(true)
         setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
@@ -209,19 +208,19 @@ function App() {
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
-        //   if (!finishStatus) {
-        //       if (window.confirm("Do you want to go back ?")) {
-        //         setfinishStatus(true)
-        const copyArr = [...storedPathList]
-        const prevPath = copyArr[copyArr.length - 1]
-        copyArr.splice(-1)
-        sessionStorage.setItem('pathList', copyArr)
-        router.back()
-        //       } else {
-        //           window.history.pushState(null, null, window.location.pathname);
-        //           setfinishStatus(false)
-        //       }
-        //   }
+        if (!finishStatus) {
+            if (window.confirm("Do you want to go back ?")) {
+                setfinishStatus(true)
+                const copyArr = [...storedPathList]
+                const prevPath = copyArr[copyArr.length - 1]
+                copyArr.splice(-1)
+                sessionStorage.setItem('pathList', copyArr)
+                router.back()
+            } else {
+                // window.history.pushState(null, null, window.location.pathname);
+                setfinishStatus(false)
+            }
+        }
     }
 
     React.useEffect(() => {
@@ -253,15 +252,15 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                    schoolName: shInputValue
+                schoolName: shInputValue
             }
         )
 
         )
-    },[shValue,shInputValue])
+    }, [shValue, shInputValue])
 
     const getSchoolObject = (stValue, rgValue) => {
-        if (stValue == "999" || rgValue == "999" ) {
+        if (stValue == "999" || rgValue == "999") {
             return
         }
 
@@ -370,7 +369,7 @@ function App() {
                                     id="school-type"
                                     aria-labelledby="school-type-label"
                                     name="schoolType"
-                                    onChange={(event) => { 
+                                    onChange={(event) => {
                                         setStValue(event.target.value);
                                         handleChange(event);
                                     }}
@@ -393,7 +392,7 @@ function App() {
                                             id="school-area"
                                             aria-labelledby="school-area-label"
                                             name="schoolArea"
-                                            onChange={(event) => { 
+                                            onChange={(event) => {
                                                 setRgValue(event.target.value);
                                                 handleChange(event);
                                             }}
@@ -402,7 +401,7 @@ function App() {
                                             <FormControlLabel sx={{ color: "black" }} value="澳門" control={<Radio />} label="澳門" />
                                             <FormControlLabel sx={{ color: "black" }} value="氹仔" control={<Radio />} label="氹仔" />
                                             <FormControlLabel sx={{ color: "black" }} value="路環" control={<Radio />} label="路環" />
-                                            <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" />
+                                            {/* <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" /> */}
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.schoolArea}</FormHelperText>
                                     </FormControl>
@@ -445,7 +444,7 @@ function App() {
                                             }
                                         />
                                         {/* </Box> */}
-                                        <p style={{color:"#000000"}}>
+                                        <p style={{ color: "#000000" }}>
                                             {adress[shInputValue] ?
                                                 "地址：" + adress[shInputValue]
                                                 :
@@ -468,10 +467,10 @@ function App() {
                                             id="class-level"
                                             aria-labelledby="class-level-label"
                                             name="classLevel"
-                                            onChange={(event) => { 
+                                            onChange={(event) => {
                                                 setSlValue(event.target.value);
                                                 handleChange(event);
-                                             }}
+                                            }}
                                             value={slValue}
                                         >
                                             {
@@ -485,7 +484,7 @@ function App() {
                                                     <TextField onChange={(event) => {
                                                         setSlValue(event.target.value);
                                                         handleChange(event);
-                                                    }} sx={{m:1}} label={"請輸入"}></TextField>
+                                                    }} sx={{ m: 1 }} label={"請輸入"}></TextField>
                                             }
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
@@ -531,15 +530,15 @@ function App() {
                                             id="level-Type"
                                             aria-labelledby="level-type-label"
                                             name="levelType"
-                                            onChange={(event) => { 
-                                                setSltValue(event.target.value) 
+                                            onChange={(event) => {
+                                                setSltValue(event.target.value)
                                                 handleChange(event);
                                             }}
                                             value={sltValue}
                                         >
                                             {
                                                 levelTypes[slValue] ?
-                                                levelTypes[slValue].map((item, index) => {
+                                                    levelTypes[slValue].map((item, index) => {
                                                         return (
                                                             <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
                                                         )
@@ -548,7 +547,7 @@ function App() {
                                                     <TextField onChange={(event) => {
                                                         setSltValue(event.target.value);
                                                         handleChange(event);
-                                                    }} sx={{m:1}} label={"請輸入"}></TextField>
+                                                    }} sx={{ m: 1 }} label={"請輸入"}></TextField>
                                             }
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
@@ -611,20 +610,22 @@ function App() {
                             </FormControl>
                         </div>
 
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                            上一頁
-                            </Button>
-
-                            <Button onClick={handleNextButton}>
-                            下一頁
-                            </Button>
-                        </div>
-
                     </div>
                     :
                     null
             }
+
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle}
+                    onClick={() => router.back()}>
+                    上一頁
+                </Button>
+
+                <Button className={styles.buttonStyle}
+                    onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
 
         </main>
     )

@@ -20,16 +20,16 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 function App() {
     const router = useRouter();
     const blanksurvey = {
-            startTime: new Date(),
-            pickup: 999,
-            otherOfPickup: 999,
-            TimeStartFromHome: "",
-            portForShcool: 999,
-            otherOfpPortForShcool: 999,
-            TimeEndToMacau: "",
-            commonTransirtation: 999,
-            otherOfCommonTransirtation: 999,
-            arrivalTimeToSchool: "",
+        startTime: new Date(),
+        pickup: 999,
+        otherOfPickup: 999,
+        TimeStartFromHome: "",
+        portForShcool: 999,
+        otherOfpPortForShcool: 999,
+        TimeEndToMacau: "",
+        commonTransirtation: 999,
+        otherOfCommonTransirtation: 999,
+        arrivalTimeToSchool: "",
     }
 
     const blankHelpText = {}
@@ -88,7 +88,7 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                    [objectName]: event.target.value
+                [objectName]: event.target.value
             }
         )
 
@@ -98,7 +98,7 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-                [name]: event.$d
+            [name]: event.$d
         })
         )
     };
@@ -185,7 +185,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfPickup: 999
+                    otherOfPickup: 999
                 }
             ))
         }
@@ -194,7 +194,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfCommonTransirtation: 999
+                    otherOfCommonTransirtation: 999
                 }
             ))
         }
@@ -203,7 +203,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfpPortForShcool: 999
+                    otherOfpPortForShcool: 999
                 }
             ))
         }
@@ -264,7 +264,7 @@ function App() {
             {
                 isClient ?
 
-                    <div style={{ minWidth: "100%" }}>
+                    <div>
                         <h1 style={{ color: "#000000" }}>
                             四、跨境上學及放學出行
                         </h1>
@@ -500,19 +500,18 @@ function App() {
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.arrivalTimeToSchool}</FormHelperText>
                             </FormControl>
                         </div>
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                                上一頁
-                            </Button>
-                            <Button onClick={handleNextButton}>
-                                下一頁
-                            </Button>
-                        </div>
-
                     </div>
                     :
                     null
             }
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                    上一頁
+                </Button>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
         </main>
     )
 

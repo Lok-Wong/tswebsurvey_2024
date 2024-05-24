@@ -20,17 +20,17 @@ import FormHelperText from '@mui/material/FormHelperText';
 function App() {
     const router = useRouter();
     const blanksurvey = {
-            startTime: new Date(),
-            leaveShcoolTime: "",
-            pickup: 999,
-            otherOfPickup: 999,
-            directToPort: 999,
-            portForHome: 999,
-            otherOfportForHome: 999,
-            commonTransirtation: 999,
-            otherOfCommonTransirtation: 999,
-            arrivalPortTime: "",
-            arrivalHomeTime: "",
+        startTime: new Date(),
+        leaveShcoolTime: "",
+        pickup: 999,
+        otherOfPickup: 999,
+        directToPort: 999,
+        portForHome: 999,
+        otherOfportForHome: 999,
+        commonTransirtation: 999,
+        otherOfCommonTransirtation: 999,
+        arrivalPortTime: "",
+        arrivalHomeTime: "",
     }
 
     const blankHelpText = {}
@@ -71,13 +71,13 @@ function App() {
 
     const _initial_pathListe = React.useMemo(() => {
         if (typeof window !== 'undefined') {
-          const local_storage_path_list = sessionStorage.getItem('pathList')? sessionStorage.getItem('pathList').split(",") : null;
-          // If there is a value stored in localStorage, use that
-          if (local_storage_path_list) {
-            return (local_storage_path_list);
-          }
+            const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
         }
-      }, []);
+    }, []);
 
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
@@ -89,7 +89,7 @@ function App() {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                    [objectName]: event.target.value
+                [objectName]: event.target.value
             }
         )
 
@@ -99,7 +99,7 @@ function App() {
     const handleTimeChange = (event, name) => {
         setSurvey((prevState) => ({
             ...prevState,
-                [name]: event.$d
+            [name]: event.$d
         })
         )
     };
@@ -174,7 +174,7 @@ function App() {
         router.push('/surveyBadWeather')
     }
 
-    
+
 
     const [isClient, setIsClient] = React.useState(false)
 
@@ -194,7 +194,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfPickup: 999
+                    otherOfPickup: 999
                 }
             ))
         }
@@ -203,7 +203,7 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfCommonTransirtation: 999
+                    otherOfCommonTransirtation: 999
                 }
             ))
         }
@@ -212,8 +212,8 @@ function App() {
             setSurvey((prevState) => (
                 {
                     ...prevState,
-                        otherOfportForHome: 999
-                    }
+                    otherOfportForHome: 999
+                }
             ))
         }
 
@@ -224,47 +224,47 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-        console.log("storedPathList12", storedPathList)
-        setStoredPathList([...storedPathList, window.location.pathname])
+            console.log("storedPathList12", storedPathList)
+            setStoredPathList([...storedPathList, window.location.pathname])
         }
-      }, [])
+    }, [])
 
-      React.useEffect(() => {
+    React.useEffect(() => {
         if (sessionStorage.getItem('pathList') === null) {
-          router.replace("./")
-          return
+            router.replace("./")
+            return
         }
         if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyCrossRd") {
-          router.replace("./")
+            router.replace("./")
         }
-      }, [])
+    }, [])
 
-      const [finishStatus, setfinishStatus] = React.useState(false);
+    const [finishStatus, setfinishStatus] = React.useState(false);
 
-      const onBackButtonEvent = (e) => {
+    const onBackButtonEvent = (e) => {
         e.preventDefault();
-      //   if (!finishStatus) {
-      //       if (window.confirm("Do you want to go back ?")) {
-      //         setfinishStatus(true)
-              const copyArr = [...storedPathList]
-              const prevPath = copyArr[copyArr.length - 1]
-              copyArr.splice(-1)
-              sessionStorage.setItem('pathList',copyArr)
-              router.back()
-      //       } else {
-      //           window.history.pushState(null, null, window.location.pathname);
-      //           setfinishStatus(false)
-      //       }
-      //   }
-      }
-    
-      React.useEffect(() => {
+        //   if (!finishStatus) {
+        //       if (window.confirm("Do you want to go back ?")) {
+        //         setfinishStatus(true)
+        const copyArr = [...storedPathList]
+        const prevPath = copyArr[copyArr.length - 1]
+        copyArr.splice(-1)
+        sessionStorage.setItem('pathList', copyArr)
+        router.back()
+        //       } else {
+        //           window.history.pushState(null, null, window.location.pathname);
+        //           setfinishStatus(false)
+        //       }
+        //   }
+    }
+
+    React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
         return () => {
-          window.removeEventListener('popstate', onBackButtonEvent);  
+            window.removeEventListener('popstate', onBackButtonEvent);
         };
-      }, []);
+    }, []);
 
 
 
@@ -273,7 +273,7 @@ function App() {
             {
                 isClient ?
 
-                    <div style={{ minWidth: "100%" }}>
+                    <div>
                         <h2 style={{ color: "#000000" }}>
                             4.2	一般情況下，學生下午放學的情況
                         </h2>
@@ -524,18 +524,17 @@ function App() {
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.arrivalHomeTime}</FormHelperText>
                             </FormControl>
                         </div>
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                                上一頁
-                            </Button>
-                            <Button onClick={handleNextButton}>
-                                下一頁
-                            </Button>
-                        </div>
-
                     </div>
                     : null
             }
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                    上一頁
+                </Button>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
         </main>
     )
 

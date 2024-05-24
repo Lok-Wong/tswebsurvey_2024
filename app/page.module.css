@@ -56,6 +56,7 @@
   .startTextcompany{
     text-align:right;
     color:#000000;
+
     /* width: inherit; */
   }
   
@@ -67,6 +68,7 @@
     padding: 2rem;
     width: 50%;
     border-radius: 10px;
+    box-shadow: -8px -3px 0px #ecb782;
   }
   
   .startbutton{
@@ -92,6 +94,7 @@
     width: 50%;
     border-radius: 10px;
     margin-top: 1vh;
+    box-shadow: -8px -3px 0px #ecb782;
   }
 
   .verifyBlock{

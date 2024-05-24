@@ -171,50 +171,72 @@ function App() {
         )
     };
 
-    const mapInputhandleChange = (data,vName,type) => {
-        setSurvey((prevState) => (
-          {
+    const handleCustomAddress = (address, type) => {
+        setSurvey((prevState) => ({
             ...prevState,
-                directToHomeNo : {
+            directToHomeNo: {
                 ...prevState.directToHomeNo,
-                [vName]:data
+                address: null
             }
-            // studentofRespondents : event.target.value
-          }
-        )    
-      )    
-    
-      setSurvey((prevState) => (
-        {
-          ...prevState,
-          directToHomeNo: {
-            ...prevState.directToHomeNo,
-            [vName] : {
-                ...prevState.directToHomeNo[vName],
-                method : type
-            }
-          }
-          // studentofRespondents : event.target.value
+        }))
+
+        if (type == "input") {
+            setSurvey((prevState) => ({
+                ...prevState,
+                directToHomeNo: {
+                    ...prevState.directToHomeNo,
+                    address: {
+                        ...prevState.directToHomeNo.address,
+                        name: address,
+                        method: type
+                    }
+                }
+
+            }))
+            return
         }
-      )    
-    )    
+
+        setSurvey((prevState) => ({
+            ...prevState,
+            directToHomeNo: {
+                ...prevState.directToHomeNo,
+                address: address,
+            }
+        }))
+
+        setSurvey((prevState) => ({
+            ...prevState,
+            directToHomeNo: {
+                address: {
+                    ...prevState.directToHomeNo.address,
+                    method: type
+                }
+            }
+        }))
     }
 
     const getMapSelectedText = () => {
+
+        if (survey.directToHomeNo.address.method == "input") {
+            return (
+                survey.directToHomeNo.address.name
+            )
+        }
+
         if (survey.directToHomeNo.address.method == "click") {
-          return (
-            survey.directToHomeNo.address.regeocode.formattedAddress
-          )
+            return (
+                survey.directToHomeNo.address.regeocode.formattedAddress
+            )
         }
-    
-        if (survey.directToHomeNo.address.method == "autoComplete"){
-          return (
-            survey.directToHomeNo.address.poi.name
-          )
+
+        if (survey.directToHomeNo.address.method == "autoComplete") {
+            return (
+                survey.directToHomeNo.address.poi.name
+            )
         }
-    
+
         return null
-      }
+    }
 
     const handleNextButton = () => {
         if (survey.leaveSchoolTime == "") {
@@ -391,7 +413,7 @@ function App() {
 
     React.useEffect(() => {
         setKey((k) => k + 1)
-    },[])
+    }, [])
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
@@ -425,7 +447,7 @@ function App() {
             {
                 isClient ?
 
-                    <div style={{ minWidth: "100%" }}>
+                    <div>
                         <h1 style={{ color: "#000000" }}>
                             3.2	一般情況下，學生下午放學的情況
                         </h1>
@@ -569,24 +591,24 @@ function App() {
                                 </div>
                                 :
                                 survey.directToHomeState == "否" ?
-                                    <div  key={key}>
+                                    <div key={key}>
                                         <div className={styles.question}>
                                             <FormControl>
                                                 <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {
-                                                            getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址"
+                                                            getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
                                                         }
                                                     </p>
 
 
                                                 </Box>
-                                                    <Button onClick={()=>setKey((k) => k + 1)}>
-                                                        按下打開地圖
-                                                    </Button>
+                                                <Button onClick={() => { setKey((k) => k + 1) }}>
+                                                    按下打開地圖
+                                                </Button>
                                                 <div>
-                                                    <MapComponent mapInputhandleChange={mapInputhandleChange} />
+                                                    <MapComponent handleCustomAddress={handleCustomAddress} />
                                                 </div>
 
                                                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
@@ -735,20 +757,18 @@ function App() {
                                     :
                                     null
                         }
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                                上一頁
-                            </Button>
-                            <Button onClick={handleNextButton}>
-                                下一頁
-                            </Button>
-
-                        </div>
-
                     </div>
                     :
                     null
             }
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                    上一頁
+                </Button>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
         </main>
     )
 
