@@ -217,7 +217,7 @@ function App() {
                 sessionStorage.setItem('pathList', copyArr)
                 router.back()
             } else {
-                // window.history.pushState(null, null, window.location.pathname);
+                window.history.pushState(null, null, window.location.pathname);
                 setfinishStatus(false)
             }
         }

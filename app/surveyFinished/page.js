@@ -64,6 +64,8 @@ export default function App() {
             })
             if (res.ok) {
                 console.log("Yeai!")
+                sessionStorage.clear();
+                router.push('/')
             } else {
                 console.log("Oops! Something is wrong.", res)
             }
@@ -87,6 +89,7 @@ export default function App() {
                         <h1 style={{ color: "#000000" }}>
                             完成問卷
                         </h1>
+
                         {
                             <div className={styles.question}>
                                  <Button onClick={() =>

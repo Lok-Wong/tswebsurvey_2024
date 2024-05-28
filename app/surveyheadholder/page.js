@@ -279,9 +279,6 @@ function App() {
     }
   }, [])
 
-  React.useEffect(() => {
-    console.log("survey", survey)
-  }, [survey])
 
   const [finishStatus, setfinishStatus] = React.useState(false);
 
@@ -297,20 +294,20 @@ function App() {
         // router.push(prevPath)
         router.back()
       } else {
-        // window.history.pushState(null, null, window.location.pathname);
+        window.history.pushState(null, null, window.location.pathname);
         setfinishStatus(false)
       }
     }
   }
 
   React.useEffect(() => {
-    console.log("popup")
     window.history.pushState(null, null, window.location.pathname);
     window.addEventListener('popstate', onBackButtonEvent);
     return () => {
       window.removeEventListener('popstate', onBackButtonEvent);
     };
   }, []);
+
 
   return (
     <main className={styles.main}>
@@ -333,10 +330,10 @@ function App() {
                 >
                   <FormControlLabel sx={{ color: "black" }} value="本人" control={<Radio />} label="本人" />
                   <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
-                  <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
+                  <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他（如︰監護人、親戚等）" />
 
                   {
-                    survey.studentofRespondents == "其他監護人" ?
+                    survey.studentofRespondents == "其他" ?
                       <Box
                         component="form"
                         sx={{

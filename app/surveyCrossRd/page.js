@@ -177,7 +177,6 @@ function App() {
     React.useEffect(() => {
         survey && sessionStorage.setItem(_studentNum + 'crossRd', JSON.stringify(survey))
         setHelpText(blankHelpText)
-        console.log(survey)
     }, [survey])
 
     React.useEffect(() => {
@@ -215,7 +214,6 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-            console.log("storedPathList12", storedPathList)
             setStoredPathList([...storedPathList, window.location.pathname])
         }
     }, [])
@@ -235,23 +233,24 @@ function App() {
     const onBackButtonEvent = (e) => {
         e.preventDefault();
         //   if (!finishStatus) {
-        //       if (window.confirm("Do you want to go back ?")) {
-        //         setfinishStatus(true)
+              if (window.confirm("Do you want to go back ?")) {
+                setfinishStatus(true)
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
         router.back()
-        //       } else {
-        //           window.history.pushState(null, null, window.location.pathname);
-        //           setfinishStatus(false)
-        //       }
+              } else {
+                  window.history.pushState(null, null, window.location.pathname);
+                  setfinishStatus(false)
+              }
         //   }
     }
 
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
+        console.log('i fire once');
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
@@ -266,7 +265,7 @@ function App() {
 
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                            四、跨境上學及放學出行
+                            四、跨境上學及放學出行情況
                         </h1>
                         <h2 style={{ color: "#000000" }}>
                             a)一般情況下，學生早上上學的情況
@@ -284,8 +283,8 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行上學" control={<Radio />} label="學生自行上學" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
-                                    {survey.pickup === "其他監護人" ?
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他（如︰監護人、親戚等）" />
+                                    {survey.pickup === "其他" ?
                                         <Box
                                             component="form"
                                             sx={{
@@ -419,9 +418,16 @@ function App() {
                                     />
                                     <FormControlLabel
                                         control={
-                                            <Radio value="巴士" />
+                                            <Radio value="公共巴士" />
                                         }
-                                        label="巴士"
+                                        label="公共巴士"
+                                        sx={{ color: "black" }}
+                                    />
+                                       <FormControlLabel
+                                        control={
+                                            <Radio value="復康巴士" />
+                                        }
+                                        label="復康巴士"
                                         sx={{ color: "black" }}
                                     />
                                     <FormControlLabel

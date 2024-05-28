@@ -261,9 +261,8 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行上學" control={<Radio />} label="學生自行上學" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他（如︰監護人、親戚等）" />
                                     {survey.pickup === "其他" ?
                                         <Box
                                             component="form"
@@ -291,7 +290,7 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="pickup-time-start-label"><h3>2)     出發時間：</h3></FormLabel>
+                                <FormLabel id="pickup-time-start-label"><h3>2)     出發時間（24 小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -307,7 +306,7 @@ function App() {
                         <div className={styles.question}>
 
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="pickup-time-end-label"><h3>3)     到達時間：</h3></FormLabel>
+                                <FormLabel id="pickup-time-end-label"><h3>3)     到達時間（24 小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -325,7 +324,7 @@ function App() {
                             <FormControl
                                 variant="standard"
                             >
-                                <FormLabel component="commonTransiration"><h3>4)	常用的交通方式：</h3></FormLabel>
+                                <FormLabel component="commonTransiration"><h3>4)	主要的交通方式：</h3></FormLabel>
                                 <RadioGroup
                                     name='commonTransirtation'
                                     value={survey.commonTransirtation}
@@ -354,9 +353,9 @@ function App() {
                                     />
                                     <FormControlLabel
                                         control={
-                                            <Radio value="巴士" />
+                                            <Radio value="公共巴士" />
                                         }
-                                        label="巴士"
+                                        label="公共巴士"
                                         sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
@@ -381,6 +380,13 @@ function App() {
                                         sx={{ color: "black" }}
                                     />
                                     <FormControlLabel
+                                        control={
+                                            <Radio value="復康巴士" />
+                                        }
+                                        label="復康巴士"
+                                        sx={{ color: "black" }}
+                                    />
+                                      <FormControlLabel
                                         control={
                                             <Radio value="步行" />
                                         }

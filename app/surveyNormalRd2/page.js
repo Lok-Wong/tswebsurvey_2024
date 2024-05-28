@@ -37,10 +37,10 @@ function App() {
             leaveDestinationTime: "",
             leaveDestinationTransition: 999,
             otherLeaveDestinationTransition: 999,
-            destinationBackHomeStartTime: "",
-            destinationBackHomeEndTime: "",
-            leaveDestinationBackHomeTransition: 999,
-            otherLeaveDestinationBackHomeTransition: 999
+            // destinationBackHomeStartTime: "",
+            // destinationBackHomeEndTime: "",
+            // leaveDestinationBackHomeTransition: 999,
+            // otherLeaveDestinationBackHomeTransition: 999
         }
     }
 
@@ -282,15 +282,15 @@ function App() {
                 return
             }
 
-            if (survey.directToHomeNo.destinationBackHomeEndTime == "") {
-                handleHelpText("destinationBackHomeEndTime", "請填寫到達家時間")
-                return
-            }
+            // if (survey.directToHomeNo.destinationBackHomeEndTime == "") {
+            //     handleHelpText("destinationBackHomeEndTime", "請填寫到達家時間")
+            //     return
+            // }
 
-            if (survey.directToHomeNo.leaveDestinationBackHomeTransition == 999) {
-                handleHelpText("leaveDestinationBackHomeTransition", "請選擇前目的地回家主要的交通方式")
-                return
-            }
+            // if (survey.directToHomeNo.leaveDestinationBackHomeTransition == 999) {
+            //     handleHelpText("leaveDestinationBackHomeTransition", "請選擇前目的地回家主要的交通方式")
+            //     return
+            // }
         }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyBadWeather')
@@ -320,10 +320,10 @@ function App() {
                         leaveDestinationTime: "",
                         leaveDestinationTransition: 999,
                         otherLeaveDestinationTransition: 999,
-                        destinationBackHomeStartTime: "",
-                        destinationBackHomeEndTime: "",
-                        leaveDestinationBackHomeTransition: 999,
-                        otherLeaveDestinationBackHomeTransition: 999
+                        // destinationBackHomeStartTime: "",
+                        // destinationBackHomeEndTime: "",
+                        // leaveDestinationBackHomeTransition: 999,
+                        // otherLeaveDestinationBackHomeTransition: 999
                     }
                 }
             )
@@ -477,9 +477,8 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="學生自行離校" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel sx={{ color: "black" }} value="補習社" control={<Radio />} label="補習社" />
+                                    <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="補習社/託管中心" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                     {survey.leavePickUp == "其他" ?
                                         <Box
@@ -555,10 +554,11 @@ function App() {
                                                 <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
                                                 <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
                                                 <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
-                                                <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
+                                                <FormControlLabel sx={{ color: "black" }} value="公共巴士" control={<Radio />} label="公共巴士" />
                                                 <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
                                                 <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
                                                 <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
+                                                <FormControlLabel sx={{ color: "black" }} value="復康巴士" control={<Radio />} label="復康巴士" />
                                                 <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
                                                 <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                 {
@@ -594,7 +594,7 @@ function App() {
                                     <div key={key}>
                                         <div className={styles.question}>
                                             <FormControl>
-                                                <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>2)	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {
@@ -616,7 +616,7 @@ function App() {
                                         </div>
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
-                                                <FormLabel id="leave-shcool-arrival-destination-time-label"><h3>到達目的地時間（24小時制）:</h3></FormLabel>
+                                                <FormLabel id="leave-shcool-arrival-destination-time-label"><h3>到達時間（24 小時制）:</h3></FormLabel>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                                         <DesktopTimePicker
@@ -642,10 +642,11 @@ function App() {
                                                     <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
                                                     <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
                                                     <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
-                                                    <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="公共巴士" control={<Radio />} label="公共巴士" />
                                                     <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
                                                     <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
                                                     <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
+                                                    <FormControlLabel sx={{ color: "black" }} value="復康巴士" control={<Radio />} label="復康巴士" />
                                                     <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
                                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
                                                     {
@@ -675,7 +676,7 @@ function App() {
                                             </FormControl>
 
                                         </div>
-                                        <div className={styles.question}>
+                                        {/* <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
                                                 <FormLabel id="leave-shcool-arrival-destination-time-label"><h3>從上述地方出發回家的時間（24小時制）:</h3></FormLabel>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -708,7 +709,6 @@ function App() {
 
                                         </div>
                                         <div className={styles.question}>
-
                                             <FormControl>
                                                 <FormLabel id="leave-shcool-and-back-home-transition-label"><h3>前目的地回家主要的交通方式：</h3></FormLabel>
                                                 <RadioGroup
@@ -752,7 +752,7 @@ function App() {
                                                 <FormHelperText sx={{ color: 'red' }}>{helpText.leaveDestinationBackHomeTransition}</FormHelperText>
                                             </FormControl>
 
-                                        </div>
+                                        </div> */}
                                     </div>
                                     :
                                     null

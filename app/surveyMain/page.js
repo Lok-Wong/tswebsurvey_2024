@@ -68,14 +68,14 @@ function App() {
 
     const handleNextButton = () => {
 
-        if (survey.fillAlready == "是") {
+        if (survey.fillAlready == "否") {
             console.log("setList", storedPathList)
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyFinished')
 
         }
-        if (survey.fillAlready == "否") {
+        if (survey.fillAlready == "是") {
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyheadholder')
@@ -134,12 +134,13 @@ function App() {
     }
 
     React.useEffect(() => {
-        // window.history.pushState(null, null, window.location.pathname);
+        window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
     }, []);
+
 
     return (
         <main className={styles.main}>
@@ -152,7 +153,7 @@ function App() {
                                     row="true"
                                 >
                                     <FormLabel sx={{ color: "black" }}>
-                                        閣下是否已填寫過「澳門學生出行調查」問卷？
+                                        家庭成員中是否有非高等教育的學生未填寫『澳門學生出行調查』問卷？
                                     </FormLabel>
                                     <RadioGroup
                                         row="true"
@@ -179,7 +180,7 @@ function App() {
             <div className={styles.buttonGroup}>
                 <Button className={styles.buttonStyle} onClick={handleNextButton}>
                     {
-                        survey.fillAlready == "否" ? "下一頁" : "完成"
+                        survey.fillAlready == "是" ? "下一頁" : "完成"
                     }
                 </Button>
             </div>

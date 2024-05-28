@@ -11,16 +11,43 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
+import Checkbox from '@mui/material/Checkbox';
+
 
 function App() {
     const router = useRouter();
 
     const blanksurvey = {
         startTime: new Date(),
-        badWeatherPickup: 999,
-        otherbadWeatherPickup: 999,
-        badWeatherTransition: 999,
-        otherbadWeatherTransition: 999,
+        tripChange: {
+            noChange: {
+                state: false,
+                value: 999
+            },
+            earlyOutDooring: {
+                state: false,
+                value: 999
+            },
+            transitionChange: {
+                state: false,
+                value: 999
+            },
+            parentPickUp: {
+                state: false,
+                value: 999
+            },
+            waitForNews: {
+                state: false,
+                value: 999
+            },
+            other: {
+                state: false,
+                value: 999
+            }
+        },
+        // otherbadWeatherPickup: 999,
+        // badWeatherTransition: 999,
+        // otherbadWeatherTransition: 999,
         comment: 999,
     }
     const blankHelpText = {}
@@ -75,6 +102,45 @@ function App() {
         )
     };
 
+    const handleTextInputChange = (event) => {
+        setSurvey((prevState) => ({
+            ...prevState,
+            tripChange: {
+                ...prevState.tripChange,
+                [event.target.name]: {
+                    ...prevState.tripChange[event.target.name],
+                    value: event.target.value
+                }
+            }
+        }))
+    }
+
+    const handleCheckBoxChange = (event) => {
+        setSurvey((prevState) => ({
+            ...prevState,
+            tripChange: {
+                ...prevState.tripChange,
+                [event.target.name]: {
+                    ...prevState.tripChange[event.target.name],
+                    state: event.target.checked
+                }
+            }
+        }))
+
+        if (event.target.checked == false) {
+            setSurvey((prevState) => ({
+                ...prevState,
+                tripChange: {
+                    ...prevState.tripChange,
+                    [event.target.name]: {
+                        ...prevState.tripChange[event.target.name],
+                        value: 999
+                    }
+                }
+            }))
+        }
+    }
+
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
@@ -85,15 +151,39 @@ function App() {
         ))
     }
 
+
+
     const handleNextButton = () => {
-        if (survey.Pickup == 999) {
-            handleHelpText("badWeatherPickup", "請選擇選項")
+        if (!survey.tripChange.noChange.state && 
+            !survey.tripChange.earlyOutDooring.state &&
+            !survey.tripChange.transitionChange.state &&
+            !survey.tripChange.parentPickUp.state&&
+            !survey.tripChange.waitForNews.state&&
+            !survey.tripChange.other.state
+        ) {
+            handleHelpText("tripChange", "請至少選擇一個選項")
             return
         }
 
-        if (survey.Transition == 999) {
-            handleHelpText("badWeatherTransition", "請選擇主要使用的交通工具")
-            return
+        if (survey.tripChange.earlyOutDooring.state){
+            if (survey.tripChange.earlyOutDooring.value === 999){
+                handleHelpText("tripChange", "請填寫提早出門的分鐘數")
+                return
+            }
+        }
+
+        if (survey.tripChange.transitionChange.state){
+            if (survey.tripChange.transitionChange.value === 999){
+                handleHelpText("tripChange", "請填寫改變後的交通方式")
+                return
+            }
+        }
+
+        if (survey.tripChange.other.state){
+            if (survey.tripChange.other.value === 999){
+                handleHelpText("tripChange", "請填寫其他")
+                return
+            }
         }
         sessionStorage.setItem("pathList", storedPathList)
         router.push("/surveyStudentFinised")
@@ -113,28 +203,28 @@ function App() {
         console.log(survey)
     }, [survey])
 
-    React.useEffect(() => {
-        if (survey.Pickup != "其他監護人") {
-            setSurvey((prevState) => (
-                {
-                    ...prevState,
-                    otherbadWeatherPickup: 999
-                }
-            ))
-        }
+    // React.useEffect(() => {
+    //     if (survey.Pickup != "其他監護人") {
+    //         setSurvey((prevState) => (
+    //             {
+    //                 ...prevState,
+    //                 otherbadWeatherPickup: 999
+    //             }
+    //         ))
+    //     }
 
-        if (survey.Transition != "其他") {
-            setSurvey((prevState) => (
-                {
-                    ...prevState,
-                    otherbadWeatherTransition: 999
-                }
-            ))
-        }
+    //     if (survey.Transition != "其他") {
+    //         setSurvey((prevState) => (
+    //             {
+    //                 ...prevState,
+    //                 otherbadWeatherTransition: 999
+    //             }
+    //         ))
+    //     }
 
 
-    }, [survey.badWeatherPickup,
-    survey.badWeatherTransition])
+    // }, [survey.badWeatherPickup,
+    // survey.badWeatherTransition])
 
     React.useEffect(() => {
         if (storedPathList != null) {
@@ -191,51 +281,138 @@ function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                            五、惡劣天氣情況下，學生上學及放學出行情況
+                            五、黃色暴雨下學生上學及放學出行情況
                         </h1>
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="badWeatherPickup-label"><h3>1) 有沒有人接送：</h3></FormLabel>
+                                <FormLabel id="badWeatherPickup-label"><h3>1) 出行方式是否有以下變化？（多選題）</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="badWeatherPickup-label"
                                     name="badWeatherPickup"
                                     value={survey.badWeatherPickup}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel sx={{ color: "black" }} value="學生自行上（放）學 " control={<Radio />} label="學生自行上（放）學 " />
-                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
-                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
-                                    <FormControlLabel sx={{ color: "black" }} value="其他監護人" control={<Radio />} label="其他監護人" />
+                                    <FormControlLabel sx={{ color: "black" }} value="沒有變化" control={
+                                        <Checkbox
+                                            checked={survey.tripChange.noChange.state}
+                                            onChange={handleCheckBoxChange}
+                                            name='noChange' />
+                                    } label="沒有變化" />
+                                    <FormControlLabel sx={{ color: "black" }} value="提早出門上學" control={
+                                        <Checkbox
+                                            checked={survey.tripChange.earlyOutDooring.state}
+                                            onChange={handleCheckBoxChange}
+                                            name='earlyOutDooring' />
+                                    }
+                                        label="提早出門上學"
+                                    />
                                     {
-                                        survey.badWeatherPickup == "其他監護人" ?
-
+                                        survey.tripChange.earlyOutDooring.state == true ?
                                             <Box
                                                 component="form"
                                                 sx={{
                                                     '& > :not(style)': { m: 0.5, width: '10rem' },
                                                 }}
                                                 noValidate
-                                                autoComplete="off"
-                                            >
+                                                autoComplete="off" >
+                                                <p>
+                                                    提早約多少分鐘?
+                                                </p>
                                                 <TextField
-                                                    id="otherbadWeatherPickup-textfill"
-                                                    label="其他"
+                                                    id="earlyOutDooring"
+                                                    label="分鐘"
                                                     variant="filled"
-                                                    onChange={handleChange}
-                                                    value={survey.otherbadWeatherPickup == 999 ? null : survey.otherbadWeatherPickup}
-                                                    name="otherbadWeatherPickup"
+                                                    onChange={handleTextInputChange}
+                                                    name="earlyOutDooring"
+                                                    value={survey.tripChange.earlyOutDooring.value == 999 ? "" : survey.tripChange.earlyOutDooring.value}
                                                 />
                                             </Box>
                                             :
                                             null
                                     }
+                                    <FormControlLabel sx={{ color: "black" }} value="改變交通方式" control={
+                                        <Checkbox
+                                            checked={survey.tripChange.transitionChange.state}
+                                            onChange={handleCheckBoxChange}
+                                            name='transitionChange' />
+                                    }
+                                        label="改變交通方式"
+                                    />
+                                    {
+                                        survey.tripChange.transitionChange.state == true ?
+                                            <Box
+                                                component="form"
+                                                sx={{
+                                                    '& > :not(style)': { m: 0.5, width: '10rem' },
+                                                }}
+                                                noValidate
+                                                autoComplete="off" >
+                                                <p>
+                                                    改變的交通方式為?
+                                                </p>
+                                                <TextField
+                                                    id="transitionChange"
+                                                    label="交通方式"
+                                                    variant="filled"
+                                                    onChange={handleTextInputChange}
+                                                    name="transitionChange"
+                                                    value={survey.tripChange.transitionChange.value == 999 ? "" : survey.tripChange.transitionChange.value}
+                                                />
+                                            </Box>
+                                            :
+                                            null
+                                    }
+
+                                    <FormControlLabel sx={{ color: "black" }} value="轉由家長接送上學" control={
+                                        <Checkbox
+                                            checked={survey.tripChange.parentPickUp.state}
+                                            onChange={handleCheckBoxChange}
+                                            name='parentPickUp' />} label="轉由家長接送上學"
+                                    />
+
+                                    <FormControlLabel sx={{ color: "black" }} value="不出門上學和等待教青局的消息" control={
+                                        <Checkbox
+                                            checked={survey.tripChange.waitForNews.state}
+                                            onChange={handleCheckBoxChange}
+                                            name='waitForNews' />} label="不出門上學和等待教青局的消息" />
+
+                                    <FormControlLabel sx={{ color: "black" }} value="其它" control={
+                                        <Checkbox
+                                            checked={survey.tripChange.other.state}
+                                            onChange={handleCheckBoxChange}
+                                            name='other' />} label="其它" />
+                                    {
+                                        survey.tripChange.other.state == true ?
+                                            <Box
+                                                component="form"
+                                                sx={{
+                                                    '& > :not(style)': { m: 0.5, width: '10rem' },
+                                                }}
+                                                noValidate
+                                                autoComplete="off" >
+                                                <p>
+                                                    請填寫其他
+                                                </p>
+                                                <TextField
+                                                    id="other"
+                                                    label="其他"
+                                                    variant="filled"
+                                                    onChange={handleTextInputChange}
+                                                    name="other"
+                                                    value={survey.tripChange.other.value == 999 ? "" : survey.tripChange.other.value}
+                                                />
+                                            </Box>
+                                            :
+                                            null
+                                    }
+
                                 </RadioGroup>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.Pickup}</FormHelperText>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.tripChange}</FormHelperText>
                             </FormControl>
                         </div>
 
-                        <div className={styles.question}>
+                        {/* <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="badWeatherransition-label"><h3>2) 主要使用的交通工具:</h3></FormLabel>
                                 <RadioGroup
@@ -281,13 +458,13 @@ function App() {
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.Transition}</FormHelperText>
                             </FormControl>
-                        </div>
+                        </div> */}
 
                         <div className={styles.question}>
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>3)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>2)	您對上下學（包括在惡劣天氣情況下）出行有何意見或建議？（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{

@@ -166,19 +166,19 @@ export default function App() {
                                 </Box>
                             </FormControl>
                         </div>
-                        <div className={styles.question}>
-                            <Button onClick={() => router.back()}>
-                                上一頁
-                            </Button>
-                            <Button onClick={handleNextButton}>
-                                下一頁
-                            </Button>
-                        </div>
-
                     </div>
                     :
                     null
             }
+            <div className={styles.buttonGroup}>
+                <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                    上一頁
+                </Button>
+                <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                    下一頁
+                </Button>
+            </div>
+
 
         </main>
 
