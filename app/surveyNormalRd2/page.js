@@ -604,9 +604,9 @@ function App() {
 
 
                                                 </Box>
-                                                <Button onClick={() => { setKey((k) => k + 1) }}>
+                                                {/* <Button onClick={() => { setKey((k) => k + 1) }}>
                                                     按下打開地圖
-                                                </Button>
+                                                </Button> */}
                                                 <div>
                                                     <MapComponent handleCustomAddress={handleCustomAddress} />
                                                 </div>

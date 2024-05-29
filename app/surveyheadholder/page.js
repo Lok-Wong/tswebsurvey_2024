@@ -47,7 +47,7 @@ function App() {
 
   const _initial_value = React.useMemo(() => {
     if (typeof window !== 'undefined') {
-      const local_storage_value_str = sessionStorage.getItem(_studentNum + 'headHolder');
+      const local_storage_value_str = sessionStorage.getItem('headHolder');
       // If there is a value stored in localStorage, use that
       if (local_storage_value_str) {
         return JSON.parse(local_storage_value_str);
@@ -163,42 +163,6 @@ function App() {
     }))
   }
 
-  // const mapInputhandleChange = (data, vName, type, lnglat) => {
-  //   setSurvey((prevState) => (
-  //     {
-  //       ...prevState,
-  //       [vName]: data
-  //       // studentofRespondents : event.target.value
-  //     }
-  //   )
-  //   )
-
-  //   setSurvey((prevState) => (
-  //     {
-  //       ...prevState,
-  //       [vName]: {
-  //         ...prevState[vName],
-  //         method: type
-  //       }
-  //       // studentofRespondents : event.target.value
-  //     }
-  //   )
-  //   )
-
-  //   if (lnglat != null) {
-  //     console.log(lnglat)
-  //     setSurvey((prevState) => ({
-  //       ...prevState,
-  //       [vName]: {
-  //         ...prevState[vName],
-  //         regeocode: {
-  //           ...prevState[vName].regeocode,
-  //           location: lnglat
-  //         }
-  //       }
-  //     }))
-  //   }
-  // }
 
   const handleNextButton = () => {
 
@@ -238,7 +202,7 @@ function App() {
 
 
   React.useEffect(() => {
-    survey && sessionStorage.setItem(_studentNum + "headHolder", JSON.stringify(survey));
+    survey && sessionStorage.setItem("headHolder", JSON.stringify(survey));
     setHelpText(blankHelpText)
   }, [survey])
 
