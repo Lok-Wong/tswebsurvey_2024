@@ -45,9 +45,6 @@ function App() {
                 value: 999
             }
         },
-        // otherbadWeatherPickup: 999,
-        // badWeatherTransition: 999,
-        // otherbadWeatherTransition: 999,
         comment: 999,
     }
     const blankHelpText = {}
@@ -116,6 +113,40 @@ function App() {
     }
 
     const handleCheckBoxChange = (event) => {
+        if(event.target.name === "noChange") {
+            setSurvey((prevState) => ({
+                ...prevState,
+                tripChange:{
+                    noChange: {
+                        state: event.target.checked,
+                        value: 999
+                    },
+                    earlyOutDooring: {
+                        state: false,
+                        value: 999
+                    },
+                    transitionChange: {
+                        state: false,
+                        value: 999
+                    },
+                    parentPickUp: {
+                        state: false,
+                        value: 999
+                    },
+                    waitForNews: {
+                        state: false,
+                        value: 999
+                    },
+                    other: {
+                        state: false,
+                        value: 999
+                    }
+                }
+            }))
+
+            return
+        }
+
         setSurvey((prevState) => ({
             ...prevState,
             tripChange: {
@@ -154,33 +185,33 @@ function App() {
 
 
     const handleNextButton = () => {
-        if (!survey.tripChange.noChange.state && 
+        if (!survey.tripChange.noChange.state &&
             !survey.tripChange.earlyOutDooring.state &&
             !survey.tripChange.transitionChange.state &&
-            !survey.tripChange.parentPickUp.state&&
-            !survey.tripChange.waitForNews.state&&
+            !survey.tripChange.parentPickUp.state &&
+            !survey.tripChange.waitForNews.state &&
             !survey.tripChange.other.state
         ) {
             handleHelpText("tripChange", "請至少選擇一個選項")
             return
         }
 
-        if (survey.tripChange.earlyOutDooring.state){
-            if (survey.tripChange.earlyOutDooring.value === 999){
+        if (survey.tripChange.earlyOutDooring.state) {
+            if (survey.tripChange.earlyOutDooring.value === 999) {
                 handleHelpText("tripChange", "請填寫提早出門的分鐘數")
                 return
             }
         }
 
-        if (survey.tripChange.transitionChange.state){
-            if (survey.tripChange.transitionChange.value === 999){
+        if (survey.tripChange.transitionChange.state) {
+            if (survey.tripChange.transitionChange.value === 999) {
                 handleHelpText("tripChange", "請填寫改變後的交通方式")
                 return
             }
         }
 
-        if (survey.tripChange.other.state){
-            if (survey.tripChange.other.value === 999){
+        if (survey.tripChange.other.state) {
+            if (survey.tripChange.other.value === 999) {
                 handleHelpText("tripChange", "請填寫其他")
                 return
             }
@@ -250,6 +281,12 @@ function App() {
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
+    const checkBoxLogict = () => {
+        if (survey.tripChange.noChange.state) {
+            return (true)
+        }
+    }
+
     const onBackButtonEvent = (e) => {
         e.preventDefault();
         //   if (!finishStatus) {
@@ -301,6 +338,7 @@ function App() {
                                     } label="沒有變化" />
                                     <FormControlLabel sx={{ color: "black" }} value="提早出門上學" control={
                                         <Checkbox
+                                            disabled={checkBoxLogict()}
                                             checked={survey.tripChange.earlyOutDooring.state}
                                             onChange={handleCheckBoxChange}
                                             name='earlyOutDooring' />
@@ -333,6 +371,7 @@ function App() {
                                     }
                                     <FormControlLabel sx={{ color: "black" }} value="改變交通方式" control={
                                         <Checkbox
+                                            disabled={checkBoxLogict()}
                                             checked={survey.tripChange.transitionChange.state}
                                             onChange={handleCheckBoxChange}
                                             name='transitionChange' />
@@ -366,6 +405,7 @@ function App() {
 
                                     <FormControlLabel sx={{ color: "black" }} value="轉由家長接送上學" control={
                                         <Checkbox
+                                            disabled={checkBoxLogict()}
                                             checked={survey.tripChange.parentPickUp.state}
                                             onChange={handleCheckBoxChange}
                                             name='parentPickUp' />} label="轉由家長接送上學"
@@ -373,12 +413,15 @@ function App() {
 
                                     <FormControlLabel sx={{ color: "black" }} value="不出門上學和等待教青局的消息" control={
                                         <Checkbox
+                                        disabled = {checkBoxLogict()}
                                             checked={survey.tripChange.waitForNews.state}
                                             onChange={handleCheckBoxChange}
                                             name='waitForNews' />} label="不出門上學和等待教青局的消息" />
 
                                     <FormControlLabel sx={{ color: "black" }} value="其它" control={
                                         <Checkbox
+                                        disabled = {checkBoxLogict()}
+
                                             checked={survey.tripChange.other.state}
                                             onChange={handleCheckBoxChange}
                                             name='other' />} label="其它" />
@@ -412,53 +455,6 @@ function App() {
                             </FormControl>
                         </div>
 
-                        {/* <div className={styles.question}>
-                            <FormControl>
-                                <FormLabel id="badWeatherransition-label"><h3>2) 主要使用的交通工具:</h3></FormLabel>
-                                <RadioGroup
-                                    aria-labelledby="badWeathertransition-label"
-                                    name="badWeatherTransition"
-                                    value={survey.badWeatherTransition}
-                                    onChange={handleChange}
-                                >
-                                    <FormControlLabel sx={{ color: "black" }} value="電單車（乘客）" control={<Radio />} label="電單車（乘客）" />
-                                    <FormControlLabel sx={{ color: "black" }} value="私家車（乘客）" control={<Radio />} label="私家車（乘客）" />
-                                    <FormControlLabel sx={{ color: "black" }} value="校車" control={<Radio />} label="校車" />
-                                    <FormControlLabel sx={{ color: "black" }} value="巴士" control={<Radio />} label="巴士" />
-                                    <FormControlLabel sx={{ color: "black" }} value="輕軌" control={<Radio />} label="輕軌" />
-                                    <FormControlLabel sx={{ color: "black" }} value="一般的士" control={<Radio />} label="一般的士" />
-                                    <FormControlLabel sx={{ color: "black" }} value="電召的士" control={<Radio />} label="電召的士" />
-                                    <FormControlLabel sx={{ color: "black" }} value="步行" control={<Radio />} label="步行" />
-                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
-
-                                    {
-                                        survey.badWeatherTransition == "其他" ?
-
-                                            <Box
-                                                component="form"
-                                                sx={{
-                                                    '& > :not(style)': { m: 0.5, width: '10rem' },
-                                                }}
-                                                noValidate
-                                                autoComplete="off"
-                                            >
-                                                <TextField
-                                                    id="otherbadWeatherTransition-textfill"
-                                                    label="其他"
-                                                    variant="filled"
-                                                    name="otherbadWeatherTransition"
-                                                    onChange={handleChange}
-                                                    value={survey.otherbadWeatherTransition == 999 ? null : survey.otherbadWeatherTransition}
-                                                />
-                                            </Box>
-                                            :
-                                            null
-                                    }
-
-                                </RadioGroup>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.Transition}</FormHelperText>
-                            </FormControl>
-                        </div> */}
 
                         <div className={styles.question}>
                             <FormControl sx={{

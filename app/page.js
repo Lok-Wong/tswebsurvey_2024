@@ -248,14 +248,14 @@ export default function Home() {
           onClick={(event) => { handleNextButton(event) }}>
           下一頁
         </Button>
-        <Button type="button"
+        {/* <Button type="button"
           name="Testing"
           onClick={(event) => { handleNextButton(event) }}>
           Map testin
         </Button>
         <Button onClick={handleOpen}>
           openModel
-        </Button>
+        </Button> */}
       </div>
 
       <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>

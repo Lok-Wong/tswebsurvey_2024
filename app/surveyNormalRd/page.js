@@ -131,15 +131,17 @@ function App() {
         if (survey.pickupTimeStart == survey.pickupTimeEnd) {
             handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
             handleHelpText("pickupTimeEnd", "到達時間不能等於出發時間")
-
+            return
         }
 
         if (survey.pickupTimeStart == "") {
             handleHelpText("pickupTimeStart", "請選擇出發時間")
+            return
         }
 
         if (survey.pickupTimeEnd == "") {
             handleHelpText("pickupTimeEnd", "請選擇到達時間")
+            return
         }
 
         if (survey.commonTransirtation == "999") {
