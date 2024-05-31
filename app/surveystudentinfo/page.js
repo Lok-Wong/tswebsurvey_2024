@@ -209,7 +209,7 @@ function App() {
     const onBackButtonEvent = (e) => {
         e.preventDefault();
         if (!finishStatus) {
-            if (window.confirm("Do you want to go back ?")) {
+            if (window.confirm("返回上一頁嗎?")) {
                 setfinishStatus(true)
                 const copyArr = [...storedPathList]
                 const prevPath = copyArr[copyArr.length - 1]

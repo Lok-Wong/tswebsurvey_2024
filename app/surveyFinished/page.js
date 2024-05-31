@@ -94,7 +94,7 @@ export default function App() {
         } catch (error) {
             setAlertState("error")
             handleAlertBarOpen()
-            setVCodeError("出錯了:請檢查網絡")
+            setVCodeError("伺服器繁忙中，請稍後再試")
             console.log(error)
         }
     }
