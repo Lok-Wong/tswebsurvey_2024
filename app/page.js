@@ -148,11 +148,20 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
+        {/* <p>
           tsWebSurvey2024_V0.7
-        </p>
+        </p> */}
         <div>
-          <a
+        <Image
+              src="/mixed(v2).png"
+              alt="mixed Logo"
+              className={styles.logo}
+              width={474.75}
+              height={100.875}
+              priority
+            />
+
+          {/* <a
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -165,7 +174,7 @@ export default function Home() {
               height={34}
               priority
             />
-          </a>
+          </a> */}
         </div>
       </div>
 
