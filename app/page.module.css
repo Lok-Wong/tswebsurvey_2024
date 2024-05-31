@@ -139,8 +139,8 @@
   }
 
   .logo {
-    width: 50vw;
-    height: 14vh;
+    width: 40vw;
+    height: 17vh;
   }
   /* Enable hover only on non-touch devices */
   @media (hover: hover) and (pointer: fine) {

@@ -157,7 +157,7 @@ export default function Home() {
               alt="mixed Logo"
               className={styles.logo}
               width={474.75}
-              height={100.875}
+              height={120.875}
               priority
             />
 
