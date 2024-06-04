@@ -33,6 +33,17 @@ function App() {
         }
     }, []);
 
+    const _totalStudentNumber = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+
+            const local_storage_value_str = sessionStorage.getItem("totalStudentNum");
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str);
+            }
+        }
+    }, []);
+
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const handleNextButton = () => {
@@ -53,6 +64,8 @@ function App() {
     React.useEffect(() => {
         const items = { ...sessionStorage }
         console.log("sessionKey", Object.keys(items))
+        console.log( typeof(parseInt(_studentNum ) + 1 ) == typeof parseInt(_totalStudentNumber))
+        
     }, [])
 
     const [isClient, setIsClient] = React.useState(false)
@@ -123,7 +136,12 @@ function App() {
                                     value={stillHaveChild}
                                     onChange={(event) => { setStillHaveChild(event.target.value) }}
                                 >
-                                    <FormControlLabel sx={{ color: "black" }} value="有" control={<Radio />} label="有" />
+                                    {
+                                        (parseInt(_studentNum ) + 1 ) == parseInt(_totalStudentNumber) ?
+                                            null
+                                        :
+                                        <FormControlLabel sx={{ color: "black" }} value="有" control={<Radio />} label="有" />
+                                    }
                                     <FormControlLabel sx={{ color: "black" }} value="没有" control={<Radio />} label="没有" />
                                 </RadioGroup>
                             </FormControl>

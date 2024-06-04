@@ -153,10 +153,10 @@ export default function Home() {
         </p> */}
         <div>
         <Image
-              src="/mixed(v2).png"
+              src="/mixed.png"
               alt="mixed Logo"
-              width={300.75}
-              height={70.875}
+              width={350.75}
+              height={95.875}
               priority
             />
 
@@ -182,10 +182,17 @@ export default function Home() {
           親愛的先生／女士，您好：<br /><br />
           歡迎您參加『澳門學生出行調查』。這次調查的主要目的是想透過家長了解澳門非高等教育學生的出行習慣，以及使用交通服務的情况。您的寶貴資料和意見對這個研究非常重要，同時對學校周邊交通建設和澳門未來的交通規劃、管理、改善都有非常大的幫助。問卷填寫每人約只需要用五分鐘的時間，懇請您抽空作答。         
           <br/>
+          <br />
           您所填寫的個人資料只會用於研究分析，絕不對外公開，請您安心回答。閣下完成問卷後，並提供聯絡資料，將自動參與本次調查的抽獎活動，得獎者將會獲得文具禮券乙份。感謝閣下的支持與協助。
           <br/>
-          倘對本調查問卷有查詢，可在辦公時間致電聯絡ＸＸＸＸＸＸＸＸ。
-          <br /><br />敬祝您身體健康！
+          <br />
+          倘對本調查問卷有查詢，可在辦公時間內致電以下電話聯絡：<br /><br />
+          XXXXXXX <br />
+          XXXXXXX <br />
+          XXXXXXX <br />
+          XXXXXXX <br />
+
+          <br /><br />敬祝　您身體健康！
         </a>
         <a>
           <br />
@@ -211,7 +218,7 @@ export default function Home() {
 
         <p className={styles.letterText}>
           同意
-            <span onClick={handleOpen} className={styles.linkText}>收集個人資料聲明</span>
+            <span onClick={handleOpen} className={styles.linkText}>個人資料收集聲明</span>
         </p>
     
       </div>
@@ -315,7 +322,9 @@ export default function Home() {
 7. 本聲明的變更
 <br />
 本聲明若有任何變更，本公司將用新的文本代替舊的文本，且會在新文本中列明修訂的日期，恕不另行公告。
-
+<br />
+<br />
+版本：2024/6/3
  
 
           </p>

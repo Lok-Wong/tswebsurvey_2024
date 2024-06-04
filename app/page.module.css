@@ -5,7 +5,8 @@
     align-items: center;
     padding: 1rem;
     min-height: 100vh;
-    background-color: #ffffff;
+    background-color: #f8fafe;
+
   }
   
   .description {
@@ -64,11 +65,11 @@
     margin-top: 0%;
     padding-left: 5%;
     padding-right: 5%;
-    background-color: #f8fafe;
+    background-color: #ffffff;
     padding: 2rem;
     width: 50%;
     border-radius: 10px;
-    box-shadow: -3px -2px 0px #837f7b8f;
+    box-shadow: -1px -3px 5px -1px rgba(131,127,123,0.5);
   }
   
   .startbutton{
@@ -90,11 +91,11 @@
   }
 
   .block{
-    background-color: #f8fafe;
+    background-color: #ffffff;
     width: 50%;
     border-radius: 10px;
-    margin-top: 1vh;
-    box-shadow: -3px -2px 0px #837f7b8f;
+    margin-top: 2vh;
+    box-shadow: -1px -3px 5px -1px rgba(131,127,123,0.5);
   }
 
   .verifyBlock{

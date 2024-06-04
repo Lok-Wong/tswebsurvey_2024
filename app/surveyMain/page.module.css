@@ -5,18 +5,18 @@
     padding: 1rem;
     align-items: center;
     min-height: 100vh;
-    background-color: #ffffff;
+    background-color:#f8fafe;
   }
 
 .question{
   width: 50vw;
   flex-direction: row;
   /* display: flex; */
-  background-color:#f8fafe;
+  background-color: #ffffff;
   padding: 1rem;
   margin-bottom: 10px;
   border-radius: 10px;
-  box-shadow: -3px -2px 0px #837f7b8f;
+  box-shadow: -1px -3px 5px -1px rgba(131,127,123,0.5);
 }
 
 .inlineQuestion{
@@ -45,7 +45,7 @@
 }
 
 .buttonStyle{
-  color:#000000;
+  color:#ffffff;
   display: inline-block;
   outline: 0;
   border: 0;

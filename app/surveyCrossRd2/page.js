@@ -42,6 +42,11 @@ function App() {
     const blankHelpText = {}
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [key, setKey] = React.useState(0)
+    const [seed, setSeed] = React.useState(1);
+    
+    const reset = () => {
+        setSeed(Math.random());
+    }
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -305,6 +310,10 @@ function App() {
     React.useEffect(() => {
         clearbackHomeData()
     }, [survey.directToPort])
+
+    React.useEffect(() => {
+        reset()
+    },[survey.directToPort])
 
     React.useEffect(() => {
         if (survey.pickup != "其他") {
@@ -666,7 +675,7 @@ function App() {
                                                     按下打開地圖
                                                 </Button> */}
                                                 <div>
-                                                    <MapComponent handleCustomAddress={handleCustomAddress} />
+                                                    <MapComponent key={seed} handleCustomAddress={handleCustomAddress} />
                                                 </div>
 
                                                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>

@@ -85,6 +85,15 @@ function App() {
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [key, setKey] = React.useState(0)
+    const [seed, setSeed] = React.useState(1);
+    const reset = () => {
+        setSeed(Math.random());
+    }
+    
+    React.useEffect(() => {
+        reset()
+    },[survey.directToHomeState])
+
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
@@ -607,8 +616,9 @@ function App() {
                                                 {/* <Button onClick={() => { setKey((k) => k + 1) }}>
                                                     按下打開地圖
                                                 </Button> */}
-                                                <div>
-                                                    <MapComponent handleCustomAddress={handleCustomAddress} />
+                                                <div >
+
+                                                    <MapComponent key={seed}  handleCustomAddress={handleCustomAddress} />
                                                 </div>
 
                                                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>

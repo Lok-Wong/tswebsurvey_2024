@@ -273,7 +273,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label"><h3>1.    有沒有人接送：</h3></FormLabel>
+                                <FormLabel id="pickup-label"><h3>1)    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"

@@ -153,7 +153,7 @@ function App() {
                                     row="true"
                                 >
                                     <FormLabel sx={{ color: "black" }}>
-                                        家庭成員中是否有非高等教育的學生未填寫『澳門學生出行調查』問卷？
+                                        家庭成員中，是否有學生（非高等教育）未填寫『澳門學生出行調查』問卷？
                                     </FormLabel>
                                     <RadioGroup
                                         row="true"
@@ -162,7 +162,7 @@ function App() {
                                         value={survey.fillAlready}
                                     >
                                         <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="是" />
-                                        <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否" />
+                                        <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="否（結束問卷）" />
                                     </RadioGroup>
                                 </FormControl>
                             </div>
