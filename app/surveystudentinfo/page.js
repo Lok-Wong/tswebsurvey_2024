@@ -358,7 +358,7 @@ function App() {
             {
                 isClient ?
                     <div>
-                        <h1 style={{ color: "#000000" }}>
+                        <h1 style={{ color: "#000000",marginBottom:"1vh" }}>
                             二、學生個人資料
                         </h1>
 

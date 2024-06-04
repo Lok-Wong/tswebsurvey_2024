@@ -5,7 +5,7 @@
     align-items: center;
     padding: 1rem;
     min-height: 100vh;
-    background-color: #e9e9cf;
+    background-color: #ffffff;
   }
   
   .description {
@@ -43,7 +43,7 @@
     border-style: solid;
     border-width: 1px;
     box-shadow: 1px 1px;
-    color:#ffffff
+    color:#f8fafe
   }
   
   .nextPageButton:hover{
@@ -64,11 +64,11 @@
     margin-top: 0%;
     padding-left: 5%;
     padding-right: 5%;
-    background-color: #ffffff;
+    background-color: #f8fafe;
     padding: 2rem;
     width: 50%;
     border-radius: 10px;
-    box-shadow: -8px -3px 0px #ecb782;
+    box-shadow: -3px -2px 0px #837f7b8f;
   }
   
   .startbutton{
@@ -90,11 +90,11 @@
   }
 
   .block{
-    background-color: #ffffff;
+    background-color: #f8fafe;
     width: 50%;
     border-radius: 10px;
     margin-top: 1vh;
-    box-shadow: -8px -3px 0px #ecb782;
+    box-shadow: -3px -2px 0px #837f7b8f;
   }
 
   .verifyBlock{
@@ -123,7 +123,7 @@
   }
 
   .signContentBox{
-    background-color: #ffffff;
+    background-color: #f8fafe;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -138,10 +138,14 @@
     color: #000000;
   }
 
-  .logo {
-    width: 40vw;
-    height: 17vh;
+  .button{
+    background-color: #036eb8;
+    color:#ffffff;
+    width: 80vw;
+    margin-top: 2%;
   }
+
+
   /* Enable hover only on non-touch devices */
   @media (hover: hover) and (pointer: fine) {
     .card:hover {
@@ -163,7 +167,6 @@
   /* Mobile */
   @media (max-width: 700px){
     .block{
-      background-color: #ffffff;
       width: 90%;
       border-radius: 10px;
     }
@@ -172,7 +175,6 @@
       margin-top: 0%;
       padding-left: 5%;
       padding-right: 5%;
-      background-color: #ffffff;
       padding: 2rem;
       width: 90%;
       border-radius: 10px;
@@ -183,7 +185,6 @@
       align-items: center;
       border-radius: 10px;
       justify-content: space-evenly;
-      background-color: #ffffff;
     }
 
     .signBlock{
@@ -191,11 +192,6 @@
       align-items: center;
       border-radius: 10px;
       justify-content: center;
-      background-color: #ffffff;
-    }
-    .logo {
-      width: 90vw;
-      height: 12vh;
     }
   }
   /* @media (max-width: 700px) {

@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
+import { IoMdRefresh } from "react-icons/io";
 
 
 
@@ -332,21 +333,21 @@ function App() {
                       getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
                     }
                   </p>
-
-
                 </Box>
                 {/* <Button>
                   按下打開地圖
                 </Button> */}
-                <div>
+                <div style={{alignSelf:"center"}} >
                   <MapComponent handleCustomAddress={handleCustomAddress} />
+                  {/* <Button className={styles.refreshBlock}>
+                    <IoMdRefresh size={"30px"} color='#000000' />
+                    <p style={{color:'#000000'}}>刷新地圖</p>
+                  </Button> */}
                 </div>
 
                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
               </FormControl>
             </div>
-
-
 
             {/* <div className={styles.question}>
          <FormControl>

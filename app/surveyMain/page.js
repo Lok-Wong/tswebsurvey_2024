@@ -180,7 +180,7 @@ function App() {
             <div className={styles.buttonGroup}>
                 <Button className={styles.buttonStyle} onClick={handleNextButton}>
                     {
-                        survey.fillAlready == "是" ? "下一頁" : "完成"
+                        survey.fillAlready == "否" ? "完成" : "下一頁"
                     }
                 </Button>
             </div>

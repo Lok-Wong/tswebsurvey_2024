@@ -155,9 +155,8 @@ export default function Home() {
         <Image
               src="/mixed(v2).png"
               alt="mixed Logo"
-              className={styles.logo}
-              width={474.75}
-              height={120.875}
+              width={300.75}
+              height={70.875}
               priority
             />
 
@@ -252,6 +251,7 @@ export default function Home() {
 
       <div>
         <Button
+         className={styles.button}
           name="next"
           onKeyDown={(event) => { enterToNext(event) }}
           onClick={(event) => { handleNextButton(event) }}>
