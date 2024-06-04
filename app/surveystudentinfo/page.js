@@ -364,7 +364,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="school-type-label"><h3>1.)  教育類型：</h3></FormLabel>
+                                <FormLabel id="school-type-label"><h3>1)  教育類型：</h3></FormLabel>
                                 <RadioGroup
                                     id="school-type"
                                     aria-labelledby="school-type-label"
@@ -387,7 +387,7 @@ function App() {
 
                                 <div className={styles.question}>
                                     <FormControl>
-                                        <FormLabel id="school-area-label"><h3>2.)  學校所屬地區：</h3></FormLabel>
+                                        <FormLabel id="school-area-label"><h3>2)  學校所屬地區：</h3></FormLabel>
                                         <RadioGroup
                                             id="school-area"
                                             aria-labelledby="school-area-label"
@@ -415,7 +415,7 @@ function App() {
 
                                 <div className={styles.question}>
                                     <FormControl>
-                                        <FormLabel id="school-name-label"><h3>3.)  學校名稱：(*如無合適選項，請輸入學校名稱。)</h3></FormLabel>
+                                        <FormLabel id="school-name-label"><h3>3)  學校名稱：(*如無合適選項，請輸入學校名稱。)</h3></FormLabel>
                                         {/* <Box
                                             component="form"
                                             sx={{

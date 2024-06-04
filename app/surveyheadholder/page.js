@@ -284,7 +284,7 @@ function App() {
             </h1>
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1) 你是學生（的）：</h3></FormLabel>
+                <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1) 閣下是學生（的）：</h3></FormLabel>
                 <RadioGroup
                   required
                   id="studentofRespondents"

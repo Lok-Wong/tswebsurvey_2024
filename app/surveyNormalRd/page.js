@@ -76,7 +76,8 @@ function App() {
     const [survey, setSurvey] = React.useState(_initial_value)
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
-
+    const [startTime, setStartTime] = React.useState()
+    const [endTime, setEndTime] = React.useState()
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -122,18 +123,6 @@ function App() {
             }
         }
 
-        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
-            handleHelpText("pickupTimeStart", "出發時間不能晚過到達時間")
-            handleHelpText("pickupTimeEnd", "到達時間不能早過出發時間")
-            return
-        }
-
-        if (survey.pickupTimeStart == survey.pickupTimeEnd) {
-            handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
-            handleHelpText("pickupTimeEnd", "到達時間不能等於出發時間")
-            return
-        }
-
         if (survey.pickupTimeStart == "") {
             handleHelpText("pickupTimeStart", "請選擇出發時間")
             return
@@ -141,6 +130,18 @@ function App() {
 
         if (survey.pickupTimeEnd == "") {
             handleHelpText("pickupTimeEnd", "請選擇到達時間")
+            return
+        }
+
+        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
+            handleHelpText("pickupTimeStart", "出發時間不能晚過到達時間")
+            handleHelpText("pickupTimeEnd", "到達時間不能早過出發時間")
+            return
+        }
+
+        if ( JSON.stringify(survey.pickupTimeStart) ===  JSON.stringify(survey.pickupTimeEnd)) {
+            handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
+            handleHelpText("pickupTimeEnd", "到達時間不能等於出發時間")
             return
         }
 
@@ -298,7 +299,7 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.pickupTimeStart)}
-                                            onChange={(event) => handleTimeChange(event, "pickupTimeStart")}
+                                            onChange={(event) => {handleTimeChange(event, "pickupTimeStart"),setStartTime(event.$d)}}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -314,7 +315,7 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.pickupTimeEnd)}
-                                            onChange={(event) => handleTimeChange(event, "pickupTimeEnd")}
+                                            onChange={(event) =>{ handleTimeChange(event, "pickupTimeEnd"),setEndTime(event.$d)}}
                                         />
                                     </DemoContainer>
                                     <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeEnd}</FormHelperText>
