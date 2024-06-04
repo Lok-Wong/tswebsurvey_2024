@@ -141,7 +141,7 @@
   .button{
     background-color: #036eb8;
     color:#ffffff;
-    width: 80vw;
+    width: 50vw;
     margin-top: 2%;
   }
 
@@ -192,6 +192,13 @@
       align-items: center;
       border-radius: 10px;
       justify-content: center;
+    }
+
+    .button{
+      background-color: #036eb8;
+      color:#ffffff;
+      width: 80vw;
+      margin-top: 2%;
     }
   }
   /* @media (max-width: 700px) {
