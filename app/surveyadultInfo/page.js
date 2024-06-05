@@ -146,12 +146,14 @@ function App() {
             <div className={styles.question}>
                 <FormControl>
                     <FormLabel id="startPoint">1) 出行地點</FormLabel>
+                    <FormLabel id="startPoint">1. 出行地點</FormLabel>
                     <Button>
                         touch and choose loaction
                     </Button>
                 </FormControl>
                 <FormControl>
                     <FormLabel id="startTime">2) 出發時間</FormLabel>
+                    <FormLabel id="startTime">2. 出發時間</FormLabel>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer className={styles.question} components={['TimePicker']}>
                             <TimePicker
@@ -166,12 +168,14 @@ function App() {
             <div className={styles.question}>
                 <FormControl>
                     <FormLabel id="endPoint">3) 出行目的地</FormLabel>
+                    <FormLabel id="endPoint">3. 出行目的地</FormLabel>
                     <Button>
                         touch and choose loaction
                     </Button>
                 </FormControl>
                 <FormControl>
                     <FormLabel id="endTime">4) 到達時間</FormLabel>
+                    <FormLabel id="endTime">4. 到達時間</FormLabel>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer className={styles.question} components={['TimePicker']}>
                             <TimePicker
@@ -202,6 +206,7 @@ function App() {
             <div className={styles.question}>
                 <FormControl>
                     <FormLabel id="still-have-family-label">1)    您是否已參加了入戶／線上居民出行調查，或學生家庭成員出行調查？</FormLabel>
+                    <FormLabel id="still-have-family-label">1.    您是否已參加了入戶／線上居民出行調查，或學生家庭成員出行調查？</FormLabel>
                     <RadioGroup
                         row
                         aria-labelledby="still-have-family-label"

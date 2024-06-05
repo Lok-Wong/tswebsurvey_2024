@@ -114,9 +114,11 @@ function App() {
 
     const handleCheckBoxChange = (event) => {
         if(event.target.name === "noChange") {
+        if (event.target.name === "noChange") {
             setSurvey((prevState) => ({
                 ...prevState,
                 tripChange:{
+                tripChange: {
                     noChange: {
                         state: event.target.checked,
                         value: 999
@@ -324,6 +326,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="badWeatherPickup-label"><h3>1) 出行方式是否有以下變化？（多選題）</h3></FormLabel>
+                                <FormLabel id="badWeatherPickup-label"><h3>1. 出行方式是否有以下變化？（多選題）</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="badWeatherPickup-label"
                                     name="badWeatherPickup"
@@ -414,6 +417,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="不出門上學和等待教青局的消息" control={
                                         <Checkbox
                                         disabled = {checkBoxLogict()}
+                                            disabled={checkBoxLogict()}
                                             checked={survey.tripChange.waitForNews.state}
                                             onChange={handleCheckBoxChange}
                                             name='waitForNews' />} label="不出門上學和等待教青局的消息" />
@@ -421,6 +425,7 @@ function App() {
                                     <FormControlLabel sx={{ color: "black" }} value="其它" control={
                                         <Checkbox
                                         disabled = {checkBoxLogict()}
+                                            disabled={checkBoxLogict()}
 
                                             checked={survey.tripChange.other.state}
                                             onChange={handleCheckBoxChange}
@@ -461,6 +466,7 @@ function App() {
                                 m: 1, width: "100%"
                             }}>
                                 <FormLabel id="comment-label"><h3>2)	您對上下學（包括在惡劣天氣情況下）出行有何意見或建議？（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>2.	您對上下學（包括在惡劣天氣情況下）出行有何意見或建議？（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{

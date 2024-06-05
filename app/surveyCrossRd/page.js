@@ -250,7 +250,6 @@ function App() {
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
-        console.log('i fire once');
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
@@ -269,11 +268,13 @@ function App() {
                         </h1>
                         <h2 style={{ color: "#000000" }}>
                             a)一般情況下，學生早上上學的情況
+                            a.一般情況下，學生早上上學的情況
                         </h2>
 
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="pickup-label"><h3>1)    有沒有人接送：</h3></FormLabel>
+                                <FormLabel id="pickup-label"><h3>1.    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
@@ -313,6 +314,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="TimeStartFromHome-label"><h3>2) 從家出發時間：</h3></FormLabel>
+                                <FormLabel id="TimeStartFromHome-label"><h3>2. 從家出發時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -330,6 +332,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="portForShcool-label"><h3>3) 前往學校的通關口岸：</h3></FormLabel>
+                                <FormLabel id="portForShcool-label"><h3>3. 前往學校的通關口岸：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="portForShcool-label"
                                     name="portForShcool"

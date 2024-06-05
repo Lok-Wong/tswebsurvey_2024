@@ -662,6 +662,7 @@ function App() {
                                         <div className={styles.question}>
                                             <FormControl>
                                                 <FormLabel id="address-label"><h3>2)	放學後去了哪裏（地標）：</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>2.	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {

@@ -463,6 +463,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="evening-leave-school-time-label"><h3>5) 離校時間（24小時制）:</h3></FormLabel>
+                                <FormLabel id="evening-leave-school-time-label"><h3>5. 離校時間（24小時制）:</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -478,6 +479,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="pickup-leave-school-way-label"><h3>6)	有沒有人接送:</h3></FormLabel>
+                                <FormLabel id="pickup-leave-school-way-label"><h3>6.	有沒有人接送:</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-leave-school-way-label"
                                     name="leavePickUp"
@@ -518,6 +520,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="back-home-dircetly-label"><h3>7)	放學是否直接回家？</h3></FormLabel>
+                                <FormLabel id="back-home-dircetly-label"><h3>7.	放學是否直接回家？</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="back-home-dircetly-label"
                                     name="directToHomeState"
@@ -604,6 +607,7 @@ function App() {
                                         <div className={styles.question}>
                                             <FormControl>
                                                 <FormLabel id="address-label"><h3>2)	放學後去了哪裏（地標）：</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>2.	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {

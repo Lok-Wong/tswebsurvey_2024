@@ -146,6 +146,7 @@ export default function App() {
                                 m: 1, width: "100%"
                             }}>
                                 <FormLabel id="comment-label"><h3>3)　請留下您的聯絡電話（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>3.　請留下您的聯絡電話（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{

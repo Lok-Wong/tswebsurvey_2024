@@ -463,6 +463,7 @@ function App() {
                                 <div className={styles.question} >
                                     <FormControl>
                                         <FormLabel id="class-level-label"><h3>4)  就讀程度：</h3></FormLabel>
+                                        <FormLabel id="class-level-label"><h3>4.  就讀程度：</h3></FormLabel>
                                         <RadioGroup
                                             id="class-level"
                                             aria-labelledby="class-level-label"
@@ -500,6 +501,7 @@ function App() {
                                 <div className={styles.question} >
                                     <FormControl>
                                         <FormLabel id="level-type-label"><h3>5)  就讀年級：</h3></FormLabel>
+                                        <FormLabel id="level-type-label"><h3>5.  就讀年級：</h3></FormLabel>
                                         {/* <Box
                                             component="form"
                                             sx={{
@@ -561,6 +563,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="gender-label"><h3>6)  姓別：</h3></FormLabel>
+                                <FormLabel id="gender-label"><h3>6.  姓別：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="studentofRespondents-radio-buttons-group-label"
                                     name="gender"
@@ -577,6 +580,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="age-label"><h3>7)  年齡</h3></FormLabel>
+                                <FormLabel id="age-label"><h3>7.  年齡</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="age-label"
                                     name="age"
@@ -596,6 +600,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="cross-border-student-label"><h3>8)  學生上學及放學是否需跨境：</h3></FormLabel>
+                                <FormLabel id="cross-border-student-label"><h3>8. 學生上學及放學是否需跨境：</h3></FormLabel>
                                 <RadioGroup
                                     id="crossBorderCheck"
                                     aria-labelledby="cross-border-student-label"

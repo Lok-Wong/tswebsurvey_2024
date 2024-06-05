@@ -255,6 +255,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl>
                                 <FormLabel id="pickup-label"><h3>1)    有沒有人接送：</h3></FormLabel>
+                                <FormLabel id="pickup-label"><h3>1.    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
@@ -293,6 +294,7 @@ function App() {
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="pickup-time-start-label"><h3>2)     出發時間（24 小時制）：</h3></FormLabel>
+                                <FormLabel id="pickup-time-start-label"><h3>2.     出發時間（24 小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -309,6 +311,7 @@ function App() {
 
                             <FormControl className={styles.inlineQuestion}>
                                 <FormLabel id="pickup-time-end-label"><h3>3)     到達時間（24 小時制）：</h3></FormLabel>
+                                <FormLabel id="pickup-time-end-label"><h3>3.     到達時間（24 小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -327,6 +330,7 @@ function App() {
                                 variant="standard"
                             >
                                 <FormLabel component="commonTransiration"><h3>4)	主要的交通方式：</h3></FormLabel>
+                                <FormLabel component="commonTransiration"><h3>4.	主要的交通方式：</h3></FormLabel>
                                 <RadioGroup
                                     name='commonTransirtation'
                                     value={survey.commonTransirtation}
