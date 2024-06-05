@@ -13,7 +13,8 @@ export default function App() {
     // const path = require('path');
     const router = useRouter();
     const blanksurvey = {
-        phoneNum: 999
+        phoneNum: 999,
+        id4Num: 999
     }
     const blankHelpText = {}
     const [helpText, setHelpText] = React.useState(blankHelpText)
@@ -141,11 +142,16 @@ export default function App() {
                         <h1 style={{ color: "#000000" }}>
                             最後
                         </h1>
+                        <p>
+                            *如提供以下資訊，即同意參加抽獎活動
+                            *以下資訊只用於抽獎用途，資料在完成整個抽獎活動後會立即燒燬。
+                        </p>
                         <div className={styles.question}>
+
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>3)　請留下您的聯絡電話（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>　請留下閣下的聯絡電話（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
@@ -161,6 +167,31 @@ export default function App() {
                                         name='phoneNum'
                                         multiline
                                         value={survey.phoneNum == 999 ? null : survey.phoneNum}
+                                        onChange={handleChange}
+                                    />
+                                </Box>
+                            </FormControl>
+                        </div>
+                        <div className={styles.question}>
+                            <FormControl sx={{
+                                m: 1, width: "100%"
+                            }}>
+                                <FormLabel id="comment-label"><h3>　請留下閣下的尾4號身分證號碼（選填）：</h3></FormLabel>
+                                <Box
+                                    component="form"
+                                    sx={{
+                                        '& > :not(style)': { width: '80%' },
+                                    }}
+                                    noValidate
+                                >
+                                    <TextField
+                                        sx={{ marginTop: "1rem" }}
+                                        id="id4Num-text"
+                                        label="尾4號身分證號碼"
+                                        variant="outlined"
+                                        name='id4Num'
+                                        multiline
+                                        value={survey.id4Num == 999 ? null : survey.id4Num}
                                         onChange={handleChange}
                                     />
                                 </Box>

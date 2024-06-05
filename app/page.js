@@ -256,7 +256,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
+      <div className={styles.buttonDiv} >
         <Button
          className={styles.button}
           name="next"
