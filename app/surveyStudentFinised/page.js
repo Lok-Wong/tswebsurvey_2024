@@ -137,7 +137,7 @@ function App() {
                                     onChange={(event) => { setStillHaveChild(event.target.value) }}
                                 >
                                     {
-                                        (parseInt(_studentNum ) + 1 ) == parseInt(_totalStudentNumber) ?
+                                        (parseInt(_studentNum ) + 1 ) >= parseInt(_totalStudentNumber) ?
                                             null
                                         :
                                         <FormControlLabel sx={{ color: "black" }} value="有" control={<Radio />} label="有" />

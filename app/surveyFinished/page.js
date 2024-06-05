@@ -117,6 +117,9 @@ export default function App() {
 
                         {
                             <div className={styles.question}>
+                                <p>
+                                    感謝閣下參與本次的線上問卷調查!
+                                </p>
                                 <Button className={styles.buttonStyle} onClick={() =>
                                     // combineObj(Object.keys(items));
                                     handleSubmit()
