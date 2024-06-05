@@ -128,7 +128,7 @@ function App() {
             handleHelpText("arrivalTimeToSchool", "請選擇時間")
             return
         }
-        if (survey.TimeStartFromHome == survey.TimeEndToMacau) {
+        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
             handleHelpText("TimeStartFromHome", "時間不能相同")
             handleHelpText("TimeEndToMacau", "時間不能相同")
             return
@@ -337,10 +337,10 @@ function App() {
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="關閘" control={<Radio />} label="關閘" />
-                                    <FormControlLabel sx={{ color: "black" }} value="青茂" control={<Radio />} label="青茂" />
-                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳" control={<Radio />} label="港珠澳" />
-                                    <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" />
-                                    <FormControlLabel sx={{ color: "black" }} value="內港" control={<Radio />} label="內港" />
+                                    <FormControlLabel sx={{ color: "black" }} value="青茂口岸" control={<Radio />} label="青茂口岸" />
+                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳大橋澳門口岸" control={<Radio />} label="港珠澳大橋澳門口岸" />
+                                    <FormControlLabel sx={{ color: "black" }} value="橫琴口岸澳門口岸區" control={<Radio />} label="橫琴口岸澳門口岸區" />
+                                    <FormControlLabel sx={{ color: "black" }} value="內港客運碼頭" control={<Radio />} label="內港客運碼頭" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
 
                                     {survey.portForShcool === "其他" ?

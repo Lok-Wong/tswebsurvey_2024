@@ -291,15 +291,6 @@ function App() {
                 return
             }
 
-            // if (survey.directToHomeNo.destinationBackHomeEndTime == "") {
-            //     handleHelpText("destinationBackHomeEndTime", "請填寫到達家時間")
-            //     return
-            // }
-
-            // if (survey.directToHomeNo.leaveDestinationBackHomeTransition == 999) {
-            //     handleHelpText("leaveDestinationBackHomeTransition", "請選擇前目的地回家主要的交通方式")
-            //     return
-            // }
         }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyBadWeather')
@@ -603,7 +594,7 @@ function App() {
                                     <div key={key}>
                                         <div className={styles.question}>
                                             <FormControl>
-                                                <FormLabel id="address-label"><h3>2)	放學後去了哪裏（地標）：</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {

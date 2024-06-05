@@ -43,7 +43,7 @@ function App() {
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [key, setKey] = React.useState(0)
     const [seed, setSeed] = React.useState(1);
-    
+
     const reset = () => {
         setSeed(Math.random());
     }
@@ -313,7 +313,7 @@ function App() {
 
     React.useEffect(() => {
         reset()
-    },[survey.directToPort])
+    }, [survey.directToPort])
 
     React.useEffect(() => {
         if (survey.pickup != "其他") {
@@ -480,10 +480,10 @@ function App() {
                                     onChange={handleChange}
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="關閘" control={<Radio />} label="關閘" />
-                                    <FormControlLabel sx={{ color: "black" }} value="青茂" control={<Radio />} label="青茂" />
-                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳" control={<Radio />} label="港珠澳" />
-                                    <FormControlLabel sx={{ color: "black" }} value="橫琴" control={<Radio />} label="橫琴" />
-                                    <FormControlLabel sx={{ color: "black" }} value="內港" control={<Radio />} label="內港" />
+                                    <FormControlLabel sx={{ color: "black" }} value="青茂口岸" control={<Radio />} label="青茂口岸" />
+                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳大橋澳門口岸" control={<Radio />} label="港珠澳大橋澳門口岸" />
+                                    <FormControlLabel sx={{ color: "black" }} value="橫琴口岸澳門口岸區" control={<Radio />} label="橫琴口岸澳門口岸區" />
+                                    <FormControlLabel sx={{ color: "black" }} value="內港客運碼頭" control={<Radio />} label="內港客運碼頭" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />
 
                                     {survey.portForHome === "其他" ?
@@ -661,7 +661,7 @@ function App() {
                                     <div key={key}>
                                         <div className={styles.question}>
                                             <FormControl>
-                                                <FormLabel id="address-label"><h3>2)	放學後去了哪裏（地標）：</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {
