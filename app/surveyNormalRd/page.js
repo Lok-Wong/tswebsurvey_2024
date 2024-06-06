@@ -254,7 +254,6 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label"><h3>1)    有沒有人接送：</h3></FormLabel>
                                 <FormLabel id="pickup-label"><h3>1.    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
@@ -293,7 +292,6 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="pickup-time-start-label"><h3>2)     出發時間（24 小時制）：</h3></FormLabel>
                                 <FormLabel id="pickup-time-start-label"><h3>2.     出發時間（24 小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
@@ -310,7 +308,6 @@ function App() {
                         <div className={styles.question}>
 
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="pickup-time-end-label"><h3>3)     到達時間（24 小時制）：</h3></FormLabel>
                                 <FormLabel id="pickup-time-end-label"><h3>3.     到達時間（24 小時制）：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
@@ -329,7 +326,6 @@ function App() {
                             <FormControl
                                 variant="standard"
                             >
-                                <FormLabel component="commonTransiration"><h3>4)	主要的交通方式：</h3></FormLabel>
                                 <FormLabel component="commonTransiration"><h3>4.	主要的交通方式：</h3></FormLabel>
                                 <RadioGroup
                                     name='commonTransirtation'
@@ -434,7 +430,7 @@ function App() {
 
                         {/* <h1>
                     2.4 學生出行意見和建議
-                </h1>
+                </h1> F
 
                 <div className={styles.question}>
                     <FormControl sx={{

@@ -284,7 +284,6 @@ function App() {
             </h1>
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1) 你是學生（的）：</h3></FormLabel>
                 <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1.你是學生（的）：</h3></FormLabel>
                 <RadioGroup
                   required
@@ -327,7 +326,6 @@ function App() {
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
                 <FormLabel id="address-label"><h3>2.家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
                 <Box>
                   <p className={styles.mapHitText}>
@@ -373,7 +371,6 @@ function App() {
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="resident-population-student-label"><h3>3) 長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</h3></FormLabel>
                 <FormLabel id="resident-population-student-label"><h3>3.長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="resident-population-student-group-label"
@@ -421,7 +418,6 @@ function App() {
         </div> */}
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="vehicle-radio-buttons-group-label"><h3>4)	家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <FormLabel id="vehicle-radio-buttons-group-label"><h3>4.家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="vehicle-radio-buttons-group-label"

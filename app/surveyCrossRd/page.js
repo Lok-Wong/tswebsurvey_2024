@@ -17,7 +17,13 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 
+// shouldComponentUpdate(()=>{
+//     console.log(111111)
+    
+// })
 function App() {
+    
+    
     const router = useRouter();
     const blanksurvey = {
         startTime: new Date(),
@@ -33,6 +39,7 @@ function App() {
     }
 
     const blankHelpText = {}
+  
 
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const handleHelpText = (eventName, errorText) => {
@@ -250,6 +257,7 @@ function App() {
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
+        // console.log(this);
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
@@ -267,13 +275,11 @@ function App() {
                             四、跨境上學及放學出行情況
                         </h1>
                         <h2 style={{ color: "#000000" }}>
-                            a)一般情況下，學生早上上學的情況
                             a.一般情況下，學生早上上學的情況
                         </h2>
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label"><h3>1)    有沒有人接送：</h3></FormLabel>
                                 <FormLabel id="pickup-label"><h3>1.    有沒有人接送：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
@@ -313,7 +319,6 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="TimeStartFromHome-label"><h3>2) 從家出發時間：</h3></FormLabel>
                                 <FormLabel id="TimeStartFromHome-label"><h3>2. 從家出發時間：</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
@@ -331,7 +336,6 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="portForShcool-label"><h3>3) 前往學校的通關口岸：</h3></FormLabel>
                                 <FormLabel id="portForShcool-label"><h3>3. 前往學校的通關口岸：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="portForShcool-label"
