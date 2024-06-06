@@ -82,7 +82,7 @@ function App() {
     }
 
     const handleCustomAddress = (address, type) => {
-        console.log("address", address)
+       // console.log("address", address)
         setSurvey((prevState) => ({
             ...prevState,
             directToPortNo: {
@@ -304,7 +304,7 @@ function App() {
     React.useEffect(() => {
         survey && sessionStorage.setItem(_studentNum + 'crossRd2', JSON.stringify(survey))
         setHelpText(blankHelpText)
-        console.log(survey)
+      //  console.log(survey)
     }, [survey])
 
     React.useEffect(() => {

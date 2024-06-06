@@ -170,12 +170,12 @@ function App() {
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + "normalRd"), JSON.stringify(survey))
         setHelpText(blankHelpText)
-        console.log(survey)
+        // console.log(survey)
     }, [survey])
 
     React.useEffect(() => {
         if (storedPathList != null) {
-            console.log("storedPathList12", storedPathList)
+            // console.log("storedPathList12", storedPathList)
             setStoredPathList([...storedPathList, window.location.pathname])
         }
     }, [])

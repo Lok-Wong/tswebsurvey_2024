@@ -69,7 +69,7 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.fillAlready == "否") {
-            console.log("setList", storedPathList)
+            // console.log("setList", storedPathList)
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyFinished')
@@ -90,7 +90,7 @@ function App() {
     }, [isClient])
 
     React.useEffect(() => {
-        console.log("survey:", survey)
+        // console.log("survey:", survey)
     }, [survey])
 
     React.useEffect(() => {

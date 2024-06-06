@@ -37,7 +37,7 @@ function App() {
 
     React.useEffect(() => {
         const items = { ...sessionStorage }
-        console.log("sessionKey", Object.keys(items))
+        // console.log("sessionKey", Object.keys(items))
     }, [])
 
     return (

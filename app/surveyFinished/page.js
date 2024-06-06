@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
+
+
 export default function App() {
     // const fs = require('fs');
     // const path = require('path');
@@ -68,11 +70,17 @@ export default function App() {
     }
 
     const handleSubmit = async (e) => {
+        // console.log(process.env)
+        // console.log(e)
+        // console.log(process)
+        // console.log(totalObj)
+
         // e.preventDefault()
         const submitData = { "data": totalObj }
-        console.log('env', process.env.NEXT_PUBLIC_LOCAL_LINK)
+        // console.log('4', submitData)
+        // console.log('env', process.env.LOCAL_HOST)
         try {
-            const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
+            const res = await fetch('http://localhost:3000/api/handleform', {
                 method: 'POST',
                 body: JSON.stringify(submitData),
                 headers: {
@@ -84,23 +92,23 @@ export default function App() {
                 handleAlertBarOpen()
                 setVCodeError("成功上傳問卷")
                 sessionStorage.clear();
-                router.push('/')
+                // router.push('/')
             } else {
                 setAlertState("error")
                 handleAlertBarOpen()
                 setVCodeError("伺服器繁忙中，請稍後再試:")
-                console.log("伺服器繁忙中，請稍後再試", res)
+                //console.log("伺服器繁忙中，請稍後再試", res)
             }
         } catch (error) {
             setAlertState("error")
             handleAlertBarOpen()
             setVCodeError("伺服器繁忙中，請稍後再試")
-            console.log(error)
+            //console.log(error)
         }
     }
 
     React.useEffect(() => {
-        console.log('totalObj', totalObj)
+        // console.log('totalObj', totalObj)
     }, [totalObj])
 
 
@@ -118,7 +126,7 @@ export default function App() {
                         {
                             <div className={styles.question}>
                                 <Button className={styles.buttonStyle} onClick={() =>
-                                    // combineObj(Object.keys(items));
+                                    // combineObj(Object.keys(items)),
                                     handleSubmit()
                                 }>
                                     提交

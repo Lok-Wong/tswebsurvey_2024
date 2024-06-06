@@ -97,7 +97,7 @@ function App() {
 
 
     React.useEffect(() => {
-        console.log("survey:", survey)
+       // console.log("survey:", survey)
     }, [survey])
 
     React.useEffect(() => {

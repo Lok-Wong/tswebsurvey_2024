@@ -63,8 +63,8 @@ function App() {
 
     React.useEffect(() => {
         const items = { ...sessionStorage }
-        console.log("sessionKey", Object.keys(items))
-        console.log( typeof(parseInt(_studentNum ) + 1 ) == typeof parseInt(_totalStudentNumber))
+        // console.log("sessionKey", Object.keys(items))
+        // console.log( typeof(parseInt(_studentNum ) + 1 ) == typeof parseInt(_totalStudentNumber))
         
     }, [])
 
@@ -77,7 +77,7 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-            console.log("storedPathList12", storedPathList)
+          //  console.log("storedPathList12", storedPathList)
             setStoredPathList([...storedPathList, window.location.pathname])
         }
     }, [])

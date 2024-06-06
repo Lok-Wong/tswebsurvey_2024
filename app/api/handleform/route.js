@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import dayjs from 'dayjs';
 import rateLimit from '@/app/utils/rateLimit.js';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const fs = require('fs');
 
 
 export async function POST(req,res){
+
     if (await rateLimit(req, res)) {
+   
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
           status: 429,
           headers: {
@@ -16,21 +20,26 @@ export async function POST(req,res){
       }
 
     if (!fs.existsSync('tsStudentData')) {
+
         fs.mkdirSync('tsStudentData');
     }
 
     const savePath = `tsStudentData/${dayjs().format('YYYY-MM-DD')}`
-
+   
     if (!fs.existsSync(savePath)) {
+
         fs.mkdirSync(savePath);
     }
 
     const requestData = await req.json()
-    console.log("req",(requestData["data"]))
+
     const ipaddress = requestData["data"]['home']['ip']
     const uuid = requestData["data"]['home']['uuid']
     const fileDate = `${dayjs().format('HHmmss')}`
-    const fileName = `${ipaddress}_${fileDate}.json`
-    fs.writeFileSync(`${savePath}/${fileName}`, JSON.stringify(requestData))
+    const fileName = `${ipaddress}_${fileDate}`
+    const hash = `${uuidv4()}.json`
+
+
+fs.writeFileSync(`${savePath}/${fileName+'_'+hash}`, JSON.stringify(requestData))
     return NextResponse.json({"message":"Post data"})
-}
+  }

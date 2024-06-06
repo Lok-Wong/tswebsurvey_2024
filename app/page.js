@@ -135,7 +135,7 @@ export default function Home() {
   }, [])
 
   React.useEffect(() => {
-    console.log("history",history)
+    // console.log("history",history)
   }, [])
 
   React.useEffect(() => {

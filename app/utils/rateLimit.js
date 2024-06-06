@@ -20,7 +20,7 @@ export default async function rateLimit(req, res) {
   if (requestCounter[clientIp] >= requestLimit) {
     return true; // Rate limit exceeded 
   } else {
-    console.log('Request count for IP:', clientIp, '=', ++requestCounter[clientIp]);
+   // console.log('Request count for IP:', clientIp, '=', ++requestCounter[clientIp]);
     return null; // Proceed with the request 
   }
 }
