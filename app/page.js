@@ -46,9 +46,9 @@ export default function Home() {
   const [isClient, setIsClient] = React.useState(false)
   const [infoSaveChecked, setInfoSaveChecked] = React.useState(false);
   const actions = [
-    { icon: <p>cz</p>, name: 'Copy' },
-    { icon: <p>cn</p>, name: 'Save' },
-    { icon: <p>en</p>, name: 'Print' },
+    { icon: <p>繁中</p>, name: 'Copy' },
+    { icon: <p>簡中</p>, name: 'Save' },
+    { icon: <p>英文</p>, name: 'Print' },
   ];
 
   const [survey, setSurvey] = React.useState({
