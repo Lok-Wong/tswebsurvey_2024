@@ -416,13 +416,6 @@ function App() {
                                 <div className={styles.question}>
                                     <FormControl>
                                         <FormLabel id="school-name-label"><h3>3)  學校名稱：(*如無合適選項，請輸入學校名稱。)</h3></FormLabel>
-                                        {/* <Box
-                                            component="form"
-                                            sx={{
-                                                '& > :not(style)': { m: 1, width: '100%', maxWidth: '100%', minWidth: '100%' },
-                                            }}
-                                            noValidate
-                                        > */}
                                         <Autocomplete
                                             sx={{
                                                 m: 1
@@ -500,32 +493,6 @@ function App() {
                                 <div className={styles.question} >
                                     <FormControl>
                                         <FormLabel id="level-type-label"><h3>5)  就讀年級：</h3></FormLabel>
-                                        {/* <Box
-                                            component="form"
-                                            sx={{
-                                                '& > :not(style)': { m: 1, width: '150%' },
-                                            }}
-                                            noValidate
-                                        >
-                                            <Autocomplete
-                                                id="level-type"
-                                                label="年級"
-                                                name='leveltype'
-                                                freeSolo
-                                                value={sltValue}
-                                                inputValue={sltInputValue}
-                                                onChange={(event, newValue) => {
-                                                    setSltValue(newValue)
-                                                }}
-                                                onInputChange={(event, newInputValue) => {
-                                                    setSltInputValue(newInputValue)
-                                                }}
-                                                options={levelTypes[slValue] ? levelTypes[slValue] : []}
-                                                renderInput={(params) =>
-                                                    <TextField {...params}></TextField>
-                                                }
-                                            />
-                                        </Box> */}
                                         <RadioGroup
                                             id="level-Type"
                                             aria-labelledby="level-type-label"

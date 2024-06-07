@@ -89,10 +89,10 @@ function App() {
     const reset = () => {
         setSeed(Math.random());
     }
-    
+
     React.useEffect(() => {
         reset()
-    },[survey.directToHomeState])
+    }, [survey.directToHomeState])
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -459,7 +459,11 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.leaveSchoolTime)}
-                                            onChange={(event) => handleTimeChange(event, "leaveSchoolTime")}
+                                            onChange={(event) => {
+                                                if (!event) {
+                                                    return
+                                                } handleTimeChange(event, "leaveSchoolTime")
+                                            }}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -534,7 +538,12 @@ function App() {
                                                     <DesktopTimePicker
                                                         ampm={false}
                                                         value={dayjs(survey.directToHomeYes.arivalHomeTime)}
-                                                        onChange={(event) => handleChangeBackHomeTime(event, "arivalHomeTime")}
+                                                        onChange={(event) => {
+                                                            if (!event) {
+                                                                return
+                                                            }
+                                                            handleChangeBackHomeTime(event, "arivalHomeTime")
+                                                        }}
                                                     />
                                                 </DemoContainer>
                                             </LocalizationProvider>
@@ -609,7 +618,7 @@ function App() {
                                                 </Button> */}
                                                 <div >
 
-                                                    <MapComponent key={seed}  handleCustomAddress={handleCustomAddress} />
+                                                    <MapComponent key={seed} handleCustomAddress={handleCustomAddress} />
                                                 </div>
 
                                                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
@@ -623,7 +632,12 @@ function App() {
                                                         <DesktopTimePicker
                                                             ampm={false}
                                                             value={dayjs(survey.directToHomeNo.leaveDestinationTime)}
-                                                            onChange={(event) => handleChangeBackHomeTime(event, "leaveDestinationTime")}
+                                                            onChange={(event) => {
+                                                                if (!event) {
+                                                                    return
+                                                                }
+                                                                handleChangeBackHomeTime(event, "leaveDestinationTime")
+                                                            }}
                                                         />
                                                     </DemoContainer>
                                                 </LocalizationProvider>

@@ -34,14 +34,14 @@ export default function App() {
 
     const handleAlertBarOpen = () => {
         setOpenAlertBar(true);
-      };
+    };
 
     const handleAlertBarClose = (event, reason) => {
         if (reason === 'clickaway') {
-          return;
+            return;
         }
         setOpenAlertBar(false);
-      };
+    };
 
     const [isClient, setIsClient] = React.useState(false)
     React.useEffect(() => {
@@ -115,13 +115,18 @@ export default function App() {
                             完成問卷
                         </h1>
 
+                        <div  className={styles.question}>
+                            <p>
+                                感謝閣下參與本次的線上問卷調查!
+                            </p>
+                            <p>
+                                請按以下按鈕完成本次問卷
+                            </p>
+                        </div>
+
                         {
-                            <div className={styles.question}>
-                                <p>
-                                    感謝閣下參與本次的線上問卷調查!
-                                </p>
+                            <div style={{display:"flex",justifyContent:'center'}}>
                                 <Button className={styles.buttonStyle} onClick={() =>
-                                    // combineObj(Object.keys(items));
                                     handleSubmit()
                                 }>
                                     提交
@@ -137,7 +142,7 @@ export default function App() {
             <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>
                 <Alert
                     onClose={handleAlertBarClose}
-                    severity= {alertState}
+                    severity={alertState}
                     variant="filled"
                     sx={{ width: '100%' }}
                 >

@@ -134,9 +134,6 @@ export default function Home() {
     };
   }, [])
 
-  React.useEffect(() => {
-    console.log("history",history)
-  }, [])
 
   React.useEffect(() => {
     getData()
@@ -148,10 +145,21 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        {/* <p>
-          tsWebSurvey2024_V0.7
-        </p> */}
-        <div>
+        <p>
+          V0.112
+        </p>
+        <div className={styles.translateContenter}>
+          <Button className={styles.translateButton}>
+            繁
+          </Button>
+          <Button className={styles.translateButton}>
+            簡
+          </Button>
+          <Button className={styles.translateButton}>
+            英
+          </Button>
+        </div>
+        <div className={styles.imagecontenter}>
         <Image
               src="/mixed.png"
               alt="mixed Logo"
@@ -159,21 +167,6 @@ export default function Home() {
               height={95.875}
               priority
             />
-
-          {/* <a
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/ts2024Logo.jpeg"
-              alt="ts2024 Logo"
-              className={styles.vercelLogo}
-              width={120}
-              height={34}
-              priority
-            />
-          </a> */}
         </div>
       </div>
 

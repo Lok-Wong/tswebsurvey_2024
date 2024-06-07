@@ -11,9 +11,9 @@
 
 .question{
   display: flex;
-  flex-direction: row;
-  /* display: flex; */
-  background-color: #ffffff;
+  flex-direction: column;
+  display: flex;
+  background-color: #f8fafe;
   padding: 1rem;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -62,7 +62,6 @@
   padding: 8px 16px;
   font-size: 16px;
   font-weight: 700;
-  line-height: 26px;
 }
 
 .buttonStyle:hover{

@@ -28,12 +28,28 @@
   }
   
   .description p {
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     margin: 0;
     padding: 1rem;
-    background-color: rgba(var(--callout-rgb), 0.5);
-    border: 1px solid rgba(var(--callout-border-rgb), 0.3);
-    border-radius: var(--border-radius);
+  }
+  .imagecontenter{
+    margin-top: 2vh;
+  }
+
+  .translateContenter{
+    position: absolute;
+    flex-direction: row;
+    background-color: #f8fafe;
+    right: 0;
+    top: 4vh;
+    justify-content: flex-end;
+   }
+
+  .translateButton{
+    max-width: 0px;
+    color: #000000;
   }
   
   .nextPageButton{
@@ -164,6 +180,7 @@
     z-index: 10;
     box-shadow: -1px -3px 5px -1px rgba(131,127,123,0.5);
     justify-content: flex-end;
+    margin-bottom: 7vh;
   }
 
 

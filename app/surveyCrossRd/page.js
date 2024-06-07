@@ -316,9 +316,15 @@ function App() {
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
+                                        
                                             ampm={false}
                                             value={dayjs(survey.TimeStartFromHome)}
-                                            onChange={(event) => handleTimeChange(event, "TimeStartFromHome")}
+                                            onChange={(event) => {
+                                                if (!event) {
+                                                    return
+                                                }
+                                                handleTimeChange(event, "TimeStartFromHome")}
+                                            }
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -377,7 +383,11 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.TimeEndToMacau)}
-                                            onChange={(event) => handleTimeChange(event, "TimeEndToMacau")}
+                                            onChange={(event) => {
+                                                if (!event) {
+                                                    return
+                                                };
+                                                handleTimeChange(event, "TimeEndToMacau")}}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -499,7 +509,11 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.arrivalTimeToSchool)}
-                                            onChange={(event) => handleTimeChange(event, "arrivalTimeToSchool")}
+                                            onChange={(event) =>{ 
+                                                if (!event) {
+                                                    return
+                                                }
+                                                handleTimeChange(event, "arrivalTimeToSchool")}}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>

@@ -102,6 +102,7 @@ function App() {
     };
 
     const handleTimeChange = (event, name) => {
+
         setSurvey((prevState) => ({
             ...prevState,
             [name]: event.$d
@@ -299,7 +300,13 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.pickupTimeStart)}
-                                            onChange={(event) => {handleTimeChange(event, "pickupTimeStart"),setStartTime(event.$d)}}
+                                            onChange={(event) => {
+                                                if (!event) {
+                                                    return
+                                                }
+                                                    handleTimeChange(event, "pickupTimeStart"),
+                                                    setStartTime(event.$d)
+                                                }}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -315,7 +322,12 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.pickupTimeEnd)}
-                                            onChange={(event) =>{ handleTimeChange(event, "pickupTimeEnd"),setEndTime(event.$d)}}
+                                            onChange={(event) =>{
+                                                if (!event) {
+                                                    return
+                                                }
+                                                 handleTimeChange(event, "pickupTimeEnd"),
+                                                 setEndTime(event.$d)}}
                                         />
                                     </DemoContainer>
                                     <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeEnd}</FormHelperText>

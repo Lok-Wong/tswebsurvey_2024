@@ -421,7 +421,11 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.leaveShcoolTime)}
-                                            onChange={(event) => handleTimeChange(event, "leaveShcoolTime")}
+                                            onChange={(event) => {
+                                                if (!event) {
+                                                    return
+                                                } handleTimeChange(event, "leaveShcoolTime")
+                                            }}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -540,7 +544,11 @@ function App() {
                                                     <DesktopTimePicker
                                                         ampm={false}
                                                         value={dayjs(survey.directToPortYes.arrivalTime)}
-                                                        onChange={(event) => handleTimeChange(event, "arrivalTime")}
+                                                        onChange={(event) => {
+                                                            if (!event) {
+                                                                return
+                                                            } handleTimeChange(event, "arrivalTime")
+                                                        }}
                                                     />
                                                 </DemoContainer>
                                             </LocalizationProvider>
@@ -690,7 +698,11 @@ function App() {
                                                         <DesktopTimePicker
                                                             ampm={false}
                                                             value={dayjs(survey.directToPortNo.arrivalTime)}
-                                                            onChange={(event) => handleTimeChange(event, "arrivalTime")}
+                                                            onChange={(event) => {
+                                                                if (!event) {
+                                                                    return
+                                                                } handleTimeChange(event, "arrivalTime")
+                                                            }}
                                                         />
                                                     </DemoContainer>
                                                 </LocalizationProvider>
