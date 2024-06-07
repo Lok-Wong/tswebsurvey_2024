@@ -13,6 +13,25 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Checkbox from '@mui/material/Checkbox';
+import Switch from '@mui/material/Switch';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import { styled } from '@mui/material/styles';
+import TranslateIcon from '@mui/icons-material/Translate';
+
+const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
+  position: 'absolute',
+  '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+  '&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight': {
+    top: theme.spacing(2),
+    left: theme.spacing(2),
+  },
+}));
+
 
 export default function Home() {
   const router = useRouter()
@@ -26,7 +45,11 @@ export default function Home() {
   const [vCodeError, setVCodeError] = React.useState(false)
   const [isClient, setIsClient] = React.useState(false)
   const [infoSaveChecked, setInfoSaveChecked] = React.useState(false);
-
+  const actions = [
+    { icon: <p>cz</p>, name: 'Copy' },
+    { icon: <p>cn</p>, name: 'Save' },
+    { icon: <p>en</p>, name: 'Print' },
+  ];
 
   const [survey, setSurvey] = React.useState({
     startTime: 999,
@@ -39,12 +62,12 @@ export default function Home() {
   const enterToNext = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
-      if (!infoSaveChecked){
+      if (!infoSaveChecked) {
         handleAlertBarOpen()
         setVCodeError("請先同意收集個人資料聲明")
         return
       }
-      
+
       if (!inputVcode) {
         handleAlertBarOpen()
         setVCodeError("未填寫驗證碼哦！")
@@ -72,7 +95,7 @@ export default function Home() {
 
   async function handleNextButton(event) {
 
-    if (!infoSaveChecked){
+    if (!infoSaveChecked) {
       handleAlertBarOpen()
       setVCodeError("請先同意收集個人資料聲明")
       return
@@ -144,40 +167,45 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
+          <Box sx={{position:"fixed",right:0,bottom:0,zIndex:100}}>
+          <StyledSpeedDial
+            ariaLabel="SpeedDial playground example"
+            icon={<TranslateIcon/>}
+            direction="left"
+          >
+            {actions.map((action) => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+              />
+            ))}
+          </StyledSpeedDial>
+        </Box>
+      <div className={styles.description}> 
         <p>
           V0.112
         </p>
-        <div className={styles.translateContenter}>
-          <Button className={styles.translateButton}>
-            繁
-          </Button>
-          <Button className={styles.translateButton}>
-            簡
-          </Button>
-          <Button className={styles.translateButton}>
-            英
-          </Button>
-        </div>
+    
         <div className={styles.imagecontenter}>
-        <Image
-              src="/mixed.png"
-              alt="mixed Logo"
-              width={350.75}
-              height={95.875}
-              priority
-            />
+          <Image
+            src="/mixed.png"
+            alt="mixed Logo"
+            width={350.75}
+            height={95.875}
+            priority
+          />
         </div>
       </div>
 
       <div className={styles.startLetter}>
         <a className={styles.letterText}>
           親愛的先生／女士，您好：<br /><br />
-          歡迎您參加『澳門學生出行調查』。這次調查的主要目的是想透過家長了解澳門非高等教育學生的出行習慣，以及使用交通服務的情况。您的寶貴資料和意見對這個研究非常重要，同時對學校周邊交通建設和澳門未來的交通規劃、管理、改善都有非常大的幫助。問卷填寫每人約只需要用五分鐘的時間，懇請您抽空作答。         
-          <br/>
+          歡迎您參加『澳門學生出行調查』。這次調查的主要目的是想透過家長了解澳門非高等教育學生的出行習慣，以及使用交通服務的情况。您的寶貴資料和意見對這個研究非常重要，同時對學校周邊交通建設和澳門未來的交通規劃、管理、改善都有非常大的幫助。問卷填寫每人約只需要用五分鐘的時間，懇請您抽空作答。
+          <br />
           <br />
           您所填寫的個人資料只會用於研究分析，絕不對外公開，請您安心回答。閣下完成問卷後，並提供聯絡資料，將自動參與本次調查的抽獎活動，得獎者將會獲得文具禮券乙份。感謝閣下的支持與協助。
-          <br/>
+          <br />
           <br />
           倘對本調查問卷有查詢，可在辦公時間內致電以下電話聯絡：<br /><br />
           XXXXXXX <br />
@@ -202,19 +230,19 @@ export default function Home() {
 
       <div className={styles.block}>
         <div className={styles.signBlock}>
-        
-        <Checkbox
-          checked={infoSaveChecked}
-          inputProps={{ 'aria-label': 'controlled' }}
-          onChange={(event) => setInfoSaveChecked(event.target.checked)}
-        />
 
-        <p className={styles.letterText}>
-          同意
+          <Checkbox
+            checked={infoSaveChecked}
+            inputProps={{ 'aria-label': 'controlled' }}
+            onChange={(event) => setInfoSaveChecked(event.target.checked)}
+          />
+
+          <p className={styles.letterText}>
+            同意
             <span onClick={handleOpen} className={styles.linkText}>個人資料收集聲明</span>
-        </p>
-    
-      </div>
+          </p>
+
+        </div>
         <div className={styles.verifyBlock}>
           <Box
             component="form"
@@ -251,7 +279,7 @@ export default function Home() {
 
       <div className={styles.buttonDiv} >
         <Button
-         className={styles.button}
+          className={styles.button}
           name="next"
           onKeyDown={(event) => { enterToNext(event) }}
           onClick={(event) => { handleNextButton(event) }}>
@@ -286,39 +314,39 @@ export default function Home() {
       >
         <Box className={styles.signContentBox}>
           <p className={styles.signContentText}>
-          1. 收集及處理的目的<br />
+            1. 收集及處理的目的<br />
 
-使用者在使用本網站提供的電子服務或下載並填寫各項服務的相關表格時，將視乎具體服務的要求而有可能需要提供個人資料，該等個人資料僅用於處理相關的目的。
-<br />
-2. 個人資料之轉移
-<br />
-收集及處理的個人資料，將視乎具體服務的需要，有關資料可能被轉移予其他行政機關、司法機關或私人實體使用，該等機關或實體在處理有關個人資料時，亦需符合相關法律的規定。
-<br />
-3. 個人資料的查閱及更正
-<br />
-按第8/2005號法律《個人資料保護法》的規定，使用者有權透過書面，查閱及更正與其有關的個人資料，或直接向接收由本公司轉移有關個人資料的其他行政機關、司法機關、私人機構或實體作出查閱及更正該等個人資料。
+            使用者在使用本網站提供的電子服務或下載並填寫各項服務的相關表格時，將視乎具體服務的要求而有可能需要提供個人資料，該等個人資料僅用於處理相關的目的。
+            <br />
+            2. 個人資料之轉移
+            <br />
+            收集及處理的個人資料，將視乎具體服務的需要，有關資料可能被轉移予其他行政機關、司法機關或私人實體使用，該等機關或實體在處理有關個人資料時，亦需符合相關法律的規定。
+            <br />
+            3. 個人資料的查閱及更正
+            <br />
+            按第8/2005號法律《個人資料保護法》的規定，使用者有權透過書面，查閱及更正與其有關的個人資料，或直接向接收由本公司轉移有關個人資料的其他行政機關、司法機關、私人機構或實體作出查閱及更正該等個人資料。
 
-為方便使用者，部分電子服務會顯示使用者曾經提交的資料，這樣可以令使用者無需重新填寫這些資料而縮短整個服務時間。如果這些資料已經過時（例如電話號碼），使用者可以作出更新。
-<br />
-4. 個人資料的保護
-<br />
-本網站的所有管理人員在處理使用者的個人資料時，均會按照第8/2005號法律《個人資料保護法》的規定，作出保密及妥善保管的措施，直至該等資料使用完畢及保存期限結束，屆時將按規定對有關資料進行銷毀或封存。
-<br />
-5. 風險
-<br />
-本網站已採用了基於SecureSocketsLayer(SSL)的安全通訊協議技術，保護個人資料在互聯網上傳輸。但有關資料在公開網絡上傳送仍會存在一定的風險，有可能被未經許可的第三者看到和使用。倘使用者對有關風險感到不安，請使用網絡以外的其他方式向本公司提供資料。
-<br />
-6. 對外連結
-<br />
-本網站內容含有外連到其他網站的超連結，例如本地或外地公共或私人機構等，倘透過這些超連結連接到其他網站時，表示使用者已經離開了本網站。這些網站的私隱政策有可能有別於本網站，本公司對這些網站的內容及其私隱政策不承擔任何責任，故使用者應事先了解這些網站倘有的私隱政策。
-<br />
-7. 本聲明的變更
-<br />
-本聲明若有任何變更，本公司將用新的文本代替舊的文本，且會在新文本中列明修訂的日期，恕不另行公告。
-<br />
-<br />
-版本：2024/6/3
- 
+            為方便使用者，部分電子服務會顯示使用者曾經提交的資料，這樣可以令使用者無需重新填寫這些資料而縮短整個服務時間。如果這些資料已經過時（例如電話號碼），使用者可以作出更新。
+            <br />
+            4. 個人資料的保護
+            <br />
+            本網站的所有管理人員在處理使用者的個人資料時，均會按照第8/2005號法律《個人資料保護法》的規定，作出保密及妥善保管的措施，直至該等資料使用完畢及保存期限結束，屆時將按規定對有關資料進行銷毀或封存。
+            <br />
+            5. 風險
+            <br />
+            本網站已採用了基於SecureSocketsLayer(SSL)的安全通訊協議技術，保護個人資料在互聯網上傳輸。但有關資料在公開網絡上傳送仍會存在一定的風險，有可能被未經許可的第三者看到和使用。倘使用者對有關風險感到不安，請使用網絡以外的其他方式向本公司提供資料。
+            <br />
+            6. 對外連結
+            <br />
+            本網站內容含有外連到其他網站的超連結，例如本地或外地公共或私人機構等，倘透過這些超連結連接到其他網站時，表示使用者已經離開了本網站。這些網站的私隱政策有可能有別於本網站，本公司對這些網站的內容及其私隱政策不承擔任何責任，故使用者應事先了解這些網站倘有的私隱政策。
+            <br />
+            7. 本聲明的變更
+            <br />
+            本聲明若有任何變更，本公司將用新的文本代替舊的文本，且會在新文本中列明修訂的日期，恕不另行公告。
+            <br />
+            <br />
+            版本：2024/6/3
+
 
           </p>
         </Box>
