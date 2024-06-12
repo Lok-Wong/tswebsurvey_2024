@@ -22,7 +22,6 @@ export default function App() {
     const [success, setSuccess] = React.useState(false);
 
     const timer = React.useRef();
-    const uuid = new uuidv4();
 
 
     const _studentNum = React.useMemo(() => {
