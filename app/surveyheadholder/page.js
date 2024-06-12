@@ -12,7 +12,6 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
-import { IoMdRefresh } from "react-icons/io";
 
 
 
@@ -23,7 +22,7 @@ function App() {
     startTime: new Date(),
     studentofRespondents: 999,
     residentPopulationStudent: 999,
-    otherOfStudentofRespondents: 999,
+    // otherOfStudentofRespondents: 999,
     address: 999,
     vehicle: 999
   }
@@ -31,7 +30,7 @@ function App() {
   const blankHelpText = {
     studentofRespondents: null,
     residentPopulationStudent: null,
-    otherOfStudentofRespondents: null,
+    // otherOfStudentofRespondents: null,
     address: null,
     vehicle: null
   }
@@ -172,12 +171,12 @@ function App() {
       return
     }
 
-    if (survey.studentofRespondents == "其他監護人") {
-      if (survey.otherOfStudentofRespondents == "999" || survey.otherOfStudentofRespondents == "") {
-        handleHelpText("studentofRespondents", "請填寫其他監護人名稱")
-        return
-      }
-    }
+    // if (survey.studentofRespondents == "其他監護人") {
+    //   if (survey.otherOfStudentofRespondents == "999" || survey.otherOfStudentofRespondents == "") {
+    //     handleHelpText("studentofRespondents", "請填寫其他監護人名稱")
+    //     return
+    //   }
+    // }
 
     if (survey.address == "999" || survey.address == "") {
       handleHelpText("address", "請填寫地址")
@@ -207,19 +206,19 @@ function App() {
     setHelpText(blankHelpText)
   }, [survey])
 
-  React.useEffect(() => {
-    if (survey.studentofRespondents != "其他監護人") {
-      setSurvey((prevState) => (
-        {
-          ...prevState,
+  // React.useEffect(() => {
+  //   if (survey.studentofRespondents != "其他監護人") {
+  //     setSurvey((prevState) => (
+  //       {
+  //         ...prevState,
 
-          otherOfStudentofRespondents: 999
+  //         otherOfStudentofRespondents: 999
 
-        }
-      ))
-    }
+  //       }
+  //     ))
+  //   }
 
-  }, [survey.studentofRespondents])
+  // }, [survey.studentofRespondents])
 
   const [isClient, setIsClient] = React.useState(false)
 
@@ -280,7 +279,7 @@ function App() {
         isClient ?
           <div>
             <h1 className={styles.title}>
-              一、學生家庭住戶資料
+              一、學生家庭資料
             </h1>
             <div className={styles.question}>
               <FormControl>
@@ -297,7 +296,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
                   <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他（如︰監護人、親戚等）" />
 
-                  {
+                  {/* {
                     survey.studentofRespondents == "其他" ?
                       <Box
                         component="form"
@@ -318,7 +317,7 @@ function App() {
                       </Box>
                       :
                       null
-                  }
+                  } */}
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.studentofRespondents}</FormHelperText>
               </FormControl>
@@ -330,19 +329,13 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
+                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
                     }
                   </p>
                 </Box>
-                {/* <Button>
-                  按下打開地圖
-                </Button> */}
-                <div style={{alignSelf:"center"}} >
+
+                <div style={{alignSelf:"center",zIndex:1}} >
                   <MapComponent handleCustomAddress={handleCustomAddress} />
-                  {/* <Button className={styles.refreshBlock}>
-                    <IoMdRefresh size={"30px"} color='#000000' />
-                    <p style={{color:'#000000'}}>刷新地圖</p>
-                  </Button> */}
                 </div>
 
                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
@@ -371,7 +364,7 @@ function App() {
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="resident-population-student-label"><h3>3) 長期固定居住於上述地址中，且現於澳門就讀幼稚園、小學或中學的成員人數為：</h3></FormLabel>
+                <FormLabel id="resident-population-student-label"><h3>3) 居住於上述地址中，在澳門就讀中學、小學或幼稚園的學生人數為：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="resident-population-student-group-label"
                   value={survey.residentPopulationStudent}
@@ -381,9 +374,8 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="1" control={<Radio />} label="1人" />
                   <FormControlLabel sx={{ color: "black" }} value="2" control={<Radio />} label="2人" />
                   <FormControlLabel sx={{ color: "black" }} value="3" control={<Radio />} label="3人" />
-                  <FormControlLabel sx={{ color: "black" }} value="4" control={<Radio />} label="4人" />
-                  <FormControlLabel sx={{ color: "black" }} value="5" control={<Radio />} label="5人" />
-                  <FormControlLabel sx={{ color: "black" }} value="6＋" control={<Radio />} label="6人或以上" />
+                  <FormControlLabel sx={{ color: "black" }} value="4+" control={<Radio />} label="4或以上" />
+                
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.residentPopulationStudent}</FormHelperText>
               </FormControl>

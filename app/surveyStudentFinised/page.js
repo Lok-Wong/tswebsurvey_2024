@@ -8,11 +8,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useRouter } from 'next/navigation';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
 function App() {
     const router = useRouter();
-    const [stillHaveChild, setStillHaveChild] = React.useState('有');
+    const [stillHaveChild, setStillHaveChild] = React.useState('');
+    const blankHelpText = {
+        maxStudnetNum: null,
+    }
+    const [helpText, setHelpText] = React.useState(blankHelpText)
+
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
             const local_storage_studentNum = sessionStorage.getItem('studentNum');
@@ -64,8 +70,8 @@ function App() {
     React.useEffect(() => {
         const items = { ...sessionStorage }
         console.log("sessionKey", Object.keys(items))
-        console.log( typeof(parseInt(_studentNum ) + 1 ) == typeof parseInt(_totalStudentNumber))
-        
+        console.log(typeof (parseInt(_studentNum) + 1) == typeof parseInt(_totalStudentNumber))
+
     }, [])
 
     const [isClient, setIsClient] = React.useState(false)
@@ -111,6 +117,13 @@ function App() {
         //   }
     }
 
+    const checkStudentNum = () => {
+        if (parseInt(_studentNum) + 1 >= parseInt(_totalStudentNumber)) {
+            return true
+        }
+        return false
+    }
+
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
@@ -136,11 +149,12 @@ function App() {
                                     value={stillHaveChild}
                                     onChange={(event) => { setStillHaveChild(event.target.value) }}
                                 >
+                                    <FormControlLabel disabled={checkStudentNum()} sx={{ color: "black" }} value="有" control={<Radio />} label="有" />
                                     {
-                                        (parseInt(_studentNum ) + 1 ) >= parseInt(_totalStudentNumber) ?
+                                        checkStudentNum() ?
+                                            <FormHelperText sx={{ color: 'green' }}>*家中所有的學生都已填寫問卷</FormHelperText>
+                                            :
                                             null
-                                        :
-                                        <FormControlLabel sx={{ color: "black" }} value="有" control={<Radio />} label="有" />
                                     }
                                     <FormControlLabel sx={{ color: "black" }} value="没有" control={<Radio />} label="没有" />
                                 </RadioGroup>

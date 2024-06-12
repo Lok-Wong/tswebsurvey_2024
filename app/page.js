@@ -13,9 +13,7 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Checkbox from '@mui/material/Checkbox';
-import Switch from '@mui/material/Switch';
 import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { styled } from '@mui/material/styles';
 import TranslateIcon from '@mui/icons-material/Translate';
@@ -57,6 +55,8 @@ export default function Home() {
     uuid: 999,
   })
 
+  const uuid = uuidv4();
+
   const [ip, setIP] = React.useState("");
 
   const enterToNext = (event) => {
@@ -83,12 +83,13 @@ export default function Home() {
       setSurvey((prevState) => ({
         ...prevState,
         ip: ip,
-        uuid: uuidv4(),
+        uuid: uuid,
         startTime: new Date(),
       }))
       sessionStorage.setItem('pathList', window.location.pathname)
+      setCookie('csrf_token', uuid, { path: '/' })
 
-      router.push('/surveyMain')
+      router.push('/surveyheadholder')
     }
   }
 
@@ -116,13 +117,15 @@ export default function Home() {
     setSurvey((prevState) => ({
       ...prevState,
       ip: ip,
-      uuid: uuidv4(),
+      uuid: uuid,
       startTime: new Date(),
     }))
+    setCookie('csrf_token', uuid, { path: '/' })
+
     if (event.target.name == "next") {
       sessionStorage.setItem('pathList', window.location.pathname)
 
-      router.push('/surveyMain')
+      router.push('/surveyheadholder')
       return
     }
 
@@ -184,7 +187,7 @@ export default function Home() {
         </Box>
       <div className={styles.description}> 
         <p>
-          V0.112
+          V0.2
         </p>
     
         <div className={styles.imagecontenter}>

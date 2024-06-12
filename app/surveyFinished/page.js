@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function App() {
     // const fs = require('fs');
@@ -16,6 +18,12 @@ export default function App() {
     const [items, setItems] = React.useState()
     const [vCodeError, setVCodeError] = React.useState(false)
     const [alertState, setAlertState] = React.useState("error")
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+
+    const timer = React.useRef();
+    const uuid = new uuidv4();
+
 
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
@@ -68,34 +76,43 @@ export default function App() {
     }
 
     const handleSubmit = async (e) => {
-        // e.preventDefault()
         const submitData = { "data": totalObj }
-        console.log('env', process.env.NEXT_PUBLIC_LOCAL_LINK)
-        try {
-            const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
-                method: 'POST',
-                body: JSON.stringify(submitData),
-                headers: {
-                    'content-type': 'application/json'
+
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            try {
+                const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
+                    method: 'POST',
+                    body: JSON.stringify(submitData),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                })
+                if (res.ok) {
+                    setAlertState("success")
+                    handleAlertBarOpen()
+                    setVCodeError("成功上傳問卷，2秒後將返回首頁")
+                    sessionStorage.clear();
+                    setSuccess(true);
+                    setLoading(false);
+                    timer.current = setTimeout(() => {
+                        router.push('/')
+                    }, 1000)
+                } else {
+                    setAlertState("error")
+                    handleAlertBarOpen()
+                    setVCodeError("伺服器繁忙中，請稍後再試:")
+                    setSuccess(false);
+                    setLoading(false);
                 }
-            })
-            if (res.ok) {
-                setAlertState("success")
-                handleAlertBarOpen()
-                setVCodeError("成功上傳問卷")
-                sessionStorage.clear();
-                router.push('/')
-            } else {
+            } catch (error) {
                 setAlertState("error")
                 handleAlertBarOpen()
-                setVCodeError("伺服器繁忙中，請稍後再試:")
-                console.log("伺服器繁忙中，請稍後再試", res)
+                setVCodeError("伺服器繁忙中，請稍後再試")
+                setSuccess(false);
+                setLoading(false);
             }
-        } catch (error) {
-            setAlertState("error")
-            handleAlertBarOpen()
-            setVCodeError("伺服器繁忙中，請稍後再試")
-            console.log(error)
         }
     }
 
@@ -115,7 +132,7 @@ export default function App() {
                             完成問卷
                         </h1>
 
-                        <div  className={styles.question}>
+                        <div className={styles.question}>
                             <p>
                                 感謝閣下參與本次的線上問卷調查!
                             </p>
@@ -124,17 +141,26 @@ export default function App() {
                             </p>
                         </div>
 
-                        {
-                            <div style={{display:"flex",justifyContent:'center'}}>
-                                <Button className={styles.buttonStyle} onClick={() =>
+                        <div style={{ display: "flex", justifyContent: 'center' }}>
+                            {
+                                !loading ?
+                                <Button className={styles.buttonStyle}
+                                onClick={() =>
                                     handleSubmit()
-                                }>
-                                    提交
+                                }
+                                >
+                                    {
+                                        success ? <CheckIcon/> : "提交"
+                                    }
                                 </Button>
-                            </div>
+                                :
+                                <CircularProgress
+                                    size={48}
+                                />
+                            }
+                        </div>
 
 
-                        }
                     </div>
                     :
                     null

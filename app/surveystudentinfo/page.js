@@ -21,8 +21,9 @@ function App() {
     const [sltValue, setSltValue] = React.useState('')
     const [stValue, setStValue] = React.useState('')
     const [rgValue, setRgValue] = React.useState('')
-    const [shValue, setShValue] = React.useState('')
+    const [shValue, setShValue] = React.useState('');
     const [shInputValue, setShInputValue] = React.useState('')
+
 
     const blanksurvey = {
         schoolType: 999,
@@ -30,7 +31,6 @@ function App() {
         schoolName: 999,
         classLevel: 999,
         levelType: 999,
-        schoolName: 999,
         gender: 999,
         age: 999,
         crossBorder: 999,
@@ -175,6 +175,7 @@ function App() {
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
+        console.log("survey", survey)
         setIsClient(true)
         setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
@@ -248,16 +249,25 @@ function App() {
         setSltValue("")
     }, [slValue])
 
-    React.useEffect(() => {
+    // React.useEffect(() => {
+    //     setSurvey((prevState) => (
+    //         {
+    //             ...prevState,
+    //             schoolName: shInputValue
+    //         }
+    //     )
+
+    //     )
+    // }, [shValue, shInputValue])
+    const schoolDataFunc = (value) => {
         setSurvey((prevState) => (
             {
                 ...prevState,
-                schoolName: shInputValue
+                schoolName: value
             }
         )
-
         )
-    }, [shValue, shInputValue])
+    }
 
     const getSchoolObject = (stValue, rgValue) => {
         if (stValue == "999" || rgValue == "999") {
@@ -358,7 +368,7 @@ function App() {
             {
                 isClient ?
                     <div>
-                        <h1 style={{ color: "#000000",marginBottom:"1vh" }}>
+                        <h1 style={{ color: "#000000", marginBottom: "1vh" }}>
                             二、學生個人資料
                         </h1>
 
@@ -423,13 +433,15 @@ function App() {
                                             freeSolo
                                             id="schoolName"
                                             name='schoolName'
-                                            value={shValue}
+                                            value={survey.schoolName}
                                             inputValue={shInputValue}
                                             onChange={(event, newValue) => {
                                                 setShValue(newValue)
+                                                schoolDataFunc(newValue)
                                             }}
                                             onInputChange={(event, newInputValue) => {
                                                 setShInputValue(newInputValue);
+                                                schoolDataFunc(newInputValue);
                                             }}
                                             options={getSchoolObject(survey.schoolType, survey.schoolArea) ? getSchoolObject(survey.schoolType, survey.schoolArea) : []}
                                             renderInput={(params) =>
@@ -464,7 +476,7 @@ function App() {
                                                 setSlValue(event.target.value);
                                                 handleChange(event);
                                             }}
-                                            value={slValue}
+                                            value={survey.classLevel}
                                         >
                                             {
                                                 schoolLevels[shInputValue] ?
@@ -474,10 +486,13 @@ function App() {
                                                         )
                                                     })
                                                     :
-                                                    <TextField onChange={(event) => {
-                                                        setSlValue(event.target.value);
-                                                        handleChange(event);
-                                                    }} sx={{ m: 1 }} label={"請輸入"}></TextField>
+                                                    <div>
+                                                        <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"幼稚園"} />
+                                                        <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"小學"} />
+                                                        <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"中學"} />
+                                                    </div>
+
+
                                             }
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.classLevel}</FormHelperText>
@@ -488,7 +503,7 @@ function App() {
                         }
 
                         {
-                            slValue ?
+                            survey.classLevel ?
 
                                 <div className={styles.question} >
                                     <FormControl>
@@ -501,11 +516,11 @@ function App() {
                                                 setSltValue(event.target.value)
                                                 handleChange(event);
                                             }}
-                                            value={sltValue}
+                                            value={survey.levelType}
                                         >
                                             {
-                                                levelTypes[slValue] ?
-                                                    levelTypes[slValue].map((item, index) => {
+                                                levelTypes[survey.classLevel] ?
+                                                    levelTypes[survey.classLevel].map((item, index) => {
                                                         return (
                                                             <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
                                                         )

@@ -73,6 +73,7 @@ function MapComponent({handleCustomAddress}) {
             autoCompleteContiner.current = new AMap.Autocomplete({
               city: "1853",
               input: "input_test",
+              output : "search_hint",
               citylimit: true,
             });
 
@@ -101,7 +102,7 @@ function MapComponent({handleCustomAddress}) {
 
 
   return (
-    <main  key={key}>
+    <main key={key}>
       {
         isClient ?
           <div style={{justifyItems:"center"}}>
@@ -119,14 +120,10 @@ function MapComponent({handleCustomAddress}) {
                 確定
               </Button>
             </div>
-            <div id="container" className={styles.container} />
-            {/* <div style={{ position: "absolute", backgroundColor: "#ffffff", bottom: 40 }}>
-              <p>
-                {selectedLocal ? selectedLocal : "selectedLocal no data"}<br></br>
-                {mapClickData ? JSON.stringify(mapClickData) : "mapClickData no data"}<br></br>
-                {autoData ? JSON.stringify(autoData.poi.location) : "autoData no data"}<br></br>
-              </p>
-            </div> */}
+            <div>
+              <div id="container" className={styles.container} />
+              <div id="search_hint" className={styles.search_hint}/>
+            </div>
           </div>
           :
           null

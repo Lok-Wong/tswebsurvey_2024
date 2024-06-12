@@ -69,7 +69,6 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.fillAlready == "否") {
-            console.log("setList", storedPathList)
             sessionStorage.setItem("studentNum", _studentNum)
             sessionStorage.setItem("pathList", storedPathList)
             router.push('/surveyFinished')
