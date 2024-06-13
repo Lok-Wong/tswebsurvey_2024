@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import dayjs from 'dayjs';
 import rateLimit from '@/app/utils/rateLimit.js';
-import { useCookies } from "react-cookie";
+import { cookies } from "next/headers";
 
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
 const fs = require('fs');
 
-
 export async function POST(req,res){
+  const crsfTooken = cookies().get('csrf_token').value;
     if (await rateLimit(req, res)) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
           status: 429,
@@ -27,11 +30,14 @@ export async function POST(req,res){
     }
 
     const requestData = await req.json()
-    console.log("req",(requestData["data"]))
+
+    if (crsfTooken !== requestData.data.home.uuid) {
+        return NextResponse.json({"message":"Invalid token"})
+    }
     const ipaddress = requestData["data"]['home']['ip']
     const uuid = requestData["data"]['home']['uuid']
     const fileDate = `${dayjs().format('HHmmss')}`
     const fileName = `${ipaddress}_${fileDate}_${uuid}.json`
     fs.writeFileSync(`${savePath}/${fileName}`, JSON.stringify(requestData))
-    return NextResponse.json({"message":"Post data"})
+    return NextResponse.json({"message":"Posted data"})
 }

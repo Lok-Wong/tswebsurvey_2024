@@ -9,8 +9,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import CheckIcon from '@mui/icons-material/Check';
 
 export default function App() {
-    // const fs = require('fs');
-    // const path = require('path');
     const router = useRouter();
     const [totalObj, setTotalObj] = React.useState()
     const [openAlertBar, setOpenAlertBar] = React.useState(false)
@@ -81,7 +79,7 @@ export default function App() {
             setSuccess(false);
             setLoading(true);
             try {
-                const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
+                const res = await fetch("http://localhost:3000/api/handleform", {
                     method: 'POST',
                     body: JSON.stringify(submitData),
                     headers: {
@@ -95,13 +93,14 @@ export default function App() {
                     sessionStorage.clear();
                     setSuccess(true);
                     setLoading(false);
-                    timer.current = setTimeout(() => {
-                        router.push('/')
-                    }, 1000)
+                    // timer.current = setTimeout(() => {
+                    //     router.push('/')
+                    // }, 1000)
                 } else {
+                    console.log('res', res)
                     setAlertState("error")
                     handleAlertBarOpen()
-                    setVCodeError("伺服器繁忙中，請稍後再試:")
+                    setVCodeError(res.statusText)
                     setSuccess(false);
                     setLoading(false);
                 }

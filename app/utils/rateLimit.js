@@ -1,7 +1,7 @@
 let requestCounter = {};
 let resetTimer;
 const time = 60* 1000; // 60 seconds
-const requestLimit = 9999999; // 5 requests per 5 seconds
+const requestLimit = 10; // 5 requests per 5 seconds
 
 // Function to reset request counts
 const resetCounters = () => {
@@ -20,7 +20,6 @@ export default async function rateLimit(req, res) {
   if (requestCounter[clientIp] >= requestLimit) {
     return true; // Rate limit exceeded 
   } else {
-    console.log('Request count for IP:', clientIp, '=', ++requestCounter[clientIp]);
     return null; // Proceed with the request 
   }
 }

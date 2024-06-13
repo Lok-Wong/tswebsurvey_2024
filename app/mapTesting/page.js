@@ -73,7 +73,7 @@ function MapComponent({handleCustomAddress}) {
             autoCompleteContiner.current = new AMap.Autocomplete({
               city: "1853",
               input: "input_test",
-              output : "search_hint",
+              // output : "search_hint",
               citylimit: true,
             });
 

@@ -17,7 +17,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { styled } from '@mui/material/styles';
 import TranslateIcon from '@mui/icons-material/Translate';
-import { Cookies, useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
@@ -60,6 +60,7 @@ export default function Home() {
 
   const uuid = uuidv4();
 
+
   const setCrsf = () => {
     setCookie('csrf_token', uuid, { path: '/' })
   }
@@ -94,6 +95,7 @@ export default function Home() {
         startTime: new Date(),
       }))
       sessionStorage.setItem('pathList', window.location.pathname)
+
       setCrsf()
 
       router.push('/surveyheadholder')
@@ -177,26 +179,26 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-          <Box sx={{position:"fixed",right:0,bottom:0,zIndex:100}}>
-          <StyledSpeedDial
-            ariaLabel="SpeedDial playground example"
-            icon={<TranslateIcon/>}
-            direction="left"
-          >
-            {actions.map((action) => (
-              <SpeedDialAction
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-              />
-            ))}
-          </StyledSpeedDial>
-        </Box>
-      <div className={styles.description}> 
+      <Box sx={{ position: "fixed", right: 0, bottom: 0, zIndex: 100 }}>
+        <StyledSpeedDial
+          ariaLabel="SpeedDial playground example"
+          icon={<TranslateIcon />}
+          direction="left"
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+            />
+          ))}
+        </StyledSpeedDial>
+      </Box>
+      <div className={styles.description}>
         <p>
           V0.2
         </p>
-    
+
         <div className={styles.imagecontenter}>
           <Image
             src="/mixed.png"
