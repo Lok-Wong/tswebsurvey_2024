@@ -79,7 +79,7 @@ export default function App() {
             setSuccess(false);
             setLoading(true);
             try {
-                const res = await fetch("http://localhost:3000/api/handleform", {
+                const res = await fetch(process.env.NEXT_PUBLIC_LOCAL_LINK, {
                     method: 'POST',
                     body: JSON.stringify(submitData),
                     headers: {
