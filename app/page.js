@@ -17,6 +17,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { styled } from '@mui/material/styles';
 import TranslateIcon from '@mui/icons-material/Translate';
+import { Cookies, useCookies } from "react-cookie";
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
@@ -43,6 +44,8 @@ export default function Home() {
   const [vCodeError, setVCodeError] = React.useState(false)
   const [isClient, setIsClient] = React.useState(false)
   const [infoSaveChecked, setInfoSaveChecked] = React.useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['Csrf_tokens']);
+
   const actions = [
     { icon: <p>繁中</p>, name: '繁中' },
     { icon: <p>簡中</p>, name: '簡中' },
@@ -56,6 +59,10 @@ export default function Home() {
   })
 
   const uuid = uuidv4();
+
+  const setCrsf = () => {
+    setCookie('csrf_token', uuid, { path: '/' })
+  }
 
   const [ip, setIP] = React.useState("");
 
@@ -87,7 +94,7 @@ export default function Home() {
         startTime: new Date(),
       }))
       sessionStorage.setItem('pathList', window.location.pathname)
-      setCookie('csrf_token', uuid, { path: '/' })
+      setCrsf()
 
       router.push('/surveyheadholder')
     }
@@ -120,7 +127,7 @@ export default function Home() {
       uuid: uuid,
       startTime: new Date(),
     }))
-    setCookie('csrf_token', uuid, { path: '/' })
+    setCrsf()
 
     if (event.target.name == "next") {
       sessionStorage.setItem('pathList', window.location.pathname)

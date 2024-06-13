@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import dayjs from 'dayjs';
 import rateLimit from '@/app/utils/rateLimit.js';
+import { useCookies } from "react-cookie";
 
 const fs = require('fs');
 
@@ -30,7 +31,7 @@ export async function POST(req,res){
     const ipaddress = requestData["data"]['home']['ip']
     const uuid = requestData["data"]['home']['uuid']
     const fileDate = `${dayjs().format('HHmmss')}`
-    const fileName = `${ipaddress}_${fileDate}.json`
+    const fileName = `${ipaddress}_${fileDate}_${uuid}.json`
     fs.writeFileSync(`${savePath}/${fileName}`, JSON.stringify(requestData))
     return NextResponse.json({"message":"Post data"})
 }
