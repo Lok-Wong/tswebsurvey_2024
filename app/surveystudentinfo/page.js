@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import Autocomplete from '@mui/material/Autocomplete';
 import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType } from '../schoolData'
+import LinearProgresss from '@/app/utils/progress';
 
 function App() {
     const router = useRouter();
@@ -23,6 +24,7 @@ function App() {
     const [rgValue, setRgValue] = React.useState('')
     const [shValue, setShValue] = React.useState('');
     const [shInputValue, setShInputValue] = React.useState('')
+    const [progressBarValue, setProgressBarValue] = React.useState(10)
 
 
     const blanksurvey = {
@@ -362,6 +364,15 @@ function App() {
 
     }
 
+    React.useEffect(() => {
+        if (survey.schoolType != "999" && survey.schoolArea != "999" && survey.schoolName != "999" && survey.classLevel != "999" && survey.levelType != "999") {
+            setProgressBarValue(30)
+            return
+        } else {
+            setProgressBarValue(10)
+        }
+    }, [survey]);
+
 
     return (
         <main className={styles.main}>
@@ -433,7 +444,7 @@ function App() {
                                             freeSolo
                                             id="schoolName"
                                             name='schoolName'
-                                            value={survey.schoolName}
+                                            value={survey.schoolName == 999 ? "" : survey.schoolName}
                                             inputValue={shInputValue}
                                             onChange={(event, newValue) => {
                                                 setShValue(newValue)
@@ -598,15 +609,20 @@ function App() {
             }
 
             <div className={styles.buttonGroup}>
-                <Button className={styles.buttonStyle}
-                    onClick={() => router.back()}>
-                    上一頁
-                </Button>
+                <LinearProgresss values={progressBarValue} />
+                <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
 
-                <Button className={styles.buttonStyle}
-                    onClick={handleNextButton}>
-                    下一頁
-                </Button>
+                    <Button className={styles.buttonStyle}
+                        onClick={() => router.back()}>
+                        上一頁
+                    </Button>
+
+                    <Button className={styles.buttonStyle}
+                        onClick={handleNextButton}>
+                        下一頁
+                    </Button>
+                </div>
+
             </div>
 
         </main>

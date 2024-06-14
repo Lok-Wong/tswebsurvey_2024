@@ -3,10 +3,11 @@ import { Button } from 'antd';
 import { useRef, useState, useEffect } from 'react';
 import styles from "./page.module.css";
 
-function MapComponent({handleCustomAddress}) {
+function MapComponent({ handleCustomAddress }) {
 
   const autoCompleteContiner = useRef(null)
   const placeSearchContiner = useRef(null)
+  const geolocation = useRef(null)
   const [isClient, setIsClient] = useState(false)
   const [inputValue, setInputVale] = useState(null)
   const [mapData, setMapData] = useState(null)
@@ -14,15 +15,15 @@ function MapComponent({handleCustomAddress}) {
   let maps = null
 
 
-  const sendCustomAddress = (address,type) => {
-    handleCustomAddress(address,type)
+  const sendCustomAddress = (address, type) => {
+    handleCustomAddress(address, type)
   }
 
   const [key, setKey] = useState(0)
 
   useEffect(() => {
     setKey((k) => k + 1)
-},[])
+  }, [])
 
 
 
@@ -45,24 +46,47 @@ function MapComponent({handleCustomAddress}) {
           maps = new AMap.Map('container', {
             // 设置地图容器id
             viewMode: '2D', // 是否为3D地图模式
-            zoom: 13, // 初始化地图级别
+            zoom: 7, // 初始化地图级别
             center: [113.568683, 22.162143], // 初始化地图中心点位置
+            resizeEnable: true, // 是否监控地图容器尺寸变化
           });
 
-          AMap.plugin(['AMap.PlaceSearch', 'AMap.AutoComplete', 'AMap.Geocoder'], () => {
+          AMap.plugin(['AMap.PlaceSearch', 'AMap.AutoComplete', 'AMap.Geocoder', 'AMap.Geolocation'], () => {
+
+            geolocation.current = new AMap.Geolocation({
+              enableHighAccuracy: true, // 是否使用高精度定位，默认：true
+              timeout: 1000, // 设置定位超时时间，默认：无穷大
+              offset: [10, 20],  // 定位按钮的停靠位置的偏移量
+              zoomToAccuracy: true,  //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+              position: 'RB' //  定
+            })
+
+            maps.addControl(geolocation.current)
+
+            geolocation.current.getCurrentPosition(function (status, result) {
+              if (status == 'complete') {
+                console.log("complete",result)
+              } else {
+                console.log("else",result)
+              }
+            })
 
             var geocoder = new AMap.Geocoder({
               city: "1853",
               citylimit: true
             })
+
+
             maps.on('click', (e) => {
               let lnglat = [e.lnglat.lng, e.lnglat.lat]
 
               geocoder.getAddress(lnglat, function (status, result) {
-                let mapDatas = {...result, regeocode : {
-                  ...result.regeocode,
-                  location : lnglat
-                }}
+                let mapDatas = {
+                  ...result, regeocode: {
+                    ...result.regeocode,
+                    location: lnglat
+                  }
+                }
                 // setSelectedLocal(result.regeocode.formattedAddress)
                 setInputVale(result.regeocode.formattedAddress)
                 setCollectMethod('click')
@@ -97,7 +121,7 @@ function MapComponent({handleCustomAddress}) {
         })
       })
     }
-  },[])
+  }, [])
 
 
 
@@ -105,24 +129,24 @@ function MapComponent({handleCustomAddress}) {
     <main key={key}>
       {
         isClient ?
-          <div style={{justifyItems:"center"}}>
-            <div style={{marginBottom:"1vh"}}>
-              <input 
-                id="input_test" 
+          <div style={{ justifyItems: "center" }}>
+            <div style={{display:'flex',justifyItems:'center', backgroundColor:'red',marginBottom: "1vh" }}>
+              <textarea
+                style={{alignSelf:'center'}}
+                id="input_test"
                 value={inputValue}
                 className={styles.tipInput}
-                onChange={(e) => {setInputVale(e.target.value),setCollectMethod("input"),setMapData(e.target.value)}}
+                onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
               />
-              <Button 
-                style={{marginLeft:"1vw"}}
-                onClick={()=>sendCustomAddress(mapData,collectMethod)}
-                >
+              <Button
+                style={{ marginLeft: "1vw" }}
+                onClick={() => sendCustomAddress(mapData, collectMethod)}
+              >
                 確定
               </Button>
             </div>
             <div>
               <div id="container" className={styles.container} />
-              <div id="search_hint" className={styles.search_hint}/>
             </div>
           </div>
           :

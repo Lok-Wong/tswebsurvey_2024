@@ -16,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import LinearProgresss from '@/app/utils/progress';
 
 function App() {
     const router = useRouter();
@@ -78,6 +79,7 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [startTime, setStartTime] = React.useState()
     const [endTime, setEndTime] = React.useState()
+    const [progressBarValue, setProgressBarValue] = React.useState(30)
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -140,7 +142,7 @@ function App() {
             return
         }
 
-        if ( JSON.stringify(survey.pickupTimeStart) ===  JSON.stringify(survey.pickupTimeEnd)) {
+        if (JSON.stringify(survey.pickupTimeStart) === JSON.stringify(survey.pickupTimeEnd)) {
             handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
             handleHelpText("pickupTimeEnd", "到達時間不能等於出發時間")
             return
@@ -241,7 +243,14 @@ function App() {
 
     }, [survey.pickup, survey.commonTransirtation])
 
-
+    React.useEffect(() => {
+        if (survey.pickup != "999" && survey.pickupTimeStart != "" && survey.pickupTimeEnd != "" && survey.commonTransirtation != "999") {
+          setProgressBarValue(40)
+          return
+        } else {
+          setProgressBarValue(30)
+        }
+      }, [survey]);
 
     return (
         <main className={styles.main}>
@@ -251,12 +260,15 @@ function App() {
                     <div>
 
                         <h1 style={{ color: "#000000" }}>
-                            三、學生上學及放學出行情況
+                            三、一般情況上學及放學出行情況
                         </h1>
+                        <h2 style={{ color: "#000000" }}>
+                            3.1  一般情況下,學生早上上學的情況
+                        </h2>
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label"><h3>1)    一般情況下，學生早上上學有無人送：</h3></FormLabel>
+                                <FormLabel id="pickup-label"><h3>1)   學生早上上學有無人送：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
@@ -304,9 +316,9 @@ function App() {
                                                 if (!event) {
                                                     return
                                                 }
-                                                    handleTimeChange(event, "pickupTimeStart"),
+                                                handleTimeChange(event, "pickupTimeStart"),
                                                     setStartTime(event.$d)
-                                                }}
+                                            }}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -322,12 +334,13 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.pickupTimeEnd)}
-                                            onChange={(event) =>{
+                                            onChange={(event) => {
                                                 if (!event) {
                                                     return
                                                 }
-                                                 handleTimeChange(event, "pickupTimeEnd"),
-                                                 setEndTime(event.$d)}}
+                                                handleTimeChange(event, "pickupTimeEnd"),
+                                                    setEndTime(event.$d)
+                                            }}
                                         />
                                     </DemoContainer>
                                     <FormHelperText sx={{ color: 'red' }}>{helpText.pickupTimeEnd}</FormHelperText>
@@ -345,21 +358,21 @@ function App() {
                                     value={survey.commonTransirtation}
                                     onChange={handleChange}
                                 >
-                                      <FormControlLabel
+                                    <FormControlLabel
                                         control={
                                             <Radio value="步行" />
                                         }
                                         label="步行"
                                         sx={{ color: "black" }}
                                     />
-                                       <FormControlLabel
+                                    <FormControlLabel
                                         control={
                                             <Radio value="公共巴士" />
                                         }
                                         label="公共巴士"
                                         sx={{ color: "black" }}
                                     />
-                                      <FormControlLabel
+                                    <FormControlLabel
                                         control={
                                             <Radio value="私家車" />
                                         }
@@ -372,21 +385,21 @@ function App() {
                                             <Radio value="電單車" />
                                         }
                                         label="電單車"
-                                    />     
-                                     <FormControlLabel
+                                    />
+                                    <FormControlLabel
                                         control={
                                             <Radio value="輕軌" />
                                         }
                                         label="輕軌"
                                         sx={{ color: "black" }}
-                                    />                         
+                                    />
                                     <FormControlLabel
                                         control={
                                             <Radio value="校車" />
                                         }
                                         label="校車"
                                         sx={{ color: "black" }}
-                                    />                                               
+                                    />
                                     <FormControlLabel
                                         control={
                                             <Radio value="的士" />
@@ -400,7 +413,7 @@ function App() {
                                         }
                                         label="復康巴士"
                                         sx={{ color: "black" }}
-                                    />                                  
+                                    />
                                     <FormControlLabel
                                         control={
                                             <Radio value="其他" />
@@ -464,12 +477,16 @@ function App() {
                     null
             }
             <div className={styles.buttonGroup}>
-                <Button className={styles.buttonStyle} onClick={() => router.back()}>
-                    上一頁
-                </Button>
-                <Button className={styles.buttonStyle} onClick={handleNextButton}>
-                    下一頁
-                </Button>
+                <LinearProgresss values={progressBarValue} />
+                <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
+
+                    <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                        上一頁
+                    </Button>
+                    <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                        下一頁
+                    </Button>
+                </div>
             </div>
         </main>
     )

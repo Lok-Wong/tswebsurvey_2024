@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
+import LinearProgresss from '@/app/utils/progress';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
     }
     const blankHelpText = {}
     const [helpText, setHelpText] = React.useState(blankHelpText)
+    const [progressBarValue, setProgressBarValue] = React.useState(95)
 
 
     const _studentNum = React.useMemo(() => {
@@ -113,10 +115,10 @@ function App() {
     }
 
     const handleCheckBoxChange = (event) => {
-        if(event.target.name === "noChange") {
+        if (event.target.name === "noChange") {
             setSurvey((prevState) => ({
                 ...prevState,
-                tripChange:{
+                tripChange: {
                     noChange: {
                         state: event.target.checked,
                         value: 999
@@ -413,14 +415,14 @@ function App() {
 
                                     <FormControlLabel sx={{ color: "black" }} value="不出門上學和等待教青局的消息" control={
                                         <Checkbox
-                                        disabled = {checkBoxLogict()}
+                                            disabled={checkBoxLogict()}
                                             checked={survey.tripChange.waitForNews.state}
                                             onChange={handleCheckBoxChange}
                                             name='waitForNews' />} label="不出門上學和等待教青局的消息" />
 
                                     <FormControlLabel sx={{ color: "black" }} value="其它" control={
                                         <Checkbox
-                                        disabled = {checkBoxLogict()}
+                                            disabled={checkBoxLogict()}
 
                                             checked={survey.tripChange.other.state}
                                             onChange={handleCheckBoxChange}
@@ -454,13 +456,16 @@ function App() {
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.tripChange}</FormHelperText>
                             </FormControl>
                         </div>
-
+                        
+                        <h1 style={{ color: "#000000" }}>
+                            六、其它意見或建議?
+                        </h1>
 
                         <div className={styles.question}>
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>2)	您對上下學（包括在惡劣天氣情況下）出行有何意見或建議？（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>2)	您對上下學（包括在黃色暴雨警告信號下）出行有何意見或建議？（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
@@ -487,12 +492,15 @@ function App() {
                     null
             }
             <div className={styles.buttonGroup}>
-                <Button className={styles.buttonStyle} onClick={() => router.back()}>
-                    上一頁
-                </Button>
-                <Button className={styles.buttonStyle} onClick={handleNextButton}>
-                    下一頁
-                </Button>
+                <LinearProgresss values={progressBarValue} />
+                <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
+                    <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                        上一頁
+                    </Button>
+                    <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                        下一頁
+                    </Button>
+                </div>
             </div>
         </main>
 

@@ -43,9 +43,9 @@
   bottom: 0;
   position: fixed;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 50vw;
-  min-height: 6vh;
+  min-height: 4.5vh;
   /* display: flex; */
   background-color:#036eb8;
   justify-content: space-between;

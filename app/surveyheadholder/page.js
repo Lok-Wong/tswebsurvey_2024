@@ -8,19 +8,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
-
-
+import LinearProgresss from '@/app/utils/progress';
 
 function App() {
   const router = useRouter()
 
   const blanksurvey = {
     startTime: new Date(),
-    studentofRespondents: 999,
+    // studentofRespondents: 999,
     residentPopulationStudent: 999,
     // otherOfStudentofRespondents: 999,
     address: 999,
@@ -28,7 +26,7 @@ function App() {
   }
 
   const blankHelpText = {
-    studentofRespondents: null,
+    // studentofRespondents: null,
     residentPopulationStudent: null,
     // otherOfStudentofRespondents: null,
     address: null,
@@ -70,8 +68,7 @@ function App() {
   const [survey, setSurvey] = React.useState(_initial_value)
   const [helpText, setHelpText] = React.useState(blankHelpText)
   const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
-  const [mapSelectText, setMapSelectText] = React.useState()
-
+  const [progressBarValue, setProgressBarValue] = React.useState(0)
   const getMapSelectedText = () => {
 
     if (survey.address.method == "input") {
@@ -166,10 +163,10 @@ function App() {
 
   const handleNextButton = () => {
 
-    if (survey.studentofRespondents == 999) {
-      handleHelpText("studentofRespondents", "請選擇一個選項")
-      return
-    }
+    // if (survey.studentofRespondents == 999) {
+    //   handleHelpText("studentofRespondents", "請選擇一個選項")
+    //   return
+    // }
 
     // if (survey.studentofRespondents == "其他監護人") {
     //   if (survey.otherOfStudentofRespondents == "999" || survey.otherOfStudentofRespondents == "") {
@@ -238,7 +235,7 @@ function App() {
       router.push("./")
       return
     }
-    if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyMain") {
+    if (_initial_pathListe[_initial_pathListe.length - 1] != "/") {
       router.push("./")
     }
   }, [])
@@ -272,6 +269,18 @@ function App() {
     };
   }, []);
 
+  React.useEffect(() => {
+    if (survey.startTime != 999 &&
+      survey.residentPopulationStudent != 999 &&
+      survey.address != 999 &&
+      survey.vehicle != 999) {
+      setProgressBarValue(10)
+      return
+    } else {
+      setProgressBarValue(0)
+    }
+  }, [survey]);
+
 
   return (
     <main className={styles.main}>
@@ -281,7 +290,7 @@ function App() {
             <h1 className={styles.title}>
               一、學生家庭資料
             </h1>
-            <div className={styles.question}>
+            {/* <div className={styles.question}>
               <FormControl>
                 <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1) 閣下是學生（的）：</h3></FormLabel>
                 <RadioGroup
@@ -296,7 +305,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
                   <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他（如︰監護人、親戚等）" />
 
-                  {/* {
+                  {
                     survey.studentofRespondents == "其他" ?
                       <Box
                         component="form"
@@ -317,24 +326,28 @@ function App() {
                       </Box>
                       :
                       null
-                  } */}
+                  }
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.studentofRespondents}</FormHelperText>
               </FormControl>
-            </div>
+            </div> */}
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="address-label"><h3>2)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：</h3></FormLabel>
+                <FormLabel id="address-label">
+                  <h3>
+                    1)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：
+                  </h3>
+                </FormLabel>
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
+                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p>*請在以下地圖點選目的地或輸入相關地址後按下確定<br/>**例子：大家樂(高士德大馬路店)</p>
                     }
                   </p>
                 </Box>
 
-                <div style={{alignSelf:"center",zIndex:1}} >
+                <div style={{ alignSelf: "center", zIndex: 1 }} >
                   <MapComponent handleCustomAddress={handleCustomAddress} />
                 </div>
 
@@ -364,7 +377,7 @@ function App() {
 
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="resident-population-student-label"><h3>3) 居住於上述地址中，在澳門就讀中學、小學或幼稚園的學生人數為：</h3></FormLabel>
+                <FormLabel id="resident-population-student-label"><h3>2) 居住於上述地址中，在澳門就讀中學、小學或幼稚園的學生人數為：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="resident-population-student-group-label"
                   value={survey.residentPopulationStudent}
@@ -375,7 +388,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="2" control={<Radio />} label="2人" />
                   <FormControlLabel sx={{ color: "black" }} value="3" control={<Radio />} label="3人" />
                   <FormControlLabel sx={{ color: "black" }} value="4+" control={<Radio />} label="4或以上" />
-                
+
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.residentPopulationStudent}</FormHelperText>
               </FormControl>
@@ -410,7 +423,7 @@ function App() {
         </div> */}
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="vehicle-radio-buttons-group-label"><h3>4)	家庭成員有沒有私家車或電單車：</h3></FormLabel>
+                <FormLabel id="vehicle-radio-buttons-group-label"><h3>3.家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="vehicle-radio-buttons-group-label"
                   value={survey.vehicle}
@@ -431,21 +444,27 @@ function App() {
           :
           null
       }
-      <div className={styles.buttonGroup}>
-        <Button
-          className={styles.buttonStyle}
-          onClick={() => router.back()}
-        >
-          上一頁
-        </Button>
 
-        <Button
-          className={styles.buttonStyle}
-          onClick={handleNextButton}
-        >
-          下一頁
-        </Button>
+      <div className={styles.buttonGroup}>
+        <LinearProgresss values={progressBarValue} />
+
+        <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
+          <Button
+            className={styles.buttonStyle}
+            onClick={() => router.back()}
+          >
+            上一頁
+          </Button>
+
+          <Button
+            className={styles.buttonStyle}
+            onClick={handleNextButton}
+          >
+            下一頁
+          </Button>
+        </div>
       </div>
+
     </main>
 
 

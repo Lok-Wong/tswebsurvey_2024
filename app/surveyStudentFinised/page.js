@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
+import LinearProgresss from '@/app/utils/progress';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         maxStudnetNum: null,
     }
     const [helpText, setHelpText] = React.useState(blankHelpText)
+    const [progressBarValue, setProgressBarValue] = React.useState(100)
 
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
@@ -166,18 +168,21 @@ function App() {
                     null
             }
             <div className={styles.buttonGroup}>
-                <Button
-                    className={styles.buttonStyle}
-                    onClick={() => router.back()}>
-                    上一頁
-                </Button>
-                <Button
-                    className={styles.buttonStyle}
-                    onClick={handleNextButton}>
-                    {
-                        stillHaveChild == "有" ? "下一頁" : "完成"
-                    }
-                </Button>
+                <LinearProgresss values={progressBarValue} />
+                <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
+                    <Button
+                        className={styles.buttonStyle}
+                        onClick={() => router.back()}>
+                        上一頁
+                    </Button>
+                    <Button
+                        className={styles.buttonStyle}
+                        onClick={handleNextButton}>
+                        {
+                            stillHaveChild == "有" ? "下一頁" : "完成"
+                        }
+                    </Button>
+                </div>
             </div>
         </main>
 
