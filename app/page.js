@@ -196,7 +196,7 @@ export default function Home() {
       </Box>
       <div className={styles.description}>
         <p>
-          V0.2
+          V0.3
         </p>
 
         <div className={styles.imagecontenter}>
