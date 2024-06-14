@@ -130,7 +130,7 @@ function MapComponent({ handleCustomAddress }) {
       {
         isClient ?
           <div style={{ justifyItems: "center" }}>
-            <div style={{display:'flex',justifyItems:'center', backgroundColor:'red',marginBottom: "1vh" }}>
+            <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
               <textarea
                 style={{alignSelf:'center'}}
                 id="input_test"
