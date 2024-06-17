@@ -3,13 +3,11 @@ import dayjs from 'dayjs';
 import rateLimit from '@/app/utils/rateLimit.js';
 import { cookies } from "next/headers";
 
-const express = require('express');
 const cookieParser = require('cookie-parser');
-const app = express();
 const fs = require('fs');
 
 export async function POST(req,res){
-  const crsfTooken = cookies().get('csrf_token').value;
+  // const crsfTooken = cookies().get('csrf_token').value;
     if (await rateLimit(req, res)) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
           status: 429,
