@@ -458,7 +458,7 @@ function App() {
                         </div>
                         
                         <h1 style={{ color: "#000000" }}>
-                            六、其它意見或建議?
+                            六、其它意見或建議
                         </h1>
 
                         <div className={styles.question}>

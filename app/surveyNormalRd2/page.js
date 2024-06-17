@@ -260,6 +260,13 @@ function App() {
             return
         }
 
+        if (survey.leavePickUp == "其他") {
+            if (survey.otherleavePickUp == 999 || survey.otherleavePickUp == "") {
+                handleHelpText("leavePickUp", "請填寫其他接送人")
+                return
+            }
+        }
+
         if (survey.directToHomeState == 999) {
             handleHelpText("directToHomeState", "請選擇是否直接回家")
             return
@@ -286,6 +293,13 @@ function App() {
             if (survey.directToHomeNo.leaveDestinationTransition == 999) {
                 handleHelpText("leaveDestinationTransition", "請選擇回家主要的交通方式")
                 return
+            }
+
+            if (survey.directToHomeNo.leaveDestinationTransition == "其他") {
+                if (survey.directToHomeNo.otherLeaveDestinationTransition == 999 || survey.directToHomeNo.otherLeaveDestinationTransition == "") {
+                    handleHelpText("leaveDestinationTransition", "請填寫其他回家主要的交通方式")
+                    return
+                }
             }
 
             if (survey.directToHomeNo.destinationBackHomeStartTime == "") {

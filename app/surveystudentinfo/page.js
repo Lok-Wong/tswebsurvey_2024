@@ -211,19 +211,19 @@ function App() {
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
-        if (!finishStatus) {
-            if (window.confirm("返回上一頁嗎?")) {
-                setfinishStatus(true)
+        // if (!finishStatus) {
+        //     if (window.confirm("返回上一頁嗎?")) {
+        //         setfinishStatus(true)
                 const copyArr = [...storedPathList]
                 const prevPath = copyArr[copyArr.length - 1]
                 copyArr.splice(-1)
                 sessionStorage.setItem('pathList', copyArr)
                 router.back()
-            } else {
-                window.history.pushState(null, null, window.location.pathname);
-                setfinishStatus(false)
-            }
-        }
+        //     } else {
+        //         window.history.pushState(null, null, window.location.pathname);
+        //         setfinishStatus(false)
+        //     }
+        // }
     }
 
     React.useEffect(() => {

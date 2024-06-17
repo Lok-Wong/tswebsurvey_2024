@@ -233,17 +233,17 @@ function App() {
     const onBackButtonEvent = (e) => {
         e.preventDefault();
         //   if (!finishStatus) {
-              if (window.confirm("Do you want to go back ?")) {
-                setfinishStatus(true)
+            //   if (window.confirm("Do you want to go back ?")) {
+            //     setfinishStatus(true)
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
         router.back()
-              } else {
-                  window.history.pushState(null, null, window.location.pathname);
-                  setfinishStatus(false)
-              }
+            //   } else {
+            //       window.history.pushState(null, null, window.location.pathname);
+            //       setfinishStatus(false)
+            //   }
         //   }
     }
 

@@ -245,20 +245,20 @@ function App() {
 
   const onBackButtonEvent = (e) => {
     e.preventDefault();
-    if (!finishStatus) {
-      if (window.confirm("返回上一頁嗎?")) {
-        setfinishStatus(true)
+    // if (!finishStatus) {
+    //   if (window.confirm("返回上一頁嗎?")) {
+    //     setfinishStatus(true)
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
         // router.push(prevPath)
         router.back()
-      } else {
-        window.history.pushState(null, null, window.location.pathname);
-        setfinishStatus(false)
-      }
-    }
+      // } else {
+      //   window.history.pushState(null, null, window.location.pathname);
+      //   setfinishStatus(false)
+      // }
+    // }
   }
 
   React.useEffect(() => {
@@ -342,7 +342,7 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p>*請在以下地圖點選目的地或輸入相關地址後按下確定<br/>**例子：大家樂(高士德大馬路店)</p>
+                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p>*請在以下地圖點選目的地或輸入相關地址後按下確定<br/>**例子：八角亭</p>
                     }
                   </p>
                 </Box>
@@ -387,7 +387,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="1" control={<Radio />} label="1人" />
                   <FormControlLabel sx={{ color: "black" }} value="2" control={<Radio />} label="2人" />
                   <FormControlLabel sx={{ color: "black" }} value="3" control={<Radio />} label="3人" />
-                  <FormControlLabel sx={{ color: "black" }} value="4+" control={<Radio />} label="4或以上" />
+                  <FormControlLabel sx={{ color: "black" }} value="4+" control={<Radio />} label="4人或以上" />
 
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.residentPopulationStudent}</FormHelperText>
