@@ -31,9 +31,9 @@ export async function POST(req,res){
 
     const requestData = await req.json()
 
-    if (crsfTooken !== requestData.data.home.uuid) {
-        return NextResponse.json({"message":"Invalid token"})
-    }
+    // if (crsfTooken !== requestData.data.home.uuid) {
+    //     return NextResponse.json({"message":"Invalid token"})
+    // }
     const ipaddress = requestData["data"]['home']['ip']
     const uuid = requestData["data"]['home']['uuid']
     const fileDate = `${dayjs().format('HHmmss')}`
