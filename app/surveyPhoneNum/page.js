@@ -160,6 +160,7 @@ export default function App() {
                                     noValidate
                                 >
                                     <TextField
+                                        inputProps={{ maxLength: 20 }}
                                         sx={{ marginTop: "1rem" }}
                                         id="phoneNum-text"
                                         label="請輸入您的電話"
@@ -185,6 +186,7 @@ export default function App() {
                                     noValidate
                                 >
                                     <TextField
+                                        inputProps={{ maxLength: 4 }}
                                         sx={{ marginTop: "1rem" }}
                                         id="id4Num-text"
                                         label="尾4號身分證號碼"

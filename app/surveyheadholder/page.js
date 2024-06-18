@@ -89,6 +89,12 @@ function App() {
       )
     }
 
+    if (survey.address.method == "geolocation") {
+      return (
+        survey.address.name.formattedAddress
+      )
+    }
+
     return null
   }
 
@@ -129,10 +135,23 @@ function App() {
   }
 
   const handleCustomAddress = (address, type) => {
+    console.log("address", address,"type",type)
     setSurvey((prevState) => ({
       ...prevState,
       address: null
     }))
+
+    if (type == "geolocation"){
+      setSurvey((prevState) => ({
+        ...prevState,
+        address: {
+          ...prevState.address,
+          name: address,
+          method: type
+        }
+      }))
+      return
+    }
 
     if (type == "input") {
       setSurvey((prevState) => ({
@@ -231,10 +250,18 @@ function App() {
   }, [])
 
   React.useEffect(() => {
+    console.log("storedPathList", _initial_pathListe)
+
+    if (typeof _initial_pathListe === 'undefined' || _initial_pathListe == null) {
+      router.push("./")
+      return
+    }
+
     if (sessionStorage.getItem('pathList') === null) {
       router.push("./")
       return
     }
+
     if (_initial_pathListe[_initial_pathListe.length - 1] != "/") {
       router.push("./")
     }
@@ -342,7 +369,7 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p>*請在以下地圖點選目的地或輸入相關地址後按下確定<br/>**例子：八角亭</p>
+                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{color:"#666666"}}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br/>**例子：八角亭</p>
                     }
                   </p>
                 </Box>

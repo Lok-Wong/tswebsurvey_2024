@@ -17,6 +17,7 @@ function App() {
     const [stillHaveChild, setStillHaveChild] = React.useState('');
     const blankHelpText = {
         maxStudnetNum: null,
+        stillHaveChild: null
     }
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [progressBarValue, setProgressBarValue] = React.useState(100)
@@ -56,6 +57,11 @@ function App() {
 
     const handleNextButton = () => {
 
+        if (stillHaveChild == "") {
+            handleHelpText("stillHaveChild", "*請選擇一個選項")
+            return
+        }
+
         if (stillHaveChild == "有") {
             router.push('/surveystudentinfo')
             sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
@@ -68,6 +74,16 @@ function App() {
             return
         }
     };
+
+    const handleHelpText = (eventName, errorText) => {
+        const objectName = eventName
+        setHelpText((prevState) => (
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
+        ))
+    }
 
     React.useEffect(() => {
         const items = { ...sessionStorage }
@@ -160,9 +176,9 @@ function App() {
                                     }
                                     <FormControlLabel sx={{ color: "black" }} value="没有" control={<Radio />} label="没有" />
                                 </RadioGroup>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.stillHaveChild}</FormHelperText>
                             </FormControl>
                         </div>
-
                     </div>
                     :
                     null

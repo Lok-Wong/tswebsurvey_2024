@@ -24,7 +24,7 @@ function App() {
     const [shValue, setShValue] = React.useState('');
     const [shInputValue, setShInputValue] = React.useState('')
     const [progressBarValue, setProgressBarValue] = React.useState(10)
-
+    const [schoolNameSelectType, setSchoolNameSelectType] = React.useState("")
 
     const blanksurvey = {
         schoolType: 999,
@@ -173,6 +173,16 @@ function App() {
         )
     };
 
+    const getSchoolTypeFromSchoolName = () => {
+        console.log("survey.schoolName", schoolType)
+        setSurvey((prevState) => (
+            {
+                ...prevState,
+                schoolType: schoolType[survey.schoolName]
+            }
+        ))
+    }
+
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
@@ -207,6 +217,8 @@ function App() {
     }, [survey])
 
     const [finishStatus, setfinishStatus] = React.useState(false);
+
+
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -354,13 +366,18 @@ function App() {
     }
 
     React.useEffect(() => {
-        if (survey.schoolType != "999" && survey.schoolArea != "999" && survey.schoolName != "999" && survey.classLevel != "999" && survey.levelType != "999") {
+        if (survey.schoolArea != "999" && survey.schoolName != "999" && survey.classLevel != "999" && survey.levelType != "999") {
             setProgressBarValue(30)
             return
         } else {
             setProgressBarValue(10)
         }
     }, [survey]);
+
+    React.useEffect(() => {
+        getSchoolTypeFromSchoolName()
+    }, [survey.schoolName])
+
 
 
     return (
@@ -410,14 +427,24 @@ function App() {
                                     onChange={(event, newValue) => {
                                         setShValue(newValue)
                                         schoolDataFunc(newValue)
+                                        setSchoolNameSelectType("select")
                                     }}
                                     onInputChange={(event, newInputValue) => {
+                                        if (newInputValue.length > 30) {
+                                            return
+                                        }
                                         setShInputValue(newInputValue);
                                         schoolDataFunc(newInputValue);
+                                        setSchoolNameSelectType("input")
                                     }}
                                     options={getSchoolObject(survey.schoolArea) ? getSchoolObject(survey.schoolArea) : []}
                                     renderInput={(params) =>
-                                        <TextField name='schoolName' {...params}></TextField>
+                                        <TextField
+                                            inputProps={{ maxLength: 3 }}
+                                            name='schoolName'
+                                            {...params}
+                                        >
+                                        </TextField>
                                     }
                                 />
                                 {/* </Box> */}
@@ -432,44 +459,38 @@ function App() {
                             </FormControl>
                         </div>
 
-                        <div className={styles.question}>
-                            <FormControl>
-                                <FormLabel id="school-type-label"><h3>3)  教育類型：</h3></FormLabel>
-                                <RadioGroup
-                                    id="school-type"
-                                    aria-labelledby="school-type-label"
-                                    name="schoolType"
-                                    onChange={(event) => {
-                                        setStValue(event.target.value);
-                                        handleChange(event);
-                                    }}
-                                    value={survey.schoolType}
-                                >
-                                    {
-                                        schoolType[shInputValue] ?
-                                            schoolType[shInputValue].map((item, index) => {
-                                                return (
-                                                    <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
-                                                )
-                                            })
-                                            :
-                                            null
-                                            // <div
-                                            // <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="正規教育" />
-                                            // <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="回歸教育" />
-                                            // </div>
-                                    }
+                        {schoolNameSelectType == "input" ?
+                            <div className={styles.question}>
+                                <FormControl>
+                                    <FormLabel id="school-type-label"><h3>2.1)  教育類型：</h3></FormLabel>
+                                    <RadioGroup
+                                        id="school-type"
+                                        aria-labelledby="school-type-label"
+                                        name="schoolType"
+                                        onChange={(event) => {
+                                            setStValue(event.target.value);
+                                            handleChange(event);
+                                        }}
+                                        value={survey.schoolType}
+                                    >
 
-                                </RadioGroup>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.schoolType}</FormHelperText>
-                            </FormControl>
-                        </div>
+                                        <div>
+                                            <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="正規教育" />
+                                            <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="回歸教育" />
+                                        </div>
 
+                                    </RadioGroup>
+                                    <FormHelperText sx={{ color: 'red' }}>{helpText.schoolType}</FormHelperText>
+                                </FormControl>
+                            </div>
+                            :
+                            null
+                        }
 
 
                         <div className={styles.question} >
                             <FormControl>
-                                <FormLabel id="class-level-label"><h3>4)  就讀程度：</h3></FormLabel>
+                                <FormLabel id="class-level-label"><h3>3)  就讀程度：</h3></FormLabel>
                                 <RadioGroup
                                     id="class-level"
                                     aria-labelledby="class-level-label"
@@ -492,6 +513,8 @@ function App() {
                                                 <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"幼稚園"} />
                                                 <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"小學"} />
                                                 <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"中學"} />
+                                                <FormControlLabel key={3} sx={{ color: "black" }} value={"特殊教育"} control={<Radio />} label={"特殊教育"} />
+
                                             </div>
 
 
@@ -506,7 +529,7 @@ function App() {
 
                         <div className={styles.question} >
                             <FormControl>
-                                <FormLabel id="level-type-label"><h3>5)  就讀年級：</h3></FormLabel>
+                                <FormLabel id="level-type-label"><h3>4)  就讀年級：</h3></FormLabel>
                                 <RadioGroup
                                     id="level-Type"
                                     aria-labelledby="level-type-label"
@@ -528,7 +551,11 @@ function App() {
                                             <TextField onChange={(event) => {
                                                 setSltValue(event.target.value);
                                                 handleChange(event);
-                                            }} sx={{ m: 1 }} label={"請輸入"}></TextField>
+                                            }}
+                                                inputProps={{ maxLength: 6 }}
+                                                sx={{ m: 1 }}
+                                                label={"請輸入"}>
+                                            </TextField>
                                     }
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
@@ -539,7 +566,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="gender-label"><h3>6)  姓別：</h3></FormLabel>
+                                <FormLabel id="gender-label"><h3>5)  姓別：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="studentofRespondents-radio-buttons-group-label"
                                     name="gender"
@@ -555,7 +582,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="age-label"><h3>7)  年齡</h3></FormLabel>
+                                <FormLabel id="age-label"><h3>6)  年齡</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="age-label"
                                     name="age"
@@ -574,7 +601,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="cross-border-student-label"><h3>8)  學生上學及放學是否需跨境：</h3></FormLabel>
+                                <FormLabel id="cross-border-student-label"><h3>7)  學生上學及放學是否需跨境：</h3></FormLabel>
                                 <RadioGroup
                                     id="crossBorderCheck"
                                     aria-labelledby="cross-border-student-label"
@@ -611,7 +638,7 @@ function App() {
 
             </div>
 
-        </main>
+        </main >
     )
 
 }

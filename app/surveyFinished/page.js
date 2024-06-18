@@ -93,11 +93,10 @@ export default function App() {
                     sessionStorage.clear();
                     setSuccess(true);
                     setLoading(false);
-                    // timer.current = setTimeout(() => {
-                    //     router.push('/')
-                    // }, 1000)
+                    timer.current = setTimeout(() => {
+                        router.push('/')
+                    }, 1000)
                 } else {
-                    console.log('res', res)
                     setAlertState("error")
                     handleAlertBarOpen()
                     setVCodeError(res.statusText)

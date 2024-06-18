@@ -16,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import LinearProgresss from '@/app/utils/progress';
 
 function App() {
     const router = useRouter();
@@ -81,6 +82,8 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const [survey, setSurvey] = React.useState(_initial_value)
+
+    const [progressBarValue, setProgressBarValue] = React.useState(30)
 
 
     const handleChange = (event) => {
@@ -233,17 +236,17 @@ function App() {
     const onBackButtonEvent = (e) => {
         e.preventDefault();
         //   if (!finishStatus) {
-            //   if (window.confirm("Do you want to go back ?")) {
-            //     setfinishStatus(true)
+        //   if (window.confirm("Do you want to go back ?")) {
+        //     setfinishStatus(true)
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
         router.back()
-            //   } else {
-            //       window.history.pushState(null, null, window.location.pathname);
-            //       setfinishStatus(false)
-            //   }
+        //   } else {
+        //       window.history.pushState(null, null, window.location.pathname);
+        //       setfinishStatus(false)
+        //   }
         //   }
     }
 
@@ -255,6 +258,15 @@ function App() {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
     }, []);
+
+    React.useEffect(() => {
+        if (survey.arrivalTimeToSchool != "") {
+            setProgressBarValue(40)
+            return
+        } else {
+            setProgressBarValue(30)
+        }
+    }, [survey]);
 
 
 
@@ -294,6 +306,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 name='otherOfPickup'
                                                 id="pickup-other-textfill"
                                                 label="其他"
@@ -316,14 +329,15 @@ function App() {
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
-                                        
+
                                             ampm={false}
                                             value={dayjs(survey.TimeStartFromHome)}
                                             onChange={(event) => {
                                                 if (!event) {
                                                     return
                                                 }
-                                                handleTimeChange(event, "TimeStartFromHome")}
+                                                handleTimeChange(event, "TimeStartFromHome")
+                                            }
                                             }
                                         />
                                     </DemoContainer>
@@ -359,6 +373,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 name='otherOfPickup'
                                                 id="pickup-other-textfill"
                                                 label="其他"
@@ -387,7 +402,8 @@ function App() {
                                                 if (!event) {
                                                     return
                                                 };
-                                                handleTimeChange(event, "TimeEndToMacau")}}
+                                                handleTimeChange(event, "TimeEndToMacau")
+                                            }}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -478,6 +494,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 id="commonTransiration-other-textfill"
                                                 label="其他"
                                                 variant="filled"
@@ -502,11 +519,12 @@ function App() {
                                         <DesktopTimePicker
                                             ampm={false}
                                             value={dayjs(survey.arrivalTimeToSchool)}
-                                            onChange={(event) =>{ 
+                                            onChange={(event) => {
                                                 if (!event) {
                                                     return
                                                 }
-                                                handleTimeChange(event, "arrivalTimeToSchool")}}
+                                                handleTimeChange(event, "arrivalTimeToSchool")
+                                            }}
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
@@ -518,12 +536,16 @@ function App() {
                     null
             }
             <div className={styles.buttonGroup}>
-                <Button className={styles.buttonStyle} onClick={() => router.back()}>
-                    上一頁
-                </Button>
-                <Button className={styles.buttonStyle} onClick={handleNextButton}>
-                    下一頁
-                </Button>
+                <LinearProgresss values={progressBarValue} />
+                <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
+
+                    <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                        上一頁
+                    </Button>
+                    <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                        下一頁
+                    </Button>
+                </div>
             </div>
         </main>
     )

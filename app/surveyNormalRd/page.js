@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
+import { useCookies } from "react-cookie";
 
 function App() {
     const router = useRouter();
@@ -80,7 +81,11 @@ function App() {
     const [startTime, setStartTime] = React.useState()
     const [endTime, setEndTime] = React.useState()
     const [progressBarValue, setProgressBarValue] = React.useState(30)
+    const [cookies, setCookie, removeCookie] = useCookies(['toSchoolTime']);
 
+    const setToSchoolTimeCookie = () => {
+        setCookie('toSchoolTime', survey.pickupTimeEnd, { path: '/' })
+    }
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (
@@ -159,7 +164,7 @@ function App() {
                 return
             }
         }
-
+        setToSchoolTimeCookie()
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyNormalRd2')
     }
@@ -245,12 +250,12 @@ function App() {
 
     React.useEffect(() => {
         if (survey.pickup != "999" && survey.pickupTimeStart != "" && survey.pickupTimeEnd != "" && survey.commonTransirtation != "999") {
-          setProgressBarValue(40)
-          return
+            setProgressBarValue(40)
+            return
         } else {
-          setProgressBarValue(30)
+            setProgressBarValue(30)
         }
-      }, [survey]);
+    }, [survey]);
 
     return (
         <main className={styles.main}>
@@ -289,6 +294,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 name='otherOfPickup'
                                                 id="pickup-other-textfill"
                                                 label="其他"
@@ -431,6 +437,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 id="commonTransiration-other-textfill"
                                                 label="其他"
                                                 variant="filled"

@@ -18,6 +18,7 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
+import { useCookies } from "react-cookie";
 
 function App() {
     const router = useRouter();
@@ -46,6 +47,7 @@ function App() {
     }
 
     const blankHelpText = {}
+    const [cookies, setCookie, removeCookie] = useCookies(['toSchoolTime']);
 
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [progressBarValue, setProgressBarValue] = React.useState(40)
@@ -255,6 +257,7 @@ function App() {
             return
         }
 
+
         if (survey.leavePickUp == 999) {
             handleHelpText("leavePickUp", "請選擇接送人")
             return
@@ -275,6 +278,11 @@ function App() {
         if (survey.directToHomeState == "是") {
             if (survey.directToHomeYes.arivalHomeTime == "") {
                 handleHelpText("arivalHomeTime", "請填寫到達家時間")
+                return
+            }
+
+            if (dayjs(survey.leaveSchoolTime) > dayjs(survey.directToHomeYes.arivalHomeTime)) {
+                handleHelpText("arivalHomeTime", "到達家時間不可早於離校時間")
                 return
             }
 
@@ -304,6 +312,11 @@ function App() {
 
             if (survey.directToHomeNo.destinationBackHomeStartTime == "") {
                 handleHelpText("destinationBackHomeStartTime", "請填寫從上述地方出發回家的時間")
+                return
+            }
+
+            if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
+                handleHelpText("leaveDestinationTime", "從上述地方出發回家的時間不可早於到達目的地時間")
                 return
             }
 
@@ -518,6 +531,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 id="pickup-leave-school-way-other-textfill"
                                                 label="其他"
                                                 variant="filled"
@@ -584,69 +598,69 @@ function App() {
                                                 onChange={handleChangeBackHome}
                                                 value={survey.directToHomeYes.arivalHomeTransition}
                                             >
-                                               <FormControlLabel
-                                        control={
-                                            <Radio value="步行" />
-                                        }
-                                        label="步行"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="公共巴士" />
-                                        }
-                                        label="公共巴士"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="私家車" />
-                                        }
-                                        label="私家車"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        sx={{ color: "black" }}
-                                        control={
-                                            <Radio value="電單車" />
-                                        }
-                                        label="電單車"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="輕軌" />
-                                        }
-                                        label="輕軌"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="校車" />
-                                        }
-                                        label="校車"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="的士" />
-                                        }
-                                        label="的士"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="復康巴士" />
-                                        }
-                                        label="復康巴士"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="其他" />
-                                        }
-                                        label="其他"
-                                        sx={{ color: "black" }}
-                                    />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="步行" />
+                                                    }
+                                                    label="步行"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="公共巴士" />
+                                                    }
+                                                    label="公共巴士"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="私家車" />
+                                                    }
+                                                    label="私家車"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    sx={{ color: "black" }}
+                                                    control={
+                                                        <Radio value="電單車" />
+                                                    }
+                                                    label="電單車"
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="輕軌" />
+                                                    }
+                                                    label="輕軌"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="校車" />
+                                                    }
+                                                    label="校車"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="的士" />
+                                                    }
+                                                    label="的士"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="復康巴士" />
+                                                    }
+                                                    label="復康巴士"
+                                                    sx={{ color: "black" }}
+                                                />
+                                                <FormControlLabel
+                                                    control={
+                                                        <Radio value="其他" />
+                                                    }
+                                                    label="其他"
+                                                    sx={{ color: "black" }}
+                                                />
                                                 {
                                                     survey.directToHomeYes.arivalHomeTransition == "其他" ?
                                                         <Box
@@ -658,6 +672,7 @@ function App() {
                                                             autoComplete="off"
                                                         >
                                                             <TextField
+                                                                inputProps={{ maxLength: 10 }}
                                                                 id="arrival-home-transition-other-textfill"
                                                                 label="其他"
                                                                 variant="filled"
@@ -684,7 +699,7 @@ function App() {
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {
-                                                            getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
+                                                            getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                                                         }
                                                     </p>
 
@@ -731,69 +746,69 @@ function App() {
                                                     onChange={handleChangeBackHome}
                                                     value={survey.directToHomeNo.leaveDestinationTransition}
                                                 >
-                                                   <FormControlLabel
-                                        control={
-                                            <Radio value="步行" />
-                                        }
-                                        label="步行"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="公共巴士" />
-                                        }
-                                        label="公共巴士"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="私家車" />
-                                        }
-                                        label="私家車"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        sx={{ color: "black" }}
-                                        control={
-                                            <Radio value="電單車" />
-                                        }
-                                        label="電單車"
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="輕軌" />
-                                        }
-                                        label="輕軌"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="校車" />
-                                        }
-                                        label="校車"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="的士" />
-                                        }
-                                        label="的士"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="復康巴士" />
-                                        }
-                                        label="復康巴士"
-                                        sx={{ color: "black" }}
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Radio value="其他" />
-                                        }
-                                        label="其他"
-                                        sx={{ color: "black" }}
-                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="步行" />
+                                                        }
+                                                        label="步行"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="公共巴士" />
+                                                        }
+                                                        label="公共巴士"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="私家車" />
+                                                        }
+                                                        label="私家車"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        sx={{ color: "black" }}
+                                                        control={
+                                                            <Radio value="電單車" />
+                                                        }
+                                                        label="電單車"
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="輕軌" />
+                                                        }
+                                                        label="輕軌"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="校車" />
+                                                        }
+                                                        label="校車"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="的士" />
+                                                        }
+                                                        label="的士"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="復康巴士" />
+                                                        }
+                                                        label="復康巴士"
+                                                        sx={{ color: "black" }}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Radio value="其他" />
+                                                        }
+                                                        label="其他"
+                                                        sx={{ color: "black" }}
+                                                    />
                                                     {
                                                         survey.directToHomeNo.leaveDestinationTransition == "其他" ?
                                                             <Box
@@ -805,6 +820,7 @@ function App() {
                                                                 autoComplete="off"
                                                             >
                                                                 <TextField
+                                                                    inputProps={{ maxLength: 10 }}
                                                                     id="leave-shcool-arrival-destination-transition-other-textfill"
                                                                     label="其他"
                                                                     variant="filled"

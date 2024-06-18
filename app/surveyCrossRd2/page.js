@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
+import LinearProgresss from '@/app/utils/progress';
 
 function App() {
     const router = useRouter();
@@ -43,6 +44,7 @@ function App() {
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [key, setKey] = React.useState(0)
     const [seed, setSeed] = React.useState(1);
+    const [progressBarValue, setProgressBarValue] = React.useState(40)
 
     const reset = () => {
         setSeed(Math.random());
@@ -401,6 +403,15 @@ function App() {
         };
     }, []);
 
+    React.useEffect(() => {
+        if (survey.leaveShcoolTime != "" && survey.pickup != 999 && survey.directToPort != 999) {
+            setProgressBarValue(70)
+            return
+        } else {
+            setProgressBarValue(40)
+        }
+    }, [survey]);
+
 
 
     return (
@@ -457,6 +468,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 name='otherOfPickup'
                                                 id="pickup-other-textfill"
                                                 label="其他"
@@ -500,6 +512,7 @@ function App() {
                                             autoComplete="off"
                                         >
                                             <TextField
+                                                inputProps={{ maxLength: 10 }}
                                                 name='otherOfportForHome'
                                                 id="otherOfportForHome-textfill"
                                                 label="其他"
@@ -639,6 +652,7 @@ function App() {
                                                         autoComplete="off"
                                                     >
                                                         <TextField
+                                                            inputProps={{ maxLength: 10 }}
                                                             id="commonTransiration-other-textfill"
                                                             label="其他"
                                                             variant="filled"
@@ -666,7 +680,7 @@ function App() {
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {
-                                                            getMapSelectedText() ? "已選擇目的地： " + getMapSelectedText() : "*請在以下地圖點選目的地或輸入相關地址後按下確定"
+                                                            getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                                                         }
                                                     </p>
 
@@ -786,6 +800,7 @@ function App() {
                                                             autoComplete="off"
                                                         >
                                                             <TextField
+                                                                inputProps={{ maxLength: 10 }}
                                                                 id="commonTransiration-other-textfill"
                                                                 label="其他"
                                                                 variant="filled"
@@ -811,12 +826,15 @@ function App() {
                     : null
             }
             <div className={styles.buttonGroup}>
-                <Button className={styles.buttonStyle} onClick={() => router.back()}>
-                    上一頁
-                </Button>
-                <Button className={styles.buttonStyle} onClick={handleNextButton}>
-                    下一頁
-                </Button>
+                <LinearProgresss values={progressBarValue} />
+                <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
+                    <Button className={styles.buttonStyle} onClick={() => router.back()}>
+                        上一頁
+                    </Button>
+                    <Button className={styles.buttonStyle} onClick={handleNextButton}>
+                        下一頁
+                    </Button>
+                </div>
             </div>
         </main>
     )

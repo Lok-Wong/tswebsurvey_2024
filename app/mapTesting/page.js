@@ -46,7 +46,7 @@ function MapComponent({ handleCustomAddress }) {
           maps = new AMap.Map('container', {
             // 设置地图容器id
             viewMode: '2D', // 是否为3D地图模式
-            zoom: 7, // 初始化地图级别
+            zoom: 13, // 初始化地图级别
             center: [113.568683, 22.162143], // 初始化地图中心点位置
             resizeEnable: true, // 是否监控地图容器尺寸变化
           });
@@ -58,23 +58,43 @@ function MapComponent({ handleCustomAddress }) {
               timeout: 1000, // 设置定位超时时间，默认：无穷大
               offset: [10, 20],  // 定位按钮的停靠位置的偏移量
               zoomToAccuracy: true,  //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-              position: 'RB' //  定
-            })
-
-            maps.addControl(geolocation.current)
-
-            geolocation.current.getCurrentPosition(function (status, result) {
-              if (status == 'complete') {
-                console.log("complete",result)
-              } else {
-                console.log("else",result)
-              }
+              position: 'RB',
+              needAddress: true
             })
 
             var geocoder = new AMap.Geocoder({
               city: "1853",
               citylimit: true
             })
+
+            geolocation.current.getCurrentPosition(function (status, result) {
+              console.log("status",status)
+              if (status == 'complete') {
+                console.log("complete",result.formattedAddress)
+                setInputVale(result.formattedAddress)
+                setCollectMethod('geolocation')
+                setMapData((result))
+                // let lnglats = [result.position.lng, result.position.lat]
+
+                // geocoder.getAddress(lnglats, function (status, result) {
+                //   let mapDatas = {
+                //     ...result, regeocode: {
+                //       ...result.regeocode,
+                //       location: lnglats
+                //     }
+                //   }
+                //   // setSelectedLocal(result.regeocode.formattedAddress)
+                //   setInputVale(result.regeocode.formattedAddress)
+                //   setCollectMethod('geolocation')
+                //   setMapData((mapDatas))
+                // })
+                
+              } else {
+                console.log("else",result)
+              }
+            })
+
+            maps.addControl(geolocation.current)
 
 
             maps.on('click', (e) => {
@@ -132,6 +152,7 @@ function MapComponent({ handleCustomAddress }) {
           <div style={{ justifyItems: "center" }}>
             <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
               <textarea
+                maxLength="50"
                 style={{alignSelf:'center'}}
                 id="input_test"
                 value={inputValue}

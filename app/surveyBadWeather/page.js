@@ -360,6 +360,7 @@ function App() {
                                                     提早約多少分鐘?
                                                 </p>
                                                 <TextField
+                                                    inputProps={{ maxLength: 5 }}
                                                     id="earlyOutDooring"
                                                     label="分鐘"
                                                     variant="filled"
@@ -393,6 +394,7 @@ function App() {
                                                     改變的交通方式為?
                                                 </p>
                                                 <TextField
+                                                    inputProps={{ maxLength: 10 }}
                                                     id="transitionChange"
                                                     label="交通方式"
                                                     variant="filled"
@@ -440,6 +442,7 @@ function App() {
                                                     請填寫其他
                                                 </p>
                                                 <TextField
+                                                    inputProps={{ maxLength: 10 }}
                                                     id="other"
                                                     label="其他"
                                                     variant="filled"
@@ -456,7 +459,7 @@ function App() {
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.tripChange}</FormHelperText>
                             </FormControl>
                         </div>
-                        
+
                         <h1 style={{ color: "#000000" }}>
                             六、其它意見或建議
                         </h1>
@@ -474,9 +477,10 @@ function App() {
                                     noValidate
                                 >
                                     <TextField
+                                        inputProps={{ maxLength: 200 }}
                                         sx={{ marginTop: "1rem" }}
                                         id="comment-text"
-                                        label="請輸入您的意見"
+                                        label="請輸入您的意見（限制200字）"
                                         variant="outlined"
                                         name='comment'
                                         multiline

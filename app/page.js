@@ -48,7 +48,7 @@ export default function Home() {
 
   const actions = [
     { icon: <p>繁中</p>, name: '繁中' },
-    { icon: <p>簡中</p>, name: '簡中' },
+    { icon: <p>葡文</p>, name: '葡文' },
     { icon: <p>英文</p>, name: '英文' },
   ];
 
@@ -164,6 +164,7 @@ export default function Home() {
 
   React.useEffect(() => {
     setIsClient(true)
+    sessionStorage.clear();
     window._AMapSecurityConfig = {
       securityJsCode: "5a70a60f476d153b9b6caa45864b605f",
     };
@@ -196,7 +197,7 @@ export default function Home() {
       </Box>
       <div className={styles.description}>
         <p>
-          V0.5
+          V0.6
         </p>
 
         <div className={styles.imagecontenter}>
@@ -268,7 +269,7 @@ export default function Home() {
               sx={{ backgroundColor: "white" }}
               id="verify_textField"
               label="驗證碼"
-              inputProps={{ style: { textTransform: "uppercase" } }}
+              inputProps={{ style: { textTransform: "uppercase" },maxLength: 4 }}
               onChange={(event) => {
                 setInputVcode(event.target.value)
               }}
