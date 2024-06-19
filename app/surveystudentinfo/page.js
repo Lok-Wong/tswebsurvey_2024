@@ -366,7 +366,7 @@ function App() {
     }
 
     React.useEffect(() => {
-        if (survey.schoolArea != "999" && survey.schoolName != "999" && survey.classLevel != "999" && survey.levelType != "999") {
+        if (survey.schoolArea != "999" && survey.schoolName != "999" && survey.classLevel != "999" && survey.levelType != "999" && survey.crossBorder != "999") {
             setProgressBarValue(30)
             return
         } else {

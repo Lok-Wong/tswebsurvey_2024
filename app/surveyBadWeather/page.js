@@ -468,7 +468,7 @@ function App() {
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>2)	您對上下學（包括在黃色暴雨警告信號下）出行有何意見或建議？（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>2)	您對上下學出行有何意見或建議？（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{

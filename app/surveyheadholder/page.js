@@ -135,7 +135,6 @@ function App() {
   }
 
   const handleCustomAddress = (address, type) => {
-    console.log("address", address,"type",type)
     setSurvey((prevState) => ({
       ...prevState,
       address: null

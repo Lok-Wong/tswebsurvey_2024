@@ -53,13 +53,16 @@ function MapComponent({ handleCustomAddress }) {
 
           AMap.plugin(['AMap.PlaceSearch', 'AMap.AutoComplete', 'AMap.Geocoder', 'AMap.Geolocation'], () => {
 
+
             geolocation.current = new AMap.Geolocation({
               enableHighAccuracy: true, // 是否使用高精度定位，默认：true
               timeout: 1000, // 设置定位超时时间，默认：无穷大
               offset: [10, 20],  // 定位按钮的停靠位置的偏移量
               zoomToAccuracy: true,  //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
               position: 'RB',
-              needAddress: true
+              needAddress: true,
+              showMarker:true,
+              showCircle:false
             })
 
             var geocoder = new AMap.Geocoder({
@@ -67,32 +70,21 @@ function MapComponent({ handleCustomAddress }) {
               citylimit: true
             })
 
-            geolocation.current.getCurrentPosition(function (status, result) {
-              console.log("status",status)
-              if (status == 'complete') {
-                console.log("complete",result.formattedAddress)
+            geolocation.current.on('complete', function (result) {
+              if (result.info == 'SUCCESS') {
                 setInputVale(result.formattedAddress)
                 setCollectMethod('geolocation')
-                setMapData((result))
-                // let lnglats = [result.position.lng, result.position.lat]
-
-                // geocoder.getAddress(lnglats, function (status, result) {
-                //   let mapDatas = {
-                //     ...result, regeocode: {
-                //       ...result.regeocode,
-                //       location: lnglats
-                //     }
-                //   }
-                //   // setSelectedLocal(result.regeocode.formattedAddress)
-                //   setInputVale(result.regeocode.formattedAddress)
-                //   setCollectMethod('geolocation')
-                //   setMapData((mapDatas))
-                // })
-                
-              } else {
-                console.log("else",result)
+                setMapData((result))                        
               }
             })
+
+            // geolocation.current.getCurrentPosition(function (status, result) {
+            //   if (status == 'complete') {
+            //     setInputVale(result.formattedAddress)
+            //     setCollectMethod('geolocation')
+            //     setMapData((result))                        
+            //   }
+            // })
 
             maps.addControl(geolocation.current)
 

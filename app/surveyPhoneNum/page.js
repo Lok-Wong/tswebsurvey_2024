@@ -140,11 +140,14 @@ export default function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                            最後
+                            個人資訊
                         </h1>
-                        <p>
-                            *如提供以下資訊，即同意參加抽獎活動
-                            *以下資訊只用於抽獎用途，資料在完成整個抽獎活動後會立即燒燬。
+                        <p className={styles.question}>
+                            *如提供以下資訊，即同意參加抽獎活動。<br/>
+                            *以下資訊只用於抽獎用途。<br/>
+                            　身分證尾4碼：主要用作抽獎之用。<br/>
+                            　電話：用作得獎通知用。<br/>
+                            *所有資料在完成整個抽獎活動後會進行燒燬。
                         </p>
                         <div className={styles.question}>
 

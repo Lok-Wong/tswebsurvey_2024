@@ -138,20 +138,20 @@ function App() {
         }
 
         if (survey.TimeStartFromHome > survey.TimeEndToMacau) {
-            handleHelpText("TimeStartFromHome", "時間不能大於到達時間")
-            handleHelpText("TimeEndToMacau", "時間不能小於出發時間")
+            handleHelpText("TimeStartFromHome", "時間不能晚於到達時間")
+            handleHelpText("TimeEndToMacau", "時間不能早於出發時間")
             return
         }
 
         if (survey.TimeStartFromHome > survey.arrivalTimeToSchool) {
-            handleHelpText("TimeStartFromHome", "時間不能大於到達時間")
-            handleHelpText("arrivalTimeToSchool", "時間不能小於出發時間")
+            handleHelpText("TimeStartFromHome", "時間不能晚於到達時間")
+            handleHelpText("arrivalTimeToSchool", "時間不能早於出發時間")
             return
         }
 
         if (survey.TimeEndToMacau > survey.arrivalTimeToSchool) {
-            handleHelpText("TimeEndToMacau", "時間不能大於到達時間")
-            handleHelpText("arrivalTimeToSchool", "時間不能小於出發時間")
+            handleHelpText("TimeEndToMacau", "時間不能晚於到達時間")
+            handleHelpText("arrivalTimeToSchool", "時間不能早於出發時間")
             return
         }
 

@@ -80,6 +80,12 @@ function App() {
             )
         }
 
+        if (survey.directToPortNo.address.method == "geolocation") {
+            return (
+              survey.directToPortNo.address.name.formattedAddress
+            )
+          }
+
         return null
     }
 
@@ -92,6 +98,21 @@ function App() {
                 address: null,
             }
         }))
+
+        if (type == "geolocation"){
+            setSurvey((prevState) => ({
+                ...prevState,
+                directToPortNo: {
+                    ...prevState.directToPortNo,
+                    address: {
+                        ...prevState.directToPortNo.address,
+                        name: address,
+                        method: type
+                    }
+                }
+            }))
+            return
+          }
 
         if (type == "input") {
             setSurvey((prevState) => ({

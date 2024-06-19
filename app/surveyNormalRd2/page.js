@@ -193,6 +193,21 @@ function App() {
             }
         }))
 
+        if (type == "geolocation"){
+            setSurvey((prevState) => ({
+                ...prevState,
+                directToHomeNo: {
+                    ...prevState.directToHomeNo,
+                    address: {
+                        ...prevState.directToHomeNo.address,
+                        name: address,
+                        method: type
+                    }
+                }
+            }))
+            return
+          }
+
         if (type == "input") {
             setSurvey((prevState) => ({
                 ...prevState,
@@ -204,7 +219,6 @@ function App() {
                         method: type
                     }
                 }
-
             }))
             return
         }
@@ -247,6 +261,12 @@ function App() {
                 survey.directToHomeNo.address.poi.name
             )
         }
+
+        if (survey.directToHomeNo.address.method == "geolocation") {
+            return (
+              survey.directToHomeNo.address.name.formattedAddress
+            )
+          }
 
         return null
     }

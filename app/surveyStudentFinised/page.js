@@ -10,7 +10,11 @@ import FormLabel from '@mui/material/FormLabel';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import LinearProgresss from '@/app/utils/progress';
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function App() {
     const router = useRouter();
@@ -21,6 +25,29 @@ function App() {
     }
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [progressBarValue, setProgressBarValue] = React.useState(100)
+    const [openAlerts, setOpenAlerts] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpenAlerts(true);
+    };
+
+    const handleClose = () => {
+        setOpenAlerts(false);
+    };
+
+    const handleKeepGoing = () => {
+        setOpenAlerts(false);
+        sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))
+        sessionStorage.setItem("pathList", storedPathList)
+        router.push('/surveystudentinfo')
+    }
+
+    const handleFinisheSurvey = () => {
+        setOpenAlerts(false);
+        router.push('/surveyPhoneNum')
+        sessionStorage.setItem("pathList", storedPathList)
+    }
+
 
     const _studentNum = React.useMemo(() => {
         if (typeof window !== 'undefined') {
@@ -56,6 +83,7 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const handleNextButton = () => {
+        console.log("checkStudentNum", checkStudentNum)
 
         if (stillHaveChild == "") {
             handleHelpText("stillHaveChild", "*請選擇一個選項")
@@ -69,6 +97,10 @@ function App() {
             return
         }
         if (stillHaveChild == "没有") {
+            if (!checkStudentNum()) {
+                handleClickOpen()
+                return
+            }
             router.push('/surveyPhoneNum')
             sessionStorage.setItem("pathList", storedPathList)
             return
@@ -200,6 +232,27 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Dialog
+                open={openAlerts}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"注意"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        尚有{parseInt(_totalStudentNumber) - parseInt(_studentNum) - 1}位學生的出行情況尚未填寫
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleKeepGoing}>繼續填寫問卷</Button>
+                    <Button onClick={handleFinisheSurvey} autoFocus>
+                        提交問卷
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </main>
 
     )
