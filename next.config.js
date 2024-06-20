@@ -37,4 +37,7 @@ const nextConfig = {
 //     nextConfig,
 //     poweredByHeader: false,
 //   }
-module.exports = {nextConfig,poweredByHeader: false,}
+module.exports = {nextConfig}
+module.exports = {
+    poweredByHeader: false,
+  }
