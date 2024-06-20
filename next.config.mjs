@@ -4,10 +4,6 @@ const securityHeaders = [
       key: 'X-Frame-Options',
       value: 'https://macautravelsurvey2024.com/'
     },
-    {
-        key:"poweredByHeader", 
-        value:"false"
-    }
   ]
 
 const nextConfig = {
@@ -32,4 +28,7 @@ const nextConfig = {
     }
 }
 
+module.exports = {
+    poweredByHeader: false,
+  }
 export default nextConfig;
