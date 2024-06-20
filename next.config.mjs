@@ -5,6 +5,10 @@ const securityHeaders = [
       key: 'X-Frame-Options',
       value: 'https://macautravelsurvey2024.com/'
     },
+    {
+        key : "X-Powered-By", 
+        value : "false"
+    },
   ]
 
 const nextConfig = {
