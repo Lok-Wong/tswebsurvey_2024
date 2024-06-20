@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-    poweredByHeader: false,
-  }
+
 
 const securityHeaders = [
     {
@@ -33,4 +31,8 @@ const nextConfig = {
     }
 }
 
-export default nextConfig;
+module.exports = {
+    nextConfig,
+    poweredByHeader: false,
+  }
+// export default nextConfig;
