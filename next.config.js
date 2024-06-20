@@ -15,9 +15,6 @@ const nextConfig = {
     async headers() {
         return [
             {
-                poweredByHeader: false,
-            },
-            {
                 // matching all API routes
                 source: "/api/:path*",
                 headers: [
@@ -31,6 +28,7 @@ const nextConfig = {
                 // Apply these headers to all routes in your application.
                 source: '/(.*)',
                 headers: securityHeaders,
+                poweredByHeader: false,
             },
         ]
     }
