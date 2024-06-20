@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-    poweredByHeader: false,
-  }
+import next from 'next';
+
+const app = next({ dev, xPoweredBy: false })
 
 const securityHeaders = [
     {
