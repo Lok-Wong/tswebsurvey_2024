@@ -95,7 +95,7 @@ export default function App() {
                     setLoading(false);
                     timer.current = setTimeout(() => {
                         router.push('/')
-                    }, 1000)
+                    }, 2000)
                 } else {
                     setAlertState("error")
                     handleAlertBarOpen()

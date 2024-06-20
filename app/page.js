@@ -197,7 +197,7 @@ export default function Home() {
       </Box>
       <div className={styles.description}>
         <p>
-          V0.6
+          V0.7
         </p>
 
         <div className={styles.imagecontenter}>
@@ -206,7 +206,7 @@ export default function Home() {
             alt="mixed Logo"
             width={350.75}
             height={95.875}
-            priority
+            resizeMode="contain"
           />
         </div>
       </div>
