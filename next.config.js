@@ -28,7 +28,6 @@ const nextConfig = {
                 // Apply these headers to all routes in your application.
                 source: '/(.*)',
                 headers: securityHeaders,
-                poweredByHeader: false,
             },
         ]
     }
@@ -38,4 +37,4 @@ const nextConfig = {
 //     nextConfig,
 //     poweredByHeader: false,
 //   }
-module.exports = nextConfig
+module.exports = {nextConfig,poweredByHeader: false,}
