@@ -29,8 +29,8 @@ const nextConfig = {
     }
 }
 
-module.exports = {
-    nextConfig,
-    poweredByHeader: false,
-  }
-// export default nextConfig;
+// module.exports = {
+//     nextConfig,
+//     poweredByHeader: false,
+//   }
+export default nextConfig;
