@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+
+module.exports = {
+    poweredByHeader: false,
+  }
+
 const securityHeaders = [
     {
       key: 'X-Frame-Options',
@@ -27,7 +32,5 @@ const nextConfig = {
         ]
     }
 }
-
-const app = next({ dev, xPoweredBy: false })
 
 export default nextConfig;
