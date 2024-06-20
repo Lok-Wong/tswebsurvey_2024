@@ -28,7 +28,6 @@ const nextConfig = {
     }
 }
 
-module.exports = {
-    poweredByHeader: false,
-  }
+const app = next({ dev, xPoweredBy: false })
+
 export default nextConfig;
