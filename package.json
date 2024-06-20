@@ -24,6 +24,7 @@
     "antd": "^5.16.4",
     "axios": "^1.6.8",
     "cookie-parser": "^1.4.6",
+    "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
     "express": "^4.19.2",
     "jsencrypt": "^3.3.2",

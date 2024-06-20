@@ -3,7 +3,7 @@
 const securityHeaders = [
     {
       key: 'X-Frame-Options',
-      value: 'https://macautravelsurvey2024.com/'
+      value: 'SAMEORIGIN'
     },
     {
         key : "X-Powered-By", 
@@ -14,6 +14,9 @@ const securityHeaders = [
 const nextConfig = {
     async headers() {
         return [
+            {
+                poweredByHeader: false,
+            },
             {
                 // matching all API routes
                 source: "/api/:path*",
@@ -37,4 +40,4 @@ const nextConfig = {
 //     nextConfig,
 //     poweredByHeader: false,
 //   }
-export default nextConfig;
+module.exports = nextConfig

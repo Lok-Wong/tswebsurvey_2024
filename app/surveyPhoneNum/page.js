@@ -7,10 +7,15 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import AES from 'crypto-js/aes';
+import getData from '../utils/string';
 
 export default function App() {
     // const fs = require('fs');
     // const path = require('path');
+
+    const [phoneNums,setPhoneNums] = React.useState()
+    const [id4Nums,setId4Nums] = React.useState()
     const router = useRouter();
     const blanksurvey = {
         phoneNum: 999,
@@ -66,11 +71,12 @@ export default function App() {
     }
 
     const handleChange = (event) => {
+        
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
                 ...prevState,
-                [objectName]: event.target.value
+                [objectName]: AES.encrypt( event.target.value, getData() ).toString()
             }
         )
 
@@ -170,8 +176,8 @@ export default function App() {
                                         variant="outlined"
                                         name='phoneNum'
                                         multiline
-                                        value={survey.phoneNum == 999 ? null : survey.phoneNum}
-                                        onChange={handleChange}
+                                        value={phoneNums}
+                                        onChange={(e) => {handleChange(e),setPhoneNums(e.target.value)}}
                                     />
                                 </Box>
                             </FormControl>
@@ -196,8 +202,8 @@ export default function App() {
                                         variant="outlined"
                                         name='id4Num'
                                         multiline
-                                        value={survey.id4Num == 999 ? null : survey.id4Num}
-                                        onChange={handleChange}
+                                        value={id4Nums}
+                                        onChange={(e) => {handleChange(e),setId4Nums(e.target.value)}}
                                     />
                                 </Box>
                             </FormControl>
