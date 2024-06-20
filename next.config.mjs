@@ -2,8 +2,6 @@
 
 import next from 'next';
 
-const app = next({ xPoweredBy: false })
-
 const securityHeaders = [
     {
       key: 'X-Frame-Options',
