@@ -2,7 +2,7 @@
 
 import next from 'next';
 
-const app = next({ dev, xPoweredBy: false })
+const app = next({ xPoweredBy: false })
 
 const securityHeaders = [
     {
