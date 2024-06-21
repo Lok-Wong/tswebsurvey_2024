@@ -358,8 +358,8 @@ function App() {
               </FormControl>
             </div> */}
 
-            <div className={styles.question}>
-              <FormControl>
+            <div className={styles.question} style={{justifyContent:'center'}}>
+              <FormControl >
                 <FormLabel id="address-label">
                   <h3>
                     1)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：
@@ -373,7 +373,7 @@ function App() {
                   </p>
                 </Box>
 
-                <div style={{ alignSelf: "center", zIndex: 1 }} >
+                <div style={{zIndex: 1 }} >
                   <MapComponent handleCustomAddress={handleCustomAddress} />
                 </div>
 
@@ -449,7 +449,7 @@ function App() {
         </div> */}
             <div className={styles.question}>
               <FormControl>
-                <FormLabel id="vehicle-radio-buttons-group-label"><h3>3.家庭成員有沒有私家車或電單車：</h3></FormLabel>
+                <FormLabel id="vehicle-radio-buttons-group-label"><h3>3)家庭成員有沒有私家車或電單車：</h3></FormLabel>
                 <RadioGroup
                   aria-labelledby="vehicle-radio-buttons-group-label"
                   value={survey.vehicle}

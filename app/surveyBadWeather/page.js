@@ -50,7 +50,7 @@ function App() {
     }
     const blankHelpText = {}
     const [helpText, setHelpText] = React.useState(blankHelpText)
-    const [progressBarValue, setProgressBarValue] = React.useState(95)
+    const [progressBarValue, setProgressBarValue] = React.useState(80)
 
 
     const _studentNum = React.useMemo(() => {
@@ -235,6 +235,15 @@ function App() {
         setHelpText(blankHelpText)
         console.log(survey)
     }, [survey])
+
+    React.useEffect(() => {
+        if (survey.tripChange.noChange.state != false || survey.tripChange.earlyOutDooring.state != false || survey.tripChange.transitionChange.state != false || survey.tripChange.parentPickUp.state != false || survey.tripChange.waitForNews.state != false || survey.tripChange.other.state != false) {
+            setProgressBarValue(100)
+        } else {
+            setProgressBarValue(80)
+        }
+
+    },[survey.tripChange])
 
     // React.useEffect(() => {
     //     if (survey.Pickup != "其他監護人") {

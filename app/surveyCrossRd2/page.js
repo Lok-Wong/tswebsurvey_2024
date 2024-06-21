@@ -311,6 +311,58 @@ function App() {
             handleHelpText("directToPort", "請選擇是否直接前往通關口岸")
             return
         }
+
+        if (survey.directToPort == "是") {
+            if (survey.directToPortYes.arrivalTime == "") {
+                handleHelpText("arrivalPortTime", "請選擇到達時間")
+                return
+            }
+            if (survey.directToPortYes.transirtation == 999) {
+                handleHelpText("commonTransirtation", "請選擇交通方式")
+                return
+            }
+            if (survey.directToPortYes.transirtation == "其他" && survey.directToPortYes.othertransirtation == 999) {
+                handleHelpText("commonTransirtation", "請填寫其他交通方式")
+                return
+            }
+            if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleHelpText("arrivalPortTime", `時間不能比" 7) 離校時間"早`)
+                return
+            }
+            if (JSON.stringify(survey.directToPortYes.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleHelpText("arrivalPortTime", `時間不能與" 7) 離校時間"相同`)
+                return
+            }
+
+        }
+
+        if (survey.directToPort == "否") {
+            if (survey.directToPortNo.address == 999) {
+                handleHelpText("address", "請選擇地點")
+                return
+            }
+            if (survey.directToPortNo.arrivalTime == "") {
+                handleHelpText("arrivalPortTime", "請選擇到達時間")
+                return
+            }
+            if (survey.directToPortNo.transirtation == 999) {
+                handleHelpText("commonTransirtation", "請選擇交通方式")
+                return
+            }
+            if (survey.directToPortNo.transirtation == "其他" && survey.directToPortNo.othertransirtation == 999) {
+                handleHelpText("commonTransirtation", "請填寫其他交通方式")
+                return
+            }
+            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleHelpText("arrivalPortTime", `時間不能與" 7) 離校時間"相同`)
+                return
+            }
+
+            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleHelpText("arrivalPortTime", `時間不能比" 7) 離校時間"早`)
+                return
+            }
+        }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyBadWeather')
     }
@@ -426,7 +478,7 @@ function App() {
 
     React.useEffect(() => {
         if (survey.leaveShcoolTime != "" && survey.pickup != 999 && survey.directToPort != 999) {
-            setProgressBarValue(70)
+            setProgressBarValue(80)
             return
         } else {
             setProgressBarValue(40)
@@ -695,8 +747,8 @@ function App() {
                                 :
                                 survey.directToPort == "否" ?
                                     <div key={key}>
-                                        <div className={styles.question}>
-                                            <FormControl>
+                                        <div className={styles.question} style={{justifyContent:"center"}}>
+                                        <FormControl>
                                                 <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>

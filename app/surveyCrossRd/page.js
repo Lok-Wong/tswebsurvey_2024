@@ -132,38 +132,27 @@ function App() {
             return
         }
         if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
-            handleHelpText("TimeStartFromHome", "時間不能相同")
-            handleHelpText("TimeEndToMacau", "時間不能相同")
+            handleHelpText("TimeEndToMacau", `時間不能與 "2) 從家出發的時間"相同`)
             return
         }
 
-        if (survey.TimeStartFromHome > survey.TimeEndToMacau) {
-            handleHelpText("TimeStartFromHome", "時間不能晚於到達時間")
-            handleHelpText("TimeEndToMacau", "時間不能早於出發時間")
+        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
+            handleHelpText("TimeEndToMacau", `時間不能比 "2) 從家出發的時間"早`)
             return
         }
 
-        if (survey.TimeStartFromHome > survey.arrivalTimeToSchool) {
-            handleHelpText("TimeStartFromHome", "時間不能晚於到達時間")
-            handleHelpText("arrivalTimeToSchool", "時間不能早於出發時間")
+        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.arrivalTimeToSchool)) {
+            handleHelpText("arrivalTimeToSchool", `時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             return
         }
 
-        if (survey.TimeEndToMacau > survey.arrivalTimeToSchool) {
-            handleHelpText("TimeEndToMacau", "時間不能晚於到達時間")
-            handleHelpText("arrivalTimeToSchool", "時間不能早於出發時間")
+        if (dayjs(survey.TimeEndToMacau) > dayjs(survey.arrivalTimeToSchool)) {
+            handleHelpText("arrivalTimeToSchool", `時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             return
         }
 
-        if (survey.TimeStartFromHome == survey.arrivalTimeToSchool) {
-            handleHelpText("TimeStartFromHome", "時間不能相同")
-            handleHelpText("arrivalTimeToSchool", "時間不能相同")
-            return
-        }
-
-        if (survey.TimeEndToMacau == survey.arrivalTimeToSchool) {
-            handleHelpText("TimeStartFromHome", "時間不能相同")
-            handleHelpText("arrivalTimeToSchool", "時間不能相同")
+        if (JSON.stringify(survey.TimeEndToMacau) == JSON.stringify(survey.arrivalTimeToSchool)) {
+            handleHelpText("arrivalTimeToSchool", `時間不能與 4) "由澳門口岸出發前往學校的時間"相同`)
             return
         }
         sessionStorage.setItem("pathList", storedPathList)

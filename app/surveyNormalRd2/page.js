@@ -234,6 +234,7 @@ function App() {
         setSurvey((prevState) => ({
             ...prevState,
             directToHomeNo: {
+                ...prevState.directToHomeNo,
                 address: {
                     ...prevState.directToHomeNo.address,
                     method: type
@@ -302,12 +303,17 @@ function App() {
             }
 
             if (dayjs(survey.leaveSchoolTime) > dayjs(survey.directToHomeYes.arivalHomeTime)) {
-                handleHelpText("arivalHomeTime", "到達家時間不可早於離校時間")
+                handleHelpText("arivalHomeTime", `時間不能比 "5) 離校時間"早`)
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTransition == 999) {
                 handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
+                return
+            }
+
+            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleHelpText("arivalHomeTime", `時間不能與" 5) 離校時間"相等`)
                 return
             }
         }
@@ -336,7 +342,12 @@ function App() {
             }
 
             if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
-                handleHelpText("leaveDestinationTime", "從上述地方出發回家的時間不可早於到達目的地時間")
+                handleHelpText("leaveDestinationTime",`時間不能比 "5) 離校時間"早`)
+                return
+            }
+
+            if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleHelpText("leaveDestinationTime", `時間不能與" 5) 離校時間"相同`)
                 return
             }
 
@@ -352,6 +363,7 @@ function App() {
                     ...prevState,
                     directToHomeYes: {
                         arivalHomeTime: "",
+                        leaveDestinationTime: "",
                         arivalHomeTransition: 999,
                         otherarivalHomeTransition: 999
                     }
@@ -492,9 +504,11 @@ function App() {
     }, [survey.directToHomeState]);
 
     React.useEffect(() => {
-        if (survey.directToHomeState !== 999) {
-            setProgressBarValue(95)
+        if (survey.leaveSchoolTime !="" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
+            setProgressBarValue(80)
             return
+        } else {
+            setProgressBarValue(40)
         }
 
     }, [survey]);
@@ -713,7 +727,7 @@ function App() {
                                 :
                                 survey.directToHomeState == "否" ?
                                     <div key={key}>
-                                        <div className={styles.question}>
+                                        <div className={styles.question} style={{justifyContent:"center"}}>
                                             <FormControl>
                                                 <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
@@ -728,7 +742,7 @@ function App() {
                                                 {/* <Button onClick={() => { setKey((k) => k + 1) }}>
                                                     按下打開地圖
                                                 </Button> */}
-                                                <div style={{ alignSelf: "center", zIndex: 1 }} >
+                                                <div style={{ zIndex: 1 }} >
 
                                                     <MapComponent key={seed} handleCustomAddress={handleCustomAddress} />
                                                 </div>

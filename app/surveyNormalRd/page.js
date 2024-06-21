@@ -142,14 +142,12 @@ function App() {
         }
 
         if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
-            handleHelpText("pickupTimeStart", "出發時間不能晚過到達時間")
-            handleHelpText("pickupTimeEnd", "到達時間不能早過出發時間")
+            handleHelpText("pickupTimeEnd", `時間不能比" 2) 出發時間"早`)
             return
         }
 
         if (JSON.stringify(survey.pickupTimeStart) === JSON.stringify(survey.pickupTimeEnd)) {
-            handleHelpText("pickupTimeStart", "出發時間不能等於到達時間")
-            handleHelpText("pickupTimeEnd", "到達時間不能等於出發時間")
+            handleHelpText("pickupTimeEnd", `時間不能與" 2) 出發時間"相等`)
             return
         }
 

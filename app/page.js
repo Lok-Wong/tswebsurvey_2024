@@ -197,7 +197,7 @@ export default function Home() {
       </Box>
       <div className={styles.description}>
         <p>
-          V0.7
+          V0.8
         </p>
 
         <div className={styles.imagecontenter}>
@@ -292,6 +292,7 @@ export default function Home() {
 
       <div className={styles.buttonDiv} >
         <Button
+          style={{fontWeight: "bold"}}
           className={styles.button}
           name="next"
           onKeyDown={(event) => { enterToNext(event) }}

@@ -161,8 +161,8 @@
     color:#ffffff;
     width: 8vw;
     margin-top: 2%;
-    font-weight: bold;
-  }
+    font-size: 16px;
+    font-weight: 700;  }
 
   .buttonDiv{
     display: flex;
@@ -233,10 +233,16 @@
     }
 
     .button{
-      background-color: #036eb8;
       color:#ffffff;
-      width: 80vw;
-      margin-top: 2%;
+      /* display: inline-block; */
+      outline: 0;
+      border: 0;
+      cursor: pointer;
+      border-radius: 4px;
+      padding: 8px 16px;
+      line-height: 26px;
+      font-size: 16px;
+      font-weight: 700;
     }
   }
   /* @media (max-width: 700px) {
