@@ -92,7 +92,7 @@ export default function App() {
                     setVCodeError("成功上傳問卷!!!")
                     sessionStorage.clear();
                     setSuccess(true);
-                    // setLoading(false);
+                    setLoading(false);
                     // timer.current = setTimeout(() => {
                     //     router.push('/')
                     // }, 2000)
