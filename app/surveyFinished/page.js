@@ -89,13 +89,13 @@ export default function App() {
                 if (res.ok) {
                     setAlertState("success")
                     handleAlertBarOpen()
-                    setVCodeError("成功上傳問卷，2秒後將返回首頁")
+                    setVCodeError("成功上傳問卷!!!")
                     sessionStorage.clear();
                     setSuccess(true);
-                    setLoading(false);
-                    timer.current = setTimeout(() => {
-                        router.push('/')
-                    }, 2000)
+                    // setLoading(false);
+                    // timer.current = setTimeout(() => {
+                    //     router.push('/')
+                    // }, 2000)
                 } else {
                     setAlertState("error")
                     handleAlertBarOpen()
@@ -126,7 +126,7 @@ export default function App() {
                     <div>
 
                         <h1 style={{ color: "#000000" }}>
-                            完成問卷
+                            提交問卷
                         </h1>
 
                         <div className={styles.question}>
@@ -141,7 +141,9 @@ export default function App() {
                         <div style={{ display: "flex", justifyContent: 'center' }}>
                             {
                                 !loading ?
-                                <Button className={styles.buttonStyle}
+                                <Button 
+                                disable = {success}
+                                className={styles.buttonStyle}
                                 onClick={() =>
                                     handleSubmit()
                                 }

@@ -292,7 +292,6 @@ export default function Home() {
 
       <div className={styles.buttonDiv} >
         <Button
-          style={{fontWeight: "bold"}}
           className={styles.button}
           name="next"
           onKeyDown={(event) => { enterToNext(event) }}

@@ -71,7 +71,7 @@ export default function App() {
     }
 
     const handleChange = (event) => {
-        
+
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
@@ -146,21 +146,21 @@ export default function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                            個人資訊
+                            抽獎活動
                         </h1>
                         <p className={styles.question}>
                             *如提供以下資訊，即同意參加抽獎活動。<br/>
                             *以下資訊只用於抽獎用途。<br/>
-                            　身分證尾4碼：主要用作抽獎之用。<br/>
-                            　電話：用作得獎通知用。<br/>
-                            *所有資料在完成整個抽獎活動後會進行燒燬。
+                            　電話：抽獎及聯絡用途。<br/>
+                            　身分證尾4碼：抽獎及身份核實用途。<br/>
+                            *所有資料在完成整個抽獎活動後會進行銷毀。
                         </p>
                         <div className={styles.question}>
 
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>　請留下閣下的聯絡電話（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>請提供閣下的聯絡電話（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{
@@ -186,7 +186,7 @@ export default function App() {
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>　請留下閣下的尾4號身分證號碼（選填）：</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>請提供閣下的身份證號碼尾4位（選填）：</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{

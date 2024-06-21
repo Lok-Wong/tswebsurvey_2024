@@ -234,6 +234,7 @@
 
     .button{
       color:#ffffff;
+      width: 80vw;
       /* display: inline-block; */
       outline: 0;
       border: 0;
