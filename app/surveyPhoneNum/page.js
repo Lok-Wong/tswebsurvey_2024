@@ -152,7 +152,7 @@ export default function App() {
                             *如提供以下資訊，即同意參加抽獎活動。<br/>
                             *以下資訊只用於抽獎用途。<br/>
                             　電話：抽獎及聯絡用途。<br/>
-                            　身分證尾4碼：抽獎及身份核實用途。<br/>
+                            　身份證尾4碼：抽獎及身份核實用途。<br/>
                             *所有資料在完成整個抽獎活動後會進行銷毀。
                         </p>
                         <div className={styles.question}>
@@ -198,7 +198,7 @@ export default function App() {
                                         inputProps={{ maxLength: 4 }}
                                         sx={{ marginTop: "1rem" }}
                                         id="id4Num-text"
-                                        label="尾4號身分證號碼"
+                                        label="尾4號身份證號碼"
                                         variant="outlined"
                                         name='id4Num'
                                         multiline
