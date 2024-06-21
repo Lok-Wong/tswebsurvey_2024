@@ -142,7 +142,7 @@ export default function App() {
                             {
                                 !loading ?
                                 <Button 
-                                disable = {success}
+                                disabled = {success}
                                 className={styles.buttonStyle}
                                 onClick={() =>
                                     handleSubmit()
