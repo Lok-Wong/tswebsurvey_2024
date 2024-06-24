@@ -11,10 +11,6 @@ export async function POST(req,res){
     return NextResponse.json({ error: 'Invalid method' }, { status: 405 });
   }
 
-  if (req.headers['content-type'] !== 'application/json') {
-    return NextResponse.json({ error: 'Invalid content type' }, { status: 415 });
-  }
-
   if (!cookies().get('csrf_token').value) {
     return NextResponse.json({ error: 'Invalid csrf token' }, { status: 403 });
   }
