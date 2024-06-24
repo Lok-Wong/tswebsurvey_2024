@@ -161,6 +161,25 @@ function App() {
 
     const handleChange = (event) => {
 
+        if (event.target.name == "schoolArea") {
+            setSurvey((prevState) => (
+                {
+                    ...prevState,
+                    schoolArea: event.target.value,
+                    schoolName: 999,
+                    schoolType: 999,
+                    classLevel: 999,
+                    levelType: 999,
+                }
+            )
+            )
+            setShValue("")
+            setShInputValue("")
+            setStValue("")
+            setSchoolNameSelectType("")
+            return
+        }
+
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
