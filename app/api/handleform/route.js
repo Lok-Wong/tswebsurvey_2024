@@ -7,7 +7,19 @@ const cookieParser = require('cookie-parser');
 const fs = require('fs');
 
 export async function POST(req,res){
-  const crsfTooken =cookies().get('csrf_token').value ? cookies().get('csrf_token').value : null;
+  if (req.method !== 'POST') {
+    return NextResponse.json({ error: 'Invalid method' }, { status: 405 });
+  }
+
+  if (req.headers['content-type'] !== 'application/json') {
+    return NextResponse.json({ error: 'Invalid content type' }, { status: 415 });
+  }
+
+  if (!cookies().get('csrf_token').value) {
+    return NextResponse.json({ error: 'Invalid csrf token' }, { status: 403 });
+  }
+
+  const crsfTooken = cookies().get('csrf_token').value ? cookies().get('csrf_token').value : null;
 
     if (await rateLimit(req, res)) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
