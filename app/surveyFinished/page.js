@@ -86,6 +86,7 @@ export default function App() {
                         'content-type': 'application/json'
                     }
                 })
+                console.log('res', res)
                 if (res.ok) {
                     setAlertState("success")
                     handleAlertBarOpen()
@@ -99,7 +100,7 @@ export default function App() {
                 } else {
                     setAlertState("error")
                     handleAlertBarOpen()
-                    setVCodeError(res.statusText)
+                    setVCodeError("己提交過問卷，請勿重複提交")
                     setSuccess(false);
                     setLoading(false);
                 }
@@ -164,7 +165,7 @@ export default function App() {
                     :
                     null
             }
-            <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>
+            <Snackbar open={openAlertBar} onClose={handleAlertBarClose}>
                 <Alert
                     onClose={handleAlertBarClose}
                     severity={alertState}
