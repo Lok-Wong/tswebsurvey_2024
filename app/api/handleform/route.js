@@ -11,11 +11,11 @@ export async function POST(req,res){
     return NextResponse.json({ error: 'Invalid method' }, { status: 405 });
   }
 
-  if (!cookies().get('csrf_token').value) {
-    return NextResponse.json({ error: 'Invalid csrf token' }, { status: 403 });
-  }
+  // if (!cookies().get('csrf_token').value) {
+  //   return NextResponse.json({ error: 'Invalid csrf token' }, { status: 403 });
+  // }
 
-  const crsfTooken = cookies().get('csrf_token').value ? cookies().get('csrf_token').value : null;
+  // const crsfTooken = cookies().get('csrf_token').value ? cookies().get('csrf_token').value : null;
 
     if (await rateLimit(req, res)) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
@@ -38,9 +38,9 @@ export async function POST(req,res){
 
     const requestData = await req.json()
 
-    if (crsfTooken !== requestData.data.home.uuid) {
-        return NextResponse.json({"message":"Invalid token"})
-    }
+    // if (crsfTooken !== requestData.data.home.uuid) {
+    //     return NextResponse.json({"message":"Invalid token"})
+    // }
     const ipaddress = requestData["data"]['home']['ip']
     const uuid = requestData["data"]['home']['uuid']
     const fileDate = `${dayjs().format('HHmmss')}`
