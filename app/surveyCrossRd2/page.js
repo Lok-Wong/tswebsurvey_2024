@@ -82,9 +82,9 @@ function App() {
 
         if (survey.directToPortNo.address.method == "geolocation") {
             return (
-              survey.directToPortNo.address.name.formattedAddress
+                survey.directToPortNo.address.name.formattedAddress
             )
-          }
+        }
 
         return null
     }
@@ -99,7 +99,7 @@ function App() {
             }
         }))
 
-        if (type == "geolocation"){
+        if (type == "geolocation") {
             setSurvey((prevState) => ({
                 ...prevState,
                 directToPortNo: {
@@ -112,7 +112,7 @@ function App() {
                 }
             }))
             return
-          }
+        }
 
         if (type == "input") {
             setSurvey((prevState) => ({
@@ -337,8 +337,13 @@ function App() {
         }
 
         if (survey.directToPort == "否") {
+            if (!survey.directToPortNo.address.method) {
+                handleHelpText("address", "請填寫地址")
+                return
+            }
+
             if (survey.directToPortNo.address == 999) {
-                handleHelpText("address", "請選擇地點")
+                handleHelpText("address", "請填寫地址")
                 return
             }
             if (survey.directToPortNo.arrivalTime == "") {
@@ -747,8 +752,8 @@ function App() {
                                 :
                                 survey.directToPort == "否" ?
                                     <div key={key}>
-                                        <div className={styles.question} style={{justifyContent:"center"}}>
-                                        <FormControl>
+                                        <div className={styles.question} style={{ justifyContent: "center" }}>
+                                            <FormControl sx={{ display: 'flex', flex: 1 }}>
                                                 <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>

@@ -181,17 +181,10 @@ function App() {
 
   const handleNextButton = () => {
 
-    // if (survey.studentofRespondents == 999) {
-    //   handleHelpText("studentofRespondents", "請選擇一個選項")
-    //   return
-    // }
-
-    // if (survey.studentofRespondents == "其他監護人") {
-    //   if (survey.otherOfStudentofRespondents == "999" || survey.otherOfStudentofRespondents == "") {
-    //     handleHelpText("studentofRespondents", "請填寫其他監護人名稱")
-    //     return
-    //   }
-    // }
+    if (!survey.address.method) {
+      handleHelpText("address", "請填寫地址")
+      return
+    }
 
     if (survey.address == "999" || survey.address == "") {
       handleHelpText("address", "請填寫地址")
@@ -316,47 +309,6 @@ function App() {
             <h1 className={styles.title}>
               一、學生家庭資料
             </h1>
-            {/* <div className={styles.question}>
-              <FormControl>
-                <FormLabel id="studentofRespondents-radio-buttons-group-label"><h3>1) 閣下是學生（的）：</h3></FormLabel>
-                <RadioGroup
-                  required
-                  id="studentofRespondents"
-                  aria-labelledby="studentofRespondents-radio-buttons-group-label"
-                  value={survey.studentofRespondents}
-                  name="studentofRespondents"
-                  onChange={handleChange}
-                >
-                  <FormControlLabel sx={{ color: "black" }} value="本人" control={<Radio />} label="本人" />
-                  <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
-                  <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他（如︰監護人、親戚等）" />
-
-                  {
-                    survey.studentofRespondents == "其他" ?
-                      <Box
-                        component="form"
-                        sx={{
-                          '& > :not(style)': { m: 0.5, width: '10rem' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                      >
-                        <TextField
-                          id="studentofRespondents-other-textfill"
-                          label="請輸入其他監護人名稱"
-                          variant="filled"
-                          value={survey.otherOfStudentofRespondents == 999 ? null : survey.otherOfStudentofRespondents}
-                          name="otherOfStudentofRespondents"
-                          onChange={handleTextFieldChange}
-                        />
-                      </Box>
-                      :
-                      null
-                  }
-                </RadioGroup>
-                <FormHelperText sx={{ color: 'red' }}>{helpText.studentofRespondents}</FormHelperText>
-              </FormControl>
-            </div> */}
 
             <div className={styles.question} style={{ justifyContent: 'center' }}>
               <FormControl sx={{ display: 'flex', flex: 1 }}>
@@ -380,26 +332,6 @@ function App() {
                 <FormHelperText sx={{ color: 'red' }}>{helpText.address}</FormHelperText>
               </FormControl>
             </div>
-
-            {/* <div className={styles.question}>
-         <FormControl>
-            <FormLabel id="resident-population-label">3)	上述地址中，長期固定居住人口（包括留宿工人）：</FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="resident-population-group-label"
-              value={survey.headHolder.residentPopulation}
-              name="residentPopulation"
-              onChange={handleChange}
-            >
-              <FormControlLabel sx={{color:"black"}}  value="1" control={<Radio />} label="1人" />
-              <FormControlLabel sx={{color:"black"}}  value="2" control={<Radio />} label="2人" />
-              <FormControlLabel sx={{color:"black"}}  value="3" control={<Radio />} label="3人" />
-              <FormControlLabel sx={{color:"black"}}  value="4" control={<Radio />} label="4人" />
-              <FormControlLabel sx={{color:"black"}}  value="5" control={<Radio />} label="5人" />
-              <FormControlLabel sx={{color:"black"}}  value="6＋" control={<Radio />} label="6人或以上" />
-            </RadioGroup>
-          </FormControl>
-        </div> */}
 
             <div className={styles.question}>
               <FormControl>

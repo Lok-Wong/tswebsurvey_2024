@@ -193,7 +193,7 @@ function App() {
             }
         }))
 
-        if (type == "geolocation"){
+        if (type == "geolocation") {
             setSurvey((prevState) => ({
                 ...prevState,
                 directToHomeNo: {
@@ -206,7 +206,7 @@ function App() {
                 }
             }))
             return
-          }
+        }
 
         if (type == "input") {
             setSurvey((prevState) => ({
@@ -265,9 +265,9 @@ function App() {
 
         if (survey.directToHomeNo.address.method == "geolocation") {
             return (
-              survey.directToHomeNo.address.name.formattedAddress
+                survey.directToHomeNo.address.name.formattedAddress
             )
-          }
+        }
 
         return null
     }
@@ -319,6 +319,16 @@ function App() {
         }
 
         if (survey.directToHomeState == "否") {
+            if (!survey.directToHomeNo.address.method) {
+                handleHelpText("address", "請填寫地址")
+                return
+            }
+
+            if (survey.directToHomeNo.address == 999) {
+                handleHelpText("address", "請填寫地址")
+                return
+            }
+
             if (survey.directToHomeNo.leaveDestinationTime == "") {
                 handleHelpText("leaveDestinationTime", "請填寫到達目的地時間")
                 return
@@ -342,7 +352,7 @@ function App() {
             }
 
             if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
-                handleHelpText("leaveDestinationTime",`時間不能比 "5) 離校時間"早`)
+                handleHelpText("leaveDestinationTime", `時間不能比 "5) 離校時間"早`)
                 return
             }
 
@@ -476,7 +486,6 @@ function App() {
         setKey((k) => k + 1)
     }, [])
 
-    const [finishStatus, setfinishStatus] = React.useState(false);
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -504,7 +513,7 @@ function App() {
     }, [survey.directToHomeState]);
 
     React.useEffect(() => {
-        if (survey.leaveSchoolTime !="" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
+        if (survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
             setProgressBarValue(80)
             return
         } else {
@@ -727,8 +736,8 @@ function App() {
                                 :
                                 survey.directToHomeState == "否" ?
                                     <div key={key}>
-                                        <div className={styles.question} style={{justifyContent:"center"}}>
-                                            <FormControl>
+                                        <div className={styles.question} style={{ justifyContent: "center" }}>
+                                            <FormControl sx={{display: 'flex', flex: 1 }}>
                                                 <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
