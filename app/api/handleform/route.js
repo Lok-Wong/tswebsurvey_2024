@@ -7,7 +7,8 @@ const cookieParser = require('cookie-parser');
 const fs = require('fs');
 
 export async function POST(req,res){
-  // const crsfTooken = cookies().get('csrf_token').value;
+  const crsfTooken =cookies().get('csrf_token').value ? cookies().get('csrf_token').value : null;
+
     if (await rateLimit(req, res)) {
         return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please try again later.' }), {
           status: 429,
@@ -29,9 +30,9 @@ export async function POST(req,res){
 
     const requestData = await req.json()
 
-    // if (crsfTooken !== requestData.data.home.uuid) {
-    //     return NextResponse.json({"message":"Invalid token"})
-    // }
+    if (crsfTooken !== requestData.data.home.uuid) {
+        return NextResponse.json({"message":"Invalid token"})
+    }
     const ipaddress = requestData["data"]['home']['ip']
     const uuid = requestData["data"]['home']['uuid']
     const fileDate = `${dayjs().format('HHmmss')}`

@@ -119,9 +119,6 @@ function App() {
 
     React.useEffect(() => {
         const items = { ...sessionStorage }
-        console.log("sessionKey", Object.keys(items))
-        console.log(typeof (parseInt(_studentNum) + 1) == typeof parseInt(_totalStudentNumber))
-
     }, [])
 
     const [isClient, setIsClient] = React.useState(false)
@@ -168,6 +165,9 @@ function App() {
     }
 
     const checkStudentNum = () => {
+        if (_totalStudentNumber == "4+") {
+            return false
+        }
         if (parseInt(_studentNum) + 1 >= parseInt(_totalStudentNumber)) {
             return true
         }
@@ -243,7 +243,13 @@ function App() {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        尚有{parseInt(_totalStudentNumber) - parseInt(_studentNum) - 1}位學生的出行情況尚未填寫
+                        {
+                            parseInt(_totalStudentNumber) >4 ?
+                            "請確認是否所有家庭成員都已填寫問卷"
+                            :
+                           "尚有" +( parseInt(_totalStudentNumber) - parseInt(_studentNum) - 1) + "位學生的出行情況尚未填寫"
+                        }
+                        
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

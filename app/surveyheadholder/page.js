@@ -140,7 +140,7 @@ function App() {
       address: null
     }))
 
-    if (type == "geolocation"){
+    if (type == "geolocation") {
       setSurvey((prevState) => ({
         ...prevState,
         address: {
@@ -274,16 +274,16 @@ function App() {
     // if (!finishStatus) {
     //   if (window.confirm("返回上一頁嗎?")) {
     //     setfinishStatus(true)
-        const copyArr = [...storedPathList]
-        const prevPath = copyArr[copyArr.length - 1]
-        copyArr.splice(-1)
-        sessionStorage.setItem('pathList', copyArr)
-        // router.push(prevPath)
-        router.back()
-      // } else {
-      //   window.history.pushState(null, null, window.location.pathname);
-      //   setfinishStatus(false)
-      // }
+    const copyArr = [...storedPathList]
+    const prevPath = copyArr[copyArr.length - 1]
+    copyArr.splice(-1)
+    sessionStorage.setItem('pathList', copyArr)
+    // router.push(prevPath)
+    router.back()
+    // } else {
+    //   window.history.pushState(null, null, window.location.pathname);
+    //   setfinishStatus(false)
+    // }
     // }
   }
 
@@ -358,8 +358,8 @@ function App() {
               </FormControl>
             </div> */}
 
-            <div className={styles.question} style={{justifyContent:'center'}}>
-              <FormControl >
+            <div className={styles.question} style={{ justifyContent: 'center' }}>
+              <FormControl sx={{ display: 'flex', flex: 1 }}>
                 <FormLabel id="address-label">
                   <h3>
                     1)	家庭住址建築物名稱（可填寫地標，無需填寫樓層及單位）：
@@ -368,12 +368,12 @@ function App() {
                 <Box>
                   <p className={styles.mapHitText}>
                     {
-                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{color:"#666666"}}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br/>**例子：八角亭</p>
+                      getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                     }
                   </p>
                 </Box>
 
-                <div style={{zIndex: 1 }} >
+                <div style={{ zIndex: 1 }} >
                   <MapComponent handleCustomAddress={handleCustomAddress} />
                 </div>
 
@@ -413,7 +413,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="1" control={<Radio />} label="1人" />
                   <FormControlLabel sx={{ color: "black" }} value="2" control={<Radio />} label="2人" />
                   <FormControlLabel sx={{ color: "black" }} value="3" control={<Radio />} label="3人" />
-                  <FormControlLabel sx={{ color: "black" }} value="4+" control={<Radio />} label="4人或以上" />
+                  <FormControlLabel sx={{ color: "black" }} value="99" control={<Radio />} label="4人或以上" />
 
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.residentPopulationStudent}</FormHelperText>
