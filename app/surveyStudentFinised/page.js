@@ -130,7 +130,6 @@ function App() {
 
     React.useEffect(() => {
         if (storedPathList != null) {
-            console.log("storedPathList12", storedPathList)
             setStoredPathList([...storedPathList, window.location.pathname])
         }
     }, [])
@@ -142,6 +141,7 @@ function App() {
         }
         if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyBadWeather") {
             router.replace("./")
+            return
         }
     }, [])
 
@@ -152,10 +152,12 @@ function App() {
         //   if (!finishStatus) {
         //       if (window.confirm("Do you want to go back ?")) {
         //         setfinishStatus(true)
+       
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
+        console.log("student",_studentNum)
         router.back()
         //       } else {
         //           window.history.pushState(null, null, window.location.pathname);

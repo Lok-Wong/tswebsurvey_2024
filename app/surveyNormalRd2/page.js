@@ -39,16 +39,10 @@ function App() {
             leaveDestinationTime: "",
             leaveDestinationTransition: 999,
             otherLeaveDestinationTransition: 999,
-            // destinationBackHomeStartTime: "",
-            // destinationBackHomeEndTime: "",
-            // leaveDestinationBackHomeTransition: 999,
-            // otherLeaveDestinationBackHomeTransition: 999
         }
     }
 
     const blankHelpText = {}
-    const [cookies, setCookie, removeCookie] = useCookies(['toSchoolTime']);
-
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [progressBarValue, setProgressBarValue] = React.useState(40)
 
@@ -244,6 +238,9 @@ function App() {
     }
 
     const getMapSelectedText = () => {
+        if (typeof (survey.directToHomeNo.address) === "undefined" || survey.directToHomeNo.address === 999) {
+            return null
+        }
 
         if (survey.directToHomeNo.address.method == "input") {
             return (
@@ -273,6 +270,12 @@ function App() {
     }
 
     const handleNextButton = () => {
+
+        if (survey.leaveSchoolTime == "Invalid Date") {
+            handleHelpText("leaveSchoolTime", "請重新填寫離校時間")
+            return
+        }
+
         if (survey.leaveSchoolTime == "") {
             handleHelpText("leaveSchoolTime", "請填寫離校時間")
             return
@@ -297,6 +300,11 @@ function App() {
         }
 
         if (survey.directToHomeState == "是") {
+            if (survey.directToHomeYes.arivalHomeTime == "Invalid Date") {
+                handleHelpText("leaveSchoolTime", "請填寫到達家時間")
+                return
+            }
+
             if (survey.directToHomeYes.arivalHomeTime == "") {
                 handleHelpText("arivalHomeTime", "請填寫到達家時間")
                 return
@@ -310,6 +318,13 @@ function App() {
             if (survey.directToHomeYes.arivalHomeTransition == 999) {
                 handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
                 return
+            }
+
+            if (survey.directToHomeYes.arivalHomeTransition == "其他") {
+                if (survey.directToHomeYes.otherarivalHomeTransition == 999 || survey.directToHomeYes.otherarivalHomeTransition == "") {
+                    handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
+                    return
+                }
             }
 
             if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
@@ -453,18 +468,18 @@ function App() {
             ))
         };
 
-        if (survey.directToHomeNo.leaveDestinationBackHomeTransition != "其他") {
-            setSurvey((prevState) => (
-                {
-                    ...prevState,
-                    directToHomeNo: {
-                        ...prevState.directToHomeNo,
-                        otherLeaveDestinationBackHomeTransition: 999
-                    }
-                }
-            ))
-        };
-    }, [survey.leavePickUp, survey.directToHomeYes.arivalHomeTransition, survey.directToHomeNo.leaveDestinationTransition, survey.directToHomeNo.leaveDestinationBackHomeTransition])
+        // if (survey.directToHomeNo.leaveDestinationBackHomeTransition != "其他") {
+        //     setSurvey((prevState) => (
+        //         {
+        //             ...prevState,
+        //             directToHomeNo: {
+        //                 ...prevState.directToHomeNo,
+        //                 otherLeaveDestinationTransition: 999
+        //             }
+        //         }
+        //     ))
+        // };
+    }, [survey.leavePickUp, survey.directToHomeYes.arivalHomeTransition, survey.directToHomeNo.leaveDestinationTransition])
 
     React.useEffect(() => {
         if (storedPathList != null) {
@@ -737,7 +752,7 @@ function App() {
                                 survey.directToHomeState == "否" ?
                                     <div key={key}>
                                         <div className={styles.question} style={{ justifyContent: "center" }}>
-                                            <FormControl sx={{display: 'flex', flex: 1 }}>
+                                            <FormControl sx={{ display: 'flex', flex: 1 }}>
                                                 <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>

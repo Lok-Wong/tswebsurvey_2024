@@ -199,21 +199,27 @@ function App() {
         }
 
         if (survey.tripChange.earlyOutDooring.state) {
-            if (survey.tripChange.earlyOutDooring.value === 999) {
+            if (survey.tripChange.earlyOutDooring.value === 999 
+                || 
+                survey.tripChange.earlyOutDooring.value === ""
+                ||
+                survey.tripChange.earlyOutDooring.value === null
+            ) {
                 handleHelpText("tripChange", "請填寫提早出門的分鐘數")
                 return
             }
         }
 
         if (survey.tripChange.transitionChange.state) {
-            if (survey.tripChange.transitionChange.value === 999) {
+            if (survey.tripChange.transitionChange.value === 999 || survey.tripChange.transitionChange.value === "" || survey.tripChange.transitionChange.value === null
+            ) {
                 handleHelpText("tripChange", "請填寫改變後的交通方式")
                 return
             }
         }
 
         if (survey.tripChange.other.state) {
-            if (survey.tripChange.other.value === 999) {
+            if (survey.tripChange.other.value === 999 || survey.tripChange.other.value === "" || survey.tripChange.other.value === null) {
                 handleHelpText("tripChange", "請填寫其他")
                 return
             }

@@ -32,6 +32,28 @@ export default function App() {
         return 0;
     }, [])
 
+    const _initial_pathListe = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_path_list = sessionStorage.getItem('pathList') ? sessionStorage.getItem('pathList').split(",") : null;
+            // If there is a value stored in localStorage, use that
+            if (local_storage_path_list) {
+                return (local_storage_path_list);
+            }
+        }
+    }, []);
+
+    const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
+
+    React.useEffect(() => {
+        if (sessionStorage.getItem('pathList') === null) {
+            router.replace("./")
+            return
+        }
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyPhoneNum") {
+            router.replace("./")
+        }
+    }, [])
+
 
     const handleNextButton = () => {
         sessionStorage.setItem("studentNum", (parseInt(_studentNum) + 1))

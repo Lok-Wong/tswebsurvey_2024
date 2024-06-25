@@ -53,16 +53,21 @@ function App() {
 
     const blankSurveyCrd2 = {
         startTime: 999,
-        leaveShcoolTime: 999,
+        leaveShcoolTime: "",
         pickup: 999,
         otherOfPickup: 999,
         directToPort: 999,
-        portForHome: 999,
-        otherOfportForHome: 999,
-        commonTransirtation: 999,
-        otherOfCommonTransirtation: 999,
-        arrivalPortTime: 999,
-        arrivalHomeTime: 999,
+        directToPortYes: {
+            arrivalTime: "",
+            transirtation: 999,
+            othertransirtation: 999,
+        },
+        directToPortNo: {
+            address: 999,
+            arrivalTime: "",
+            transirtation: 999,
+            othertransirtation: 999,
+        },
 
     }
 
@@ -88,14 +93,10 @@ function App() {
             otherarivalHomeTransition: 999
         },
         directToHomeNo: {
-            leaveDestination: 999,
-            leaveDestinationTime: 999,
+            address: 999,
+            leaveDestinationTime: "",
             leaveDestinationTransition: 999,
             otherLeaveDestinationTransition: 999,
-            destinationBackHomeStartTime: 999,
-            destinationBackHomeEndTime: 999,
-            leaveDestinationBackHomeTransition: 999,
-            otherLeaveDestinationBackHomeTransition: 999
         }
     }
 
@@ -237,15 +238,23 @@ function App() {
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
+    // const  setStudentNum = React.useCallback ( (num) => {
+    //     if (num > 0) {
+    //         console.log("num", num)
+    //         const newStudentNum = num - 1
+    //         sessionStorage.setItem("studentNum", newStudentNum)
+    //     }
+    // },[])
 
 
-    const onBackButtonEvent = (e) => {
+    const onBackButtonEvent = React.useCallback ( (e) => {
         e.preventDefault();
         // if (!finishStatus) {
         //     if (window.confirm("返回上一頁嗎?")) {
         //         setfinishStatus(true)
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
+        // setStudentNum(sessionStorage.getItem("studentNum"))
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
         router.back()
@@ -254,7 +263,7 @@ function App() {
         //         setfinishStatus(false)
         //     }
         // }
-    }
+    },[])
 
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
@@ -264,33 +273,6 @@ function App() {
         };
     }, []);
 
-    // React.useEffect(() => {
-    //     setRgValue("")
-    // }, [stValue])
-
-    // React.useEffect(() => {
-    //     setShValue("")
-    //     setShInputValue("")
-    // }, [rgValue])
-
-    // React.useEffect(() => {
-    //     setSlValue("")
-    // }, [shValue, shInputValue])
-
-    // React.useEffect(() => {
-    //     setSltValue("")
-    // }, [slValue])
-
-    // React.useEffect(() => {
-    //     setSurvey((prevState) => (
-    //         {
-    //             ...prevState,
-    //             schoolName: shInputValue
-    //         }
-    //     )
-
-    //     )
-    // }, [shValue, shInputValue])
     const schoolDataFunc = (value) => {
         setSurvey((prevState) => (
             {
@@ -336,7 +318,7 @@ function App() {
             return
         }
 
-        if (survey.schoolName == "999" || survey.schoolName == "") {
+        if (survey.schoolName == "999" || survey.schoolName == "" || survey.schoolName == null) {
             handleHelpText('schoolName', "請選擇學校名稱")
             return
         }
@@ -408,7 +390,7 @@ function App() {
                             二、學生個人資料
                         </h1>
 
-                        <div className={styles.question}>
+                        <div key={1} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-area-label"><h3>1)  學校所屬地區：</h3></FormLabel>
                                 <RadioGroup
@@ -431,7 +413,7 @@ function App() {
                         </div>
 
 
-                        <div className={styles.question}>
+                        <div key={2} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-name-label"><h3>2)  學校名稱：(*如無合適選項，請輸入學校名稱。)</h3></FormLabel>
                                 <Autocomplete
@@ -479,7 +461,7 @@ function App() {
                         </div>
 
                         {schoolNameSelectType == "input" ?
-                            <div className={styles.question}>
+                            <div key={323} className={styles.question}>
                                 <FormControl>
                                     <FormLabel id="school-type-label"><h3>2.1)  教育類型：</h3></FormLabel>
                                     <RadioGroup
@@ -507,7 +489,7 @@ function App() {
                         }
 
 
-                        <div className={styles.question} >
+                        <div key={4} className={styles.question} >
                             <FormControl>
                                 <FormLabel id="class-level-label"><h3>3)  就讀程度：</h3></FormLabel>
                                 <RadioGroup
@@ -532,7 +514,7 @@ function App() {
                                                 <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"幼稚園"} />
                                                 <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"小學"} />
                                                 <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"中學"} />
-                                                <FormControlLabel key={3} sx={{ color: "black" }} value={"特殊教育"} control={<Radio />} label={"特殊教育"} />
+                                                <FormControlLabel key={4} sx={{ color: "black" }} value={"特殊教育"} control={<Radio />} label={"特殊教育"} />
 
                                             </div>
 
@@ -546,7 +528,7 @@ function App() {
 
 
 
-                        <div className={styles.question} >
+                        <div key={5} className={styles.question} >
                             <FormControl>
                                 <FormLabel id="level-type-label"><h3>4)  就讀年級：</h3></FormLabel>
                                 <RadioGroup
@@ -583,7 +565,7 @@ function App() {
 
 
 
-                        <div className={styles.question}>
+                        <div key={6} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="gender-label"><h3>5)  姓別：</h3></FormLabel>
                                 <RadioGroup
@@ -599,7 +581,7 @@ function App() {
                             </FormControl>
                         </div>
 
-                        <div className={styles.question}>
+                        <div key={7} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="age-label"><h3>6)  年齡</h3></FormLabel>
                                 <RadioGroup
@@ -618,7 +600,7 @@ function App() {
                             </FormControl>
                         </div>
 
-                        <div className={styles.question}>
+                        <div key={8} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="cross-border-student-label"><h3>7)  學生上學及放學是否需跨境：</h3></FormLabel>
                                 <RadioGroup
@@ -640,7 +622,7 @@ function App() {
                     null
             }
 
-            <div className={styles.buttonGroup}>
+            <div key={9} className={styles.buttonGroup}>
                 <LinearProgresss values={progressBarValue} />
                 <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
 

@@ -87,6 +87,7 @@ function App() {
 
 
     const handleChange = (event) => {
+        console.log(event.target.value)
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
@@ -111,12 +112,29 @@ function App() {
             handleHelpText("pickup", "請選擇一個選項")
             return
         }
+
+        if (survey.pickup == "其他") {
+            if (survey.otherOfPickup == 999) {
+                handleHelpText("pickup", "請填寫其他")
+                return
+            }
+        }
+
+        if (survey.TimeStartFromHome == "Invalid Date") {
+            handleHelpText("TimeStartFromHome", "請重新選擇時間")
+            return
+        }
+
         if (survey.TimeStartFromHome == "") {
             handleHelpText("TimeStartFromHome", "請選擇時間")
             return
         }
         if (survey.portForShcool == 999) {
             handleHelpText("portForShcool", "請選擇一個選項")
+            return
+        }
+        if (survey.TimeEndToMacau == "Invalid Date") {
+            handleHelpText("TimeEndToMacau", "請重新選擇時間")
             return
         }
         if (survey.TimeEndToMacau == "") {
@@ -127,6 +145,11 @@ function App() {
             handleHelpText("commonTransirtation", "請選擇一個選項")
             return
         }
+        if (survey.arrivalTimeToSchool == "Invalid Date") {
+            handleHelpText("arrivalTimeToSchool", "請重新選擇時間")
+            return
+        }
+
         if (survey.arrivalTimeToSchool == "") {
             handleHelpText("arrivalTimeToSchool", "請選擇時間")
             return
@@ -172,13 +195,15 @@ function App() {
     }, [survey])
 
     React.useEffect(() => {
-        if (survey.pickup != "其他監護人") {
+        if (survey.pickup != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
                     otherOfPickup: 999
                 }
-            ))
+            )
+            )
+            return
         }
 
         if (survey.commonTransirtation != "其他") {
@@ -188,21 +213,23 @@ function App() {
                     otherOfCommonTransirtation: 999
                 }
             ))
+            return
         }
 
-        if (survey.otherOfpPortForShcool != "其他") {
+        if (survey.portForShcool != "其他") {
             setSurvey((prevState) => (
                 {
                     ...prevState,
                     otherOfpPortForShcool: 999
                 }
             ))
+            return
         }
 
 
     }, [survey.pickup,
     survey.commonTransirtation,
-    survey.otherOfpPortForShcool])
+    survey.portForShcool])
 
     React.useEffect(() => {
         if (storedPathList != null) {
@@ -363,12 +390,12 @@ function App() {
                                         >
                                             <TextField
                                                 inputProps={{ maxLength: 10 }}
-                                                name='otherOfPickup'
-                                                id="pickup-other-textfill"
+                                                name='otherOfpPortForShcool'
+                                                id="pickup-other-textfills"
                                                 label="其他"
                                                 variant="filled"
                                                 onChange={handleChange}
-                                                value={survey.portForShcool == 999 ? null : survey.portForShcool}
+                                                value={survey.otherOfpPortForShcool == 999 ? null : survey.otherOfpPortForShcool}
                                             />
                                         </Box>
                                         :

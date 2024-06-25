@@ -131,12 +131,12 @@ function App() {
             }
         }
 
-        if (survey.pickupTimeStart == "") {
+        if (survey.pickupTimeStart == "" || survey.pickupTimeStart == "Invalid Date") {
             handleHelpText("pickupTimeStart", "請選擇出發時間")
             return
         }
 
-        if (survey.pickupTimeEnd == "") {
+        if (survey.pickupTimeEnd == "" || survey.pickupTimeEnd == "Invalid Date") {
             handleHelpText("pickupTimeEnd", "請選擇到達時間")
             return
         }
@@ -321,7 +321,8 @@ function App() {
                                                     return
                                                 }
                                                 handleTimeChange(event, "pickupTimeStart"),
-                                                    setStartTime(event.$d)
+                                                    setStartTime(event.$d),
+                                                    console.log("event",event.$d)
                                             }}
                                         />
                                     </DemoContainer>
