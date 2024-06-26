@@ -9,6 +9,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import AES from 'crypto-js/aes';
 import getData from '../utils/string';
+import modeECB from "crypto-js/mode-ecb";
+import cryptojs from 'crypto-js';
 
 export default function App() {
     // const fs = require('fs');
@@ -72,11 +74,16 @@ export default function App() {
 
     const handleChange = (event) => {
 
+        console.log("AES", AES.encrypt( event.target.value, cryptojs.enc.Utf8.parse(getData()),{mode: modeECB}).toString())
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
                 ...prevState,
-                [objectName]: AES.encrypt( event.target.value, getData() ).toString()
+                [objectName]: AES.encrypt( 
+                    event.target.value, 
+                    cryptojs.enc.Utf8.parse(getData()),
+                    {mode: modeECB})
+                    .toString()
             }
         )
 
