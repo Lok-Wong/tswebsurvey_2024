@@ -164,6 +164,9 @@ export default function Home() {
 
   React.useEffect(() => {
     setIsClient(true)
+    if (typeof window !== "undefined") {
+      setCookie('jsEnabled', "true", { path: '/' })
+    }
     sessionStorage.clear();
     window._AMapSecurityConfig = {
       securityJsCode: "5a70a60f476d153b9b6caa45864b605f",
@@ -307,6 +310,13 @@ export default function Home() {
           openModel
         </Button> */}
       </div>
+      <noscript className={styles.noScriptBox}>
+        <div className={styles.noScriptBoxText}>
+          <p>你的瀏覽器停用了JavaScript，需要啟用JavaScript才可使用本網頁。</p>
+          <p>如使用Google Chrome瀏覽器，可參考以下網址，以啟用JavaScript：</p>
+          <a href="https://support.google.com/admanager/answer/12654?hl=zh-Hant">https://support.google.com/admanager/answer/12654?hl=zh-Hant</a>
+        </div>
+      </noscript>
 
       <Snackbar open={openAlertBar} autoHideDuration={6000} onClose={handleAlertBarClose}>
         <Alert

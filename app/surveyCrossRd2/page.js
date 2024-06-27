@@ -26,6 +26,7 @@ function App() {
         leaveShcoolTime: "",
         pickup: 999,
         otherOfPickup: 999,
+        portForHome : 999,
         directToPort: 999,
         directToPortYes: {
             arrivalTime: "",

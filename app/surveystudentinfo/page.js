@@ -25,6 +25,7 @@ function App() {
     const [shInputValue, setShInputValue] = React.useState('')
     const [progressBarValue, setProgressBarValue] = React.useState(10)
     const [schoolNameSelectType, setSchoolNameSelectType] = React.useState("")
+    const [studnetNumbcount, setStudentNumCount] = React.useState()
 
     const blanksurvey = {
         schoolType: 999,
@@ -56,6 +57,7 @@ function App() {
         leaveShcoolTime: "",
         pickup: 999,
         otherOfPickup: 999,
+        portForHome: 999,
         directToPort: 999,
         directToPortYes: {
             arrivalTime: "",
@@ -206,7 +208,6 @@ function App() {
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
-        console.log("survey", survey)
         setIsClient(true)
         setStoredPathList(sessionStorage.getItem("pathList") ? sessionStorage.getItem("pathList").split(",") : null)
     }, [])
@@ -238,32 +239,43 @@ function App() {
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
-    // const  setStudentNum = React.useCallback ( (num) => {
-    //     if (num > 0) {
-    //         console.log("num", num)
-    //         const newStudentNum = num - 1
-    //         sessionStorage.setItem("studentNum", newStudentNum)
-    //     }
-    // },[])
+    const  setStudentNum = React.useCallback ( (num) => {
+        console.log("num", num)
+        if (typeof num === 'undefined') {
+            return(0)
+        }
+        
+        if (num > 0) {
+            const newStudentNum = num - 1
+            return(newStudentNum)
+        }
+    },[])
 
 
     const onBackButtonEvent = React.useCallback ( (e) => {
+        setfinishStatus(true)
+
         e.preventDefault();
+        if (typeof setStudentNum(_studentNum) === 'undefined') {
+            sessionStorage.setItem("studentNum", 0)
+        } else {
+            sessionStorage.setItem("studentNum", setStudentNum(_studentNum))
+        }
         // if (!finishStatus) {
         //     if (window.confirm("返回上一頁嗎?")) {
         //         setfinishStatus(true)
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
-        // setStudentNum(sessionStorage.getItem("studentNum"))
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
         router.back()
+
         //     } else {
         //         window.history.pushState(null, null, window.location.pathname);
         //         setfinishStatus(false)
         //     }
         // }
-    },[])
+    },[finishStatus])
 
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
