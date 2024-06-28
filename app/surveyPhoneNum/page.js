@@ -74,7 +74,6 @@ export default function App() {
 
     const handleChange = (event) => {
 
-        console.log("AES", AES.encrypt( event.target.value, cryptojs.enc.Utf8.parse(getData()),{mode: modeECB}).toString())
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
