@@ -204,13 +204,13 @@ export default function Home() {
         </p>
 
         <div className={styles.imagecontenter}>
-          {/* <Image
+          <Image
             src="/mixed.png"
             alt="mixed Logo"
             width={350.75}
             height={95.875}
             resizeMode="contain"
-          /> */}
+          />
         </div>
       </div>
 
