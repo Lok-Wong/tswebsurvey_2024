@@ -118,6 +118,7 @@ export default function App() {
 
     const handleNextButton = () => {
         sessionStorage.setItem("pathList", storedPathList)
+        sessionStorage.setItem("surveyEndTime", new Date())
         router.push("/surveyFinished")
     }
 

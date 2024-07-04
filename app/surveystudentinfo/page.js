@@ -240,7 +240,6 @@ function App() {
     const [finishStatus, setfinishStatus] = React.useState(false);
 
     const  setStudentNum = React.useCallback ( (num) => {
-        console.log("num", num)
         if (typeof num === 'undefined') {
             return(0)
         }
@@ -283,7 +282,7 @@ function App() {
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };
-    }, []);
+    }, [finishStatus]);
 
     const schoolDataFunc = (value) => {
         setSurvey((prevState) => (
