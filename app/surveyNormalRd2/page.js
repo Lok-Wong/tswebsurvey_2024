@@ -529,11 +529,17 @@ function App() {
 
     React.useEffect(() => {
         if (survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
-            setProgressBarValue(80)
+            if (survey.directToHomeNo.leaveDestinationTransition &&survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999){
+                setProgressBarValue(80)
+                return
+            }
+            if (survey.directToHomeYes.leaveDestinationTransition &&survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999){
+                setProgressBarValue(80)
+                return
+            }
+            setProgressBarValue(60)
             return
-        } else {
-            setProgressBarValue(40)
-        }
+        } 
 
     }, [survey]);
 

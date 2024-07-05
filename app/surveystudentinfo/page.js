@@ -183,6 +183,19 @@ function App() {
             return
         }
 
+        if (event.target.name == "classLevel") {
+            setSurvey((prevState) => (
+                {
+                    ...prevState,
+                    classLevel: event.target.value,
+                    levelType : 999
+                }
+            )
+            )
+            return
+        }
+
+
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
@@ -196,7 +209,6 @@ function App() {
     };
 
     const getSchoolTypeFromSchoolName = () => {
-        console.log("survey.schoolName", schoolType)
         setSurvey((prevState) => (
             {
                 ...prevState,
@@ -285,10 +297,14 @@ function App() {
     }, [finishStatus]);
 
     const schoolDataFunc = (value) => {
+
         setSurvey((prevState) => (
             {
                 ...prevState,
-                schoolName: value
+                schoolName: value,
+                schoolType: 999,
+                classLevel: 999,
+                levelType: 999,
             }
         )
         )
@@ -594,7 +610,7 @@ function App() {
 
                         <div key={7} className={styles.question}>
                             <FormControl>
-                                <FormLabel id="age-label"><h3>6)  年齡</h3></FormLabel>
+                                <FormLabel id="age-label"><h3>6)  年齡：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="age-label"
                                     name="age"

@@ -11,6 +11,7 @@ import AES from 'crypto-js/aes';
 import getData from '../utils/string';
 import modeECB from "crypto-js/mode-ecb";
 import cryptojs from 'crypto-js';
+import FormHelperText from '@mui/material/FormHelperText';
 
 export default function App() {
     // const fs = require('fs');
@@ -74,7 +75,19 @@ export default function App() {
 
     const handleChange = (event) => {
 
+            
+
         const objectName = event.target.name
+        if (event.target.value.length == 0) {
+            setSurvey((prevState) => (
+                {
+                    ...prevState,
+                    [objectName]: 999
+                }
+            ))
+            return
+        }
+
         setSurvey((prevState) => (
             {
                 ...prevState,
@@ -117,6 +130,15 @@ export default function App() {
     }, [])
 
     const handleNextButton = () => {
+        console.log("phoneNums", phoneNums)
+        if (typeof phoneNums != "undefined"){
+            if (phoneNums.length>0) {
+                if (phoneNums.length < 8 ) {
+                    handleHelpText("phoneNum", "請輸入8位數以上的電話號碼")
+                    return
+                }
+            }
+        }
         sessionStorage.setItem("pathList", storedPathList)
         sessionStorage.setItem("surveyEndTime", JSON.stringify(new Date()))
         router.push("/surveyFinished")
@@ -187,7 +209,9 @@ export default function App() {
                                         onChange={(e) => {handleChange(e),setPhoneNums(e.target.value)}}
                                     />
                                 </Box>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.phoneNum}</FormHelperText>
                             </FormControl>
+
                         </div>
                         <div className={styles.question}>
                             <FormControl sx={{

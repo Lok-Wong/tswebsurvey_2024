@@ -200,7 +200,7 @@ export default function Home() {
       </Box>
       <div className={styles.description}>
         <p>
-          V0.9
+          V1.0
         </p>
 
         <div className={styles.imagecontenter}>
@@ -224,10 +224,9 @@ export default function Home() {
           <br />
           <br />
           倘對本調查問卷有查詢，可在辦公時間致電聯絡：<br /><br />
-          XXXXXXX <br />
-          XXXXXXX <br />
-          XXXXXXX <br />
-          XXXXXXX <br />
+          63703082 <br />
+          63703083 <br />
+          63946045 <br />
 
           <br /><br />感謝您的支持與協助！
         </a>
@@ -237,7 +236,12 @@ export default function Home() {
         <div className={styles.startTextcompany}>
           <a >
             <br />
+            委託單位：交通事務局
+            <br />
             執行單位：澳大創科有限公司
+            <br />
+            協調單位：教育及青年發展局
+
           </a>
         </div>
       </div>

@@ -484,11 +484,18 @@ function App() {
 
     React.useEffect(() => {
         if (survey.leaveShcoolTime != "" && survey.pickup != 999 && survey.directToPort != 999) {
-            setProgressBarValue(80)
+            if (survey.directToPortYes.transirtation != 999 && survey.leaveShcoolTime != "" && survey.pickup != 999 && survey.directToPort != 999) {
+                setProgressBarValue(80)
+                return
+            }
+            if (survey.directToPortNo.transirtation != 999 && survey.leaveShcoolTime != "" && survey.pickup != 999 && survey.directToPort != 999) {
+                setProgressBarValue(80)
+                return
+            }
+            setProgressBarValue(60)
             return
-        } else {
-            setProgressBarValue(40)
-        }
+        } 
+
     }, [survey]);
 
 
