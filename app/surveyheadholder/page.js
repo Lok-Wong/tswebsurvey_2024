@@ -300,6 +300,10 @@ function App() {
     }
   }, [survey]);
 
+  React.useEffect(() => {
+    sessionStorage.setItem('checkschoolName',null)
+},[])
+
 
   return (
     <main className={styles.main}>

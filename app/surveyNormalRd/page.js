@@ -197,6 +197,11 @@ function App() {
         }
     }, [])
 
+    React.useEffect(() => {
+        sessionStorage.setItem('checkschoolName',null)
+    },[])
+
+
     const [finishStatus, setfinishStatus] = React.useState(false);
 
     const onBackButtonEvent = (e) => {

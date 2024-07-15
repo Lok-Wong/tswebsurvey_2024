@@ -257,7 +257,6 @@ export const schoolAddress = {
   "石排灣公立學校": "石排灣蝴蝶谷大馬路CN6a地段",
   "二龍喉公立學校": "山洞巷二龍喉公園",
   "傳承國際學校": "聯生填海區鄰近石排灣馬路之地段12a",
-
 }
 
 export const schoolLevel = {

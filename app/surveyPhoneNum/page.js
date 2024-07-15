@@ -130,11 +130,19 @@ export default function App() {
     }, [])
 
     const handleNextButton = () => {
-        console.log("phoneNums", phoneNums)
         if (typeof phoneNums != "undefined"){
             if (phoneNums.length>0) {
                 if (phoneNums.length < 8 ) {
                     handleHelpText("phoneNum", "請輸入8位數以上的電話號碼")
+                    return
+                }
+            }
+        }
+
+        if (typeof id4Nums != "undefined"){
+            if (id4Nums.length>0) {
+                if (id4Nums.length < 4 ) {
+                    handleHelpText("id4Nums", "請輸入尾4位的身分證號碼")
                     return
                 }
             }

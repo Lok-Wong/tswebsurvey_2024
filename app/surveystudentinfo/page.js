@@ -26,6 +26,7 @@ function App() {
     const [progressBarValue, setProgressBarValue] = React.useState(10)
     const [schoolNameSelectType, setSchoolNameSelectType] = React.useState("")
     const [studnetNumbcount, setStudentNumCount] = React.useState()
+    const [checkName, setCheckName] = React.useState()
 
     const blanksurvey = {
         schoolType: 999,
@@ -297,7 +298,11 @@ function App() {
     }, [finishStatus]);
 
     const schoolDataFunc = (value) => {
-
+        if (sessionStorage.getItem("checkschoolName") != value) {
+            sessionStorage.setItem("checkschoolName", value)
+            console.log("nochange")
+            return
+        }
         setSurvey((prevState) => (
             {
                 ...prevState,
@@ -308,6 +313,8 @@ function App() {
             }
         )
         )
+        console.log("changed")
+        sessionStorage.setItem("checkschoolName", value)
     }
 
     const getSchoolObject = (rgValue) => {
@@ -450,6 +457,7 @@ function App() {
                                     freeSolo
                                     id="schoolName"
                                     name='schoolName'
+                                    defaultValue={survey.schoolName}
                                     value={survey.schoolName == 999 ? "" : survey.schoolName}
                                     inputValue={shInputValue}
                                     onChange={(event, newValue) => {
