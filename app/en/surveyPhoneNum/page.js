@@ -181,7 +181,7 @@ export default function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div>
+                    <div style={{width:"50vw"}}>
                         <h1 style={{ color: "#000000" }}>
                             Drawing Event
                         </h1>
@@ -245,6 +245,8 @@ export default function App() {
                                         onChange={(e) => {handleChange(e),setId4Nums(e.target.value)}}
                                     />
                                 </Box>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.id4Nums}</FormHelperText>
+
                             </FormControl>
                         </div>
                     </div>

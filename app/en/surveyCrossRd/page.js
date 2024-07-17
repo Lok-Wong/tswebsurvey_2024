@@ -295,13 +295,15 @@ function App() {
             {
                 isClient ?
 
-                    <div>
-                        <h1 style={{ color: "#000000" }}>
-                        IV. Cross-border traveling to and from school
-                        </h1>
-                        <h2 style={{ color: "#000000" }}>
-                        4.1 Under normal circumstances, the situation of going to school in the morning
-                        </h2>
+                    <div className={styles.pageWidth}>
+                        <div style={{width:'50vw'}}>
+                            <h1 style={{ color: "#000000"}}>
+                            IV. Cross-border traveling to and from school
+                            </h1>
+                            <h2 style={{ color: "#000000" }}>
+                            4.1 Under normal circumstances, <br/> the situation of going to school in the morning
+                            </h2>
+                        </div>
 
                         <div className={styles.question}>
                             <FormControl>

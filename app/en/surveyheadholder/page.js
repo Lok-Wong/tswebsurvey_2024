@@ -309,7 +309,7 @@ function App() {
     <main className={styles.main}>
       {
         isClient ?
-          <div>
+          <div className={styles.pageWidth}>
             <h1 className={styles.title}>
             I. Student's Family Information
             </h1>

@@ -49,7 +49,7 @@ export default function App() {
             router.replace("./")
             return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyPhoneNum") {
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/en/surveyPhoneNum") {
             router.replace("./")
         }
     }, [])
@@ -146,7 +146,7 @@ export default function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div>
+                    <div style={{width:"50vw"}}>
 
                         <h1 style={{ color: "#000000" }}>
                             Submit the questionnaire

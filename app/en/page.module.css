@@ -121,6 +121,12 @@
     justify-content: space-evenly;
     flex-direction: row;
   }
+  .verifyCodeBox{
+    flex-direction: column;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+  }
 
   .signBlock{
     display: flex;
@@ -196,6 +202,10 @@
 
   .noScriptBoxText{
     padding: 5vw;
+  }
+
+  .pageWidth{
+    width:"50vw";
   }
 
 
@@ -275,6 +285,10 @@
       line-height: 26px;
       font-size: 16px;
       font-weight: 700;
+    }
+
+    .pageWidth{
+      width:"90vw";
     }
   }
   

@@ -47,9 +47,8 @@ export default function Home() {
   const [cookies, setCookie, removeCookie] = useCookies(['Csrf_tokens']);
 
   const actions = [
-    { icon: <p>繁中</p>, name: '繁中' },
-    { icon: <p>葡文</p>, name: '葡文' },
-    { icon: <p>英文</p>, name: '英文' },
+    { icon: <p>繁中</p>, name: '繁中', onclick:() => router.push('/') },
+    { icon: <p>英文</p>, name: '英文', onclick:() => router.push('/en') },
   ];
 
   const [survey, setSurvey] = React.useState({
@@ -78,13 +77,13 @@ export default function Home() {
 
       if (!inputVcode) {
         handleAlertBarOpen()
-        setVCodeError("未填寫驗證碼哦！")
+        setVCodeError("未填寫驗證碼！")
         return
       }
 
       if (vCode != inputVcode.toLocaleUpperCase()) {
         handleAlertBarOpen()
-        setVCodeError("驗證碼錯誤哦！")
+        setVCodeError("驗證碼錯誤！")
         return
       }
 
@@ -113,13 +112,13 @@ export default function Home() {
 
     if (!inputVcode) {
       handleAlertBarOpen()
-      setVCodeError("未填寫驗證碼哦！")
+      setVCodeError("未填寫驗證碼！")
       return
     }
 
     if (vCode != inputVcode.toLocaleUpperCase()) {
       handleAlertBarOpen()
-      setVCodeError("驗證碼錯誤哦！")
+      setVCodeError("驗證碼錯誤！")
       return
     }
 

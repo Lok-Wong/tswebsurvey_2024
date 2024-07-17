@@ -187,7 +187,7 @@ function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div>
+                    <div style={{width:"50vw"}}>
                         {/* <h1 style={{ color: "#000000" }}>
                             是否還有其他家庭成員是非高等教育學生而未填寫本問卷？
                         </h1> */}

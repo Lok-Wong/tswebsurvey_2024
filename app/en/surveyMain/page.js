@@ -145,7 +145,7 @@ function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div>
+                    <div style={{width:"50vw"}}>
                         <div className={styles.checkBlock}>
                             <div className={styles.question}>
                                 <FormControl

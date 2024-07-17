@@ -419,7 +419,7 @@ function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div>
+                    <div className={styles.pageWidth}>
                         <h1 style={{ color: "#000000", marginBottom: "1vh" }}>
                         II. Personal information of the student
                         </h1>

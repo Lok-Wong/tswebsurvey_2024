@@ -76,6 +76,11 @@
   background-color: #0265aa;
 }
 
+.pageWidth{
+  width:"50vw";
+}
+
+
  /* Mobile */
  @media (max-width: 700px){
   .question{
@@ -86,4 +91,9 @@
   .buttonGroup{
     width: 98vw;
   }
+
+  .pageWidth{
+    width:"90vw";
+  }
+  
  }

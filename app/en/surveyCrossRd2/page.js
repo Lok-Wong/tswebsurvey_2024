@@ -505,7 +505,7 @@ function App() {
             {
                 isClient ?
 
-                    <div>
+                    <div style={{width:"50vw"}}>
                         <h2 style={{ color: "#000000" }}>
                         4.2 Under normal circumstances, the situation of students leaving school in the afternoon
                         </h2>

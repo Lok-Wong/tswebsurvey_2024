@@ -265,7 +265,7 @@ function App() {
             {
                 isClient ?
 
-                    <div>
+                    <div style={{width:"50vw"}}>
 
                         <h1 style={{ color: "#000000" }}>
                         III. Under normal circumstances, the commuting situation for going to and returning from school

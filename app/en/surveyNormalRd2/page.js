@@ -548,7 +548,7 @@ function App() {
             {
                 isClient ?
 
-                    <div>
+                    <div style={{width:"50vw"}}>
                         <h1 style={{ color: "#000000" }}>
                         3.2 Under normal circumstances, the situation after school in the afternoon
                         </h1>

@@ -282,7 +282,7 @@ export default function Home() {
               onKeyDown={(event) => { enterToNext(event) }}
             />
           </Box>
-          <div>
+          <div className={styles.verifyCodeBox}>
             <Vcode
               id="1"
               length={4}
