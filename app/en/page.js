@@ -217,7 +217,7 @@ export default function Home() {
       <div className={styles.startLetter}>
         <a className={styles.letterText}>
           Dear Parents/Students:<br /><br />
-          Welcome to participate in the "Survey of Macao Students’ Travel Habits". The purpose of this survey is to understand the traveling habits of non-tertiary students in Macau, as well as gather your opinions and suggestions regarding commuting to and from school.
+          Welcome to participate in the Survey of Macao Students Travel Habits. The purpose of this survey is to understand the traveling habits of non-tertiary students in Macau, as well as gather your opinions and suggestions regarding commuting to and from school.
           <br />
           <br />
           Your valuable information and opinions are very important. This survey will only take around 5 minutes to complete, and the provided information will used soely for analysis and will not be disclosed to the public. By you providing your contact information after completing the questionnaire, your name will be entered into a drawing to win a stationery gift certificate.
@@ -349,13 +349,13 @@ export default function Home() {
           Depending on the actual need of the services, the personal data collected and handled by the Company may be transferred to other administrative organs, judicial organs, or private entities. Such organs or entities are required to comply with the relevant legislation while processing the personal data.            <br />
           3. Access and Correction of Personal Data
           <br />
-          In accordance with the provisions of Law No. 8/2005 "Personal Data Protection Law", users have the right to access and correct their personal data by writing to the Company, or directly to other administrative agencies, judicial agencies, private organizations or entities that receive such personal data from the Company.
+          In accordance with the provisions of Law No. 8/2005 Personal Data Protection Law, users have the right to access and correct their personal data by writing to the Company, or directly to other administrative agencies, judicial agencies, private organizations or entities that receive such personal data from the Company.
 
-          For the user’s convenience, some electronic services may display the information submitted in the past, so that the user is not required to fill it in again to save time. Any outdated information (for example, telephone number) can be updated immediately.
+          For the users convenience, some electronic services may display the information submitted in the past, so that the user is not required to fill it in again to save time. Any outdated information (for example, telephone number) can be updated immediately.
           <br />
           4. Protection of Personal Data
           <br />
-          All administrators of this website will follow the provisions of Law No. 8/2005 "Personal Data Protection Law" when handling the personal data of users, and take measures to ensure confidentiality and proper custody until the usage of data ceases and the retention period of data expires. The relevant data will then be destroyed or archived in accordance with the relevant regulations.
+          All administrators of this website will follow the provisions of Law No. 8/2005 Personal Data Protection Law when handling the personal data of users, and take measures to ensure confidentiality and proper custody until the usage of data ceases and the retention period of data expires. The relevant data will then be destroyed or archived in accordance with the relevant regulations.
           <br />
           5. Risk
           <br />

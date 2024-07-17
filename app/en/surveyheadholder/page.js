@@ -311,7 +311,7 @@ function App() {
         isClient ?
           <div className={styles.pageWidth}>
             <h1 className={styles.title}>
-            I. Student's Family Information
+            I. Student Family Information
             </h1>
 
             <div className={styles.question} style={{ justifyContent: 'center' }}>
