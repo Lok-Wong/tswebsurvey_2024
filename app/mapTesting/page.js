@@ -45,10 +45,11 @@ function MapComponent({ handleCustomAddress }) {
         }).then((AMap) => {
           maps = new AMap.Map('container', {
             // 设置地图容器id
-            viewMode: '2D', // 是否为3D地图模式
+            viewMode: '3D', // 是否为3D地图模式
             zoom: 13, // 初始化地图级别
             center: [113.568683, 22.162143], // 初始化地图中心点位置
             resizeEnable: true, // 是否监控地图容器尺寸变化
+            lang:"zh_en",
           });
 
           AMap.plugin(['AMap.PlaceSearch', 'AMap.AutoComplete', 'AMap.Geocoder', 'AMap.Geolocation'], () => {
@@ -62,7 +63,7 @@ function MapComponent({ handleCustomAddress }) {
               position: 'RB',
               needAddress: true,
               showMarker:true,
-              showCircle:false
+              showCircle:false,
             })
 
             var geocoder = new AMap.Geocoder({
@@ -87,8 +88,6 @@ function MapComponent({ handleCustomAddress }) {
             // })
 
             maps.addControl(geolocation.current)
-
-
             maps.on('click', (e) => {
               let lnglat = [e.lnglat.lng, e.lnglat.lat]
 

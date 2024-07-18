@@ -18,6 +18,8 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { styled } from '@mui/material/styles';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { useCookies } from "react-cookie";
+import Link from "next/link";
+
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
@@ -45,12 +47,6 @@ export default function Home() {
   const [isClient, setIsClient] = React.useState(false)
   const [infoSaveChecked, setInfoSaveChecked] = React.useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['Csrf_tokens']);
-
-  const actions = [
-    { icon: <p>繁中</p>, name: '繁中' },
-    { icon: <p>PT</p>, name: '葡文' },
-    { icon: <p>EN</p>, name: '英文' },
-  ];
 
   const [survey, setSurvey] = React.useState({
     startTime: 999,
@@ -179,6 +175,11 @@ export default function Home() {
     sessionStorage.setItem("home", JSON.stringify(survey))
   }, [ip, survey]);
 
+  const actions = [
+    { icon: <Link href="/">繁中</Link>, name: '繁中',  },
+    { icon: <Link href="/en">英文</Link>, name: '英文',  },
+    { icon: <Link href="/">葡文</Link>, name: '即將發佈', },
+  ];
 
 
   return (
