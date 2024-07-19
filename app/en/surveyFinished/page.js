@@ -146,10 +146,10 @@ export default function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div style={{width:"50vw"}}>
+                    <div>
 
                         <h1 style={{ color: "#000000" }}>
-                            Submit the questionnaire
+                            Submit the Questionnaire
                         </h1>
 
                         <div className={styles.question}>

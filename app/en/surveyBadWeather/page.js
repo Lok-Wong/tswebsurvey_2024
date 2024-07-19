@@ -332,7 +332,7 @@ function App() {
         <main className={styles.main}>
             {
                 isClient ?
-                    <div style={{width:"50vw"}}>
+                    <div>
                         <h1 style={{ color: "#000000" }}>
                         V.  The situation of students going to school and leaving school during the presence of Yellow Rainstorm Warning Signal 
                         </h1>

@@ -296,7 +296,7 @@ function App() {
                 isClient ?
 
                     <div className={styles.pageWidth}>
-                        <div style={{width:'50vw'}}>
+                        <div>
                             <h1 style={{ color: "#000000"}}>
                             IV. Cross-border traveling to and from school
                             </h1>
