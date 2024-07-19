@@ -13,6 +13,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Autocomplete from '@mui/material/Autocomplete';
 import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType, schoolType } from '../../schoolData'
 import LinearProgresss from '@/app/utils/progress';
+import "../englishPage.css";
+
 function App() {
     const router = useRouter();
 

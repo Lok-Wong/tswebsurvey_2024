@@ -19,6 +19,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
 import { useCookies } from "react-cookie";
+import "../englishPage.css";
 
 function App() {
     const router = useRouter();

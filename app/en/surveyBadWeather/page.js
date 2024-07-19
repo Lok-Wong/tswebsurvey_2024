@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import LinearProgresss from '@/app/utils/progress';
-
+import "../englishPage.css";
 
 function App() {
     const router = useRouter();

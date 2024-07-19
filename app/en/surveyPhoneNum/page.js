@@ -12,6 +12,7 @@ import getData from '../../utils/string';
 import modeECB from "crypto-js/mode-ecb";
 import cryptojs from 'crypto-js';
 import FormHelperText from '@mui/material/FormHelperText';
+import "../englishPage.css";
 
 export default function App() {
     // const fs = require('fs');

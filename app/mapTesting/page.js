@@ -137,7 +137,7 @@ function MapComponent({ handleCustomAddress }) {
 
 
   return (
-    <main key={key}>
+    <div key={key}>
       {
         isClient ?
           <div style={{ justifyItems: "center" }}>
@@ -164,7 +164,7 @@ function MapComponent({ handleCustomAddress }) {
           :
           null
       }
-    </main>
+    </div>
   );
 }
 

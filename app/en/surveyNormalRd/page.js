@@ -18,6 +18,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
 import { useCookies } from "react-cookie";
+import "../englishPage.css";
 
 function App() {
     const router = useRouter();

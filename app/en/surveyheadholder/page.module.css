@@ -36,6 +36,14 @@
 .mapHitText{
   font-weight: bold;
   color: rgb(5, 5, 170);
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+.mapHitText br {
+  content: "";
+  display: block;
+  margin-bottom: 0.15em;
 }
 
 
