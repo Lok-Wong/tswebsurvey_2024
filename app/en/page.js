@@ -239,9 +239,9 @@ export default function Home() {
             <br />
             Entrusting Entity: DSAT
             <br />
-            Executing Entity: UMtec Limited
-            <br />
             Coordinating Entity: DSEDJ
+            <br />
+            Executing Entity: UMtec Limited
           </a>
         </div>
       </div>
