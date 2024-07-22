@@ -341,36 +341,43 @@ export default function Home() {
       >
         <Box className={styles.signContentBox}>
           <p className={styles.signContentText}>
-          1. Purpose of data collection and processing<br />
-
-          When users use the electronic services provided by this website or fill in the relevant forms obtained by downloading from this website or other means for the various services, they may need to provide personal information depending on the requirements of the specific services. Such personal data collected will only be used for the purposes of the relevant services.
+          1. Purpose of data collection and processing
           <br />
+          When users use the electronic services provided by this website or fill in the relevant forms obtained by downloading from this website or other means for the various services, they may need to provide personal information depending on the requirements of the specific services. Such personal data collected will only be used for the purposes of the relevant services.
+          </p>
+          <p className={styles.signContentText}>
           2. Transfer of Personal Data
           <br />
           Depending on the actual need of the services, the personal data collected and handled by the Company may be transferred to other administrative organs, judicial organs, or private entities. Such organs or entities are required to comply with the relevant legislation while processing the personal data.            <br />
+          </p>
+          <p className={styles.signContentText}>
           3. Access and Correction of Personal Data
           <br />
           In accordance with the provisions of Law No. 8/2005 Personal Data Protection Law, users have the right to access and correct their personal data by writing to the Company, or directly to other administrative agencies, judicial agencies, private organizations or entities that receive such personal data from the Company.
-
           For the users convenience, some electronic services may display the information submitted in the past, so that the user is not required to fill it in again to save time. Any outdated information (for example, telephone number) can be updated immediately.
-          <br />
+          </p>
+          <p className={styles.signContentText}>
           4. Protection of Personal Data
           <br />
           All administrators of this website will follow the provisions of Law No. 8/2005 Personal Data Protection Law when handling the personal data of users, and take measures to ensure confidentiality and proper custody until the usage of data ceases and the retention period of data expires. The relevant data will then be destroyed or archived in accordance with the relevant regulations.
-          <br />
+          </p>
+          <p className={styles.signContentText}>
           5. Risk
           <br />
           This website has adopted a secure communication protocol technology based on SecureSocketsLayer (SSL) to protect the personal data that is being transmitted on the Internet. However, the transmission of relevant information on public networks may still carry certain risks, and the information may be seen and used by unauthorized third parties. If users feel uncomfortable about the risks, please use means other than the Internet to provide information to the Company.
-          <br />
+          </p>
+          <p className={styles.signContentText}>
           6. External Links
           <br />
           The content of this website contains hyperlinks to other websites, such as local or foreign public or private institutions, etc. Connection to those websites through these hyperlinks implies that the user has left this website. The privacy policies of these websites may be different from that of this website, and the Company is not responsible for their contents and privacy policies. Thus, the user should be aware of such privacy policies in advance.
-          <br />
+          </p>
+          <p className={styles.signContentText}>
           7. Changes to this Statement
           <br />
           If any changes occur to the Statement, the Company will replace the old version with a new one and the date of amendment will be stated without further notice.
+          </p>
           <br />
-          <br />
+          <p className={styles.signContentText}>
           Version: 2024/6/3
           </p>
         </Box>
