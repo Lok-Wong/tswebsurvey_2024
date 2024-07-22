@@ -224,10 +224,11 @@ export default function Home() {
           Your valuable information and opinions are very important. This survey will only take around 5 minutes to complete, and the provided information will used soely for analysis and will not be disclosed to the public. By you providing your contact information after completing the questionnaire, your name will be entered into a drawing to win a stationery gift certificate.
           <br />
           <br />
-          If you have any inquiries regarding this survey, please feel free to contact us during office hours at the following phone numbers:<br /><br />
+          If you have any inquiries regarding this survey, please feel free to contact or email us during office hours at the following phone numbers or email address:<br /><br />
           63703082 <br />
           63703083 <br />
           63946045 <br />
+          umtec.TS2024@um.edu.mo<br />
           <br /> <br />Thank you for your time and valuable information!
         
         </a>
