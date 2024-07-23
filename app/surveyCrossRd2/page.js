@@ -18,6 +18,8 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function App() {
     const router = useRouter();
@@ -26,7 +28,8 @@ function App() {
         leaveShcoolTime: "",
         pickup: 999,
         otherOfPickup: 999,
-        portForHome : 999,
+        portForHome: 999,
+        otherOfportForHome: 999,
         directToPort: 999,
         directToPortYes: {
             arrivalTime: "",
@@ -46,6 +49,20 @@ function App() {
     const [key, setKey] = React.useState(0)
     const [seed, setSeed] = React.useState(1);
     const [progressBarValue, setProgressBarValue] = React.useState(40)
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
     const reset = () => {
         setSeed(Math.random());
@@ -297,55 +314,83 @@ function App() {
 
     const handleNextButton = (event) => {
         if (survey.leaveShcoolTime == "") {
+            handleAlertBarOpen()
+            setVCodeError("7) 請選擇離校時間")
             handleHelpText("leaveShcoolTime", "請選擇離校時間")
             return
         }
         if (survey.pickup == 999) {
+            handleAlertBarOpen()
+            setVCodeError("8) 請選擇是否有人接送")
             handleHelpText("pickup", "請選擇是否有人接送")
             return
         }
 
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
+                handleAlertBarOpen()
+                setVCodeError("8) 請填寫其他監護人")
                 handleHelpText("pickup", "請填寫其他監護人")
                 return
             }
         }
 
+        if (survey.portForHome == 999) {
+            handleAlertBarOpen()
+            setVCodeError("9) 請選擇回家使用的通關口岸")
+            handleHelpText("portForHome", "請選擇回家使用的通關口岸")
+            return
+        }
+
+        if (survey.portForHome == "其他") {
+            if (survey.otherOfportForHome == 999 || survey.otherOfportForHome == "") {
+                handleAlertBarOpen()
+                setVCodeError("9) 請填寫其他通關口岸")
+                handleHelpText("portForHome", "請填寫其他通關口岸")
+                return
+            }
+        }
+
         if (survey.directToPort == 999) {
+            handleAlertBarOpen()
+            setVCodeError("10) 請選擇是否直接前往通關口岸")
             handleHelpText("directToPort", "請選擇是否直接前往通關口岸")
             return
         }
 
-        if (survey.directToPort == "其他") {
-            if (survey.otherOfportForHome == "999" || survey.otherOfportForHome == "") {
-                handleHelpText("directToPort", "請選擇是否直接前往通關口岸")
-                return
-            }
-        }
 
         if (survey.directToPort == "是") {
             if (survey.directToPortYes.arrivalTime == "") {
+                handleAlertBarOpen()
+                setVCodeError("請選擇到達時間")
                 handleHelpText("arrivalPortTime", "請選擇到達時間")
                 return
             }
             if (survey.directToPortYes.transirtation == 999) {
+                handleAlertBarOpen()
+                setVCodeError("請選擇交通方式")
                 handleHelpText("transirtation", "請選擇交通方式")
                 return
             }
 
             if (survey.directToPortYes.transirtation == "其他") {
                 if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
+                    handleAlertBarOpen()
+                    setVCodeError("請填寫其他交通方式")
                     handleHelpText("transirtation", "請填寫其他交通方式")
                     return
                 }
             }
 
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`時間不能比" 7) 離校時間"早`)
                 handleHelpText("arrivalPortTime", `時間不能比" 7) 離校時間"早`)
                 return
             }
             if (JSON.stringify(survey.directToPortYes.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`時間不能與" 7) 離校時間"相同`)
                 handleHelpText("arrivalPortTime", `時間不能與" 7) 離校時間"相同`)
                 return
             }
@@ -354,36 +399,50 @@ function App() {
 
         if (survey.directToPort == "否") {
             if (!survey.directToPortNo.address.method) {
-                handleHelpText("address", "請填寫地址")
+                handleAlertBarOpen()
+                setVCodeError("請填寫地址及按下確定按鈕")
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
 
             if (survey.directToPortNo.address == 999) {
-                handleHelpText("address", "請填寫地址")
+                handleAlertBarOpen()
+                setVCodeError("請填寫地址及按下確定按鈕")
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
             if (!survey.directToPortNo.arrivalTime) {
+                handleAlertBarOpen()
+                setVCodeError("請選擇到達時間")
                 handleHelpText("arrivalPortTime", "請選擇到達時間")
                 return
             }
             if (survey.directToPortNo.transirtation == 999) {
+                handleAlertBarOpen()
+                setVCodeError("請選擇交通方式")
                 handleHelpText("transirtation", "請選擇交通方式")
                 return
             }
 
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
+                    handleAlertBarOpen()
+                    setVCodeError("請填寫其他交通方式")
                     handleHelpText("transirtation", "請填寫其他交通方式")
                     return
                 }
             }
 
             if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`時間不能與" 7) 離校時間"相同`)
                 handleHelpText("arrivalPortTime", `時間不能與" 7) 離校時間"相同`)
                 return
             }
 
             if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`時間不能比" 7) 離校時間"早`)
                 handleHelpText("arrivalPortTime", `時間不能比" 7) 離校時間"早`)
                 return
             }
@@ -513,7 +572,7 @@ function App() {
             }
             setProgressBarValue(60)
             return
-        } 
+        }
 
     }, [survey]);
 
@@ -941,6 +1000,21 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
         </main>
     )
 

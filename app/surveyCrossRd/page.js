@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function App() {
     const router = useRouter();
@@ -80,10 +82,22 @@ function App() {
     }, []);
 
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
-
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
     const [survey, setSurvey] = React.useState(_initial_value)
 
     const [progressBarValue, setProgressBarValue] = React.useState(30)
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
 
     const handleChange = (event) => {
@@ -109,72 +123,111 @@ function App() {
 
     const handleNextButton = (event) => {
         if (survey.pickup == 999) {
+            handleAlertBarOpen()
+            setVCodeError("1) 請選擇一個選項")
             handleHelpText("pickup", "請選擇一個選項")
             return
         }
 
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == 999) {
+                handleAlertBarOpen()
+                setVCodeError("1) 請填寫其他內容")
                 handleHelpText("pickup", "請填寫其他")
                 return
             }
         }
 
         if (survey.TimeStartFromHome == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("2) 請重新選擇時間")
             handleHelpText("TimeStartFromHome", "請重新選擇時間")
             return
         }
 
         if (survey.TimeStartFromHome == "") {
+            handleAlertBarOpen()
+            setVCodeError("2) 請選擇時間")
             handleHelpText("TimeStartFromHome", "請選擇時間")
             return
         }
         if (survey.portForShcool == 999) {
-            handleHelpText("portForShcool", "請選擇一個選項")
+            handleAlertBarOpen()
+            setVCodeError("3) 請選擇通關口岸")
+            handleHelpText("portForShcool", "請選擇通關口岸")
             return
         }
         if (survey.TimeEndToMacau == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("4) 請重新選擇時間")
             handleHelpText("TimeEndToMacau", "請重新選擇時間")
             return
         }
         if (survey.TimeEndToMacau == "") {
+            handleAlertBarOpen()
+            setVCodeError("4) 請選擇時間")
             handleHelpText("TimeEndToMacau", "請選擇時間")
             return
         }
         if (survey.commonTransirtation == 999) {
+            handleAlertBarOpen()
+            setVCodeError("5) 請選擇主要交通方式")
             handleHelpText("commonTransirtation", "請選擇一個選項")
             return
         }
+
+        if (survey.commonTransirtation == "其他") {
+            if (survey.otherOfCommonTransirtation == "" || survey.otherOfCommonTransirtation == 999) {
+                handleAlertBarOpen()
+                setVCodeError("5) 請填寫其他內容")
+                handleHelpText("commonTransirtation", "請填寫其他")
+                return
+            }
+        }
         if (survey.arrivalTimeToSchool == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("6) 請重新選擇時間")
             handleHelpText("arrivalTimeToSchool", "請重新選擇時間")
             return
         }
 
         if (survey.arrivalTimeToSchool == "") {
+            handleAlertBarOpen()
+            setVCodeError("6) 請選擇時間")
             handleHelpText("arrivalTimeToSchool", "請選擇時間")
             return
         }
         if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能與 "2) 從家出發的時間"相同`)
             handleHelpText("TimeEndToMacau", `時間不能與 "2) 從家出發的時間"相同`)
             return
         }
 
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能比 "2) 從家出發的時間"早`)
             handleHelpText("TimeEndToMacau", `時間不能比 "2) 從家出發的時間"早`)
             return
         }
 
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.arrivalTimeToSchool)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             handleHelpText("arrivalTimeToSchool", `時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             return
         }
 
         if (dayjs(survey.TimeEndToMacau) > dayjs(survey.arrivalTimeToSchool)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             handleHelpText("arrivalTimeToSchool", `時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             return
         }
 
         if (JSON.stringify(survey.TimeEndToMacau) == JSON.stringify(survey.arrivalTimeToSchool)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能與 4) "由澳門口岸出發前往學校的時間"相同`)
             handleHelpText("arrivalTimeToSchool", `時間不能與 4) "由澳門口岸出發前往學校的時間"相同`)
             return
         }
@@ -285,8 +338,8 @@ function App() {
     }, [survey]);
 
     React.useEffect(() => {
-        sessionStorage.setItem('checkschoolName',null)
-    },[])
+        sessionStorage.setItem('checkschoolName', null)
+    }, [])
 
 
 
@@ -567,6 +620,22 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
     )
 
