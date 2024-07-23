@@ -305,13 +305,22 @@ function App() {
             handleHelpText("pickup", "Were you being picked up or dropped off")
             return
         }
-        if (survey.pickup == "其他監護人" && survey.otherOfPickup == 999) {
-            handleHelpText("pickup", "Please fill in other guardians")
-            return
+        if (survey.pickup == "其他") {
+            if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
+                handleHelpText("pickup", "請填寫其他監護人")
+                return
+            }
         }
         if (survey.directToPort == 999) {
             handleHelpText("directToPort", "Do you go directly to the Border Checkpoint")
             return
+        }
+
+        if (survey.directToPort == "其他") {
+            if (survey.otherOfportForHome == "999" || survey.otherOfportForHome == "") {
+                handleHelpText("directToPort", "請選擇是否直接前往通關口岸")
+                return
+            }
         }
 
         if (survey.directToPort == "是") {
@@ -320,13 +329,17 @@ function App() {
                 return
             }
             if (survey.directToPortYes.transirtation == 999) {
-                handleHelpText("commonTransirtation", "Please select the mode of transportation")
+                handleHelpText("transirtation", "Please select the mode of transportation")
                 return
             }
-            if (survey.directToPortYes.transirtation == "其他" && survey.directToPortYes.othertransirtation == 999) {
-                handleHelpText("commonTransirtation", "Please fill in the other modes of transportation")
-                return
+
+            if (survey.directToPortYes.transirtation == "其他") {
+                if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
+                    handleHelpText("transirtation", "Please fill in the other modes of transportation")
+                    return
+                }
             }
+
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
                 handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
                 return
@@ -352,14 +365,17 @@ function App() {
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
                 return
             }
-            if (survey.directToPortNo.transirtation == 999) {
-                handleHelpText("commonTransirtation", "Please select the mode of transportation")
+            if (survey.directToPortNo.transirtation == 999 ) {
+                handleHelpText("transirtation", "Please select the mode of transportation")
                 return
             }
-            if (survey.directToPortNo.transirtation == "其他" && survey.directToPortNo.othertransirtation == 999) {
-                handleHelpText("commonTransirtation", "Please fill in the other modes of transportation")
-                return
+            if (survey.directToPortNo.transirtation == "其他") {
+                if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
+                    handleHelpText("transirtation", "請填寫其他交通方式")
+                    return
+                }
             }
+
             if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
                 handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
                 return
@@ -605,7 +621,7 @@ function App() {
                                                 label="Other"
                                                 variant="filled"
                                                 onChange={handleChange}
-                                                value={survey.portForHome == 999 ? null : survey.portForHome}
+                                                value={survey.otherOfportForHome == 999 ? null : survey.otherOfportForHome}
                                             />
                                         </Box>
                                         :
@@ -753,7 +769,7 @@ function App() {
                                                 }
 
                                             </RadioGroup>
-                                            <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransirtation}</FormHelperText>
+                                            <FormHelperText sx={{ color: 'red' }}>{helpText.transirtation}</FormHelperText>
                                         </FormControl>
                                     </div>
 
@@ -901,7 +917,7 @@ function App() {
                                                     }
 
                                                 </RadioGroup>
-                                                <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransirtation}</FormHelperText>
+                                                <FormHelperText sx={{ color: 'red' }}>{helpText.transirtation}</FormHelperText>
                                             </FormControl>
                                         </div>
 

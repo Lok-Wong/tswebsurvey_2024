@@ -16,6 +16,9 @@ function MapComponent({ handleCustomAddress }) {
 
 
   const sendCustomAddress = (address, type) => {
+    if (!address){
+      return
+    }
     handleCustomAddress(address, type)
   }
 
@@ -151,7 +154,7 @@ function MapComponent({ handleCustomAddress }) {
                 onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
               />
               <Button
-                style={{ marginLeft: "1vw" }}
+                style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
                 onClick={() => sendCustomAddress(mapData, collectMethod)}
               >
                 確定

@@ -19,6 +19,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
 import { useCookies } from "react-cookie";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function App() {
     const router = useRouter();
@@ -84,6 +86,21 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [key, setKey] = React.useState(0)
     const [seed, setSeed] = React.useState(1);
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
+
     const reset = () => {
         setSeed(Math.random());
     }
@@ -272,62 +289,84 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.leaveSchoolTime == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("5) 請重新填寫離校時間")
             handleHelpText("leaveSchoolTime", "請重新填寫離校時間")
             return
         }
 
         if (survey.leaveSchoolTime == "") {
+            handleAlertBarOpen()
+            setVCodeError("5) 請填寫離校時間")
             handleHelpText("leaveSchoolTime", "請填寫離校時間")
             return
         }
 
 
         if (survey.leavePickUp == 999) {
+            handleAlertBarOpen()
+            setVCodeError("6) 請選擇接送人")
             handleHelpText("leavePickUp", "請選擇接送人")
             return
         }
 
         if (survey.leavePickUp == "其他") {
             if (survey.otherleavePickUp == 999 || survey.otherleavePickUp == "") {
+                handleAlertBarOpen()
+                setVCodeError("6) 請填寫其他接送人")
                 handleHelpText("leavePickUp", "請填寫其他接送人")
                 return
             }
         }
 
         if (survey.directToHomeState == 999) {
+            handleAlertBarOpen()
+            setVCodeError("7) 請填寫其他接送人")
             handleHelpText("directToHomeState", "請選擇是否直接回家")
             return
         }
 
         if (survey.directToHomeState == "是") {
             if (survey.directToHomeYes.arivalHomeTime == "Invalid Date") {
+                handleAlertBarOpen()
+                setVCodeError("請填寫到達家時間")
                 handleHelpText("leaveSchoolTime", "請填寫到達家時間")
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTime == "") {
+                handleAlertBarOpen()
+                setVCodeError("請填寫到達家時間")
                 handleHelpText("arivalHomeTime", "請填寫到達家時間")
                 return
             }
 
             if (dayjs(survey.leaveSchoolTime) > dayjs(survey.directToHomeYes.arivalHomeTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`到達家的時間不能比 "5) 離校時間"早`)
                 handleHelpText("arivalHomeTime", `時間不能比 "5) 離校時間"早`)
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTransition == 999) {
+                handleAlertBarOpen()
+                setVCodeError("請選擇回家主要的交通方式")
                 handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTransition == "其他") {
                 if (survey.directToHomeYes.otherarivalHomeTransition == 999 || survey.directToHomeYes.otherarivalHomeTransition == "") {
-                    handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
+                    handleAlertBarOpen()
+                    setVCodeError("請填寫其家回家的方式")
+                    handleHelpText("arivalHomeTransition", "請填寫其家回家的方式")
                     return
                 }
             }
 
             if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`到達家的時間不能與" 5) 離校時間"相等`)
                 handleHelpText("arivalHomeTime", `時間不能與" 5) 離校時間"相等`)
                 return
             }
@@ -335,43 +374,59 @@ function App() {
 
         if (survey.directToHomeState == "否") {
             if (!survey.directToHomeNo.address.method) {
-                handleHelpText("address", "請填寫地址")
+                handleAlertBarOpen()
+                setVCodeError(`請填寫地址及按下確定按鈕`)
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
 
             if (survey.directToHomeNo.address == 999) {
-                handleHelpText("address", "請填寫地址")
+                handleAlertBarOpen()
+                setVCodeError(`請填寫地址及按下確定按鈕`)
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
 
             if (survey.directToHomeNo.leaveDestinationTime == "") {
+                handleAlertBarOpen()
+                setVCodeError(`請填寫到達目的地時間`)
                 handleHelpText("leaveDestinationTime", "請填寫到達目的地時間")
                 return
             }
 
             if (survey.directToHomeNo.leaveDestinationTransition == 999) {
+                handleAlertBarOpen()
+                setVCodeError(`請選擇回家主要的交通方式`)
                 handleHelpText("leaveDestinationTransition", "請選擇回家主要的交通方式")
                 return
             }
 
             if (survey.directToHomeNo.leaveDestinationTransition == "其他") {
                 if (survey.directToHomeNo.otherLeaveDestinationTransition == 999 || survey.directToHomeNo.otherLeaveDestinationTransition == "") {
+                    handleAlertBarOpen()
+                    setVCodeError(`請填寫其他回家主要的交通方式`)
                     handleHelpText("leaveDestinationTransition", "請填寫其他回家主要的交通方式")
                     return
                 }
             }
 
             if (survey.directToHomeNo.destinationBackHomeStartTime == "") {
+                handleAlertBarOpen()
+                setVCodeError(`請填寫從上述地方出發回家的時間`)
                 handleHelpText("destinationBackHomeStartTime", "請填寫從上述地方出發回家的時間")
                 return
             }
 
             if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`到達時間不能比 "5) 離校時間"早`)
                 handleHelpText("leaveDestinationTime", `時間不能比 "5) 離校時間"早`)
                 return
             }
 
             if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`到達時間不能比 "5) 離校時間"相同`)
                 handleHelpText("leaveDestinationTime", `時間不能與" 5) 離校時間"相同`)
                 return
             }
@@ -529,17 +584,17 @@ function App() {
 
     React.useEffect(() => {
         if (survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
-            if (survey.directToHomeNo.leaveDestinationTransition &&survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999){
+            if (survey.directToHomeNo.leaveDestinationTransition && survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
                 setProgressBarValue(80)
                 return
             }
-            if (survey.directToHomeYes.leaveDestinationTransition &&survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999){
+            if (survey.directToHomeYes.leaveDestinationTransition && survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
                 setProgressBarValue(80)
                 return
             }
             setProgressBarValue(60)
             return
-        } 
+        }
 
     }, [survey]);
 
@@ -997,6 +1052,22 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
     )
 

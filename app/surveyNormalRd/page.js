@@ -18,6 +18,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
 import { useCookies } from "react-cookie";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function App() {
     const router = useRouter();
@@ -82,6 +84,19 @@ function App() {
     const [endTime, setEndTime] = React.useState()
     const [progressBarValue, setProgressBarValue] = React.useState(30)
     const [cookies, setCookie, removeCookie] = useCookies(['toSchoolTime']);
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
     const setToSchoolTimeCookie = () => {
         setCookie('toSchoolTime', survey.pickupTimeEnd, { path: '/' })
@@ -120,44 +135,60 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.pickup == "999") {
+            handleAlertBarOpen()
+            setVCodeError("1) 請選擇一個選項")
             handleHelpText("pickup", "請選擇一個選項")
             return
         }
 
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
+                handleAlertBarOpen()
+                setVCodeError("1) 未填寫其他內容")
                 handleHelpText("pickup", "請填寫其他")
                 return
             }
         }
 
         if (survey.pickupTimeStart == "" || survey.pickupTimeStart == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("2) 請選擇出發時間")
             handleHelpText("pickupTimeStart", "請選擇出發時間")
             return
         }
 
         if (survey.pickupTimeEnd == "" || survey.pickupTimeEnd == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("3) 請選擇到達時間")
             handleHelpText("pickupTimeEnd", "請選擇到達時間")
             return
         }
 
         if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能比" 2) 出發時間"早`)
             handleHelpText("pickupTimeEnd", `時間不能比" 2) 出發時間"早`)
             return
         }
 
         if (JSON.stringify(survey.pickupTimeStart) === JSON.stringify(survey.pickupTimeEnd)) {
+            handleAlertBarOpen()
+            setVCodeError(`時間不能與" 2) 出發時間"相等`)
             handleHelpText("pickupTimeEnd", `時間不能與" 2) 出發時間"相等`)
             return
         }
 
         if (survey.commonTransirtation == "999") {
+            handleAlertBarOpen()
+            setVCodeError(`4) 請選擇一個選項`)
             handleHelpText("commonTransirtation", "請選擇一個選項")
             return
         }
 
         if (survey.commonTransirtation == "其他") {
             if (survey.otherOfCommonTransirtation == "999" || survey.otherOfCommonTransirtation == "") {
+                handleAlertBarOpen()
+                setVCodeError(`4) 未填寫其他內容`)
                 handleHelpText("commonTransirtation", "請填寫其他")
                 return
             }
@@ -198,8 +229,8 @@ function App() {
     }, [])
 
     React.useEffect(() => {
-        sessionStorage.setItem('checkschoolName',null)
-    },[])
+        sessionStorage.setItem('checkschoolName', null)
+    }, [])
 
 
     const [finishStatus, setfinishStatus] = React.useState(false);
@@ -266,7 +297,6 @@ function App() {
                 isClient ?
 
                     <div>
-
                         <h1 style={{ color: "#000000" }}>
                             三、一般情況上學及放學出行情況
                         </h1>
@@ -327,7 +357,7 @@ function App() {
                                                 }
                                                 handleTimeChange(event, "pickupTimeStart"),
                                                     setStartTime(event.$d),
-                                                    console.log("event",event.$d)
+                                                    console.log("event", event.$d)
                                             }}
                                         />
                                     </DemoContainer>
@@ -499,6 +529,23 @@ function App() {
                     </Button>
                 </div>
             </div>
+
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
     )
 
