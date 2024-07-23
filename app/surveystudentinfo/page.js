@@ -635,7 +635,7 @@ function App() {
 
                         <div key={6} className={styles.question}>
                             <FormControl>
-                                <FormLabel id="gender-label"><h3>5)  姓別：</h3></FormLabel>
+                                <FormLabel id="gender-label"><h3>5)  性別：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="studentofRespondents-radio-buttons-group-label"
                                     name="gender"
