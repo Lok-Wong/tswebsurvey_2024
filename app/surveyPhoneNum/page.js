@@ -198,6 +198,8 @@ export default function App() {
                                 m: 1, width: "100%"
                             }}>
                                 <FormLabel id="comment-label"><h3>請提供閣下的聯絡電話（選填）：</h3></FormLabel>
+                                <p>*(若為澳門及中國內地以外之電話號碼，請加上區號以便得獎聯繫。)</p>
+                                <p>*例子：85213467985</p>
                                 <Box
                                     component="form"
                                     sx={{

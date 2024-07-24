@@ -492,6 +492,7 @@ function App() {
                                 variant="standard"
                             >
                                 <FormLabel component="commonTransiration"><h3>5) The main mode of transportation to the school after crossing the border:</h3></FormLabel>
+                                <p>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
                                 <RadioGroup
                                     name='commonTransirtation'
                                     value={survey.commonTransirtation}
