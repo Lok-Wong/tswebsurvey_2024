@@ -276,7 +276,7 @@ function App() {
                 <DialogActions>
                     <Button onClick={handleKeepGoing}>Continue filling out the questionnaire</Button>
                     <Button onClick={handleFinisheSurvey} autoFocus>
-                        Submit the questionnaire
+                        Submit the Questionnaire
                     </Button>
                 </DialogActions>
             </Dialog>
