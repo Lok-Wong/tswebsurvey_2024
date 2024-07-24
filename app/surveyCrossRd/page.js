@@ -489,6 +489,7 @@ function App() {
                                 variant="standard"
                             >
                                 <FormLabel component="commonTransiration"><h3>5)	過關後，前往學校的主要交通方式：</h3></FormLabel>
+                                <p>*(如使用了多於一種的交通工具時，請選擇你認為較主要的交通工具)</p>
                                 <RadioGroup
                                     name='commonTransirtation'
                                     value={survey.commonTransirtation}

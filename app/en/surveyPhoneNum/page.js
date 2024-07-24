@@ -199,6 +199,8 @@ export default function App() {
                                 m: 1, width: "100%"
                             }}>
                                 <FormLabel id="comment-label"><h3>Please provide your contact number (Optional):</h3></FormLabel>
+                                <p>*(*(If the phone number is not in Macau or Mainland China, please add the area code for the purpose of contacting you to win the prize.))</p>
+                                <p>*Example : 85261234567</p>
                                 <Box
                                     component="form"
                                     sx={{

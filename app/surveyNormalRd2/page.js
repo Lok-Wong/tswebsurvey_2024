@@ -710,7 +710,10 @@ function App() {
                                     </div>
                                     <div className={styles.question}>
                                         <FormControl>
+
                                             <FormLabel id="arrival-home-transition-label"><h3>回家主要的交通方式：</h3></FormLabel>
+                                            <p>*(如過程中需要使用兩種或以上的交通工具時，請選擇你認為較為主要的交通工具)</p>
+
                                             <RadioGroup
                                                 aria-labelledby="arrival-home-transition-label"
                                                 name="arivalHomeTransition"
@@ -859,6 +862,8 @@ function App() {
                                         <div className={styles.question}>
                                             <FormControl>
                                                 <FormLabel id="leave-shcool-arrival-destination-transition-label"><h3>回家主要的交通方式：</h3></FormLabel>
+                                                <p>*(如使用了多於一種的交通工具時，請選擇你認為較主要的交通工具)</p>
+
                                                 <RadioGroup
                                                     aria-labelledby="leave-shcool-arrival-destination-transition-label"
                                                     name="leaveDestinationTransition"

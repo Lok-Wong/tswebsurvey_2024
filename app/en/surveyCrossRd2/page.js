@@ -29,7 +29,7 @@ function App() {
         leaveShcoolTime: "",
         pickup: 999,
         otherOfPickup: 999,
-        portForHome : 999,
+        portForHome: 999,
         otherOfportForHome: 999,
         directToPort: 999,
         directToPortYes: {
@@ -586,7 +586,7 @@ function App() {
 
                     <div>
                         <h2 style={{ color: "#000000" }}>
-                        4.2 Under normal circumstances, the situation of students leaving school in the afternoon
+                            4.2 Under normal circumstances, the situation of students leaving school in the afternoon
                         </h2>
 
                         <div className={styles.question}>
@@ -739,6 +739,8 @@ function App() {
                                         >
                                             <FormLabel
                                                 component="transirtation"><h3>The primary mode of transportation to the Border Checkpoint:</h3></FormLabel>
+                                            <p>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
+
                                             <RadioGroup
                                                 name='transirtation'
                                                 value={survey.directToPortYes.transirtation}

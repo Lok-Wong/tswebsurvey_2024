@@ -738,6 +738,7 @@ function App() {
                                         >
                                             <FormLabel
                                                 component="transirtation"><h3>	前往口岸的主要交通方式：</h3></FormLabel>
+                                            <p>*(如過程中需要使用兩種或以上的交通工具時，請選擇你認為較為主要的交通工具)</p>
                                             <RadioGroup
                                                 name='transirtation'
                                                 value={survey.directToPortYes.transirtation}
@@ -886,6 +887,7 @@ function App() {
                                             >
                                                 <FormLabel
                                                     component="transirtation"><h3>	主要交通方式：</h3></FormLabel>
+                                                <p>*(如使用了多於一種的交通工具時，請選擇你認為較主要的交通工具)</p>
                                                 <RadioGroup
                                                     name='transirtation'
                                                     value={survey.directToPortNo.transirtation}
