@@ -12,10 +12,22 @@ function MapComponent({ handleCustomAddress }) {
   const [inputValue, setInputVale] = useState(null)
   const [mapData, setMapData] = useState(null)
   const [collectMethod, setCollectMethod] = useState(null)
+  const [urlArray, setArray] = useState(null)
   let maps = null
 
-  const url = document.URL;
-  const urlArray = url.split("/");
+  // const url = document.URL;
+  // const urlArray = url.split("/");
+
+  useEffect(() => {
+    const url = document.URL;
+    setArray(url.split("/"));
+  }, [])
+
+  const getButtonText = () =>{
+    if (urlArray.indexOf("en") > -1) return "Confirm"
+    else if (urlArray.indexOf("pt") > -1) return "Confirmar"
+    else return "確定"
+  }
 
   const sendCustomAddress = (address, type) => {
     if (!address){
@@ -140,7 +152,67 @@ function MapComponent({ handleCustomAddress }) {
   }, [])
 
 
-  if (urlArray.indexOf("en") > -1) return (
+  // if (urlArray.indexOf("en") > -1) return (
+  //   <div key={key}>
+  //     {
+  //       isClient ?
+  //         <div style={{ justifyItems: "center" }}>
+  //           <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
+  //             <textarea
+  //               maxLength="50"
+  //               style={{alignSelf:'center'}}
+  //               id="input_test"
+  //               value={inputValue}
+  //               className={styles.tipInput}
+  //               onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
+  //             />
+  //             <Button
+  //               style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
+  //               onClick={() => sendCustomAddress(mapData, collectMethod)}
+  //             >
+  //               Confirm
+  //             </Button>
+  //           </div>
+  //           <div>
+  //             <div id="container" className={styles.container} />
+  //           </div>
+  //         </div>
+  //         :
+  //         null
+  //     }
+  //   </div>
+  // );
+  // else if (urlArray.indexOf("pt") > -1) return (
+  //   <div key={key}>
+  //     {
+  //       isClient ?
+  //         <div style={{ justifyItems: "center" }}>
+  //           <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
+  //             <textarea
+  //               maxLength="50"
+  //               style={{alignSelf:'center'}}
+  //               id="input_test"
+  //               value={inputValue}
+  //               className={styles.tipInput}
+  //               onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
+  //             />
+  //             <Button
+  //               style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
+  //               onClick={() => sendCustomAddress(mapData, collectMethod)}
+  //             >
+  //               Confirmar
+  //             </Button>
+  //           </div>
+  //           <div>
+  //             <div id="container" className={styles.container} />
+  //           </div>
+  //         </div>
+  //         :
+  //         null
+  //     }
+  //   </div>
+  // );
+  return (
     <div key={key}>
       {
         isClient ?
@@ -158,67 +230,7 @@ function MapComponent({ handleCustomAddress }) {
                 style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
                 onClick={() => sendCustomAddress(mapData, collectMethod)}
               >
-                Confirm
-              </Button>
-            </div>
-            <div>
-              <div id="container" className={styles.container} />
-            </div>
-          </div>
-          :
-          null
-      }
-    </div>
-  );
-  else if (urlArray.indexOf("pt") > -1) return (
-    <div key={key}>
-      {
-        isClient ?
-          <div style={{ justifyItems: "center" }}>
-            <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
-              <textarea
-                maxLength="50"
-                style={{alignSelf:'center'}}
-                id="input_test"
-                value={inputValue}
-                className={styles.tipInput}
-                onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
-              />
-              <Button
-                style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
-                onClick={() => sendCustomAddress(mapData, collectMethod)}
-              >
-                Confirmar
-              </Button>
-            </div>
-            <div>
-              <div id="container" className={styles.container} />
-            </div>
-          </div>
-          :
-          null
-      }
-    </div>
-  );
-  else return (
-    <div key={key}>
-      {
-        isClient ?
-          <div style={{ justifyItems: "center" }}>
-            <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
-              <textarea
-                maxLength="50"
-                style={{alignSelf:'center'}}
-                id="input_test"
-                value={inputValue}
-                className={styles.tipInput}
-                onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
-              />
-              <Button
-                style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
-                onClick={() => sendCustomAddress(mapData, collectMethod)}
-              >
-                確定
+                {getButtonText()}
               </Button>
             </div>
             <div>
