@@ -114,7 +114,7 @@ function App() {
             sessionStorage.setItem("pathList", storedPathList)
             return
         }
-        if (stillHaveChild == "没有") {
+        if (stillHaveChild == "沒有") {
             if (!checkStudentNum()) {
                 handleClickOpen()
                 return
@@ -226,7 +226,7 @@ function App() {
                                             :
                                             null
                                     }
-                                    <FormControlLabel sx={{ color: "black" }} value="没有" control={<Radio />} label="没有" />
+                                    <FormControlLabel sx={{ color: "black" }} value="沒有" control={<Radio />} label="沒有" />
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.stillHaveChild}</FormHelperText>
                             </FormControl>
