@@ -13,6 +13,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Autocomplete from '@mui/material/Autocomplete';
 import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType, schoolType } from '../../schoolData'
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -154,6 +156,20 @@ function App() {
     const [adress, setAdress] = React.useState(schoolAddress)
     const [schoolLevels, setSchoolLevels] = React.useState(schoolLevel)
     const [levelTypes, setLevelTypes] = React.useState(levelType)
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
@@ -254,19 +270,19 @@ function App() {
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
-    const  setStudentNum = React.useCallback ( (num) => {
+     const setStudentNum = React.useCallback((num) => {
         if (typeof num === 'undefined') {
-            return(0)
+            return (0)
         }
-        
+
         if (num > 0) {
             const newStudentNum = num - 1
-            return(newStudentNum)
+            return (newStudentNum)
         }
-    },[])
+    }, [])
 
 
-    const onBackButtonEvent = React.useCallback ( (e) => {
+    const onBackButtonEvent = React.useCallback((e) => {
         setfinishStatus(true)
 
         e.preventDefault();
@@ -289,7 +305,7 @@ function App() {
         //         setfinishStatus(false)
         //     }
         // }
-    },[finishStatus])
+    }, [finishStatus])
 
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
@@ -344,42 +360,58 @@ function App() {
 
     const handleNextButton = () => {
 
-        if (survey.schoolType == "999") {
-            handleHelpText('schoolType', "Please select the type of education")
-            return
-        }
+        // if (survey.schoolType == "999") {
+        //     handleAlertBarOpen()
+        //     setVCodeError("2) Please select the type of education")
+        //     handleHelpText('schoolType', "Please select the type of education")
+        //     return
+        // }
 
         if (survey.schoolArea == "999") {
+            handleAlertBarOpen()
+            setVCodeError("1) Please select your school district")
             handleHelpText('schoolArea', "Please select your school district")
             return
         }
 
         if (survey.schoolName == "999" || survey.schoolName == "" || survey.schoolName == null) {
+            handleAlertBarOpen()
+            setVCodeError("2) Please select your school")
             handleHelpText('schoolName', "Please select your school")
             return
         }
 
         if (survey.classLevel == "999" || survey.classLevel == "") {
+            handleAlertBarOpen()
+            setVCodeError("3) Please select your education level")
             handleHelpText('classLevel', "Please select your education level")
             return
         }
 
         if (survey.levelType == "999" || survey.levelType == "") {
+            handleAlertBarOpen()
+            setVCodeError("4) Please select your grade level")
             handleHelpText('levelType', "Please select your grade level")
             return
         }
 
         if (survey.gender == "999") {
+            handleAlertBarOpen()
+            setVCodeError("5) Please select gender")
             handleHelpText('gender', "Please select gender")
             return
         }
 
         if (survey.age == "999") {
+            handleAlertBarOpen()
+            setVCodeError("6) Please select age")
             handleHelpText('age', "Please select age")
             return
         }
 
         if (survey.crossBorder == "999") {
+            handleAlertBarOpen()
+            setVCodeError("7) Please select whether cross-border travel is required")
             handleHelpText('crossBorder', "Please select whether cross-border travel is required")
             return
         }
@@ -673,8 +705,24 @@ function App() {
                         Next Page
                     </Button>
                 </div>
-
             </div>
+
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
 
         </main >
     )
