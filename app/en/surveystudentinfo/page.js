@@ -11,7 +11,7 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import Autocomplete from '@mui/material/Autocomplete';
-import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType, schoolType } from '../../schoolData'
+import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType, schoolType } from '../../schoolDataEn'
 import LinearProgresss from '@/app/utils/progress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
