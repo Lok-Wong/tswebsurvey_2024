@@ -394,7 +394,7 @@ function App() {
                                 variant="standard"
                             >
                                 <FormLabel component="commonTransiration"><h3>4) Primary mode of transportation:</h3></FormLabel>
-                                <p>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
+                                <p className={styles.remind}>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
                                 <RadioGroup
                                     name='commonTransirtation'
                                     value={survey.commonTransirtation}

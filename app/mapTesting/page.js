@@ -14,6 +14,8 @@ function MapComponent({ handleCustomAddress }) {
   const [collectMethod, setCollectMethod] = useState(null)
   let maps = null
 
+  const url = document.URL;
+  const urlArray = url.split("/");
 
   const sendCustomAddress = (address, type) => {
     if (!address){
@@ -138,8 +140,67 @@ function MapComponent({ handleCustomAddress }) {
   }, [])
 
 
-
-  return (
+  if (urlArray.indexOf("en") > -1) return (
+    <div key={key}>
+      {
+        isClient ?
+          <div style={{ justifyItems: "center" }}>
+            <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
+              <textarea
+                maxLength="50"
+                style={{alignSelf:'center'}}
+                id="input_test"
+                value={inputValue}
+                className={styles.tipInput}
+                onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
+              />
+              <Button
+                style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
+                onClick={() => sendCustomAddress(mapData, collectMethod)}
+              >
+                Confirm
+              </Button>
+            </div>
+            <div>
+              <div id="container" className={styles.container} />
+            </div>
+          </div>
+          :
+          null
+      }
+    </div>
+  );
+  else if (urlArray.indexOf("pt") > -1) return (
+    <div key={key}>
+      {
+        isClient ?
+          <div style={{ justifyItems: "center" }}>
+            <div style={{display:'flex',justifyContent:"center",alignItems:"center",marginBottom: "1vh" }}>
+              <textarea
+                maxLength="50"
+                style={{alignSelf:'center'}}
+                id="input_test"
+                value={inputValue}
+                className={styles.tipInput}
+                onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
+              />
+              <Button
+                style={{ marginLeft: "1vw" , backgroundColor:"#036eb8",color:"white" }}
+                onClick={() => sendCustomAddress(mapData, collectMethod)}
+              >
+                Confirmar
+              </Button>
+            </div>
+            <div>
+              <div id="container" className={styles.container} />
+            </div>
+          </div>
+          :
+          null
+      }
+    </div>
+  );
+  else return (
     <div key={key}>
       {
         isClient ?
