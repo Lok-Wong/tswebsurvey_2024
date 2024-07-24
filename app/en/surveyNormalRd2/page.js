@@ -712,7 +712,7 @@ function App() {
                                     <div className={styles.question}>
                                         <FormControl>
                                             <FormLabel id="arrival-home-transition-label"><h3>The primary mode of transportation to go home:</h3></FormLabel>
-                                            <p>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
+                                            <p className={styles.remind}>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
                                             <RadioGroup
                                                 aria-labelledby="arrival-home-transition-label"
                                                 name="arivalHomeTransition"
@@ -861,6 +861,7 @@ function App() {
                                         <div className={styles.question}>
                                             <FormControl>
                                                 <FormLabel id="leave-shcool-arrival-destination-transition-label"><h3>The primary mode of transportation to go home:</h3></FormLabel>
+                                                <p className={styles.remind}>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
                                                 <RadioGroup
                                                     aria-labelledby="leave-shcool-arrival-destination-transition-label"
                                                     name="leaveDestinationTransition"
