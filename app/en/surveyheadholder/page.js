@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -70,6 +72,20 @@ function App() {
   const [helpText, setHelpText] = React.useState(blankHelpText)
   const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
   const [progressBarValue, setProgressBarValue] = React.useState(0)
+  const [vCodeError, setVCodeError] = React.useState(false)
+  const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+  const handleAlertBarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlertBar(false);
+  };
+
+  const handleAlertBarOpen = () => {
+    setOpenAlertBar(true);
+  };
+
   const getMapSelectedText = () => {
 
     if (survey.address.method == "input") {
@@ -183,21 +199,29 @@ function App() {
   const handleNextButton = () => {
 
     if (!survey.address.method) {
-      handleHelpText("address", "Please fill in the address")
+      handleAlertBarOpen()
+      setVCodeError("1) 請填寫地址及按下確定按鈕")
+      handleHelpText("address", "請填寫地址及按下確定按鈕")
       return
     }
 
     if (survey.address == "999" || survey.address == "") {
-      handleHelpText("address", "Please fill in the address")
+      handleAlertBarOpen()
+      setVCodeError("1) 請填寫地址及按下確定按鈕")
+      handleHelpText("address", "請填寫地址及按下確定按鈕")
       return
     }
 
     if (survey.residentPopulationStudent == "999") {
+      handleAlertBarOpen()
+      setVCodeError("2) Please select an option")
       handleHelpText("residentPopulationStudent", "Please select an option")
       return
     }
 
     if (survey.vehicle == "999") {
+      handleAlertBarOpen()
+      setVCodeError("3) Please select an option")
       handleHelpText("vehicle", "Please select an option")
       return
     }
@@ -427,6 +451,22 @@ function App() {
           </Button>
         </div>
       </div>
+
+      <Snackbar 
+        open={openAlertBar} 
+        autoHideDuration={2000} 
+        onClose={handleAlertBarClose}
+        anchorOrigin={{vertical :'bottom', horizontal:'center'}}
+      >
+        <Alert
+          autohideduration={2000}
+          onClose={handleAlertBarClose}
+          severity="error"
+          variant="filled"
+        >
+          {vCodeError}
+        </Alert>
+      </Snackbar>
 
     </main>
 

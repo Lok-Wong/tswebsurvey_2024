@@ -19,6 +19,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
 import { useCookies } from "react-cookie";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -85,6 +87,21 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [key, setKey] = React.useState(0)
     const [seed, setSeed] = React.useState(1);
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
+
     const reset = () => {
         setSeed(Math.random());
     }
@@ -273,107 +290,145 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.leaveSchoolTime == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("5) Please fill in the departure time from school again")
             handleHelpText("leaveSchoolTime", "Please fill in the departure time from school again")
             return
         }
 
         if (survey.leaveSchoolTime == "") {
+            handleAlertBarOpen()
+            setVCodeError("5) Please fill in the departure time from school")
             handleHelpText("leaveSchoolTime", "Please fill in the departure time from school")
             return
         }
 
 
         if (survey.leavePickUp == 999) {
+            handleAlertBarOpen()
+            setVCodeError("6) Please select a pick-up person")
             handleHelpText("leavePickUp", "Please select a pick-up person")
             return
         }
 
         if (survey.leavePickUp == "其他") {
             if (survey.otherleavePickUp == 999 || survey.otherleavePickUp == "") {
+                handleAlertBarOpen()
+                setVCodeError("6) Please fill in other pickup/drop-off person(s)")
                 handleHelpText("leavePickUp", "Please fill in other pickup/drop-off person(s)")
                 return
             }
         }
 
         if (survey.directToHomeState == 999) {
+            handleAlertBarOpen()
+            setVCodeError("7) Do you go home directly after school")
             handleHelpText("directToHomeState", "Do you go home directly after school")
             return
         }
 
         if (survey.directToHomeState == "是") {
             if (survey.directToHomeYes.arivalHomeTime == "Invalid Date") {
+                handleAlertBarOpen()
+                setVCodeError("Please fill in the arrival time at home")
                 handleHelpText("leaveSchoolTime", "Please fill in the arrival time at home")
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTime == "") {
+                handleAlertBarOpen()
+                setVCodeError("Please fill in the arrival time at home")
                 handleHelpText("arivalHomeTime", "Please fill in the arrival time at home")
                 return
             }
 
             if (dayjs(survey.leaveSchoolTime) > dayjs(survey.directToHomeYes.arivalHomeTime)) {
-                handleHelpText("arivalHomeTime", `The time should not be earlier than "5) Departure time from school".`)
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "5) Departure time from school"`)
+                handleHelpText("arivalHomeTime", `The time should not be earlier than "5) Departure time from school"`)
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTransition == 999) {
+                handleAlertBarOpen()
+                setVCodeError("Please choose the primary mode of transportation to go home")
                 handleHelpText("arivalHomeTransition", "Please choose the primary mode of transportation to go home")
                 return
             }
 
             if (survey.directToHomeYes.arivalHomeTransition == "其他") {
                 if (survey.directToHomeYes.otherarivalHomeTransition == 999 || survey.directToHomeYes.otherarivalHomeTransition == "") {
-                    handleHelpText("arivalHomeTransition", "Please choose the primary mode of transportation to go home")
+                    handleAlertBarOpen()
+                    setVCodeError("Please fill the other mode of transportation to go home")
+                    handleHelpText("arivalHomeTransition", "Please fill the other mode of transportation to go home")
                     return
                 }
             }
 
             if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleHelpText("arivalHomeTime", `The time should not be the same as "5) Departure time from school".`)
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "5) Departure time from school"`)
+                handleHelpText("arivalHomeTime", `The time should not be the same as "5) Departure time from school"`)
                 return
             }
         }
 
         if (survey.directToHomeState == "否") {
             if (!survey.directToHomeNo.address.method) {
-                handleHelpText("address", "Please fill in the address")
+                handleAlertBarOpen()
+                setVCodeError(`請填寫地址及按下確定按鈕`)
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
 
             if (survey.directToHomeNo.address == 999) {
-                handleHelpText("address", "Please fill in the address")
+                handleAlertBarOpen()
+                setVCodeError(`請填寫地址及按下確定按鈕`)
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
 
             if (survey.directToHomeNo.leaveDestinationTime == "") {
+                handleAlertBarOpen()
+                setVCodeError(`Please fill in the arrival time to the destination`)
                 handleHelpText("leaveDestinationTime", "Please fill in the arrival time to the destination")
                 return
             }
 
             if (survey.directToHomeNo.leaveDestinationTransition == 999) {
+                handleAlertBarOpen()
+                setVCodeError(`Please choose the primary mode of transportation to go home`)
                 handleHelpText("leaveDestinationTransition", "Please choose the primary mode of transportation to go home")
                 return
             }
 
             if (survey.directToHomeNo.leaveDestinationTransition == "其他") {
                 if (survey.directToHomeNo.otherLeaveDestinationTransition == 999 || survey.directToHomeNo.otherLeaveDestinationTransition == "") {
+                    handleAlertBarOpen()
+                    setVCodeError(`Please fill in other modes of transportation to go home`)
                     handleHelpText("leaveDestinationTransition", "Please fill in other modes of transportation to go home")
                     return
                 }
             }
 
             if (survey.directToHomeNo.destinationBackHomeStartTime == "") {
+                handleAlertBarOpen()
+                setVCodeError(`Please fill in the travel time from home to the above location`)
                 handleHelpText("destinationBackHomeStartTime", "Please fill in the travel time from home to the above location")
                 return
             }
 
             if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
-                handleHelpText("leaveDestinationTime", `The time should not be earlier than "5) Departure time".`)
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "5) Departure time"`)
+                handleHelpText("leaveDestinationTime", `The time should not be earlier than "5) Departure time"`)
                 return
             }
 
             if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleHelpText("leaveDestinationTime", `The time should not be the same as "5) Departure time".`)
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "5) Departure time"`)
+                handleHelpText("leaveDestinationTime", `The time should not be the same as "5) Departure time"`)
                 return
             }
 
@@ -530,17 +585,17 @@ function App() {
 
     React.useEffect(() => {
         if (survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
-            if (survey.directToHomeNo.leaveDestinationTransition &&survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999){
+            if (survey.directToHomeNo.leaveDestinationTransition && survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
                 setProgressBarValue(80)
                 return
             }
-            if (survey.directToHomeYes.leaveDestinationTransition &&survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999){
+            if (survey.directToHomeYes.leaveDestinationTransition && survey.leaveSchoolTime != "" && survey.leavePickUp != 999 && survey.directToHomeState != 999) {
                 setProgressBarValue(80)
                 return
             }
             setProgressBarValue(60)
             return
-        } 
+        }
 
     }, [survey]);
 
@@ -998,6 +1053,22 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
     )
 
