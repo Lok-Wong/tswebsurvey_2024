@@ -72,6 +72,10 @@
   line-height: 26px;
 }
 
+.question p {
+  width: auto;
+}
+
 .buttonStyle:hover{
   background-color: #0265aa;
 }
@@ -85,5 +89,9 @@
 
   .buttonGroup{
     width: 98vw;
+  }
+
+  .question>div>div>label:not(:last-child) {
+    margin-bottom: 0.15em;
   }
  }
