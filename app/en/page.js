@@ -317,9 +317,9 @@ export default function Home() {
       </div>
       <noscript className={styles.noScriptBox}>
         <div className={styles.noScriptBoxText}>
-          <p>你的瀏覽器停用了JavaScript，需要啟用JavaScript才可使用本網頁。</p>
-          <p>如使用Google Chrome瀏覽器，可參考以下網址，以啟用JavaScript：</p>
-          <a href="https://support.google.com/admanager/answer/12654?hl=zh-Hant">https://support.google.com/admanager/answer/12654?hl=zh-Hant</a>
+          <p>Your browser has disabled JavaScript, to visit this website need to activate Javascript</p>
+          <p>If using Google Chrome browser, to activate JavaScript, you can make a reference to the link below:</p>
+          <a href="https://support.google.com/admanager/answer/12654">https://support.google.com/admanager/answer/12654</a>
         </div>
       </noscript>
 
