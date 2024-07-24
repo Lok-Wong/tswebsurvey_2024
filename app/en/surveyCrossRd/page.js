@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -81,10 +83,22 @@ function App() {
     }, []);
 
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
-
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
     const [survey, setSurvey] = React.useState(_initial_value)
 
     const [progressBarValue, setProgressBarValue] = React.useState(30)
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
 
     const handleChange = (event) => {
@@ -110,72 +124,111 @@ function App() {
 
     const handleNextButton = (event) => {
         if (survey.pickup == 999) {
+            handleAlertBarOpen()
+            setVCodeError("1) Please select an option")
             handleHelpText("pickup", "Please select an option")
             return
         }
 
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == 999) {
+                handleAlertBarOpen()
+                setVCodeError("1) Please fill in Other")
                 handleHelpText("pickup", "Please fill in Other")
                 return
             }
         }
 
         if (survey.TimeStartFromHome == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("2) Please select a new time")
             handleHelpText("TimeStartFromHome", "Please select a new time")
             return
         }
 
         if (survey.TimeStartFromHome == "") {
+            handleAlertBarOpen()
+            setVCodeError("2) Please select a time")
             handleHelpText("TimeStartFromHome", "Please select a time")
             return
         }
         if (survey.portForShcool == 999) {
-            handleHelpText("portForShcool", "Please select an option")
+            handleAlertBarOpen()
+            setVCodeError("3) Please select a Border Checkpoint")
+            handleHelpText("portForShcool", "Please select a Border Checkpoint")
             return
         }
         if (survey.TimeEndToMacau == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("4) Please select a new time")
             handleHelpText("TimeEndToMacau", "Please select a new time")
             return
         }
         if (survey.TimeEndToMacau == "") {
+            handleAlertBarOpen()
+            setVCodeError("4) Please select a time")
             handleHelpText("TimeEndToMacau", "Please select a time")
             return
         }
         if (survey.commonTransirtation == 999) {
+            handleAlertBarOpen()
+            setVCodeError("5) Please select the primary mode of transportation")
             handleHelpText("commonTransirtation", "Please select an option")
             return
         }
+
+        if (survey.commonTransirtation == "其他") {
+            if (survey.otherOfCommonTransirtation == "" || survey.otherOfCommonTransirtation == 999) {
+                handleAlertBarOpen()
+                setVCodeError("5) Please fill in Other")
+                handleHelpText("commonTransirtation", "Please fill in Other")
+                return
+            }
+        }
         if (survey.arrivalTimeToSchool == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("6) Please select a new time")
             handleHelpText("arrivalTimeToSchool", "Please select a new time")
             return
         }
 
         if (survey.arrivalTimeToSchool == "") {
+            handleAlertBarOpen()
+            setVCodeError("6) Please select a time")
             handleHelpText("arrivalTimeToSchool", "Please select a time")
             return
         }
         if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) The time should not be the same as "2) Departure time from home"`)
             handleHelpText("TimeEndToMacau", `The time should not be the same as "2) Departure time from home"`)
             return
         }
 
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) The time should not be earlier than "2) Departure time from home"`)
             handleHelpText("TimeEndToMacau", `The time should not be earlier than "2) Departure time from home"`)
             return
         }
 
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.arrivalTimeToSchool)) {
+            handleAlertBarOpen()
+            setVCodeError(`6) The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             handleHelpText("arrivalTimeToSchool", `The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             return
         }
 
         if (dayjs(survey.TimeEndToMacau) > dayjs(survey.arrivalTimeToSchool)) {
+            handleAlertBarOpen()
+            setVCodeError(`6) The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             handleHelpText("arrivalTimeToSchool", `The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             return
         }
 
         if (JSON.stringify(survey.TimeEndToMacau) == JSON.stringify(survey.arrivalTimeToSchool)) {
+            handleAlertBarOpen()
+            setVCodeError(`The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
             handleHelpText("arrivalTimeToSchool", `The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
             return
         }
@@ -287,7 +340,7 @@ function App() {
 
     React.useEffect(() => {
         sessionStorage.setItem('checkschoolName',null)
-    },[])
+    }, [])
 
 
 
@@ -570,6 +623,22 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
     )
 

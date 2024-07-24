@@ -15,6 +15,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -27,6 +29,20 @@ function App() {
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [progressBarValue, setProgressBarValue] = React.useState(100)
     const [openAlerts, setOpenAlerts] = React.useState(false);
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
     const handleClickOpen = () => {
         setOpenAlerts(true);
@@ -87,7 +103,9 @@ function App() {
         console.log("checkStudentNum", checkStudentNum)
 
         if (stillHaveChild == "") {
-            handleHelpText("stillHaveChild", "*Please select an option")
+            handleAlertBarOpen()
+            setVCodeError("Please select an option")
+            handleHelpText("stillHaveChild", "Please select an option")
             return
         }
 
@@ -97,7 +115,7 @@ function App() {
             sessionStorage.setItem("pathList", storedPathList)
             return
         }
-        if (stillHaveChild == "没有") {
+        if (stillHaveChild == "沒有") {
             if (!checkStudentNum()) {
                 handleClickOpen()
                 return
@@ -153,12 +171,12 @@ function App() {
         //   if (!finishStatus) {
         //       if (window.confirm("Do you want to go back ?")) {
         //         setfinishStatus(true)
-       
+
         const copyArr = [...storedPathList]
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
-        console.log("student",_studentNum)
+        console.log("student", _studentNum)
         router.back()
         //       } else {
         //           window.history.pushState(null, null, window.location.pathname);
@@ -209,7 +227,7 @@ function App() {
                                             :
                                             null
                                     }
-                                    <FormControlLabel sx={{ color: "black" }} value="没有" control={<Radio />} label="No" />
+                                    <FormControlLabel sx={{ color: "black" }} value="沒有" control={<Radio />} label="No" />
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.stillHaveChild}</FormHelperText>
                             </FormControl>
@@ -247,12 +265,12 @@ function App() {
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {
-                            parseInt(_totalStudentNumber) >4 ?
-                            "Please confirm that the students in the family have already filled out the questionnaire"
-                            :
-                           "There is (are) still " +( parseInt(_totalStudentNumber) - parseInt(_studentNum) - 1) + "student(s) who has (have) not yet filled out their travel information"
+                            parseInt(_totalStudentNumber) > 4 ?
+                                "Please confirm that the students in the family have already filled out the questionnaire"
+                                :
+                                "There is (are) still " + (parseInt(_totalStudentNumber) - parseInt(_studentNum) - 1) + " student(s) who has (have) not yet filled out their travel information"
                         }
-                        
+
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -262,6 +280,22 @@ function App() {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
 
     )

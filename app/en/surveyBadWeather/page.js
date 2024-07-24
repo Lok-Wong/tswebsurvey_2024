@@ -13,7 +13,10 @@ import { useRouter } from 'next/navigation';
 import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
+
 
 function App() {
     const router = useRouter();
@@ -51,6 +54,20 @@ function App() {
     const blankHelpText = {}
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [progressBarValue, setProgressBarValue] = React.useState(80)
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
 
     const _studentNum = React.useMemo(() => {
@@ -194,17 +211,21 @@ function App() {
             !survey.tripChange.waitForNews.state &&
             !survey.tripChange.other.state
         ) {
+            handleAlertBarOpen()
+            setVCodeError("1) Please select at least one option")
             handleHelpText("tripChange", "Please select at least one option")
             return
         }
 
         if (survey.tripChange.earlyOutDooring.state) {
             if (survey.tripChange.earlyOutDooring.value === 999 
-                || 
+                ||
                 survey.tripChange.earlyOutDooring.value === ""
                 ||
                 survey.tripChange.earlyOutDooring.value === null
             ) {
+                handleAlertBarOpen()
+                setVCodeError("Please fill in how many minutes earlier you will be leaving home to school")
                 handleHelpText("tripChange", "Please fill in how many minutes earlier you will be leaving home to school")
                 return
             }
@@ -213,6 +234,8 @@ function App() {
         if (survey.tripChange.transitionChange.state) {
             if (survey.tripChange.transitionChange.value === 999 || survey.tripChange.transitionChange.value === "" || survey.tripChange.transitionChange.value === null
             ) {
+                handleAlertBarOpen()
+                setVCodeError("Please fill in the changed mode of transportation")
                 handleHelpText("tripChange", "Please fill in the changed mode of transportation")
                 return
             }
@@ -220,6 +243,8 @@ function App() {
 
         if (survey.tripChange.other.state) {
             if (survey.tripChange.other.value === 999 || survey.tripChange.other.value === "" || survey.tripChange.other.value === null) {
+                handleAlertBarOpen()
+                setVCodeError("Please fill in the changed mode of transportation")
                 handleHelpText("tripChange", "Please fill in Other")
                 return
             }
@@ -249,7 +274,7 @@ function App() {
             setProgressBarValue(80)
         }
 
-    },[survey.tripChange])
+    }, [survey.tripChange])
 
     // React.useEffect(() => {
     //     if (survey.Pickup != "其他監護人") {
@@ -520,6 +545,22 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
 
     )

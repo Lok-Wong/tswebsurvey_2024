@@ -18,6 +18,8 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import FormHelperText from '@mui/material/FormHelperText';
 import MapComponent from '@/app/mapTesting/page';
 import LinearProgresss from '@/app/utils/progress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -48,6 +50,20 @@ function App() {
     const [key, setKey] = React.useState(0)
     const [seed, setSeed] = React.useState(1);
     const [progressBarValue, setProgressBarValue] = React.useState(40)
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+
+    const [vCodeError, setVCodeError] = React.useState(false)
 
     const reset = () => {
         setSeed(Math.random());
@@ -299,57 +315,83 @@ function App() {
 
     const handleNextButton = (event) => {
         if (survey.leaveShcoolTime == "") {
+            handleAlertBarOpen()
+            setVCodeError("7) Please select the departure time from school")
             handleHelpText("leaveShcoolTime", "Please select the departure time from school")
             return
         }
         if (survey.pickup == 999) {
+            handleAlertBarOpen()
+            setVCodeError("8) Were you being picked up or dropped off")
             handleHelpText("pickup", "Were you being picked up or dropped off")
             return
         }
+
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
+                handleAlertBarOpen()
+                setVCodeError("8) Please fill in other guardians")
                 handleHelpText("pickup", "Please fill in other guardians")
                 return
             }
         }
 
         if (survey.portForHome == "999") {
-            handleHelpText("portForHome", "Please select a border checkpoint")
+            handleAlertBarOpen()
+            setVCodeError("9) Please select a Border Checkpoint")
+            handleHelpText("portForHome", "Please select a Border Checkpoint")
             return
         }
+        
         if (survey.portForHome == "其他") {
-            if (survey.otherOfportForHome == "999" || survey.otherOfportForHome == "") {
-                handleHelpText("portForHome", "Please fill in other border checkpoint")
+            if (survey.otherOfportForHome == 999 || survey.otherOfportForHome == "") {
+                handleAlertBarOpen()
+                setVCodeError("9) Please fill in other Border Checkpoint")
+                handleHelpText("portForHome", "Please fill in other Border Checkpoint")
                 return
             }
         }
 
         if (survey.directToPort == 999) {
-            handleHelpText("directToPort", "Do you go directly to the Border Checkpoint")
+            handleAlertBarOpen()
+            setVCodeError("10) Did you go directly to the Border Checkpoint")
+            handleHelpText("directToPort", "Did you go directly to the Border Checkpoint")
             return
         }
+
+
         if (survey.directToPort == "是") {
             if (survey.directToPortYes.arrivalTime == "") {
+                handleAlertBarOpen()
+                setVCodeError("Please select the arrival time")
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
                 return
             }
             if (survey.directToPortYes.transirtation == 999) {
+                handleAlertBarOpen()
+                    setVCodeError("Please select the mode of transportation")
                 handleHelpText("transirtation", "Please select the mode of transportation")
                 return
             }
 
             if (survey.directToPortYes.transirtation == "其他") {
                 if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
+                    handleAlertBarOpen()
+                    setVCodeError("Please fill in the other modes of transportation")
                     handleHelpText("transirtation", "Please fill in the other modes of transportation")
                     return
                 }
             }
 
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
-                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
+                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
                 return
             }
             if (JSON.stringify(survey.directToPortYes.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
                 handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
                 return
             }
@@ -358,36 +400,51 @@ function App() {
 
         if (survey.directToPort == "否") {
             if (!survey.directToPortNo.address.method) {
-                handleHelpText("address", "Please fill in the address")
+                handleAlertBarOpen()
+                setVCodeError("請填寫地址及按下確定按鈕")
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
 
             if (survey.directToPortNo.address == 999) {
-                handleHelpText("address", "Please fill in the address")
+                handleAlertBarOpen()
+                setVCodeError("請填寫地址及按下確定按鈕")
+                handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
             if (survey.directToPortNo.arrivalTime == "") {
+                handleAlertBarOpen()
+                setVCodeError("Please select the arrival time")
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
                 return
             }
             if (survey.directToPortNo.transirtation == 999 ) {
+                handleAlertBarOpen()
+                setVCodeError("Please select the mode of transportation")
                 handleHelpText("transirtation", "Please select the mode of transportation")
                 return
             }
+
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
+                    handleAlertBarOpen()
+                    setVCodeError("Please fill in the other modes of transportation")
                     handleHelpText("transirtation", "Please fill in the other modes of transportation")
                     return
                 }
             }
 
             if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
                 handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
                 return
             }
 
             if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
-                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school".`)
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
+                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
                 return
             }
         }
@@ -516,7 +573,7 @@ function App() {
             }
             setProgressBarValue(60)
             return
-        } 
+        }
 
     }, [survey]);
 
@@ -944,6 +1001,21 @@ function App() {
                     </Button>
                 </div>
             </div>
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
         </main>
     )
 
