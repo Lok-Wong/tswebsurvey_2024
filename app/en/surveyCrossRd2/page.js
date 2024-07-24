@@ -28,6 +28,7 @@ function App() {
         pickup: 999,
         otherOfPickup: 999,
         portForHome : 999,
+        otherOfportForHome: 999,
         directToPort: 999,
         directToPortYes: {
             arrivalTime: "",
@@ -307,22 +308,26 @@ function App() {
         }
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
-                handleHelpText("pickup", "請填寫其他監護人")
+                handleHelpText("pickup", "Please fill in other guardians")
                 return
             }
         }
+
+        if (survey.portForHome == "999") {
+            handleHelpText("portForHome", "Please select a border checkpoint")
+            return
+        }
+        if (survey.portForHome == "其他") {
+            if (survey.otherOfportForHome == "999" || survey.otherOfportForHome == "") {
+                handleHelpText("portForHome", "Please fill in other border checkpoint")
+                return
+            }
+        }
+
         if (survey.directToPort == 999) {
             handleHelpText("directToPort", "Do you go directly to the Border Checkpoint")
             return
         }
-
-        if (survey.directToPort == "其他") {
-            if (survey.otherOfportForHome == "999" || survey.otherOfportForHome == "") {
-                handleHelpText("directToPort", "請選擇是否直接前往通關口岸")
-                return
-            }
-        }
-
         if (survey.directToPort == "是") {
             if (survey.directToPortYes.arrivalTime == "") {
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
@@ -371,7 +376,7 @@ function App() {
             }
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
-                    handleHelpText("transirtation", "請填寫其他交通方式")
+                    handleHelpText("transirtation", "Please fill in the other modes of transportation")
                     return
                 }
             }

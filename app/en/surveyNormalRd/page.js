@@ -18,6 +18,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
 import { useCookies } from "react-cookie";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import "../englishPage.css";
 
 function App() {
@@ -83,6 +85,19 @@ function App() {
     const [endTime, setEndTime] = React.useState()
     const [progressBarValue, setProgressBarValue] = React.useState(30)
     const [cookies, setCookie, removeCookie] = useCookies(['toSchoolTime']);
+    const [openAlertBar, setOpenAlertBar] = React.useState(false)
+    const handleAlertBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAlertBar(false);
+    };
+
+    const handleAlertBarOpen = () => {
+        setOpenAlertBar(true);
+    };
+    
+    const [vCodeError, setVCodeError] = React.useState(false)
 
     const setToSchoolTimeCookie = () => {
         setCookie('toSchoolTime', survey.pickupTimeEnd, { path: '/' })
@@ -121,43 +136,59 @@ function App() {
     const handleNextButton = () => {
 
         if (survey.pickup == "999") {
+            handleAlertBarOpen()
+            setVCodeError("1) Please select an option")
             handleHelpText("pickup", "Please select an option")
             return
         }
 
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
+                handleAlertBarOpen()
+                setVCodeError("1) Please fill in Other")
                 handleHelpText("pickup", "Please fill in Other")
                 return
             }
         }
 
         if (survey.pickupTimeStart == "" || survey.pickupTimeStart == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("2) Please select the departure time")
             handleHelpText("pickupTimeStart", "Please select the departure time")
             return
         }
 
         if (survey.pickupTimeEnd == "" || survey.pickupTimeEnd == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("3) Please select the arrival time")
             handleHelpText("pickupTimeEnd", "Please select the arrival time")
             return
         }
 
         if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
+            handleAlertBarOpen()
+            setVCodeError(`3) The time should not be earlier than the "2) departure time"`)
             handleHelpText("pickupTimeEnd", `The time should not be earlier than the "2) departure time"`)
             return
         }
 
         if (JSON.stringify(survey.pickupTimeStart) === JSON.stringify(survey.pickupTimeEnd)) {
+            handleAlertBarOpen()
+            setVCodeError(`3) The time should not be the same as "2) Departure time"`)
             handleHelpText("pickupTimeEnd", `The time should not be the same as "2) Departure time"`)
             return
         }
 
         if (survey.commonTransirtation == "999") {
+            handleAlertBarOpen()
+            setVCodeError(`4) Please select an option`)
             handleHelpText("commonTransirtation", "Please select an option")
             return
         }
 
         if (survey.commonTransirtation == "其他") {
+            handleAlertBarOpen()
+            setVCodeError(`4) Please fill in Other`)
             if (survey.otherOfCommonTransirtation == "999" || survey.otherOfCommonTransirtation == "") {
                 handleHelpText("commonTransirtation", "Please fill in Other")
                 return
@@ -200,7 +231,7 @@ function App() {
 
     React.useEffect(() => {
         sessionStorage.setItem('checkschoolName',null)
-    },[])
+    }, [])
 
 
     const [finishStatus, setfinishStatus] = React.useState(false);
@@ -267,7 +298,6 @@ function App() {
                 isClient ?
 
                     <div>
-
                         <h1 style={{ color: "#000000" }}>
                         III. Under normal circumstances, the commuting situation for going to and returning from school
                         </h1>
@@ -328,7 +358,7 @@ function App() {
                                                 }
                                                 handleTimeChange(event, "pickupTimeStart"),
                                                     setStartTime(event.$d),
-                                                    console.log("event",event.$d)
+                                                    console.log("event", event.$d)
                                             }}
                                         />
                                     </DemoContainer>
@@ -500,6 +530,23 @@ function App() {
                     </Button>
                 </div>
             </div>
+
+            <Snackbar
+                open={openAlertBar}
+                autoHideDuration={2000}
+                onClose={handleAlertBarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    autohideduration={2000}
+                    onClose={handleAlertBarClose}
+                    severity="error"
+                    variant="filled"
+                >
+                    {vCodeError}
+                </Alert>
+            </Snackbar>
+
         </main>
     )
 
