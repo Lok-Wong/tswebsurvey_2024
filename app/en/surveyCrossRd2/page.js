@@ -418,13 +418,9 @@ function App() {
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
                 return
             }
-<<<<<<< Updated upstream
             if (survey.directToPortNo.transirtation == 999 ) {
                 handleAlertBarOpen()
                 setVCodeError("Please select the mode of transportation")
-=======
-            if (survey.directToPortNo.transirtation == 999) {
->>>>>>> Stashed changes
                 handleHelpText("transirtation", "Please select the mode of transportation")
                 return
             }

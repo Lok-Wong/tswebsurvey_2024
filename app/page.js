@@ -230,7 +230,6 @@ export default function Home() {
           63703083 <br />
           63946045 <br />
           umtec.TS2024@um.edu.mo<br />
-
           <br /><br />感謝您的支持與協助！
         </a>
         <a>
