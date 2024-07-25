@@ -225,7 +225,7 @@ function App() {
                 survey.tripChange.earlyOutDooring.value === null
             ) {
                 handleAlertBarOpen()
-                setVCodeError("Please fill in how many minutes earlier you will be leaving home to school")
+                setVCodeError("Please fill in how many minutes earlier the student will be leaving home to school")
                 handleHelpText("tripChange", "Please fill in how many minutes earlier you will be leaving home to school")
                 return
             }
@@ -359,7 +359,7 @@ function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                        V.  The situation of students going to school and leaving school during the presence of Yellow Rainstorm Warning Signal 
+                        V.  The commuting behaviour of student to/from school under Amber Rainstorm Warning
                         </h1>
 
                         <div className={styles.question}>
@@ -435,7 +435,7 @@ function App() {
                                                 <TextField
                                                     inputProps={{ maxLength: 10 }}
                                                     id="transitionChange"
-                                                    label="Traveling method"
+                                                    label="Mode of Transportation"
                                                     variant="filled"
                                                     onChange={handleTextInputChange}
                                                     name="transitionChange"
@@ -451,7 +451,7 @@ function App() {
                                             disabled={checkBoxLogict()}
                                             checked={survey.tripChange.parentPickUp.state}
                                             onChange={handleCheckBoxChange}
-                                            name='parentPickUp' />} label="Changed to be picking up and dropping off for school by parents"
+                                            name='parentPickUp' />} label="To be picked up and dropped off to school by parents"
                                     />
 
                                     <FormControlLabel sx={{ color: "black" }} value="不出門上學和等待教青局的消息" control={
@@ -507,7 +507,7 @@ function App() {
                             <FormControl sx={{
                                 m: 1, width: "100%"
                             }}>
-                                <FormLabel id="comment-label"><h3>2) What are your opinions or suggestions regarding traveling to and from school? (Optional):</h3></FormLabel>
+                                <FormLabel id="comment-label"><h3>2) What are your opinions or suggestions regarding school commuting? (Optional)</h3></FormLabel>
                                 <Box
                                     component="form"
                                     sx={{

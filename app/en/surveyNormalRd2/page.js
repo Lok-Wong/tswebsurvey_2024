@@ -322,8 +322,8 @@ function App() {
 
         if (survey.directToHomeState == 999) {
             handleAlertBarOpen()
-            setVCodeError("7) Do you go home directly after school")
-            handleHelpText("directToHomeState", "Do you go home directly after school")
+            setVCodeError("7) Does the student go home directly after school")
+            handleHelpText("directToHomeState", "Does the student go home directly after school")
             return
         }
 
@@ -413,8 +413,8 @@ function App() {
 
             if (survey.directToHomeNo.destinationBackHomeStartTime == "") {
                 handleAlertBarOpen()
-                setVCodeError(`Please fill in the travel time from home to the above location`)
-                handleHelpText("destinationBackHomeStartTime", "Please fill in the travel time from home to the above location")
+                setVCodeError(`Please fill in the travel time from the above location to home`)
+                handleHelpText("destinationBackHomeStartTime", "Please fill in the travel time from the above location to home")
                 return
             }
 
@@ -606,7 +606,7 @@ function App() {
 
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                        3.2 Under normal circumstances, the situation after school in the afternoon
+                        3.2 The commuting behaviours of students from school under normal circumstances
                         </h1>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
@@ -670,7 +670,7 @@ function App() {
                         </div>
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="back-home-dircetly-label"><h3>7) Do you go home directly after school?</h3></FormLabel>
+                                <FormLabel id="back-home-dircetly-label"><h3>7) Does the student go home directly after school?</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="back-home-dircetly-label"
                                     name="directToHomeState"
@@ -816,7 +816,7 @@ function App() {
                                     <div key={key}>
                                         <div className={styles.question} style={{ justifyContent: "center" }}>
                                             <FormControl sx={{ display: 'flex', flex: 1 }}>
-                                                <FormLabel id="address-label"><h3>Where did you go after school (landmark):</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>Where does the student go after school (landmark):</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {

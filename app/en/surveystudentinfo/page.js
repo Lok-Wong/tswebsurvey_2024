@@ -500,7 +500,7 @@ function App() {
                                         setSchoolNameSelectType("select")
                                     }}
                                     onInputChange={(event, newInputValue) => {
-                                        if (newInputValue.length > 30) {
+                                        if (newInputValue.length > 150) {
                                             return
                                         }
                                         setShInputValue(newInputValue);
@@ -546,7 +546,7 @@ function App() {
 
                                         <div>
                                             <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="Formal Education" />
-                                            <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="Adult Education" />
+                                            <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="Recurrent Education" />
                                         </div>
 
                                     </RadioGroup>

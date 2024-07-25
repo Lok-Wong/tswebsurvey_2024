@@ -221,7 +221,7 @@ export default function Home() {
           Welcome to participate in the Survey of Macao Students Travel Habits. The purpose of this survey is to understand the traveling habits of non-tertiary students in Macau, as well as gather your opinions and suggestions regarding commuting to and from school.
           <br />
           <br />
-          Your valuable information and opinions are very important. This survey will only take around 5 minutes to complete, and the provided information will used soely for analysis and will not be disclosed to the public. By you providing your contact information after completing the questionnaire, your name will be entered into a drawing to win a stationery gift certificate.
+          Your valuable information and opinions are very important. This survey will only take around 5 minutes to complete, and the provided information will used soely for analysis and will not be disclosed to the public. By you providing your contact information after completing the questionnaire, your name will be entered into a drawing to win a stationery gift voucher.
           <br />
           <br />
           If you have any inquiries regarding this survey, please feel free to contact or email us during office hours at the following phone numbers or email address:<br /><br />

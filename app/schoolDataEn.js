@@ -1,4 +1,4 @@
-export const school_type = ["Formal Education", "Adult Education"]
+export const school_type = ["Formal Education", "Recurrent Education"]
 
 export const region = ["Macau", "Taipa", "Coloane"]
 
@@ -126,7 +126,6 @@ export const schoolName = {
     "Secção Infantil da Escola Pui Tou (Sucursal da Taipa)",
     "Escola Secundária Pui Va (Secção Primária e Infantil)",
     "Secção Primària da Escola Pui Tou (Sucursal da Taipa)",
-
   ],
   colane: [
     "Escola de São José de Ká Hó",
@@ -393,18 +392,18 @@ export const levelType = {
 
 export const schoolType = {
   "Escola Fong Chong da Taipa (Sucursal)": "Formal Education",
-  "Escola Seong Fan da Associação Comercial de Macau(Secção Nocturna)": "Adult Education",
-  "Escola São João de Brito (Nocturno)": "Adult Education",
-  "Ensino Primário Recorrente": "Adult Education",
-  "Escola Estrela do Mar (Nocturno)": "Adult Education",
-  "Sheng Kung Hui Escola Choi Kou(Macau) (Nocturno)": "Adult Education",
-  "Escola Luso-Chinesa Técnico-Profissional (Nocturno)": "Adult Education",
-  "Ensino Secundário Recorrente": "Adult Education",
-  "Escola Secundária Nocturna Xin Hua": "Adult Education",
-  "Escola Secundária Luso-Chinesa de Luís Gonzaga Gomes (Curso Nocturno-Secção Portuguesa)": "Adult Education",
-  "Escola Secundária Millennium": "Adult Education",
-  "Escola Secundária Técnico-Profissional da Federação das Associações dos Operários de Macau(Nocturno)": "Adult Education",
-  "Colégio Diocesano de São José (6) (Secção Nocturna)": "Adult Education",
+  "Escola Seong Fan da Associação Comercial de Macau(Secção Nocturna)": "Recurrent Education",
+  "Escola São João de Brito (Nocturno)": "Recurrent Education",
+  "Ensino Primário Recorrente": "Recurrent Education",
+  "Escola Estrela do Mar (Nocturno)": "Recurrent Education",
+  "Sheng Kung Hui Escola Choi Kou(Macau) (Nocturno)": "Recurrent Education",
+  "Escola Luso-Chinesa Técnico-Profissional (Nocturno)": "Recurrent Education",
+  "Ensino Secundário Recorrente": "Recurrent Education",
+  "Escola Secundária Nocturna Xin Hua": "Recurrent Education",
+  "Escola Secundária Luso-Chinesa de Luís Gonzaga Gomes (Curso Nocturno-Secção Portuguesa)": "Recurrent Education",
+  "Escola Secundária Millennium": "Recurrent Education",
+  "Escola Secundária Técnico-Profissional da Federação das Associações dos Operários de Macau(Nocturno)": "Recurrent Education",
+  "Colégio Diocesano de São José (6) (Secção Nocturna)": "Recurrent Education",
   "Sheng Kung Hui Escola Choi Kou (Macau)": "Formal Education",
   "Escola da Associação para Filhos e Irmãos dos Agricultores, em chinês Choi Nong Chi Tai Hoc Hau": "Formal Education",
   "Escola Estrela do Mar (Rua do Padre António)": "Formal Education",

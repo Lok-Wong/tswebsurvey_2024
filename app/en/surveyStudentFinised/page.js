@@ -212,7 +212,7 @@ function App() {
                         </h1> */}
                         <div className={styles.question} >
                             <FormControl>
-                                <FormLabel id="still-have-other-child-label"><h3>Are there any other family members who are not tertiary students and have not completed this questionnaire?</h3></FormLabel>
+                                <FormLabel id="still-have-other-child-label"><h3>Are there any other family members who are non-tertiary students and have not completed this questionnaire?</h3></FormLabel>
                                 <RadioGroup
                                     defaultValue={stillHaveChild}
                                     aria-labelledby="still-have-other-child-label"
@@ -266,7 +266,7 @@ function App() {
                     <DialogContentText id="alert-dialog-description">
                         {
                             parseInt(_totalStudentNumber) > 4 ?
-                                "Please confirm that the students in the family have already filled out the questionnaire"
+                                "Please confirm that all the students in the family have already filled out the questionnaire"
                                 :
                                 "There is (are) still " + (parseInt(_totalStudentNumber) - parseInt(_studentNum) - 1) + " student(s) who has (have) not yet filled out their travel information"
                         }

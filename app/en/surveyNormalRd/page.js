@@ -299,10 +299,10 @@ function App() {
 
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                        III. Under normal circumstances, the commuting situation for going to and returning from school
+                        III. The commuting behaviours of students to/from school under normal circumstances
                         </h1>
                         <h2 style={{ color: "#000000" }}>
-                        3.1 Under normal circumstances, the situation going to school in the morning:
+                        3.1 The commuting behaviours of students to school under normal circumstances
                         </h2>
 
                         <div className={styles.question}>

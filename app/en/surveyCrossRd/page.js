@@ -352,10 +352,10 @@ function App() {
                     <div className={styles.pageWidth}>
                         <div>
                             <h1 style={{ color: "#000000"}}>
-                            IV. Cross-border traveling to and from school
+                            IV. Cross-border traveling to/from school
                             </h1>
                             <h2 style={{ color: "#000000" }}>
-                            4.1 Under normal circumstances, <br/> the situation of going to school in the morning
+                            4.1 The commuting behaviours of students to school under normal circumstances
                             </h2>
                         </div>
 

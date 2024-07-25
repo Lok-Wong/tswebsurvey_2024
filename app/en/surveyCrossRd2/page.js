@@ -322,8 +322,8 @@ function App() {
         }
         if (survey.pickup == 999) {
             handleAlertBarOpen()
-            setVCodeError("8) Were you being picked up or dropped off")
-            handleHelpText("pickup", "Were you being picked up or dropped off")
+            setVCodeError("8) Is the student picked up or dropped off")
+            handleHelpText("pickup", "Is the student picked up or dropped off")
             return
         }
 
@@ -346,16 +346,16 @@ function App() {
         if (survey.portForHome == "其他") {
             if (survey.otherOfportForHome == 999 || survey.otherOfportForHome == "") {
                 handleAlertBarOpen()
-                setVCodeError("9) Please fill in other Border Checkpoint")
-                handleHelpText("portForHome", "Please fill in other Border Checkpoint")
+                setVCodeError("9) Does the student go directly to the Border Checkpoint ")
+                handleHelpText("portForHome", "Does the student go directly to the Border Checkpoint ")
                 return
             }
         }
 
         if (survey.directToPort == 999) {
             handleAlertBarOpen()
-            setVCodeError("10) Did you go directly to the Border Checkpoint")
-            handleHelpText("directToPort", "Did you go directly to the Border Checkpoint")
+            setVCodeError("9) Does the student go directly to the Border Checkpoint ")
+            handleHelpText("directToPort", "Does the student go directly to the Border Checkpoint ")
             return
         }
 
@@ -618,7 +618,7 @@ function App() {
                                     value={survey.pickup}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="The student goes to school on his/her own" />
+                                    <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="Student leaving school on his/her own" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Parents" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Domestic Helper" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Tutorial center / After School Care Centre" />
