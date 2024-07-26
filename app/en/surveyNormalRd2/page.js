@@ -376,15 +376,15 @@ function App() {
         if (survey.directToHomeState == "否") {
             if (!survey.directToHomeNo.address.method) {
                 handleAlertBarOpen()
-                setVCodeError(`請填寫地址及按下確定按鈕`)
-                handleHelpText("address", "請填寫地址及按下確定按鈕")
+                setVCodeError(`Please fill in the adress and press the "Confirm" button`)
+                handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
                 return
             }
 
             if (survey.directToHomeNo.address == 999) {
                 handleAlertBarOpen()
-                setVCodeError(`請填寫地址及按下確定按鈕`)
-                handleHelpText("address", "請填寫地址及按下確定按鈕")
+                setVCodeError(`Please fill in the adress and press the "Confirm" button`)
+                handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
                 return
             }
 

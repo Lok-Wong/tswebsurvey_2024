@@ -201,15 +201,15 @@ function App() {
 
     if (!survey.address.method) {
       handleAlertBarOpen()
-      setVCodeError("1) 請填寫地址及按下確定按鈕")
-      handleHelpText("address", "請填寫地址及按下確定按鈕")
+      setVCodeError(`1) Please fill in the adress and press the "Confirm" button`)
+      handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
       return
     }
 
     if (survey.address == "999" || survey.address == "") {
       handleAlertBarOpen()
-      setVCodeError("1) 請填寫地址及按下確定按鈕")
-      handleHelpText("address", "請填寫地址及按下確定按鈕")
+      setVCodeError(`1) Please fill in the adress and press the "Confirm" button`)
+      handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
       return
     }
 
