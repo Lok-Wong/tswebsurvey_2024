@@ -131,7 +131,7 @@ function App() {
         }
 
         if (survey.pickup == "其他") {
-            if (survey.otherOfPickup == 999) {
+            if (survey.otherOfPickup == 999 || survey.otherOfPickup == "") {
                 handleAlertBarOpen()
                 setVCodeError("1) Please fill in Other")
                 handleHelpText("pickup", "Please fill in Other")
@@ -145,19 +145,28 @@ function App() {
             handleHelpText("TimeStartFromHome", "Please select a new time")
             return
         }
-
         if (survey.TimeStartFromHome == "") {
             handleAlertBarOpen()
             setVCodeError("2) Please select a time")
             handleHelpText("TimeStartFromHome", "Please select a time")
             return
         }
+
         if (survey.portForShcool == 999) {
             handleAlertBarOpen()
             setVCodeError("3) Please select a Border Checkpoint")
             handleHelpText("portForShcool", "Please select a Border Checkpoint")
             return
         }
+        if (survey.otherOfpPortForShcool == "其他") {
+            if (survey.otherOfpPortForShcool == 999 || survey.otherOfpPortForShcool == "") {
+                handleAlertBarOpen()
+                setVCodeError("3) Please fill in the other Border Checkpoint")
+                handleHelpText("pickup", "Please fill in the other Border Checkpoint")
+                return
+            }
+        }
+
         if (survey.TimeEndToMacau == "Invalid Date") {
             handleAlertBarOpen()
             setVCodeError("4) Please select a new time")
@@ -170,13 +179,13 @@ function App() {
             handleHelpText("TimeEndToMacau", "Please select a time")
             return
         }
+
         if (survey.commonTransirtation == 999) {
             handleAlertBarOpen()
             setVCodeError("5) Please select the primary mode of transportation")
             handleHelpText("commonTransirtation", "Please select an option")
             return
         }
-
         if (survey.commonTransirtation == "其他") {
             if (survey.otherOfCommonTransirtation == "" || survey.otherOfCommonTransirtation == 999) {
                 handleAlertBarOpen()
@@ -185,26 +194,26 @@ function App() {
                 return
             }
         }
+
         if (survey.arrivalTimeToSchool == "Invalid Date") {
             handleAlertBarOpen()
             setVCodeError("6) Please select a new time")
             handleHelpText("arrivalTimeToSchool", "Please select a new time")
             return
         }
-
         if (survey.arrivalTimeToSchool == "") {
             handleAlertBarOpen()
             setVCodeError("6) Please select a time")
             handleHelpText("arrivalTimeToSchool", "Please select a time")
             return
         }
+
         if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
             handleAlertBarOpen()
             setVCodeError(`4) The time should not be the same as "2) Departure time from home"`)
             handleHelpText("TimeEndToMacau", `The time should not be the same as "2) Departure time from home"`)
             return
         }
-
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
             handleAlertBarOpen()
             setVCodeError(`4) The time should not be earlier than "2) Departure time from home"`)
@@ -218,17 +227,15 @@ function App() {
             handleHelpText("arrivalTimeToSchool", `The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             return
         }
-
         if (dayjs(survey.TimeEndToMacau) > dayjs(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
             setVCodeError(`6) The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             handleHelpText("arrivalTimeToSchool", `The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
             return
         }
-
         if (JSON.stringify(survey.TimeEndToMacau) == JSON.stringify(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
-            setVCodeError(`The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
+            setVCodeError(`6)The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
             handleHelpText("arrivalTimeToSchool", `The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
             return
         }
