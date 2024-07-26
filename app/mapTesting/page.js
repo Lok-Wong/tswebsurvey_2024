@@ -12,20 +12,19 @@ function MapComponent({ handleCustomAddress }) {
   const [inputValue, setInputVale] = useState(null)
   const [mapData, setMapData] = useState(null)
   const [collectMethod, setCollectMethod] = useState(null)
-  const [urlArray, setArray] = useState(null)
+  const [url, setURL] = useState(null)
   let maps = null
 
   // const url = document.URL;
   // const urlArray = url.split("/");
 
   useEffect(() => {
-    const url = document.URL;
-    setArray(url.split("/"));
+    setURL(document.URL);
   }, [])
 
   const getButtonText = () =>{
-    if (urlArray.indexOf("en") > -1) return "Confirm"
-    else if (urlArray.indexOf("pt") > -1) return "Confirmar"
+    if (url.indexOf("/en") > -1) return "Confirm"
+    else if (url.indexOf("/pt") > -1) return "Confirmar"
     else return "確定"
   }
 
