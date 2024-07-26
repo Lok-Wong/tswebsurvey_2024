@@ -178,7 +178,7 @@ export default function Home() {
   const actions = [
     { icon: <Link href="/">繁中</Link>, name: '繁中', },
     { icon: <Link href="/en">EN</Link>, name: 'English', },
-    { icon: <Link href="/">PT</Link>, name: 'Em Breve', },
+    { icon: <Link href="/">PT</Link>, name: 'em breve', },
   ];
 
 

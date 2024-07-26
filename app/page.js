@@ -175,9 +175,9 @@ export default function Home() {
   }, [ip, survey]);
 
   const actions = [
-    { icon: <Link href="/">繁中</Link>, name: '繁中',  },
-    { icon: <Link href="/en">英文</Link>, name: '英文',  },
-    { icon: <Link href="/">葡文</Link>, name: '即將發佈', },
+    { icon: <Link href="/">繁中</Link>, name: '繁中', },
+    { icon: <Link href="/en">EN</Link>, name: 'English', },
+    { icon: <Link href="/">PT</Link>, name: 'em breve', },
   ];
 
 
@@ -231,7 +231,7 @@ export default function Home() {
           63703083 <br />
           63946045 <br /><br />
 
-          或可電郵至<br/>
+          或可電郵至：<br/>
           umtec.TS2024@um.edu.mo<br />
           <br /><br />感謝您的支持與協助！
         </a>
