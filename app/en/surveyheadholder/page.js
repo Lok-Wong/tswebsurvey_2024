@@ -344,7 +344,7 @@ function App() {
               <FormControl sx={{ display: 'flex', flex: 1 }}>
                 <FormLabel id="address-label">
                   <h3>
-                    1)	Building Name of the student's home address (a landmark is also acceptable, there is no requirement to include the floor and unit information):
+                    {`1)	Building Name of the student's home address (a landmark is also acceptable, there is no requirement to include the floor and unit information):`}
                   </h3>
                 </FormLabel>
                 <Box>
