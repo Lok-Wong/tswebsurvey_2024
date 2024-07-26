@@ -235,7 +235,7 @@ function App() {
         }
         if (JSON.stringify(survey.TimeEndToMacau) == JSON.stringify(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
-            setVCodeError(`6)The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
+            setVCodeError(`6) The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
             handleHelpText("arrivalTimeToSchool", `The time should not be the same as "4) Departure time from the Border Checkpoint to School"`)
             return
         }
@@ -368,7 +368,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label"><h3>1)  Is there anyone accompanying the student to school in the morning:</h3></FormLabel>
+                                <FormLabel id="pickup-label"><h3>1) Is there anyone accompanying the student to school in the morning:</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
