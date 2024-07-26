@@ -158,7 +158,7 @@ function App() {
             handleHelpText("portForShcool", "Please select a Border Checkpoint")
             return
         }
-        if (survey.otherOfpPortForShcool == "其他") {
+        if (survey.portForShcool == "其他") {
             if (survey.otherOfpPortForShcool == 999 || survey.otherOfpPortForShcool == "") {
                 handleAlertBarOpen()
                 setVCodeError("3) Please fill in the other Border Checkpoint")
