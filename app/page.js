@@ -211,7 +211,7 @@ export default function Home() {
             alt="mixed Logo"
             width={350.75}
             height={95.875}
-            resizeMode="contain"
+            // resizeMode="contain"
           />
         </div>
       </div>
