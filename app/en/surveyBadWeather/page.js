@@ -359,7 +359,7 @@ function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                        V.  The commuting behaviour of student to/from school under Amber Rainstorm Warning
+                        V.  The commuting behaviour of student to/from school under yellow rainstorm warning
                         </h1>
 
                         <div className={styles.question}>

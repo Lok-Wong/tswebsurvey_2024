@@ -369,29 +369,29 @@ function App() {
 
         if (survey.schoolArea == "999") {
             handleAlertBarOpen()
-            setVCodeError("1) Please select your school district")
-            handleHelpText('schoolArea', "Please select your school district")
+            setVCodeError("1) Please select student's school district")
+            handleHelpText('schoolArea', "Please select student's school district")
             return
         }
 
         if (survey.schoolName == "999" || survey.schoolName == "" || survey.schoolName == null) {
             handleAlertBarOpen()
-            setVCodeError("2) Please select your school")
-            handleHelpText('schoolName', "Please select your school")
+            setVCodeError("2) Please select student's school")
+            handleHelpText('schoolName', "Please select student's school")
             return
         }
 
         if (survey.classLevel == "999" || survey.classLevel == "") {
             handleAlertBarOpen()
-            setVCodeError("3) Please select your education level")
-            handleHelpText('classLevel', "Please select your education level")
+            setVCodeError("3) Please select student's education level")
+            handleHelpText('classLevel', "Please select student's education level")
             return
         }
 
         if (survey.levelType == "999" || survey.levelType == "") {
             handleAlertBarOpen()
-            setVCodeError("4) Please select your grade level")
-            handleHelpText('levelType', "Please select your grade level")
+            setVCodeError("4) Please select student's grade level")
+            handleHelpText('levelType', "Please select student's grade level")
             return
         }
 

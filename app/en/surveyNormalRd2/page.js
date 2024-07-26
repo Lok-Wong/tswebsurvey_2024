@@ -638,8 +638,8 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="The student leaving school on his/her own" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Parents" />
-                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Domestic Helpter" />
-                                    <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Tutorial Center / After School Care Center" />
+                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Domestic Helper" />
+                                    <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Tutoring Centers/Custodial Centers" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Others (e.g., Guardians, Relatives, etc.)" />
                                     {survey.leavePickUp == "其他" ?
                                         <Box
