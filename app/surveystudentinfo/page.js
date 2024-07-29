@@ -550,7 +550,7 @@ function App() {
                                         value={survey.schoolType}
                                     >
 
-                                        <div>
+                                        <div className={styles.columnRadio}>
                                             <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="正規教育" />
                                             <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="回歸教育" />
                                         </div>
@@ -585,7 +585,7 @@ function App() {
                                                 )
                                             })
                                             :
-                                            <div>
+                                            <div className={styles.columnRadio}>
                                                 <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"幼稚園"} />
                                                 <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"小學"} />
                                                 <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"中學"} />
