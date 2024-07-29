@@ -316,7 +316,12 @@ function App() {
     }, [finishStatus]);
 
     const schoolDataFunc = (value) => {
-        if (sessionStorage.getItem("checkschoolName") != value) {
+        // alert("Before: " + sessionStorage.getItem('checkschoolName') + "\n" + (sessionStorage.getItem("checkschoolName") == ""));
+        if (sessionStorage.getItem("checkschoolName") == "null") {
+            sessionStorage.setItem("checkschoolName", "")
+            return
+        }
+        if (sessionStorage.getItem("checkschoolName") == value) {
             sessionStorage.setItem("checkschoolName", value)
             console.log("nochange")
             return
@@ -359,6 +364,7 @@ function App() {
     }
 
     const handleNextButton = () => {
+        // console.log(survey);
 
         // if (survey.schoolType == "999") {
         //     handleAlertBarOpen()
