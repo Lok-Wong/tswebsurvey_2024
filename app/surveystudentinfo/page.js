@@ -315,7 +315,12 @@ function App() {
     }, [finishStatus]);
 
     const schoolDataFunc = (value) => {
-        if (sessionStorage.getItem("checkschoolName") != value) {
+        // alert("Before: " + sessionStorage.getItem('checkschoolName') + "\n" + (sessionStorage.getItem("checkschoolName") == ""));
+        if (sessionStorage.getItem("checkschoolName") == "null") {
+            sessionStorage.setItem("checkschoolName", "")
+            return
+        }
+        if (sessionStorage.getItem("checkschoolName") == value) {
             sessionStorage.setItem("checkschoolName", value)
             console.log("nochange")
             return
@@ -358,6 +363,7 @@ function App() {
     }
 
     const handleNextButton = () => {
+        // console.log(survey);
 
         // if (survey.schoolType == "999") {
         //     handleAlertBarOpen()
@@ -375,6 +381,7 @@ function App() {
 
         if (survey.schoolName == "999" || survey.schoolName == "" || survey.schoolName == null) {
             handleAlertBarOpen()
+            alert(survey.schoolName);
             setVCodeError("2) 請選擇學校名稱")
             handleHelpText('schoolName', "請選擇學校名稱")
             return
@@ -543,7 +550,7 @@ function App() {
                                         value={survey.schoolType}
                                     >
 
-                                        <div>
+                                        <div className={styles.columnRadio}>
                                             <FormControlLabel sx={{ color: "black" }} value="正規教育" control={<Radio />} label="正規教育" />
                                             <FormControlLabel sx={{ color: "black" }} value="回歸教育" control={<Radio />} label="回歸教育" />
                                         </div>
@@ -578,7 +585,7 @@ function App() {
                                                 )
                                             })
                                             :
-                                            <div>
+                                            <div className={styles.columnRadio}>
                                                 <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"幼稚園"} />
                                                 <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"小學"} />
                                                 <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"中學"} />
