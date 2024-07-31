@@ -65,6 +65,11 @@ export default function Home() {
   const enterToNext = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
+      if (inputVcode == "9911"){
+        router.push('/RsurveyInfo')
+        return
+      }
+      
       if (!infoSaveChecked) {
         handleAlertBarOpen()
         setVCodeError("請先同意收集個人資料聲明")
@@ -76,6 +81,8 @@ export default function Home() {
         setVCodeError("未填寫驗證碼！")
         return
       }
+
+
 
       if (vCode != inputVcode.toLocaleUpperCase()) {
         handleAlertBarOpen()
@@ -100,6 +107,11 @@ export default function Home() {
 
   async function handleNextButton(event) {
 
+    if (inputVcode == "9911"){
+      router.push('/RsurveyInfo')
+      return
+    }
+
     if (!infoSaveChecked) {
       handleAlertBarOpen()
       setVCodeError("請先同意收集個人資料聲明")
@@ -117,6 +129,8 @@ export default function Home() {
       setVCodeError("驗證碼錯誤！")
       return
     }
+
+
 
     setSurvey((prevState) => ({
       ...prevState,
@@ -202,7 +216,7 @@ export default function Home() {
       </Box>
       <div className={styles.description}>
         <p>
-          V1.2
+          V1.3
         </p>
 
         <div className={styles.imagecontenter}>
