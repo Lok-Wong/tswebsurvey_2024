@@ -256,17 +256,6 @@ function App() {
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
-    const setStudentNum = React.useCallback((num) => {
-        if (typeof num === 'undefined') {
-            return (0)
-        }
-
-        if (num > 0) {
-            const newStudentNum = num - 1
-            return (newStudentNum)
-        }
-    }, [])
-
 
     const onBackButtonEvent = React.useCallback((e) => {
         setfinishStatus(true)
@@ -300,7 +289,7 @@ function App() {
 
         sessionStorage.setItem("pathList", storedPathList)
 
-        router.push('/RsurveyCheckOd')
+        router.push('/RsurveyOD')
 
 
     }

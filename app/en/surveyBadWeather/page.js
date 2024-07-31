@@ -516,10 +516,10 @@ function App() {
                                     noValidate
                                 >
                                     <TextField
-                                        inputProps={{ maxLength: 200 }}
+                                        inputProps={{ maxLength: 500 }}
                                         sx={{ marginTop: "1rem" }}
                                         id="comment-text"
-                                        label="Please enter your comments (200 word limit)"
+                                        label="Please enter your comments (500 word limit)"
                                         variant="outlined"
                                         name='comment'
                                         multiline
