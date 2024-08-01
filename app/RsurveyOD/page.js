@@ -30,8 +30,7 @@ function App() {
     const purposeOfVisitList = ["返工", "返學", "返屋企", "回家午休", "轉換交通工具", "載人", "購物", "飲食", "買餐點", "休閒/社交活動", "私人事務", "工作相關"]
     const mainMode = ["電單車（駕駛）", "私家車（駕駛）", "電單車（乘客）", "私家車（乘客）", "巴士", "輕軌", "一般的士", "電召的士", "員工巴士", "校車", "娛樂場接駁車", "步行"]
 
-    const testRef = React.useRef(null)
-    const scrollToElement = () => testRef.current.scrollIntoView({ behavior: 'smooth' });
+    const listRef = React.useRef(null)
 
     const [times, setTimes] = React.useState(1)
     const initaSurvey = {
@@ -217,7 +216,7 @@ function App() {
 
     React.useEffect(() => {
         if (scrollTo) {
-            testRef.current.scrollIntoView({ behavior: 'smooth' });
+            listRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [scrollTo]);
 
@@ -409,7 +408,7 @@ function App() {
                     </FormControl>
                 </div>
             </div>
-            <div ref={testRef}></div>
+            <div ref={listRef}></div>
             {index == surveyObject.length - 1 ? null :
                 <Button onClick={() => handleInsertButton(index)}>
                     按此插入行程

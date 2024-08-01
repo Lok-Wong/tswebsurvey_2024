@@ -15,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Slider from '@mui/material/Slider';
 import { Box, TextField } from '@mui/material';
+import { Flex } from 'antd';
 
 function App() {
     const router = useRouter();
@@ -24,6 +25,7 @@ function App() {
     const [salarys, setSalarys] = React.useState()
     const [walkTimes, setWalkTimes] = React.useState()
     const [days, setDays] = React.useState(new Date())
+    const odTypeRef = React.useRef(null)
 
     const blanksurvey = {
         gender: 999,
@@ -86,6 +88,7 @@ function App() {
     const [helpText, setHelpText] = React.useState(blankHelpText)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [openAlertBar, setOpenAlertBar] = React.useState(false)
+    const [scrollTo, setScrollTo] = React.useState(false);
 
     const handleAlertBarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -112,6 +115,10 @@ function App() {
 
     const handleChange = (event) => {
         const objectName = event.target.name
+        if (objectName === "OdDayType") {
+            setScrollTo(true)
+        }
+
         if (objectName === "age") {
             if (event.target.value === 85) {
                 setSurvey((prevState) => (
@@ -218,8 +225,8 @@ function App() {
 
             }
         )
-
         )
+
     };
 
     const [isClient, setIsClient] = React.useState(false)
@@ -303,6 +310,13 @@ function App() {
         }
     }, [survey]);
 
+
+    React.useEffect(() => {
+        if (scrollTo) {
+            odTypeRef.current.scrollIntoView({ behavior: 'smooth' });
+            setScrollTo(false)
+        }
+    }, [scrollTo]);
 
     const getWorkingStatusContent = () => {
         if (survey.workingStatus === "就學") {
@@ -420,59 +434,83 @@ function App() {
         return `${year}/${month}/${day - 1} 03:00:00 至 ${year}/${month}/${day} 03:00:00`;
     }
 
+    const getNextPageText = () => {
+        if (isClient) {
+            if (survey.personOdType === "旅客") {
+                return (
+                    "完成"
+                )
+            }
+
+            if (survey.OdDayType === "沒有") {
+                return (
+                    "完成"
+                )
+            }
+
+            return ("下一頁")
+        }
+        return ("下一頁")
+
+    }
+
     const getOdDayType = (booleans) => {
         if (booleans === "有") {
             return (
-                <FormControl>
-                    <FormLabel
-                        id="OdDayYes-label">
-                        <h3>
-                            11) 昨天是你的甚麼日子?
-                        </h3>
-                    </FormLabel>
-                    <RadioGroup
-                        aria-labelledby="OdDayYes-label"
-                        name="OdDayYes"
-                        onChange={handleChange}
-                        value={survey.OdDayYes}
-                    >
-                        <FormControlLabel sx={{ color: "black" }} value="上班及上學日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="上班及上學日" />
-                        <FormControlLabel sx={{ color: "black" }} value="上班日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="上班日" />
-                        <FormControlLabel sx={{ color: "black" }} value="上學日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="上學日" />
-                        <FormControlLabel sx={{ color: "black" }} value="放假日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="放假日" />
-                        <FormControlLabel sx={{ color: "black" }} value="請假日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="請假日" />
-                        <FormControlLabel sx={{ color: "black" }} value="無薪假日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="無薪假日" />
+                <div ref={odTypeRef} className={styles.question}>
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel
+                            id="OdDayYes-label">
+                            <h3>
+                                11) 昨天是你的甚麼日子?
+                            </h3>
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby="OdDayYes-label"
+                            name="OdDayYes"
+                            onChange={handleChange}
+                            value={survey.OdDayYes}
+                        >
+                            <FormControlLabel sx={{ color: "black" }} value="上班及上學日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="上班及上學日" />
+                            <FormControlLabel sx={{ color: "black" }} value="上班日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="上班日" />
+                            <FormControlLabel sx={{ color: "black" }} value="上學日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="上學日" />
+                            <FormControlLabel sx={{ color: "black" }} value="放假日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="放假日" />
+                            <FormControlLabel sx={{ color: "black" }} value="請假日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="請假日" />
+                            <FormControlLabel sx={{ color: "black" }} value="無薪假日" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="無薪假日" />
 
-                    </RadioGroup>
-                    <FormHelperText sx={{ color: 'red' }}>{helpText.OdDayYes}</FormHelperText>
-                </FormControl>
+                        </RadioGroup>
+                        <FormHelperText sx={{ color: 'red' }}>{helpText.OdDayYes}</FormHelperText>
+                    </FormControl>
+                </div>
             )
         }
         if (booleans === "沒有") {
             return (
-                <FormControl>
-                    <FormLabel
-                        id="OdDayNo-label">
-                        <h3>
-                            11) 沒有行程的原因是？
-                        </h3>
-                    </FormLabel>
-                    <RadioGroup
-                        aria-labelledby="OdDayNo-label"
-                        name="OdDayNo"
-                        onChange={handleChange}
-                        value={survey.OdDayNo}
-                    >
-                        <FormControlLabel sx={{ color: "black" }} value="居家辨公" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="居家辨公" />
-                        <FormControlLabel sx={{ color: "black" }} value="休假" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="休假" />
-                        <FormControlLabel sx={{ color: "black" }} value="在家休息" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="在家休息" />
-                        <FormControlLabel sx={{ color: "black" }} value="天氣" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="天氣" />
-                        <FormControlLabel sx={{ color: "black" }} value="生病臥床" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="生病臥床" />
-                        <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="其他" />
+                <div ref={odTypeRef} className={styles.question}>
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel
+                            id="OdDayNo-label">
+                            <h3>
+                                11) 沒有行程的原因是？
+                            </h3>
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby="OdDayNo-label"
+                            name="OdDayNo"
+                            onChange={handleChange}
+                            value={survey.OdDayNo}
+                        >
+                            <FormControlLabel sx={{ color: "black" }} value="居家辨公" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="居家辨公" />
+                            <FormControlLabel sx={{ color: "black" }} value="休假" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="休假" />
+                            <FormControlLabel sx={{ color: "black" }} value="在家休息" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="在家休息" />
+                            <FormControlLabel sx={{ color: "black" }} value="天氣" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="天氣" />
+                            <FormControlLabel sx={{ color: "black" }} value="生病臥床" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="生病臥床" />
+                            <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="其他" />
 
-                    </RadioGroup>
-                    <FormHelperText sx={{ color: 'red' }}>{helpText.OdDayNo}</FormHelperText>
-                </FormControl>
+                        </RadioGroup>
+                        <FormHelperText sx={{ color: 'red' }}>{helpText.OdDayNo}</FormHelperText>
+                    </FormControl>
+                </div>
             )
         }
     }
@@ -489,7 +527,7 @@ function App() {
                         </h1>
 
                         <div className={styles.question}>
-                            <FormControl>
+                            <FormControl className={styles.inlineQuestionFormControl}>
                                 <FormLabel id="gender-label"><h3>5)  性別：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="gender-label"
@@ -505,7 +543,7 @@ function App() {
                         </div>
 
                         <div className={styles.question}>
-                            <FormControl>
+                            <FormControl className={styles.inlineQuestionFormControl}>
                                 <FormLabel id="person-od-type-label"><h3>2) 閣下屬於哪種出行人群：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="person-od-type-label"
@@ -530,7 +568,7 @@ function App() {
                                 :
                                 <div>
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
 
                                             <p>
@@ -546,9 +584,9 @@ function App() {
                                     </div>
 
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="age-label"><h3>3)  年齡：</h3></FormLabel>
-                                            <Box sx={{ width: "400%" }}>
+                                            <div >
                                                 <Slider
                                                     sx={{ color: "#3E848C" }}
                                                     min={0}
@@ -561,14 +599,15 @@ function App() {
                                                     onChange={(value) => { handleChange(value), setAges(value.target.value) }}
                                                     valueLabelFormat={getAgeValueLabel}
                                                 />
-                                            </Box>
-                                           
+                                                <p>{survey.age}</p>
+                                            </div>
+
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.age}</FormHelperText>
                                         </FormControl>
                                     </div>
 
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="working-status-label"><h3>4)  就業／就學情況是（擇一主要身份）：</h3></FormLabel>
                                             <RadioGroup
                                                 id="workingStatus"
@@ -590,7 +629,7 @@ function App() {
                                     {getWorkingStatusContent()}
 
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="salary-label"><h3>5) 閣下的月收入（或零用錢）是：</h3></FormLabel>
                                             <Box>
                                                 <Slider
@@ -612,7 +651,7 @@ function App() {
                                     </div>
 
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="license-count-label"><h3>6) 請問您有沒有電單車或私家車車牌（駕駛執照）？</h3></FormLabel>
                                             <RadioGroup
                                                 id="licenseCount"
@@ -632,7 +671,7 @@ function App() {
                                     </div>
 
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="intention-purchase-car-label"><h3>7) 未來年是否有購車意願？</h3></FormLabel>
                                             <RadioGroup
                                                 id="IntentionOfPurchaseCar"
@@ -654,6 +693,7 @@ function App() {
 
                                     <div className={styles.question}>
                                         <FormControl
+                                            className={styles.inlineQuestionFormControl}
                                             variant="standard"
                                         >
                                             <FormLabel component="commonTransportation"><h3>8)	請問您上班或上學最常用的出行方式是：</h3></FormLabel>
@@ -810,7 +850,7 @@ function App() {
                                         </FormControl>
                                     </div>
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="walkTime-label"><h3>9) 如果要選擇步行前往目的地，而不使用交通工具，您能夠接受的步行時間上限是：</h3></FormLabel>
                                             <Box>
                                                 <Slider
@@ -832,7 +872,7 @@ function App() {
                                     </div>
 
                                     <div className={styles.question}>
-                                        <FormControl>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel
                                                 id="OdDayType-label">
                                                 <h3> 10) {getTime(days)} <br />
@@ -853,13 +893,10 @@ function App() {
                                         </FormControl>
                                     </div>
 
-                                    <div className={styles.question}>
-                                        {getOdDayType(survey.OdDayType)}
-                                    </div>
+                                    {getOdDayType(survey.OdDayType)}
                                 </div>
 
                         }
-
                     </div>
                     :
                     null
@@ -876,15 +913,14 @@ function App() {
 
                     <Button className={styles.buttonStyle}
                         onClick={handleNextButton}>
-                        {
-                            survey.personOdType == "旅客" || survey.OdDayType == "沒有" ?
-                                "完成"
-                                :
-                                "下一頁"
-                        }
+                        {getNextPageText()}
                     </Button>
                 </div>
             </div>
+
+
+
+
 
             <Snackbar
                 open={openAlertBar}
