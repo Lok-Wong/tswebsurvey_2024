@@ -22,6 +22,9 @@ import { useRouter } from 'next/navigation';
 import LinearProgresss from '@/app/utils/progress';
 import Snackbar from '@mui/material/Snackbar';
 import Autocomplete from '@mui/material/Autocomplete';
+import Slider from '@mui/material/Slider';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
+import Collapse from '@mui/material/Collapse';
 
 
 function App() {
@@ -29,147 +32,191 @@ function App() {
 
     const purposeOfVisitList = ["返工", "返學", "返屋企", "回家午休", "轉換交通工具", "載人", "購物", "飲食", "買餐點", "休閒/社交活動", "私人事務", "工作相關"]
     const mainMode = ["電單車（駕駛）", "私家車（駕駛）", "電單車（乘客）", "私家車（乘客）", "巴士", "輕軌", "一般的士", "電召的士", "員工巴士", "校車", "娛樂場接駁車", "步行"]
-
     const listRef = React.useRef(null)
+    const [walkToVehicles, setWalkToVehicles] = React.useState(0)
+    const [waittingTimes, setWaittingTimes] = React.useState(0)
+    const [walkToBuildings, setWalkToBuildings] = React.useState(0)
 
-    const [times, setTimes] = React.useState(1)
-    const initaSurvey = {
-        startPoint: "null",
-        endPoint: "null",
-        startTime: "null",
-        endTime: "null",
-        purposeOfVisit: "null",
-        otherOfpurposeOfVisit: "null",
-        mainMode: "null",
+    const sliderMarks = [
+        {
+            value: 0,
+            label: '不需等待',
+        },
+        {
+            value: 30,
+            label: '>=30分鐘',
+        },
+        {
+            value: 15,
+            label: '15分鐘',
+        },
+    ]
+
+    const _ODid = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+
+            const local_storage_ODid = sessionStorage.getItem('ODid');
+            if (local_storage_ODid) {
+                return local_storage_ODid
+            }
+        }
+        return 1;
+    }, [])
+    const [times, setTimes] = React.useState(parseInt(_ODid))
+
+
+    const initaSurvey = [{
+        startPoint: "999",
+        endPoint: "999",
+        startTime: "999",
+        endTime: "999",
+        purposeOfVisit: "999",
+        otherOfpurposeOfVisit: "999",
+        mainMode: "999",
         motoMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         carMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         motoPassengerMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         carPassengerMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         busMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         lightRailMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         taxiMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         staffBusMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         schoolBusMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         tourBusMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
-        walkMode: "null",
-        otherMode: "null",
+        walkMode: "999",
+        otherMode: "999",
         id: 0,
         startTime: new Date(),
-        endTime: 'null',
-    }
+        endTime: '999',
+    }]
+
+    const _initial_value = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+
+            const local_storage_value_str = sessionStorage.getItem('RsurveyOD');
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str);
+            }
+        }
+        // Otherwise use initial_value that was passed to the function
+        return initaSurvey;
+    }, []);
+
     const blankSurvey = {
-        startPoint: "null",
-        endPoint: "null",
-        startTime: "null",
-        endTime: "null",
-        purposeOfVisit: "null",
-        otherOfpurposeOfVisit: "null",
-        mainMode: "null",
+        startPoint: "999",
+        endPoint: "999",
+        startTime: "999",
+        endTime: "999",
+        purposeOfVisit: "999",
+        otherOfpurposeOfVisit: "999",
+        mainMode: "999",
         motoMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         carMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         motoPassengerMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         carPassengerMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         busMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         lightRailMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         taxiMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         staffBusMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         schoolBusMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
         tourBusMode: {
-            walkToVehicle: "null",
-            waittingTime: "null",
-            walkToBuilding: "null",
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
         },
-        walkMode: "null",
-        otherMode: "null",
+        walkMode: "999",
+        otherMode: "999",
         id: times,
-        startTime: new Date(),
-        endTime: 'null',
+        ODstartTime: new Date(),
+        endTime: '999',
     }
-    const [surveyObject, setSurveyObject] = React.useState(
-        [
-            initaSurvey
-        ]
-    )
-    const [startTime, setStartTime] = React.useState(dayjs());
     const dragItem = React.useRef(0);
     const draggedOverItem = React.useRef(0);
 
+    const [surveyObject, setSurveyObject] = React.useState(_initial_value);
+
+    const [isClient, setIsClient] = React.useState(false)
+
+    React.useEffect(() => {
+        setIsClient(true)
+    }, [])
 
     function handleSort() {
         const itemClone = [...surveyObject];
@@ -182,18 +229,17 @@ function App() {
         if (window.confirm("確定要刪除第" + (index + 1) + "條行程嗎？") == false) {
             return;
         }
-        const newList = surveyObject.filter((item) => item.id !== id);
+        const newList = surveyObject.filter((item) => item.id !== index);
         setSurveyObject(newList);
     }
 
     function handleInsertButton(index) {
         setTimes((prevState) => (prevState + 1))
-        setSurveyObject((prevState) => ([...prevState.slice(0, index+1),
+        setSurveyObject((prevState) => ([...prevState.slice(0, index + 1),
             blankSurvey,
-        ...prevState.slice(index+1)
+        ...prevState.slice(index + 1)
         ]))
         setScrollTo(false)
-
     }
 
     function handleAddButton() {
@@ -206,23 +252,49 @@ function App() {
     }
 
     const handleNextButton = () => {
-
         sessionStorage.setItem("pathList", storedPathList)
         // router.push('/RsurveyCheckOd')
-
     }
 
     const [scrollTo, setScrollTo] = React.useState(false);
 
+    const handleTimeChange = (event, name, index) => {
+        surveyObject.findIndex((item) => console.log("item", item.id));
+        console.log("index", index);
+        const currentListIndex = surveyObject.findIndex((item) => item.id === index);
+        const updatedList = Object.assign({}, surveyObject[currentListIndex]);
+        updatedList[name] = event.$d;
+        const newList = surveyObject.slice();
+        newList[currentListIndex] = updatedList;
+        setSurveyObject(newList);
+    };
+
     React.useEffect(() => {
         if (scrollTo) {
             listRef.current.scrollIntoView({ behavior: 'smooth' });
+            setScrollTo(false);
+            return;
         }
     }, [scrollTo]);
 
     React.useEffect(() => {
+        surveyObject && sessionStorage.setItem(("RsurveyOD"), JSON.stringify(surveyObject))
+        surveyObject && sessionStorage.setItem(("ODid"), JSON.stringify(times))
+        // setHelpText(blankHelpText)
+    }, [surveyObject])
+
+    React.useEffect(() => {
         console.log(surveyObject)
+        console.log(surveyObject.length)
     }, [surveyObject]);
+
+    const getListNumber = surveyObject.map((d, index) => {
+        return (
+            <Button className={styles.buttonStyle} onClick={() => scrollToSection(index)}>
+                {index+1}
+            </Button>
+        )
+    })
 
     const listItems = surveyObject.map((d, index) =>
         <div key={index} >
@@ -234,6 +306,7 @@ function App() {
                 onDragEnter={() => (draggedOverItem.current = index)}
                 onDragEnd={handleSort}
                 onDragOver={(e) => e.preventDefault()}
+                id={"tab" + index}
             >
                 <div className={styles.removeButtomDiv}>
                     <p>第{index + 1}個行程 {d.id}</p>
@@ -255,10 +328,11 @@ function App() {
                         <FormLabel id="startTime">2) 出發時間</FormLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
-                                <TimePicker
+                                <DesktopTimePicker
+                                    name='startTime'
                                     ampm={false}
-                                    value={startTime}
-                                    onChange={(newValue) => setStartTime(newValue)}
+                                    value={dayjs(surveyObject[index].startTime)}
+                                    onChange={(newValue) => { handleTimeChange(newValue, 'startTime', d.id) }}
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
@@ -278,10 +352,10 @@ function App() {
                         <FormLabel id="endTime">4) 到達時間</FormLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
-                                <TimePicker
+                                <DesktopTimePicker
                                     ampm={false}
-                                    value={startTime}
-                                    onChange={(newValue) => setStartTime(newValue)}
+                                    value={dayjs(surveyObject[index].endTime)}
+                                    onChange={(newValue) => handleTimeChange(newValue, 'endTime', index)}
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
@@ -347,64 +421,77 @@ function App() {
                         />
                     </FormControl>
                 </div>
+
                 <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="walkToVehicle">6.1) 步行至上車／等待交通工具的地點用了：</FormLabel>
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 0.5, width: '10rem' },
-                            }}
-                            noValidate
-                            autoComplete="off"
-                        >
-                            <TextField
-                                inputProps={{ maxLength: 10 }}
-                                id="walkToVehicle-textfill"
-                                variant="filled"
-                                name='walkToVehicle'
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel id="walkToVehicles-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
+                        <div className={styles.sliderDiv}>
+                            <Slider
+                                sx={{ color: "#3E848C" }}
+                                min={0}
+                                max={30}
+                                step={1}
+                                valueLabelDisplay="auto"
+                                aria-label="walkToVehicles"
+                                name='walkToVehicles'
+                                value={walkToVehicles}
+                                marks={sliderMarks}
+                                onChange={(value) => { setWalkToVehicles(value.target.value) }}
+                            // valueLabelFormat={getAgeValueLabel}
+                            // marks={ageMarks}
                             />
-                        </Box>
+
+                        </div>
+
+                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                     </FormControl>
                 </div>
+
                 <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="waittingTime">6.2) 等待交通工具的時間（如適用）用了：</FormLabel>
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 0.5, width: '10rem' },
-                            }}
-                            noValidate
-                            autoComplete="off"
-                        >
-                            <TextField
-                                inputProps={{ maxLength: 10 }}
-                                id="waittingTime-textfill"
-                                variant="filled"
-                                name='waittingTime'
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel id="waittingTimes-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
+                        <div className={styles.sliderDiv}>
+                            <Slider
+                                sx={{ color: "#3E848C" }}
+                                min={0}
+                                max={30}
+                                step={1}
+                                valueLabelDisplay="auto"
+                                aria-label="waittingTimes"
+                                name='waittingTimes'
+                                value={waittingTimes}
+                                marks={sliderMarks}
+                                onChange={(value) => { setWaittingTimes(value.target.value) }}
+                            // valueLabelFormat={getAgeValueLabel}
+                            // marks={ageMarks}
                             />
-                        </Box>
+
+                        </div>
+                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                     </FormControl>
                 </div>
+
                 <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="walkToBuilding">6.3) 下車後，步行至目的地的時間用了：</FormLabel>
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 0.5, width: '10rem' },
-                            }}
-                            noValidate
-                            autoComplete="off"
-                        >
-                            <TextField
-                                inputProps={{ maxLength: 10 }}
-                                id="walkToBuilding-textfill"
-                                variant="filled"
-                                name='walkToBuilding'
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel id="walkToBuildings-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
+                        <div className={styles.sliderDiv}>
+                            <Slider
+                                sx={{ color: "#3E848C" }}
+                                min={0}
+                                max={30}
+                                step={1}
+                                valueLabelDisplay="auto"
+                                aria-label="walkToBuildings"
+                                name='walkToBuildings'
+                                value={walkToBuildings}
+                                marks={sliderMarks}
+                                onChange={(value) => { setWalkToBuildings(value.target.value) }}
+                            // valueLabelFormat={getAgeValueLabel}
+                            // marks={ageMarks}
                             />
-                        </Box>
+
+                        </div>
+                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                     </FormControl>
                 </div>
             </div>
@@ -423,20 +510,32 @@ function App() {
         setTimes(times)
     }, [times]);
 
+    const scrollToSection = (id) => {
+        const element = document.getElementById("tab"+id)
+        element?.scrollIntoView({ behavior: "smooth" });
+    };
 
     return (
         <main className={styles.main}>
-            <div>
-                <h1>
-                    2.	行程表格
-                </h1>
-            </div>
-            <div>
-                {listItems}
-            </div>
+            {
+                isClient ?
+                    <div>
+                        <h1>
+                            2.	行程表格
+                        </h1>
 
+                        <div>
+                            {listItems}
+                        </div>
+                    </div>
+                    :
+                    null
+            }
 
             <div className={styles.buttonGroup}>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    {getListNumber}
+                </div>
                 <LinearProgresss values={progressBarValue} />
                 <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
 

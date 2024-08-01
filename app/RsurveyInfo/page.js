@@ -15,7 +15,6 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Slider from '@mui/material/Slider';
 import { Box, TextField } from '@mui/material';
-import { Flex } from 'antd';
 
 function App() {
     const router = useRouter();
@@ -89,6 +88,53 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [openAlertBar, setOpenAlertBar] = React.useState(false)
     const [scrollTo, setScrollTo] = React.useState(false);
+
+    const ageMarks = [
+        {
+            value: 0,
+            label: '0歲-4歲',
+        },
+        {
+            value: 40,
+            label: '40-44歲',
+        },
+        {
+            value: 85,
+            label: '>=85歲',
+        },
+    ]
+
+    const salaryMarks = [
+        {
+            value: 0,
+            label: '<$3,000',
+        },
+        {
+            value: 6,
+            label: '$12,000-$13,999',
+        },
+        {
+            value: 12,
+            label: '>$100,000',
+        },
+    ]
+
+    const walkTimeMarks = [
+        {
+            value: 1,
+            label: '5分鐘內',
+        },
+        {
+            value: 30,
+            label: '31-35分鐘',
+        },
+        {
+            value: 61,
+            label: '60分鐘以上',
+        },
+    ]
+
+
 
     const handleAlertBarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -586,7 +632,7 @@ function App() {
                                     <div className={styles.question}>
                                         <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="age-label"><h3>3)  年齡：</h3></FormLabel>
-                                            <div >
+                                            <div className={styles.sliderDiv}>
                                                 <Slider
                                                     sx={{ color: "#3E848C" }}
                                                     min={0}
@@ -598,9 +644,16 @@ function App() {
                                                     value={ages}
                                                     onChange={(value) => { handleChange(value), setAges(value.target.value) }}
                                                     valueLabelFormat={getAgeValueLabel}
+                                                    marks={ageMarks}
                                                 />
-                                                <p>{survey.age}</p>
+
                                             </div>
+                                            {
+                                                !survey.age || survey.age == "999" ?
+                                                    <p>請拉動選擇你的年齡範位</p>
+                                                    :
+                                                    <p>已選擇：{survey.age}</p>
+                                            }
 
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.age}</FormHelperText>
                                         </FormControl>
@@ -631,7 +684,7 @@ function App() {
                                     <div className={styles.question}>
                                         <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="salary-label"><h3>5) 閣下的月收入（或零用錢）是：</h3></FormLabel>
-                                            <Box>
+                                            <div className={styles.sliderDiv}>
                                                 <Slider
                                                     sx={{ color: "#3E848C" }}
                                                     min={0}
@@ -643,8 +696,15 @@ function App() {
                                                     value={salarys}
                                                     onChange={(value) => { handleChange(value), setSalarys(value.target.value) }}
                                                     valueLabelFormat={getSalaryValueLabel}
+                                                    marks={salaryMarks}
                                                 />
-                                            </Box>
+                                            </div>
+                                            {
+                                                !survey.salary || survey.salary == "999" ?
+                                                    <p>請拉動選擇你的月收入範位</p>
+                                                    :
+                                                    <p>已選擇：{survey.salary}</p>
+                                            }
 
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.salary}</FormHelperText>
                                         </FormControl>
@@ -852,7 +912,7 @@ function App() {
                                     <div className={styles.question}>
                                         <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="walkTime-label"><h3>9) 如果要選擇步行前往目的地，而不使用交通工具，您能夠接受的步行時間上限是：</h3></FormLabel>
-                                            <Box>
+                                            <div className={styles.sliderDiv}>
                                                 <Slider
                                                     sx={{ color: "#3E848C" }}
                                                     min={1}
@@ -864,8 +924,15 @@ function App() {
                                                     value={walkTimes}
                                                     onChange={(value) => { handleChange(value), setWalkTimes(value.target.value) }}
                                                     valueLabelFormat={getWalkTime}
+                                                    marks={walkTimeMarks}
                                                 />
-                                            </Box>
+                                            </div>
+                                            {
+                                                !survey.walkTime || survey.walkTime == "999" ?
+                                                    <p>請拉動選擇你可接受的步行時間</p>
+                                                    :
+                                                    <p>已選擇：{survey.walkTime}</p>
+                                            }
 
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.walkTime}</FormHelperText>
                                         </FormControl>

@@ -85,6 +85,11 @@
   line-height: 26px;
 }
 
+.sliderDiv {
+  padding-right: 8%;
+  padding-left: 8%;
+}
+
 .buttonStyle:hover {
   background-color: #0265aa;
 }
