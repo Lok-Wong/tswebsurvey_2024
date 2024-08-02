@@ -31,7 +31,10 @@
 .odHeaderButton{
   flex:0.1;
   color: #ffffff;
+}
 
+.odHeaderButton:hover {
+  background-color: #7AB8BF;
 }
 
 .increaseOdLine {
@@ -136,7 +139,7 @@
 }
 
 .buttonStyle:hover {
-  background-color: #0265aa;
+  background-color: #7AB8BF;
 }
 
 .columnRadio {
