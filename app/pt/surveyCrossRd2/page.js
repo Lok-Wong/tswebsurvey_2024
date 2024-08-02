@@ -316,22 +316,22 @@ function App() {
     const handleNextButton = (event) => {
         if (survey.leaveShcoolTime == "") {
             handleAlertBarOpen()
-            setVCodeError("7) Please select the departure time from school")
-            handleHelpText("leaveShcoolTime", "Please select the departure time from school")
+            setVCodeError("7) Seleccione a hora de saída da escola")
+            handleHelpText("leaveShcoolTime", "Seleccione a hora de saída da escola")
             return
         }
         if (survey.pickup == 999) {
             handleAlertBarOpen()
-            setVCodeError("8) Is the student picked up or dropped off")
-            handleHelpText("pickup", "Is the student picked up or dropped off")
+            setVCodeError("8) Seleccione se o aluno é acompanhado")
+            handleHelpText("pickup", "Seleccione se o aluno é acompanhado")
             return
         }
 
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
                 handleAlertBarOpen()
-                setVCodeError("8) Please fill in other guardians")
-                handleHelpText("pickup", "Please fill in other guardians")
+                setVCodeError("8) Preencha outros tutores")
+                handleHelpText("pickup", "Preencha outros tutores")
                 return
             }
         }
@@ -346,16 +346,16 @@ function App() {
         if (survey.portForHome == "其他") {
             if (survey.otherOfportForHome == 999 || survey.otherOfportForHome == "") {
                 handleAlertBarOpen()
-                setVCodeError("9) Please fill in the other Border Checkpoint")
-                handleHelpText("portForHome", "Please fill in the other Border Checkpoint")
+                setVCodeError("9) Does the student go directly to the Border Checkpoint ")
+                handleHelpText("portForHome", "Does the student go directly to the Border Checkpoint ")
                 return
             }
         }
 
         if (survey.directToPort == 999) {
             handleAlertBarOpen()
-            setVCodeError("9) Does the student go directly to the Border Checkpoint ")
-            handleHelpText("directToPort", "Does the student go directly to the Border Checkpoint ")
+            setVCodeError("9) Seleccione se se dirigir directamente ao posto fronteiriço depois das aulas")
+            handleHelpText("directToPort", "Seleccione se se dirigir directamente ao posto fronteiriço depois das aulas")
             return
         }
 
@@ -363,36 +363,36 @@ function App() {
         if (survey.directToPort == "是") {
             if (survey.directToPortYes.arrivalTime == "") {
                 handleAlertBarOpen()
-                setVCodeError("Please select the arrival time")
-                handleHelpText("arrivalPortTime", "Please select the arrival time")
+                setVCodeError("Seleccione a hora de chegada")
+                handleHelpText("arrivalPortTime", "Seleccione a hora de chegada")
                 return
             }
             if (survey.directToPortYes.transirtation == 999) {
                 handleAlertBarOpen()
-                    setVCodeError("Please select the mode of transportation")
-                handleHelpText("transirtation", "Please select the mode of transportation")
+                    setVCodeError("Seleccione o meio de transporte")
+                handleHelpText("transirtation", "Seleccione o meio de transporte")
                 return
             }
 
             if (survey.directToPortYes.transirtation == "其他") {
                 if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
                     handleAlertBarOpen()
-                    setVCodeError("Please fill in the other modes of transportation")
-                    handleHelpText("transirtation", "Please fill in the other modes of transportation")
+                    setVCodeError("Preencha outros meios de transporte")
+                    handleHelpText("transirtation", "Preencha outros meios de transporte")
                     return
                 }
             }
 
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
-                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
+                setVCodeError(`Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
+                handleHelpText("arrivalPortTime", `Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
                 return
             }
             if (JSON.stringify(survey.directToPortYes.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
-                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
+                setVCodeError(`Não pode ser igual à “7) Hora de saída da escola”`)
+                handleHelpText("arrivalPortTime", `Não pode ser igual à “7) Hora de saída da escola”`)
                 return
             }
 
@@ -401,8 +401,8 @@ function App() {
         if (survey.directToPort == "否") {
             if (!survey.directToPortNo.address.method) {
                 handleAlertBarOpen()
-                setVCodeError(`Please fill in the adress and press the "Confirm" button`)
-                handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
+                setVCodeError(`Preencha a morada`)
+                handleHelpText("address", `Preencha a morada`)
                 return
             }
 
@@ -414,42 +414,42 @@ function App() {
             }
             if (survey.directToPortNo.arrivalTime == "") {
                 handleAlertBarOpen()
-                setVCodeError("Please select the arrival time")
-                handleHelpText("arrivalPortTime", "Please select the arrival time")
+                setVCodeError("Seleccione a hora de chegada")
+                handleHelpText("arrivalPortTime", "Seleccione a hora de chegada")
                 return
             }
             if (survey.directToPortNo.transirtation == 999 ) {
                 handleAlertBarOpen()
-                setVCodeError("Please select the mode of transportation")
-                handleHelpText("transirtation", "Please select the mode of transportation")
+                setVCodeError("Seleccione o meio de transporte")
+                handleHelpText("transirtation", "Seleccione o meio de transporte")
                 return
             }
 
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
                     handleAlertBarOpen()
-                    setVCodeError("Please fill in the other modes of transportation")
-                    handleHelpText("transirtation", "Please fill in the other modes of transportation")
+                    setVCodeError("Preencha outros meios de transporte")
+                    handleHelpText("transirtation", "Preencha outros meios de transporte")
                     return
                 }
             }
 
             if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
-                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
+                setVCodeError(`Não pode ser igual à “7) Hora de saída da escola”`)
+                handleHelpText("arrivalPortTime", `Não pode ser igual à “7) Hora de saída da escola”`)
                 return
             }
 
             if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
-                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
+                setVCodeError(`Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
+                handleHelpText("arrivalPortTime", `Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
                 return
             }
         }
         sessionStorage.setItem("pathList", storedPathList)
-        router.push('/en/surveyBadWeather')
+        router.push('/pt/surveyBadWeather')
     }
 
 
@@ -586,12 +586,12 @@ function App() {
 
                     <div>
                         <h2 style={{ color: "#000000" }}>
-                            4.2 Under normal circumstances, the situation of students leaving school in the afternoon
+                        4.2 Deslocação de regresso à casa em regra geral
                         </h2>
 
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestion}>
-                                <FormLabel id="leaveShcoolTime-label"><h3>7) Departure time from school (24-Hour Clock):</h3></FormLabel>
+                                <FormLabel id="leaveShcoolTime-label"><h3>7) Hora de saída da escola (24 horas):</h3></FormLabel>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                         <DesktopTimePicker
@@ -611,18 +611,18 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="pickup-label"><h3>8) Is there anyone picking up the student after school in the afternoon?</h3></FormLabel>
+                                <FormLabel id="pickup-label"><h3>8) Na deslocação de regresso à casa, o aluno é acompanhado por:</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="pickup-label"
                                     name="pickup"
                                     value={survey.pickup}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="Student leaving school on his/her own" />
-                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Parents" />
-                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Domestic Helper" />
-                                    <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Tutorial center / After School Care Centre" />
-                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Others (e.g., Guardians, Relatives, etc.)" />
+                                    <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="Ninguém" />
+                                    <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Pais" />
+                                    <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Trabalhador doméstico" />
+                                    <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Pessoal de centro de explicações/centro de recepção de alunos" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Outros" />
                                     {survey.pickup === "其他" ?
                                         <Box
                                             component="form"
@@ -636,7 +636,7 @@ function App() {
                                                 inputProps={{ maxLength: 10 }}
                                                 name='otherOfPickup'
                                                 id="pickup-other-textfill"
-                                                label="Others"
+                                                label="Outros"
                                                 variant="filled"
                                                 onChange={handleChange}
                                                 value={survey.otherOfPickup == 999 ? null : survey.otherOfPickup}
@@ -653,19 +653,19 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="portForHome-label"><h3>9) The Border Checkpoint for returning home</h3></FormLabel>
+                                <FormLabel id="portForHome-label"><h3>9) Posto fronteiriço utilizado para regressar à casa:</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="portForHome-label"
                                     name="portForHome"
                                     value={survey.portForHome}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel sx={{ color: "black" }} value="關閘" control={<Radio />} label="Border Gate" />
-                                    <FormControlLabel sx={{ color: "black" }} value="青茂口岸" control={<Radio />} label="Qingmao" />
-                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳大橋澳門口岸" control={<Radio />} label="Hong Kong-Zhuhai-Macao Bridge Frontier Post at Macao Port" />
-                                    <FormControlLabel sx={{ color: "black" }} value="橫琴口岸澳門口岸區" control={<Radio />} label="Macao Port Zone of Hengqin Port" />
-                                    <FormControlLabel sx={{ color: "black" }} value="內港客運碼頭" control={<Radio />} label="Inner Harbour Ferry Terminal" />
-                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Other" />
+                                    <FormControlLabel sx={{ color: "black" }} value="關閘" control={<Radio />} label="Portas do Cerco" />
+                                    <FormControlLabel sx={{ color: "black" }} value="青茂口岸" control={<Radio />} label="Posto fronteiriço Qingmao" />
+                                    <FormControlLabel sx={{ color: "black" }} value="港珠澳大橋澳門口岸" control={<Radio />} label="Posto Fronteiriço de Macau da Ponte Hong Kong-Zhuhai-Macau" />
+                                    <FormControlLabel sx={{ color: "black" }} value="橫琴口岸澳門口岸區" control={<Radio />} label="Posto Fronteiriço de Macau do Posto fronteiriço Hengqin" />
+                                    <FormControlLabel sx={{ color: "black" }} value="內港客運碼頭" control={<Radio />} label="Terminal Marítimo de Passageiros do Porto Interior" />
+                                    <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Outros" />
 
                                     {survey.portForHome === "其他" ?
                                         <Box
@@ -680,7 +680,7 @@ function App() {
                                                 inputProps={{ maxLength: 10 }}
                                                 name='otherOfportForHome'
                                                 id="otherOfportForHome-textfill"
-                                                label="Other"
+                                                label="Outros"
                                                 variant="filled"
                                                 onChange={handleChange}
                                                 value={survey.otherOfportForHome == 999 ? null : survey.otherOfportForHome}
@@ -696,15 +696,15 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl>
-                                <FormLabel id="directToPort-label"><h3>10) Do you go to the Border Checkpoint directly after school?</h3></FormLabel>
+                                <FormLabel id="directToPort-label"><h3>10) Dirige-se directamente ao posto fronteiriço depois das aulas?</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="directToPort-label"
                                     name="directToPort"
                                     value={survey.directToPort}
                                     onChange={handleChange}
                                 >
-                                    <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="Yes" />
-                                    <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="No" />
+                                    <FormControlLabel sx={{ color: "black" }} value="是" control={<Radio />} label="Sim " />
+                                    <FormControlLabel sx={{ color: "black" }} value="否" control={<Radio />} label="Não" />
 
                                 </RadioGroup>
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.directToPort}</FormHelperText>
@@ -716,7 +716,7 @@ function App() {
                                 <div>
                                     <div className={styles.question}>
                                         <FormControl className={styles.inlineQuestion}>
-                                            <FormLabel id="arrivalPortTime-label"><h3>Arrival time to the Border Checkpoint (24-Hour Clock)</h3></FormLabel>
+                                            <FormLabel id="arrivalPortTime-label"><h3>Hora de chegada ao posto fronteiriço (24 horas)</h3></FormLabel>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DemoContainer className={styles.question} components={['TimePicker']}>
                                                     <DesktopTimePicker
@@ -738,8 +738,8 @@ function App() {
                                         <FormControl
                                         >
                                             <FormLabel
-                                                component="transirtation"><h3>The primary mode of transportation to the Border Checkpoint:</h3></FormLabel>
-                                            <p className={styles.remind}>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
+                                                component="transirtation"><h3>Meio de transporte principal utilizado para ir ao posto fronteiriço:</h3></FormLabel>
+                                            <p className={styles.remind}>*(No caso de utilizar mais do que um meio de transporte, seleccione o mais principal)</p>
 
                                             <RadioGroup
                                                 name='transirtation'
@@ -750,21 +750,21 @@ function App() {
                                                     control={
                                                         <Radio value="步行" />
                                                     }
-                                                    label="Walk"
+                                                    label="A pé"
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="公共巴士" />
                                                     }
-                                                    label="Public Bus"
+                                                    label="Autocarro público "
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="私家車" />
                                                     }
-                                                    label="Private"
+                                                    label="Automóvel"
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
@@ -772,41 +772,41 @@ function App() {
                                                     control={
                                                         <Radio value="電單車" />
                                                     }
-                                                    label="Motorcycle"
+                                                    label="Mota"
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="輕軌" />
                                                     }
-                                                    label="Light Rail"
+                                                    label="Metro ligeiro"
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="校車" />
                                                     }
-                                                    label="School Bus"
+                                                    label="Automóvel de escola"
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="的士" />
                                                     }
-                                                    label="Taxi"
+                                                    label="Táxi"
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="復康巴士" />
                                                     }
-                                                    label="Rehabus"
+                                                    label="Autocarro de reabilitação"
                                                     sx={{ color: "black" }}
                                                 />
                                                 <FormControlLabel
                                                     control={
                                                         <Radio value="其他" />
                                                     }
-                                                    label="Other"
+                                                    label="Outros"
                                                     sx={{ color: "black" }}
                                                 />
                                                 {survey.directToPortYes.transirtation === "其他" ?
@@ -821,7 +821,7 @@ function App() {
                                                         <TextField
                                                             inputProps={{ maxLength: 10 }}
                                                             id="commonTransiration-other-textfill"
-                                                            label="Other"
+                                                            label="Outros"
                                                             variant="filled"
                                                             name='othertransirtation'
                                                             onChange={handleChangedirectPort}
@@ -843,11 +843,11 @@ function App() {
                                     <div key={key}>
                                         <div className={styles.question} style={{ justifyContent: "center" }}>
                                             <FormControl sx={{ display: 'flex', flex: 1 }}>
-                                                <FormLabel id="address-label"><h3>Where did you go after school (landmark):</h3></FormLabel>
+                                                <FormLabel id="address-label"><h3>Para onde vai depois das aulas (localização aproximada):</h3></FormLabel>
                                                 <Box>
                                                     <p className={styles.mapHitText}>
                                                         {
-                                                            getMapSelectedText() ? "Selected Address: " + getMapSelectedText() : <p style={{ color: "#666666" }}>*Please select the destination on the map below or enter the relevant address and click OK<br />**Example: Biblioteca Pública da Associação Comercial de Macau</p>
+                                                            getMapSelectedText() ? "Morada selecionada: " + getMapSelectedText() : <p style={{ color: "#666666" }}>*Seleccione o destino no mapa ou insira a morada e clique em “confirmar”<br />**por ex.: Biblioteca Pública da Associação Comercial de Macau</p>
                                                         }
                                                     </p>
 
@@ -866,7 +866,7 @@ function App() {
 
                                         <div className={styles.question}>
                                             <FormControl className={styles.inlineQuestion}>
-                                                <FormLabel id="directToPortNoarrivalTime-label"><h3>Arrival Time (24-Hour Clock)</h3></FormLabel>
+                                                <FormLabel id="directToPortNoarrivalTime-label"><h3>Hora de chegada (24 horas)</h3></FormLabel>
                                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                     <DemoContainer className={styles.question} components={['TimePicker']}>
                                                         <DesktopTimePicker
@@ -887,8 +887,8 @@ function App() {
                                         <div className={styles.question}>
                                             <FormControl
                                             >
-                                                <FormLabel component="transirtation"><h3>The primary mode of transportation to the Border Checkpoint:</h3></FormLabel>
-                                                <p className={styles.remind}>*(If you need to use two or more means of transportation during the process, please choose the one you think is more important.)</p>
+                                                <FormLabel component="transirtation"><h3>Meio de transporte principal:</h3></FormLabel>
+                                                <p className={styles.remind}>*(No caso de utilizar mais do que um meio de transporte, seleccione o mais principal)</p>
                                                 <RadioGroup
                                                     name='transirtation'
                                                     value={survey.directToPortNo.transirtation}
@@ -898,21 +898,21 @@ function App() {
                                                         control={
                                                             <Radio value="步行" />
                                                         }
-                                                        label="Walk"
+                                                        label="A pé"
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="公共巴士" />
                                                         }
-                                                        label="Public Bus"
+                                                        label="Autocarro público "
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="私家車" />
                                                         }
-                                                        label="Private Car"
+                                                        label="Automóvel"
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
@@ -920,41 +920,41 @@ function App() {
                                                         control={
                                                             <Radio value="電單車" />
                                                         }
-                                                        label="Motorcycle"
+                                                        label="Mota"
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="輕軌" />
                                                         }
-                                                        label="Light Rail"
+                                                        label="Metro ligeiro"
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="校車" />
                                                         }
-                                                        label="School Bus"
+                                                        label="Automóvel de escola"
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="的士" />
                                                         }
-                                                        label="Taxi"
+                                                        label="Táxi"
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="復康巴士" />
                                                         }
-                                                        label="Rehabus"
+                                                        label="Autocarro de reabilitação"
                                                         sx={{ color: "black" }}
                                                     />
                                                     <FormControlLabel
                                                         control={
                                                             <Radio value="其他" />
                                                         }
-                                                        label="Other"
+                                                        label="Outros"
                                                         sx={{ color: "black" }}
                                                     />
                                                     {survey.directToPortNo.transirtation === "其他" ?
@@ -969,7 +969,7 @@ function App() {
                                                             <TextField
                                                                 inputProps={{ maxLength: 10 }}
                                                                 id="commonTransiration-other-textfill"
-                                                                label="Other"
+                                                                label="Outros"
                                                                 variant="filled"
                                                                 name='othertransirtation'
                                                                 onChange={handleChangedirectPort}
@@ -996,10 +996,10 @@ function App() {
                 <LinearProgresss values={progressBarValue} />
                 <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
                     <Button className={styles.buttonStyle} onClick={() => router.back()}>
-                        Previous Page
+                        Voltar
                     </Button>
                     <Button className={styles.buttonStyle} onClick={handleNextButton}>
-                        Next Page
+                        Próximo
                     </Button>
                 </div>
             </div>
