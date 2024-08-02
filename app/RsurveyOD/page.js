@@ -226,10 +226,14 @@ function App() {
         setSurveyObject(itemClone);
     }
     function handleRemove(id, index) {
+        if (surveyObject.length === 1) {
+            alert("至少要有一個行程，（如沒有行程，請返回上頁並重新選擇第10 )題。")
+            return;
+        }
         if (window.confirm("確定要刪除第" + (index + 1) + "條行程嗎？") == false) {
             return;
         }
-        const newList = surveyObject.filter((item) => item.id !== index);
+        const newList = surveyObject.filter((item) => item.id !== id);
         setSurveyObject(newList);
     }
 
@@ -289,11 +293,15 @@ function App() {
     }, [surveyObject]);
 
     const getListNumber = surveyObject.map((d, index) => {
-        return (
-            <Button className={styles.buttonStyle} onClick={() => scrollToSection(index)}>
-                {index+1}
-            </Button>
-        )
+        if (isClient) {
+            return (
+                <Button key={"btn"+index} className={styles.anchorListButton} onClick={() => scrollToSection(index)}>
+                    {index + 1}
+                </Button>
+            )
+        }
+        return null
+
     })
 
     const listItems = surveyObject.map((d, index) =>
@@ -511,7 +519,7 @@ function App() {
     }, [times]);
 
     const scrollToSection = (id) => {
-        const element = document.getElementById("tab"+id)
+        const element = document.getElementById("tab" + id)
         element?.scrollIntoView({ behavior: "smooth" });
     };
 
@@ -528,12 +536,12 @@ function App() {
                             {listItems}
                         </div>
                     </div>
+
                     :
                     null
             }
-
             <div className={styles.buttonGroup}>
-                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <div style={{ justifyContent: 'space-around' }}>
                     {getListNumber}
                 </div>
                 <LinearProgresss values={progressBarValue} />
