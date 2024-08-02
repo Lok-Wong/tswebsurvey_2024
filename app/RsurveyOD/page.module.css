@@ -111,7 +111,7 @@
   padding-bottom: 0.5vh;
   padding-top: 0.5vh;
   z-index: 10;
-  box-shadow: -1px -3px 5px -1px rgba(131, 127, 123, 0.5);
+  box-shadow: -1px -3px 5px -1px rgba(122, 184, 191, 0.5);
 }
 
 .anchorListButton {
@@ -162,7 +162,7 @@
 
 .dividerDiv{
   margin-top: 1vh;
-  margin-bottom: 1vh;
+  margin-bottom: 10vh;
 }
 
 

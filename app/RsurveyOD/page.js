@@ -258,7 +258,6 @@ function App() {
             blankSurvey,
         ]))
         setScrollTo(true)
-        console.log(surveyObject)
     }
 
     const handleNextButton = () => {
