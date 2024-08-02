@@ -24,14 +24,14 @@ import Snackbar from '@mui/material/Snackbar';
 import Autocomplete from '@mui/material/Autocomplete';
 import Slider from '@mui/material/Slider';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
-import Collapse from '@mui/material/Collapse';
-
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function App() {
     const [progressBarValue, setProgressBarValue] = React.useState(10)
 
-    const purposeOfVisitList = ["返工", "返學", "返屋企", "回家午休", "轉換交通工具", "載人", "購物", "飲食", "買餐點", "休閒/社交活動", "私人事務", "工作相關"]
-    const mainMode = ["電單車（駕駛）", "私家車（駕駛）", "電單車（乘客）", "私家車（乘客）", "巴士", "輕軌", "一般的士", "電召的士", "員工巴士", "校車", "娛樂場接駁車", "步行"]
+    const purposeOfVisitList = ["返工", "返學", "返屋企", "回家午休", "轉換交通工具", "載人", "購物", "飲食", "買餐點", "休閒/社交活動", "私人事務", "工作相關", "其他"]
+    const mainMode = ["電單車（駕駛）", "私家車（駕駛）", "電單車（乘客）", "私家車（乘客）", "巴士", "輕軌", "一般的士", "電召的士", "員工巴士", "校車", "娛樂場接駁車", "步行", "其他"]
     const listRef = React.useRef(null)
     const [walkToVehicles, setWalkToVehicles] = React.useState(0)
     const [waittingTimes, setWaittingTimes] = React.useState(0)
@@ -247,6 +247,10 @@ function App() {
     }
 
     function handleAddButton() {
+        if (surveyObject.length >= 12) {
+            alert("最多只能有12個行程")
+            return;
+        }
         setTimes((prevState) => (prevState + 1))
         setSurveyObject((prevState) => ([...prevState,
             blankSurvey,
@@ -263,8 +267,6 @@ function App() {
     const [scrollTo, setScrollTo] = React.useState(false);
 
     const handleTimeChange = (event, name, index) => {
-        surveyObject.findIndex((item) => console.log("item", item.id));
-        console.log("index", index);
         const currentListIndex = surveyObject.findIndex((item) => item.id === index);
         const updatedList = Object.assign({}, surveyObject[currentListIndex]);
         updatedList[name] = event.$d;
@@ -272,6 +274,16 @@ function App() {
         newList[currentListIndex] = updatedList;
         setSurveyObject(newList);
     };
+
+    const handleChange = (event, name, index) => {
+        const currentListIndex = surveyObject.findIndex((item) => item.id === index);
+        const updatedList = Object.assign({}, surveyObject[currentListIndex]);
+        console.log("event", event)
+        updatedList[name] = event.target.textContent;
+        const newList = surveyObject.slice();
+        newList[currentListIndex] = updatedList;
+        setSurveyObject(newList);
+    }
 
     React.useEffect(() => {
         if (scrollTo) {
@@ -295,7 +307,7 @@ function App() {
     const getListNumber = surveyObject.map((d, index) => {
         if (isClient) {
             return (
-                <Button key={"btn"+index} className={styles.anchorListButton} onClick={() => scrollToSection(index)}>
+                <Button key={"btn" + index} className={styles.anchorListButton} onClick={() => scrollToSection(index)}>
                     {index + 1}
                 </Button>
             )
@@ -306,6 +318,12 @@ function App() {
 
     const listItems = surveyObject.map((d, index) =>
         <div key={index} >
+            <div className={styles.odHeader}>
+                <p className={styles.odHeaderP}>第{index + 1}個行程</p>
+                <Button className={styles.odHeaderButton} onClick={() => handleRemove(d.id, index)}>
+                    <DeleteIcon/>
+                </Button>
+            </div>
             <div
                 className={styles.question}
                 key={d.id}
@@ -316,12 +334,12 @@ function App() {
                 onDragOver={(e) => e.preventDefault()}
                 id={"tab" + index}
             >
-                <div className={styles.removeButtomDiv}>
-                    <p>第{index + 1}個行程 {d.id}</p>
+                {/* <div className={styles.removeButtomDiv}>
+                    <p>第{index + 1}個行程</p>
                     <Button onClick={() => handleRemove(d.id, index)}>
                         X
                     </Button>
-                </div>
+                </div> */}
 
                 <div className={styles.inlineQuestion}>
                     <FormControl>
@@ -377,7 +395,12 @@ function App() {
                             id="purposeOfVisit-box"
                             sx={{ width: 300 }}
                             options={purposeOfVisitList}
+                            onChange={(event) => {
+                                handleChange(event, 'purposeOfVisit', d.id)
+                            }
+                            }
                             freeSolo
+                            value={surveyObject[index].purposeOfVisit}
                             renderInput={(params) => <TextField {...params} />}
                         />
                         {/* <RadioGroup
@@ -505,9 +528,12 @@ function App() {
             </div>
             <div ref={listRef}></div>
             {index == surveyObject.length - 1 ? null :
-                <Button onClick={() => handleInsertButton(index)}>
-                    按此插入行程
-                </Button>
+                <div className={styles.increaseOdLine}>
+                    <Button onClick={() => handleInsertButton(index)}>
+                        <AddIcon />
+                        <p className={styles.increaseOdLineText}>按此插入行程 </p>
+                    </Button>
+                </div>
             }
 
         </div>
@@ -541,7 +567,7 @@ function App() {
                     null
             }
             <div className={styles.buttonGroup}>
-                <div style={{ justifyContent: 'space-around' }}>
+                <div>
                     {getListNumber}
                 </div>
                 <LinearProgresss values={progressBarValue} />
