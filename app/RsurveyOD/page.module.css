@@ -72,6 +72,16 @@
   box-shadow: -1px -3px 5px -1px rgba(131, 127, 123, 0.5);
 }
 
+.anchorListButton {
+  color: #ffffff;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .buttonStyle {
   color: #ffffff;
   display: inline-block;
