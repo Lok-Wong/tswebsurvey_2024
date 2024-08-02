@@ -26,6 +26,8 @@ import Slider from '@mui/material/Slider';
 import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
+
 
 function App() {
     const [progressBarValue, setProgressBarValue] = React.useState(10)
@@ -321,7 +323,7 @@ function App() {
             <div className={styles.odHeader}>
                 <p className={styles.odHeaderP}>第{index + 1}個行程</p>
                 <Button className={styles.odHeaderButton} onClick={() => handleRemove(d.id, index)}>
-                    <DeleteIcon/>
+                    <DeleteIcon />
                 </Button>
             </div>
             <div
@@ -527,7 +529,11 @@ function App() {
                 </div>
             </div>
             <div ref={listRef}></div>
-            {index == surveyObject.length - 1 ? null :
+            {index == surveyObject.length - 1 ?
+                <div className={styles.dividerDiv}>
+                    <Divider color="#3F858C" sx={{ borderBottomWidth: 3}}/>
+                </div>
+                :
                 <div className={styles.increaseOdLine}>
                     <Button onClick={() => handleInsertButton(index)}>
                         <AddIcon />

@@ -23,6 +23,9 @@
   flex-direction: row;
   display: flex;
   align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow:  -2px 0px 5px rgba(122, 184, 191, 0.5);
 }
 
 .odHeaderP{
@@ -55,8 +58,9 @@
   /* display: flex; */
   background-color: #ffffff;
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: -1px -3px 5px -1px rgba(131, 127, 123, 0.5);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: -1px -3px 5px -1px rgba(122, 184, 191, 0.5);
   background-color: #ffffff;
 }
 
@@ -154,6 +158,11 @@
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+}
+
+.dividerDiv{
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }
 
 
