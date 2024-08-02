@@ -1,0 +1,24 @@
+h2 {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 700px){
+  h1 {
+    font-size: 1.625rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 701px) {
+  main>div:first-child {
+    width: 50vw;
+  }
+}
