@@ -2,6 +2,7 @@
 import * as React from 'react';
 import styles from "./page.module.css";
 import MapSelections from "../mapSelection/page";
+import Button from "@mui/material/Button"
 
 function App() {
   const routeRecord = {
@@ -11,10 +12,17 @@ function App() {
     destination1: 999,
   }
 
+  const handleTestButton = () => {
+    console.log(routeRecord);
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.question}>
         起點：{MapSelections(routeRecord, "start0")}
+      </div>
+      <div>
+        <Button onClick={handleTestButton}>測試</Button>
       </div>
     </main>
   );
