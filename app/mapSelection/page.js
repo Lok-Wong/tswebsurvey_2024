@@ -29,7 +29,10 @@ function MapSelections(route, label) {
     const [survey, setSurvey] = React.useState(_initial_value);
 
     const [open, setOpen] = React.useState(false);
-    const mapClose = () => setOpen(false);
+    const mapClose = () => {
+        handleChangeData(label);
+        setOpen(false);
+    }
 
     const [key, setKey] = React.useState("start0");
 
@@ -107,6 +110,12 @@ function MapSelections(route, label) {
         return null
     }
 
+    const handleChangeData = (label) => {
+        sessionStorage.setItem(label, JSON.stringify(survey[label]));
+        // console.log(sessionStorage);
+        return;
+    }
+
     function createMapSelection(key) {
         return (
             <div key={key}>
@@ -157,7 +166,6 @@ function MapSelections(route, label) {
     }
 
     if (label.length > 0) {
-        // sessionStorage.setItem("routeRecord", JSON.stringify(survey[label]));
         return (createMapSelections(label));
     }
     else
