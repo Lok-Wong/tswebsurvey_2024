@@ -2,19 +2,12 @@
 import * as React from 'react';
 import styles from "./page.module.css";
 import Button from '@mui/material/Button';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { useRouter } from 'next/navigation';
-import FormHelperText from '@mui/material/FormHelperText';
-import LinearProgresss from '@/app/utils/progress';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import MapComponent from '../mapTesting/page';
 
-function MapSelections(route, labels) {
+function MapSelections(route, label) {
     const [isClient, setIsClient] = React.useState(false)
 
     React.useEffect(() => {
@@ -85,6 +78,8 @@ function MapSelections(route, labels) {
     }
 
     const getMapSelectedText = (location) => {
+        // console.log(location.method);
+
         if (location.method == "input") {
             return (
             location.name
@@ -112,14 +107,9 @@ function MapSelections(route, labels) {
         return null
     }
 
-    const handleTestButton = () => {
-        console.log(survey);
-    } 
-
-    function createMapSelection(key, label) {
+    function createMapSelection(key) {
         return (
             <div key={key}>
-                {label}：{getMapSelectedText(survey[key]) ? getMapSelectedText(survey[key]) : ""}
                 <Button onClick = {() => {
                     setOpen(true);
                     setKey(key);
@@ -130,26 +120,16 @@ function MapSelections(route, labels) {
         );
     }
 
-    function createMapSelections(json, labels) {
-        const arr = [];
-        Object.keys(json).forEach(key => arr.push(key))
-
+    function createMapSelections(json, label) {
+        //console.log(json);
         return (
-            <div className={styles.main}>
+            <div className={styles.mapSelect} key={label}>
                 {
                     isClient ?
-                        <div className={styles.question} >
+                        <div>
                             <FormControl>
-                                {
-                                    Object.keys(arr).map(index => {
-                                        return (
-                                            createMapSelection(arr[index], labels[index])
-                                        );
-                                    })
-                                }
+                                    {createMapSelection(label)}
                             </FormControl>
-
-                            <Button onClick={(handleTestButton)}></Button>
                         </div>
                         :
                         null
@@ -165,7 +145,7 @@ function MapSelections(route, labels) {
                         <div className={styles.map}>
                             <p className={styles.mapHitText}>
                             {
-                                getMapSelectedText(survey[key]) ? "已選擇地址： " + getMapSelectedText(survey[key]) : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
+                                getMapSelectedText(survey[label]) ? "已選擇地址： " + getMapSelectedText(survey[label]) : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                             }
                             </p>
                             <MapComponent handleCustomAddress={handleCustomAddress}/>
@@ -173,16 +153,10 @@ function MapSelections(route, labels) {
                     </Box>
                 </Modal>
             </div>
-
         );
     }
 
-    if (Object.keys(route).length > 0 && labels.length > 0)
-        return (createMapSelections(route, labels));
-    else
-        return (
-            <div>No route storage is selected</div>
-        );
+    return (createMapSelections(route, label));
 }
 
 export default MapSelections;

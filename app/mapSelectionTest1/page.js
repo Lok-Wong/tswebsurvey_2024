@@ -10,10 +10,13 @@ function App() {
     start1: 999,
     destination1: 999,
   }
-  const labels = ["起點1", "目的地1", "起點2", "目的地2"];
 
   return (
-    MapSelections(routeRecord, labels)
+    <main className={styles.main}>
+      <div className={styles.question}>
+        起點：{MapSelections(routeRecord, "start0")}
+      </div>
+    </main>
   );
 }
 

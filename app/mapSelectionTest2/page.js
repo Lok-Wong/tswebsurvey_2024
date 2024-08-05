@@ -564,7 +564,7 @@ function App() {
                     {vCodeError}
                 </Alert>
             </Snackbar>
-            {createMapSelections(survey.routeRecord, labels)}
+            {createMapSelections(survey.routeRecord, "start0")}
         </main>
     )
 
