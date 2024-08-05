@@ -15,7 +15,7 @@ import Checkbox from '@mui/material/Checkbox';
 import LinearProgresss from '@/app/utils/progress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import createMapSelections from "../mapSelection/page";
+import MapSelections from "../mapSelection/page";
 
 function App() {
     const router = useRouter();
@@ -355,7 +355,6 @@ function App() {
     //     start1: 999,
     //     destination1: 999,
     // }
-    const labels = ["起點1", "目的地1", "起點2", "目的地2"];
     
     return (
         <main className={styles.main}>
@@ -564,7 +563,7 @@ function App() {
                     {vCodeError}
                 </Alert>
             </Snackbar>
-            {createMapSelections(survey.routeRecord, "start0")}
+            {MapSelections(survey.routeRecord, "start0")}
         </main>
     )
 
