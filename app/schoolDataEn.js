@@ -387,8 +387,8 @@ export const schoolLevel = {
 export const levelType = {
   "Kindergarten": ["k1", "k2", "k3"],
   "Primary School": ["p1", "p2", "p3", "p4", "p5", "p6"],
-  "Secondary school": ["s1", "s2", "s3", "s4", "s5", "s6"],
-  "Special education": ["Special education"]
+  "Secondary School": ["s1", "s2", "s3", "s4", "s5", "s6"],
+  "Special Education": ["Special education"]
 }
 
 export const schoolType = {

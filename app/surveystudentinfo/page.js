@@ -381,7 +381,7 @@ function App() {
 
         if (survey.schoolName == "999" || survey.schoolName == "" || survey.schoolName == null) {
             handleAlertBarOpen()
-            alert(survey.schoolName);
+            // alert(survey.schoolName);
             setVCodeError("2) 請選擇學校名稱")
             handleHelpText('schoolName', "請選擇學校名稱")
             return
