@@ -10,7 +10,7 @@
 }
 
 .odHeader {
-  top: -1px;;
+  top: 0px;
   position: sticky;
   padding:1vh;
   text-align:center;

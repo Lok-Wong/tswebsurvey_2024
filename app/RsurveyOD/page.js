@@ -66,12 +66,15 @@ function App() {
     }, [])
     const [times, setTimes] = React.useState(parseInt(_ODid))
 
+    const errorTextObject = [
+
+    ]
 
     const initaSurvey = [{
         startPoint: "999",
         endPoint: "999",
-        startTime: "999",
-        endTime: "999",
+        startTime: null,
+        endTime: null,
         purposeOfVisit: "999",
         otherOfpurposeOfVisit: "999",
         mainMode: "999",
@@ -106,6 +109,11 @@ function App() {
             walkToBuilding: "999",
         },
         taxiMode: {
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
+        },
+        onlineTaxiMode: {
             walkToVehicle: "999",
             waittingTime: "999",
             walkToBuilding: "999",
@@ -128,8 +136,7 @@ function App() {
         walkMode: "999",
         otherMode: "999",
         id: 0,
-        startTime: new Date(),
-        endTime: '999',
+        ODstartTime: new Date(),
     }]
 
     const _initial_value = React.useMemo(() => {
@@ -148,8 +155,8 @@ function App() {
     const blankSurvey = {
         startPoint: "999",
         endPoint: "999",
-        startTime: "999",
-        endTime: "999",
+        startTime: null,
+        endTime: null,
         purposeOfVisit: "999",
         otherOfpurposeOfVisit: "999",
         mainMode: "999",
@@ -184,6 +191,11 @@ function App() {
             walkToBuilding: "999",
         },
         taxiMode: {
+            walkToVehicle: "999",
+            waittingTime: "999",
+            walkToBuilding: "999",
+        },
+        onlineTaxiMode: {
             walkToVehicle: "999",
             waittingTime: "999",
             walkToBuilding: "999",
@@ -207,7 +219,6 @@ function App() {
         otherMode: "999",
         id: times,
         ODstartTime: new Date(),
-        endTime: '999',
     }
     const dragItem = React.useRef(0);
     const draggedOverItem = React.useRef(0);
@@ -260,6 +271,58 @@ function App() {
         setScrollTo(true)
     }
 
+    const changeModeName = (index) => {
+        var mainName = surveyObject[index]["mainMode"]
+        switch (mainName) {
+            case "電單車（駕駛）":
+                return "motoMode"
+            case "私家車（駕駛）":
+                return "carMode"
+            case "電單車（乘客）":
+                return "motoPassengerMode"
+            case "私家車（乘客）":
+                return "carPassengerMode"
+            case "巴士":
+                return "busMode"
+            case "輕軌":
+                return "lightRailMode"
+            case "一般的士":
+                return "taxiMode"
+            case "電召的士":
+                return "onlineTaxiMode"
+            case "員工巴士":
+                return "staffBusMode"
+            case "校車":
+                return "schoolBusMode"
+            case "娛樂場接駁車":
+                return "tourBusMode"
+            case "步行":
+                return "walkMode"
+            case "其他":
+                return "otherMode"
+        }
+    }
+
+    const getObjNameForMode = (index, name) => {
+        if (isClient) {
+            if (surveyObject[index]["mainMode"] == "999" || !surveyObject[index]["mainMode"]) {
+                return 0
+            }
+            const modeName = changeModeName(index)
+            return surveyObject[index][modeName][name]
+        }
+    }
+
+    function setScaleNumber(value, name, id, index) {
+        var mainModeObjectName = changeModeName(index)
+        const currentListIndex = surveyObject.findIndex((item) => item.id === id);
+        const updatedList = Object.assign({}, surveyObject[currentListIndex]);
+        updatedList[mainModeObjectName][name] = value.target.value;
+        const newList = surveyObject.slice();
+        newList[currentListIndex] = updatedList;
+        setSurveyObject(newList);
+    }
+
     const handleNextButton = () => {
         sessionStorage.setItem("pathList", storedPathList)
         // router.push('/RsurveyCheckOd')
@@ -268,12 +331,22 @@ function App() {
     const [scrollTo, setScrollTo] = React.useState(false);
 
     const handleTimeChange = (event, name, index) => {
+        if (!event.$d) {
+            const currentListIndex = surveyObject.findIndex((item) => item.id === index);
+            const updatedList = Object.assign({}, surveyObject[currentListIndex]);
+            updatedList[name] = event;
+            const newList = surveyObject.slice();
+            newList[currentListIndex] = updatedList;
+            setSurveyObject(newList);
+            return;
+        }
         const currentListIndex = surveyObject.findIndex((item) => item.id === index);
         const updatedList = Object.assign({}, surveyObject[currentListIndex]);
         updatedList[name] = event.$d;
         const newList = surveyObject.slice();
         newList[currentListIndex] = updatedList;
         setSurveyObject(newList);
+        return;
     };
 
     const handleChange = (event, name, index) => {
@@ -301,8 +374,7 @@ function App() {
     }, [surveyObject])
 
     React.useEffect(() => {
-        console.log(surveyObject)
-        console.log(surveyObject.length)
+        console.log("surveyObject", surveyObject)
     }, [surveyObject]);
 
     const getListNumber = surveyObject.map((d, index) => {
@@ -317,9 +389,49 @@ function App() {
 
     })
 
+    const renderGetpreviousEndTime = (index) => {
+        const getPreviousEndTime = (index) => {
+            if (surveyObject[index - 1]["endTime"]) {
+                const previousEndTimes = surveyObject[index - 1]["endTime"]
+                handleTimeChange(previousEndTimes, 'startTime', surveyObject[index].id)
+                return;
+            }
+        }
+        if (index == 0) {
+            return null
+        }
+
+        return (
+            <button onClick={() => getPreviousEndTime(index)} >
+                <p>
+                    getPreviousEndTime
+                </p>
+            </button>
+        )
+    }
+
+    const checkTimeWhenClose = (index) => {
+        console.log("checkTimeWhenClose", dayjs(surveyObject[index]["startTime"]))
+        if (!dayjs(surveyObject[index]["startTime"])) {
+            alert("請填寫出發時間")
+            return false;
+        }
+        if (!dayjs(surveyObject[index]["endTime"])) {
+            alert("請填寫到達時間")
+            return false;
+        }
+
+        if (dayjs(surveyObject[index]["startTime"]) > dayjs(surveyObject[index]["endTime"])) {
+            alert("出發時間晚於到達時間")
+            return false;
+        }
+        return true;
+    }
+
     const listItems = surveyObject.map((d, index) =>
-        <div key={index} >
+        <div key={index} id={"tab" + index} >
             <div className={styles.odHeader}>
+                <div ref={listRef}></div>
                 <p className={styles.odHeaderP}>第{index + 1}個行程</p>
                 <Button className={styles.odHeaderButton} onClick={() => handleRemove(d.id, index)}>
                     <DeleteIcon />
@@ -333,15 +445,7 @@ function App() {
                 onDragEnter={() => (draggedOverItem.current = index)}
                 onDragEnd={handleSort}
                 onDragOver={(e) => e.preventDefault()}
-                id={"tab" + index}
             >
-                {/* <div className={styles.removeButtomDiv}>
-                    <p>第{index + 1}個行程</p>
-                    <Button onClick={() => handleRemove(d.id, index)}>
-                        X
-                    </Button>
-                </div> */}
-
                 <div className={styles.inlineQuestion}>
                     <FormControl>
                         <FormLabel id="startPoint">1) 出行地點</FormLabel>
@@ -356,6 +460,8 @@ function App() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
                                 <DesktopTimePicker
+                                    onClose={() => checkTimeWhenClose(index)}
+                                    closeOnSelect={true}
                                     name='startTime'
                                     ampm={false}
                                     value={dayjs(surveyObject[index].startTime)}
@@ -363,6 +469,7 @@ function App() {
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
+                        {renderGetpreviousEndTime(index)}
                     </FormControl>
                 </div>
 
@@ -380,9 +487,11 @@ function App() {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
                                 <DesktopTimePicker
+                                    onClose={() => checkTimeWhenClose(index)}
+                                    closeOnSelect={true}
                                     ampm={false}
                                     value={dayjs(surveyObject[index].endTime)}
-                                    onChange={(newValue) => handleTimeChange(newValue, 'endTime', index)}
+                                    onChange={(newValue) => handleTimeChange(newValue, 'endTime', d.id)}
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
@@ -398,141 +507,116 @@ function App() {
                             options={purposeOfVisitList}
                             onChange={(event) => {
                                 handleChange(event, 'purposeOfVisit', d.id)
-                            }
-                            }
+                            }}
                             freeSolo
                             value={surveyObject[index].purposeOfVisit}
                             renderInput={(params) => <TextField {...params} />}
                         />
-                        {/* <RadioGroup
-                            aria-labelledby="purposeOfVisit-label"
-                            name="purposeOfVisit"
-                        >
-                            <FormControlLabel sx={{ color: "black" }} value="返工" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="返工" />
-                            <FormControlLabel sx={{ color: "black" }} value="返學" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="返學" />
-                            <FormControlLabel sx={{ color: "black" }} value="返屋企" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="返屋企" />
-                            <FormControlLabel sx={{ color: "black" }} value="回家午休" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="回家午休" />
-                            <FormControlLabel sx={{ color: "black" }} value="轉換交通工具" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="轉換交通工具" />
-                            <FormControlLabel sx={{ color: "black" }} value="載人" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="載人" />
-                            <FormControlLabel sx={{ color: "black" }} value="購物" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="購物" />
-                            <FormControlLabel sx={{ color: "black" }} value="飲食" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="飲食" />
-                            <FormControlLabel sx={{ color: "black" }} value="買餐點" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="買餐點" />
-                            <FormControlLabel sx={{ color: "black" }} value="休閒/社交活動" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="休閒/社交活動" />
-                            <FormControlLabel sx={{ color: "black" }} value="私人事務" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="私人事務" />
-                            <FormControlLabel sx={{ color: "black" }} value="工作相關" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="工作相關" />
-                            <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio sx={{ '&, &.Mui-checked': { color: '#3E848C', }, }} />} label="其他" />
-                            <Box
-                                component="form"
-                                sx={{
-                                    '& > :not(style)': { m: 0.5, width: '10rem' },
-                                }}
-                                noValidate
-                                autoComplete="off"
-                            >
-                                <TextField
-                                    inputProps={{ maxLength: 10 }}
-                                    id="purposeOfVisit-other-textfill"
-                                    label="其他"
-                                    variant="filled"
-                                    name='otherOfpurposeOfVisit'
-                                />
-                            </Box>
-                        </RadioGroup> */}
                     </FormControl>
                 </div>
+
                 <div className={styles.inlineQuestion}>
                     <FormControl>
                         <FormLabel id="mainMode">6) 主要交通方式:</FormLabel>
                         <Autocomplete
+                            onChange={(event) => {
+                                handleChange(event, 'mainMode', d.id)
+                            }}
                             disablePortal
                             id="mainMode-box"
                             sx={{ width: 300 }}
                             options={mainMode}
+                            value={surveyObject[index].mainMode}
                             freeSolo
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </FormControl>
                 </div>
+                {
+                    surveyObject[index].mainMode == "其他" || surveyObject[index].mainMode == "999" || surveyObject[index].mainMode == "步行" || !surveyObject[index].mainMode ?
+                        null
+                        :
+                        <div>
+                            <div className={styles.inlineQuestion}>
+                                <FormControl className={styles.inlineQuestionFormControl}>
+                                    <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
+                                    <div className={styles.sliderDiv}>
+                                        <Slider
+                                            sx={{ color: "#3E848C" }}
+                                            min={0}
+                                            max={30}
+                                            step={1}
+                                            valueLabelDisplay="auto"
+                                            aria-label="walkToVehicle"
+                                            name='walkToVehicle'
+                                            marks={sliderMarks}
+                                            value={getObjNameForMode(index, "walkToVehicle")}
+                                            onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
+                                        // valueLabelFormat={getAgeValueLabel}
+                                        // marks={ageMarks}
+                                        />
+                                    </div>
 
-                <div className={styles.inlineQuestion}>
-                    <FormControl className={styles.inlineQuestionFormControl}>
-                        <FormLabel id="walkToVehicles-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
-                        <div className={styles.sliderDiv}>
-                            <Slider
-                                sx={{ color: "#3E848C" }}
-                                min={0}
-                                max={30}
-                                step={1}
-                                valueLabelDisplay="auto"
-                                aria-label="walkToVehicles"
-                                name='walkToVehicles'
-                                value={walkToVehicles}
-                                marks={sliderMarks}
-                                onChange={(value) => { setWalkToVehicles(value.target.value) }}
-                            // valueLabelFormat={getAgeValueLabel}
-                            // marks={ageMarks}
-                            />
+                                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                                </FormControl>
+                            </div>
 
+                            <div className={styles.inlineQuestion}>
+                                <FormControl className={styles.inlineQuestionFormControl}>
+                                    <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
+                                    <div className={styles.sliderDiv}>
+                                        <Slider
+                                            sx={{ color: "#3E848C" }}
+                                            min={0}
+                                            max={30}
+                                            step={1}
+                                            valueLabelDisplay="auto"
+                                            aria-label="waittingTime"
+                                            name='waittingTime'
+                                            marks={sliderMarks}
+                                            value={getObjNameForMode(index, "waittingTime")}
+                                            onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
+                                        // valueLabelFormat={getAgeValueLabel}
+                                        // marks={ageMarks}
+                                        />
+
+                                    </div>
+                                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                                </FormControl>
+                            </div>
+
+                            <div className={styles.inlineQuestion}>
+                                <FormControl className={styles.inlineQuestionFormControl}>
+                                    <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
+                                    <div className={styles.sliderDiv}>
+                                        <Slider
+                                            sx={{ color: "#3E848C" }}
+                                            min={0}
+                                            max={30}
+                                            step={1}
+                                            valueLabelDisplay="auto"
+                                            aria-label="walkToBuilding"
+                                            name='walkToBuilding'
+                                            marks={sliderMarks}
+                                            value={getObjNameForMode(index, "walkToBuilding")}
+                                            onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
+                                        // valueLabelFormat={getAgeValueLabel}
+                                        // marks={ageMarks}
+                                        />
+
+                                    </div>
+                                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                                </FormControl>
+                            </div>
                         </div>
-
-                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                    </FormControl>
-                </div>
-
-                <div className={styles.inlineQuestion}>
-                    <FormControl className={styles.inlineQuestionFormControl}>
-                        <FormLabel id="waittingTimes-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
-                        <div className={styles.sliderDiv}>
-                            <Slider
-                                sx={{ color: "#3E848C" }}
-                                min={0}
-                                max={30}
-                                step={1}
-                                valueLabelDisplay="auto"
-                                aria-label="waittingTimes"
-                                name='waittingTimes'
-                                value={waittingTimes}
-                                marks={sliderMarks}
-                                onChange={(value) => { setWaittingTimes(value.target.value) }}
-                            // valueLabelFormat={getAgeValueLabel}
-                            // marks={ageMarks}
-                            />
-
-                        </div>
-                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                    </FormControl>
-                </div>
-
-                <div className={styles.inlineQuestion}>
-                    <FormControl className={styles.inlineQuestionFormControl}>
-                        <FormLabel id="walkToBuildings-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
-                        <div className={styles.sliderDiv}>
-                            <Slider
-                                sx={{ color: "#3E848C" }}
-                                min={0}
-                                max={30}
-                                step={1}
-                                valueLabelDisplay="auto"
-                                aria-label="walkToBuildings"
-                                name='walkToBuildings'
-                                value={walkToBuildings}
-                                marks={sliderMarks}
-                                onChange={(value) => { setWalkToBuildings(value.target.value) }}
-                            // valueLabelFormat={getAgeValueLabel}
-                            // marks={ageMarks}
-                            />
-
-                        </div>
-                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                    </FormControl>
-                </div>
+                }
             </div>
-            <div ref={listRef}></div>
             {index == surveyObject.length - 1 ?
                 <div className={styles.dividerDiv}>
-                    <Divider color="#3F858C" sx={{ borderBottomWidth: 3}}/>
+                    <Divider color="#3F858C" sx={{ borderBottomWidth: 3 }} />
                 </div>
                 :
+
                 <div className={styles.increaseOdLine}>
                     <Button onClick={() => handleInsertButton(index)}>
                         <AddIcon />
@@ -544,6 +628,8 @@ function App() {
         </div>
 
     );
+
+
 
     React.useEffect(() => {
         setTimes(times)
@@ -575,7 +661,7 @@ function App() {
                 <div>
                     {getListNumber}
                 </div>
-                <LinearProgresss values={progressBarValue} />
+                {/* <LinearProgresss values={progressBarValue} /> */}
                 <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
 
                     <Button className={styles.buttonStyle}
