@@ -160,7 +160,7 @@ function App() {
             if (survey.otherOfpPortForShcool == 999 || survey.otherOfpPortForShcool == "") {
                 handleAlertBarOpen()
                 setVCodeError("3) 請填寫其他的通關口岸")
-                handleHelpText("pickup", "請填寫其他的通關口岸")
+                handleHelpText("portForShcool", "請填寫其他的通關口岸")
                 return
             }
         }

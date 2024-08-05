@@ -17,7 +17,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import "../englishPage.css";
+import "../portuguesePage.css";
 
 function App() {
     const router = useRouter();

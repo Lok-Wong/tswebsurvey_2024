@@ -19,7 +19,7 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import LinearProgresss from '@/app/utils/progress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import "../englishPage.css";
+import "../portuguesePage.css";
 
 function App() {
     const router = useRouter();
@@ -162,7 +162,7 @@ function App() {
             if (survey.otherOfpPortForShcool == 999 || survey.otherOfpPortForShcool == "") {
                 handleAlertBarOpen()
                 setVCodeError("3) Please fill in the other Border Checkpoint")
-                handleHelpText("pickup", "Please fill in the other Border Checkpoint")
+                handleHelpText("portForShcool", "Please fill in the other Border Checkpoint")
                 return
             }
         }

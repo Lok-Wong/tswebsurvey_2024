@@ -15,7 +15,7 @@ import { schoolName, school_type, region, schoolAddress, schoolLevel, levelType,
 import LinearProgresss from '@/app/utils/progress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import "../englishPage.css";
+import "../portuguesePage.css";
 
 function App() {
     const router = useRouter();

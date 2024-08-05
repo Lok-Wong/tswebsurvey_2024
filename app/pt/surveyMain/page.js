@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import "../englishPage.css";
+import "../portuguesePage.css";
 
 function App() {
     const router = useRouter();
