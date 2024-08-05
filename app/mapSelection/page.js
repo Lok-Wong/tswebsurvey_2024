@@ -156,8 +156,10 @@ function MapSelections(route, label) {
         );
     }
 
-    if (label.length > 0)
+    if (label.length > 0) {
+        // sessionStorage.setItem("routeRecord", JSON.stringify(survey[label]));
         return (createMapSelections(label));
+    }
     else
         return (
             <div>

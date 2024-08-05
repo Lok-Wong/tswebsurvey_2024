@@ -14,6 +14,13 @@ function App() {
 
   const handleTestButton = () => {
     console.log(routeRecord);
+
+    return;
+  }
+
+  const handleChangedData = (label) => {
+    // routeRecord = JSON.parse(sessionStorage.getItem(routeRecord));
+    return;
   }
 
   return (
@@ -24,6 +31,7 @@ function App() {
       <div>
         <Button onClick={handleTestButton}>測試</Button>
       </div>
+      {handleChangedData("start0")}
     </main>
   );
 }
