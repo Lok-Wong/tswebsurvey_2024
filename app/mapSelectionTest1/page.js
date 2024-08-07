@@ -19,9 +19,10 @@ function App() {
   }
 
   const handleChangeData = () => {
-    Object.keys(sessionStorage).map(key => (
-      routeRecord[key] = JSON.parse(sessionStorage[key])
-    ))
+    Object.keys(sessionStorage).map(key => {
+      if (routeRecord.hasOwnProperty(key))
+        routeRecord[key] = JSON.parse(sessionStorage[key]);
+    })
 
     // console.log(JSON.parse(routeRecord));
     return;
