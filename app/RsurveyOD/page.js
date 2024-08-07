@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
@@ -27,6 +26,7 @@ import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
 function App() {
@@ -38,6 +38,9 @@ function App() {
     const [walkToVehicles, setWalkToVehicles] = React.useState(0)
     const [waittingTimes, setWaittingTimes] = React.useState(0)
     const [walkToBuildings, setWalkToBuildings] = React.useState(0)
+
+
+
 
     const sliderMarks = [
         {
@@ -66,15 +69,11 @@ function App() {
     }, [])
     const [times, setTimes] = React.useState(parseInt(_ODid))
 
-    const errorTextObject = [
-
-    ]
-
     const initaSurvey = [{
         startPoint: "999",
         endPoint: "999",
-        startTime: null,
-        endTime: null,
+        startTime: "",
+        endTime: "",
         purposeOfVisit: "999",
         otherOfpurposeOfVisit: "999",
         mainMode: "999",
@@ -152,11 +151,52 @@ function App() {
         return initaSurvey;
     }, []);
 
+
+
+    const initalBlankHelpText = [{
+        startPoint: "",
+        endPoint: "",
+        startTime: "",
+        endTime: "",
+        purposeOfVisit: "",
+        mainMode: "",
+        walkToVehicle: "",
+        waittingTime: "",
+        walkToBuilding: "",
+        id: 0,
+    }]
+
+    const blankHelpText = {
+        startPoint: "",
+        endPoint: "",
+        startTime: "",
+        endTime: "",
+        purposeOfVisit: "",
+        mainMode: "",
+        walkToVehicle: "",
+        waittingTime: "",
+        walkToBuilding: "",
+        id: times,
+    }
+
+    const _initial_error_value = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+
+            const local_storage_value_str = sessionStorage.getItem('errorObj');
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str);
+            }
+        }
+        // Otherwise use initial_value that was passed to the function
+        return initalBlankHelpText;
+    }, []);
+
     const blankSurvey = {
         startPoint: "999",
         endPoint: "999",
-        startTime: null,
-        endTime: null,
+        startTime: "",
+        endTime: "",
         purposeOfVisit: "999",
         otherOfpurposeOfVisit: "999",
         mainMode: "999",
@@ -220,8 +260,13 @@ function App() {
         id: times,
         ODstartTime: new Date(),
     }
+
+    const [helpText, setHelpText] = React.useState(_initial_error_value)
     const dragItem = React.useRef(0);
     const draggedOverItem = React.useRef(0);
+    const componentRef = React.useRef(null);
+
+
 
     const [surveyObject, setSurveyObject] = React.useState(_initial_value);
 
@@ -248,12 +293,19 @@ function App() {
         }
         const newList = surveyObject.filter((item) => item.id !== id);
         setSurveyObject(newList);
+        const newErrorList = helpText.filter((item) => item.id !== id);
+        setHelpText(newErrorList);
+
     }
 
     function handleInsertButton(index) {
         setTimes((prevState) => (prevState + 1))
         setSurveyObject((prevState) => ([...prevState.slice(0, index + 1),
             blankSurvey,
+        ...prevState.slice(index + 1)
+        ]))
+        setHelpText((prevState) => ([...prevState.slice(0, index + 1),
+            blankHelpText,
         ...prevState.slice(index + 1)
         ]))
         setScrollTo(false)
@@ -267,6 +319,9 @@ function App() {
         setTimes((prevState) => (prevState + 1))
         setSurveyObject((prevState) => ([...prevState,
             blankSurvey,
+        ]))
+        setHelpText((prevState) => ([...prevState,
+            blankHelpText,
         ]))
         setScrollTo(true)
     }
@@ -352,7 +407,6 @@ function App() {
     const handleChange = (event, name, index) => {
         const currentListIndex = surveyObject.findIndex((item) => item.id === index);
         const updatedList = Object.assign({}, surveyObject[currentListIndex]);
-        console.log("event", event)
         updatedList[name] = event.target.textContent;
         const newList = surveyObject.slice();
         newList[currentListIndex] = updatedList;
@@ -375,7 +429,14 @@ function App() {
 
     React.useEffect(() => {
         console.log("surveyObject", surveyObject)
+        console.log("helpText", helpText)
     }, [surveyObject]);
+
+    React.useEffect(() => {
+        if (isClient) {
+            console.log("componentRef", componentRef)
+        }
+    }, [componentRef]);
 
     const getListNumber = surveyObject.map((d, index) => {
         if (isClient) {
@@ -389,13 +450,23 @@ function App() {
 
     })
 
+    const getCurrentDiv = () => {
+        if (isClient) {
+            componentRef.current?.focus()
+            console.log("componentRef", componentRef.current)
+        }
+        return null
+    }
+
     const renderGetpreviousEndTime = (index) => {
         const getPreviousEndTime = (index) => {
             if (surveyObject[index - 1]["endTime"]) {
                 const previousEndTimes = surveyObject[index - 1]["endTime"]
                 handleTimeChange(previousEndTimes, 'startTime', surveyObject[index].id)
+                checkTimeWhenClose(surveyObject[index].id, index)
                 return;
             }
+
         }
         if (index == 0) {
             return null
@@ -410,22 +481,58 @@ function App() {
         )
     }
 
-    const checkTimeWhenClose = (index) => {
-        console.log("checkTimeWhenClose", dayjs(surveyObject[index]["startTime"]))
-        if (!dayjs(surveyObject[index]["startTime"])) {
-            alert("請填寫出發時間")
-            return false;
-        }
-        if (!dayjs(surveyObject[index]["endTime"])) {
-            alert("請填寫到達時間")
-            return false;
+    const checkTimeWhenClose = (id, index) => {
+        console.log("startTime", surveyObject[index]["startTime"])
+        console.log("endTime", surveyObject[index]["endTime"])
+
+        const changeObj = (erroText, name, id) => {
+            const currentListIndex = helpText.findIndex((item) => item.id === id);
+            const updatedList = Object.assign({}, helpText[currentListIndex]);
+            updatedList[name] = erroText;
+            const newList = helpText.slice();
+            newList[currentListIndex] = updatedList;
+            setHelpText(newList);
         }
 
-        if (dayjs(surveyObject[index]["startTime"]) > dayjs(surveyObject[index]["endTime"])) {
-            alert("出發時間晚於到達時間")
-            return false;
+        // if (!dayjs(surveyObject[index]["startTime"])) {
+        //     changeObj("請填寫出發時間", "startTime", id)
+        //     return;
+        // } else {
+        //     changeObj("", "startTime", id)
+        // }
+
+        // if (!dayjs(surveyObject[index]["endTime"])) {
+        //     changeObj("請填寫到達時間", "endTime", id)
+        //     return;
+        // } else {
+        //     changeObj("", "endTime", id)
+        // }
+
+        if (surveyObject[index]["endTime"] < surveyObject[index]["startTime"]) {
+            changeObj("到達時間不能早於2)出發時間", "endTime", id)
+            return;
+        } else {
+            changeObj("", "endTime", id)
         }
-        return true;
+
+        // if (dayjs(surveyObject[index]["endTime"]).diff(dayjs(surveyObject[index]["startTime"]),"minute") >= 120 ) {
+        //     changeObj(`第${index+1}行程時間不可多於120分鐘`, "endTime", id)
+        //     return;
+        // } else {
+        //     changeObj("", "endTime", id)
+        // }
+
+
+        // if (index != 0) {
+        //     if (dayjs(surveyObject[index]["startTime"]) < dayjs(surveyObject[index - 1]["endTime"])) {
+        //         changeObj(`第${index+1}行程出發時間不能早於第${index}行程的到達時間`, "startTime", id)
+        //         return;
+        //     } else {
+        //         changeObj("", "startTime", id)
+        //     }
+        // }
+
+        return;
     }
 
     const listItems = surveyObject.map((d, index) =>
@@ -454,24 +561,27 @@ function App() {
                         </Button>
                     </FormControl>
                 </div>
+                <FormHelperText sx={{ color: 'red' }}>aa</FormHelperText>
                 <div className={styles.inlineQuestion}>
                     <FormControl>
                         <FormLabel id="startTime">2) 出發時間</FormLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
                                 <DesktopTimePicker
-                                    onClose={() => checkTimeWhenClose(index)}
+                                    onAccept={() => { checkTimeWhenClose(d.id, index) }}
                                     closeOnSelect={true}
                                     name='startTime'
                                     ampm={false}
                                     value={dayjs(surveyObject[index].startTime)}
-                                    onChange={(newValue) => { handleTimeChange(newValue, 'startTime', d.id) }}
+                                    onChange={(newValue) => { console.log("newValue", newValue), handleTimeChange(newValue, 'startTime', d.id) }}
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
                         {renderGetpreviousEndTime(index)}
                     </FormControl>
                 </div>
+
+                <FormHelperText sx={{ color: 'red' }}>{helpText[index].startTime}</FormHelperText>
 
                 <div className={styles.inlineQuestion}>
                     <FormControl>
@@ -481,22 +591,31 @@ function App() {
                         </Button>
                     </FormControl>
                 </div>
+                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
                 <div className={styles.inlineQuestion}>
                     <FormControl>
                         <FormLabel id="endTime">4) 到達時間</FormLabel>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer className={styles.question} components={['TimePicker']}>
                                 <DesktopTimePicker
-                                    onClose={() => checkTimeWhenClose(index)}
+                                    onAccept={() => checkTimeWhenClose(d.id, index)}
                                     closeOnSelect={true}
                                     ampm={false}
                                     value={dayjs(surveyObject[index].endTime)}
-                                    onChange={(newValue) => handleTimeChange(newValue, 'endTime', d.id)}
+                                    onChange={(newValue) => { handleTimeChange(newValue, 'endTime', d.id) }}
                                 />
                             </DemoContainer>
                         </LocalizationProvider>
                     </FormControl>
                 </div>
+
+                <p>
+                    {JSON.stringify(surveyObject[index].startTime)}<br />
+                    {JSON.stringify(surveyObject[index].endTime)}
+                </p>
+
+                <FormHelperText sx={{ color: 'red' }}>{helpText[index].endTime}</FormHelperText>
+
                 <div className={styles.inlineQuestion}>
                     <FormControl>
                         <FormLabel id="purposeOfVisit">5) 出行目的</FormLabel>
@@ -514,6 +633,7 @@ function App() {
                         />
                     </FormControl>
                 </div>
+                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
 
                 <div className={styles.inlineQuestion}>
                     <FormControl>
@@ -532,6 +652,7 @@ function App() {
                         />
                     </FormControl>
                 </div>
+                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
                 {
                     surveyObject[index].mainMode == "其他" || surveyObject[index].mainMode == "999" || surveyObject[index].mainMode == "步行" || !surveyObject[index].mainMode ?
                         null
@@ -560,6 +681,7 @@ function App() {
                                     {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                                 </FormControl>
                             </div>
+                            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
 
                             <div className={styles.inlineQuestion}>
                                 <FormControl className={styles.inlineQuestionFormControl}>
@@ -584,6 +706,7 @@ function App() {
                                     {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                                 </FormControl>
                             </div>
+                            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
 
                             <div className={styles.inlineQuestion}>
                                 <FormControl className={styles.inlineQuestionFormControl}>
@@ -608,6 +731,7 @@ function App() {
                                     {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                                 </FormControl>
                             </div>
+                            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
                         </div>
                 }
             </div>
@@ -635,6 +759,10 @@ function App() {
         setTimes(times)
     }, [times]);
 
+    React.useEffect(() => {
+        helpText && sessionStorage.setItem(("errorObj"), JSON.stringify(helpText))
+    }, [helpText]);
+
     const scrollToSection = (id) => {
         const element = document.getElementById("tab" + id)
         element?.scrollIntoView({ behavior: "smooth" });
@@ -653,7 +781,6 @@ function App() {
                             {listItems}
                         </div>
                     </div>
-
                     :
                     null
             }

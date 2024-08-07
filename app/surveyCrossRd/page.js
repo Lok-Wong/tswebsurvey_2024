@@ -114,6 +114,9 @@ function App() {
     };
 
     const handleTimeChange = (event, name) => {
+        console.log(event.$d)
+        console.log(event)
+
         setSurvey((prevState) => ({
             ...prevState,
             [name]: event.$d
