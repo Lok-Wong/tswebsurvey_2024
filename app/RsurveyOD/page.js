@@ -38,7 +38,7 @@ function App() {
     const [walkToVehicles, setWalkToVehicles] = React.useState(0)
     const [waittingTimes, setWaittingTimes] = React.useState(0)
     const [walkToBuildings, setWalkToBuildings] = React.useState(0)
-
+    const [selectedDivIndex, setSelectedDivIndex] = React.useState(0)
 
 
 
@@ -266,11 +266,10 @@ function App() {
     const draggedOverItem = React.useRef(0);
     const componentRef = React.useRef(null);
 
-
-
     const [surveyObject, setSurveyObject] = React.useState(_initial_value);
 
     const [isClient, setIsClient] = React.useState(false)
+    const [runCheck, setRunCheck] = React.useState(false)
 
     React.useEffect(() => {
         setIsClient(true)
@@ -311,11 +310,57 @@ function App() {
         setScrollTo(false)
     }
 
+    function checkError() {
+    const checkErrorObj = (name, erroText, id) => {
+        const currentListIndex = helpText.findIndex((item) => item.id === id);
+        const updatedList = Object.assign({}, helpText[currentListIndex]);
+        updatedList[name] = erroText;
+        const newList = helpText.slice();
+        newList[currentListIndex] = updatedList;
+        setHelpText(newList);
+    }
+        var error = false
+        surveyObject.map((d, index) => {
+            if (!d.startTime) {
+                error = true
+                checkErrorObj("startTime", "請填寫出發時間", d.id)
+            }
+            if (!d.endTime) {
+                error = true
+                checkErrorObj("endTime", "請填寫到達時間", d.id)
+            }
+            if (dayjs(d.endTime) < dayjs(d.startTime)) {
+                error = true
+                checkErrorObj("endTime", "到達時間不能早於出發時間", d.id)
+            }
+            if (dayjs(d.endTime).diff(dayjs(d.startTime), "minute") >= 120) {
+                error = true
+                checkErrorObj("endTime", `第${index + 1}行程時間不可多於120分鐘`, d.id)
+            }
+            if (index != 0) {
+                if (dayjs(d.startTime) < dayjs(surveyObject[index - 1]["endTime"])) {
+                    error = true
+                    checkErrorObj("startTime", `第${index + 1}行程出發時間不能早於第${index}行程的到達時間`, d.id)
+                }
+                else {
+                    checkErrorObj("", "startTime", d.id)
+                }
+            }
+         })
+         return error
+    }
+
+
     function handleAddButton() {
         if (surveyObject.length >= 12) {
             alert("最多只能有12個行程")
             return;
         }
+
+        if (checkError()) {
+            return;
+        }
+
         setTimes((prevState) => (prevState + 1))
         setSurveyObject((prevState) => ([...prevState,
             blankSurvey,
@@ -424,7 +469,6 @@ function App() {
     React.useEffect(() => {
         surveyObject && sessionStorage.setItem(("RsurveyOD"), JSON.stringify(surveyObject))
         surveyObject && sessionStorage.setItem(("ODid"), JSON.stringify(times))
-        // setHelpText(blankHelpText)
     }, [surveyObject])
 
     React.useEffect(() => {
@@ -438,6 +482,12 @@ function App() {
         }
     }, [componentRef]);
 
+    // React.useEffect(() => {
+    //     surveyObject.map((d, index) => {
+    //         checkTimeWhenClose(d.id, index)
+    //     })
+    // },[runCheck])
+
     const getListNumber = surveyObject.map((d, index) => {
         if (isClient) {
             return (
@@ -450,13 +500,6 @@ function App() {
 
     })
 
-    const getCurrentDiv = () => {
-        if (isClient) {
-            componentRef.current?.focus()
-            console.log("componentRef", componentRef.current)
-        }
-        return null
-    }
 
     const renderGetpreviousEndTime = (index) => {
         const getPreviousEndTime = (index) => {
@@ -482,273 +525,281 @@ function App() {
     }
 
     const checkTimeWhenClose = (id, index) => {
-        console.log("startTime", surveyObject[index]["startTime"])
-        console.log("endTime", surveyObject[index]["endTime"])
 
         const changeObj = (erroText, name, id) => {
-            const currentListIndex = helpText.findIndex((item) => item.id === id);
-            const updatedList = Object.assign({}, helpText[currentListIndex]);
-            updatedList[name] = erroText;
-            const newList = helpText.slice();
-            newList[currentListIndex] = updatedList;
-            setHelpText(newList);
+            setHelpText((prevState) => {
+                const currentListIndex = prevState.findIndex((item) => item.id === id);
+                const updatedList = Object.assign({}, prevState[currentListIndex]);
+                updatedList[name] = erroText;
+                const newList = prevState.slice();
+                newList[currentListIndex] = updatedList;
+                return newList;
+            })
+            // const currentListIndex = helpText.findIndex((item) => item.id === id);
+            // const updatedList = Object.assign({}, helpText[currentListIndex]);
+            // updatedList[name] = erroText;
+            // const newList = helpText.slice();
+            // newList[currentListIndex] = updatedList;
+            // setHelpText(newList);
         }
 
-        // if (!dayjs(surveyObject[index]["startTime"])) {
-        //     changeObj("請填寫出發時間", "startTime", id)
-        //     return;
-        // } else {
-        //     changeObj("", "startTime", id)
-        // }
-
-        // if (!dayjs(surveyObject[index]["endTime"])) {
-        //     changeObj("請填寫到達時間", "endTime", id)
-        //     return;
-        // } else {
-        //     changeObj("", "endTime", id)
-        // }
-
-        if (surveyObject[index]["endTime"] < surveyObject[index]["startTime"]) {
-            changeObj("到達時間不能早於2)出發時間", "endTime", id)
-            return;
-        } else {
+        const initialErrorText = () => {
             changeObj("", "endTime", id)
+            changeObj("", "startTime", id)
         }
 
-        // if (dayjs(surveyObject[index]["endTime"]).diff(dayjs(surveyObject[index]["startTime"]),"minute") >= 120 ) {
-        //     changeObj(`第${index+1}行程時間不可多於120分鐘`, "endTime", id)
-        //     return;
-        // } else {
-        //     changeObj("", "endTime", id)
-        // }
+        initialErrorText()
+
+        if (!dayjs(surveyObject[index]["startTime"])) {
+            changeObj("請填寫出發時間", "startTime", id)
+        } 
+
+        if (!dayjs(surveyObject[index]["endTime"])) {
+            changeObj("請填寫到達時間", "endTime", id)
+        } 
+
+        if (index != 0) {
+            if (dayjs(surveyObject[index]["startTime"]) < dayjs(surveyObject[index - 1]["endTime"])) {
+                console.log("abccc")
+                changeObj(`第${index+1}行程出發時間不能早於第${index}行程的到達時間`, "startTime", id)
+            } 
+        }
+
+        if (dayjs(surveyObject[index]["endTime"]) < dayjs(surveyObject[index]["startTime"])) {
+            changeObj("到達時間不能早於2)出發時間", "endTime", id)
+        } 
 
 
-        // if (index != 0) {
-        //     if (dayjs(surveyObject[index]["startTime"]) < dayjs(surveyObject[index - 1]["endTime"])) {
-        //         changeObj(`第${index+1}行程出發時間不能早於第${index}行程的到達時間`, "startTime", id)
-        //         return;
-        //     } else {
-        //         changeObj("", "startTime", id)
-        //     }
-        // }
+        if (dayjs(surveyObject[index]["endTime"]).diff(dayjs(surveyObject[index]["startTime"]),"minute") >= 120 ) {
+            changeObj(`第${index+1}行程時間不可多於120分鐘`, "endTime", id)
+        }
 
         return;
     }
 
     const listItems = surveyObject.map((d, index) =>
-        <div key={index} id={"tab" + index} >
-            <div className={styles.odHeader}>
-                <div ref={listRef}></div>
-                <p className={styles.odHeaderP}>第{index + 1}個行程</p>
-                <Button className={styles.odHeaderButton} onClick={() => handleRemove(d.id, index)}>
-                    <DeleteIcon />
-                </Button>
-            </div>
-            <div
-                className={styles.question}
-                key={d.id}
-                draggable
-                onDragStart={() => (dragItem.current = index)}
-                onDragEnter={() => (draggedOverItem.current = index)}
-                onDragEnd={handleSort}
-                onDragOver={(e) => e.preventDefault()}
+        <div>
+            <div className={selectedDivIndex === index ? styles.selectedDiv : null}
+                key={index}
+                id={"tab" + index}
+                onTouchStart={() => setSelectedDivIndex(index)}
+                onTouchMove={() => setSelectedDivIndex(index)}
+                onMouseEnter={() => setSelectedDivIndex(index)}
             >
-                <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="startPoint">1) 出行地點</FormLabel>
-                        <Button>
-                            touch and choose loaction
-                        </Button>
-                    </FormControl>
-                </div>
-                <FormHelperText sx={{ color: 'red' }}>aa</FormHelperText>
-                <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="startTime">2) 出發時間</FormLabel>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer className={styles.question} components={['TimePicker']}>
-                                <DesktopTimePicker
-                                    onAccept={() => { checkTimeWhenClose(d.id, index) }}
-                                    closeOnSelect={true}
-                                    name='startTime'
-                                    ampm={false}
-                                    value={dayjs(surveyObject[index].startTime)}
-                                    onChange={(newValue) => { console.log("newValue", newValue), handleTimeChange(newValue, 'startTime', d.id) }}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                        {renderGetpreviousEndTime(index)}
-                    </FormControl>
-                </div>
-
-                <FormHelperText sx={{ color: 'red' }}>{helpText[index].startTime}</FormHelperText>
-
-                <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="endPoint">3) 出行目的地</FormLabel>
-                        <Button>
-                            touch and choose loaction
-                        </Button>
-                    </FormControl>
-                </div>
-                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-                <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="endTime">4) 到達時間</FormLabel>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer className={styles.question} components={['TimePicker']}>
-                                <DesktopTimePicker
-                                    onAccept={() => checkTimeWhenClose(d.id, index)}
-                                    closeOnSelect={true}
-                                    ampm={false}
-                                    value={dayjs(surveyObject[index].endTime)}
-                                    onChange={(newValue) => { handleTimeChange(newValue, 'endTime', d.id) }}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </FormControl>
-                </div>
-
-                <p>
-                    {JSON.stringify(surveyObject[index].startTime)}<br />
-                    {JSON.stringify(surveyObject[index].endTime)}
-                </p>
-
-                <FormHelperText sx={{ color: 'red' }}>{helpText[index].endTime}</FormHelperText>
-
-                <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="purposeOfVisit">5) 出行目的</FormLabel>
-                        <Autocomplete
-                            disablePortal
-                            id="purposeOfVisit-box"
-                            sx={{ width: 300 }}
-                            options={purposeOfVisitList}
-                            onChange={(event) => {
-                                handleChange(event, 'purposeOfVisit', d.id)
-                            }}
-                            freeSolo
-                            value={surveyObject[index].purposeOfVisit}
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </FormControl>
-                </div>
-                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-                <div className={styles.inlineQuestion}>
-                    <FormControl>
-                        <FormLabel id="mainMode">6) 主要交通方式:</FormLabel>
-                        <Autocomplete
-                            onChange={(event) => {
-                                handleChange(event, 'mainMode', d.id)
-                            }}
-                            disablePortal
-                            id="mainMode-box"
-                            sx={{ width: 300 }}
-                            options={mainMode}
-                            value={surveyObject[index].mainMode}
-                            freeSolo
-                            renderInput={(params) => <TextField {...params} />}
-                        />
-                    </FormControl>
-                </div>
-                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-                {
-                    surveyObject[index].mainMode == "其他" || surveyObject[index].mainMode == "999" || surveyObject[index].mainMode == "步行" || !surveyObject[index].mainMode ?
-                        null
-                        :
-                        <div>
-                            <div className={styles.inlineQuestion}>
-                                <FormControl className={styles.inlineQuestionFormControl}>
-                                    <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
-                                    <div className={styles.sliderDiv}>
-                                        <Slider
-                                            sx={{ color: "#3E848C" }}
-                                            min={0}
-                                            max={30}
-                                            step={1}
-                                            valueLabelDisplay="auto"
-                                            aria-label="walkToVehicle"
-                                            name='walkToVehicle'
-                                            marks={sliderMarks}
-                                            value={getObjNameForMode(index, "walkToVehicle")}
-                                            onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
-                                        // valueLabelFormat={getAgeValueLabel}
-                                        // marks={ageMarks}
-                                        />
-                                    </div>
-
-                                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                                </FormControl>
-                            </div>
-                            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-                            <div className={styles.inlineQuestion}>
-                                <FormControl className={styles.inlineQuestionFormControl}>
-                                    <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
-                                    <div className={styles.sliderDiv}>
-                                        <Slider
-                                            sx={{ color: "#3E848C" }}
-                                            min={0}
-                                            max={30}
-                                            step={1}
-                                            valueLabelDisplay="auto"
-                                            aria-label="waittingTime"
-                                            name='waittingTime'
-                                            marks={sliderMarks}
-                                            value={getObjNameForMode(index, "waittingTime")}
-                                            onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
-                                        // valueLabelFormat={getAgeValueLabel}
-                                        // marks={ageMarks}
-                                        />
-
-                                    </div>
-                                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                                </FormControl>
-                            </div>
-                            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-                            <div className={styles.inlineQuestion}>
-                                <FormControl className={styles.inlineQuestionFormControl}>
-                                    <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
-                                    <div className={styles.sliderDiv}>
-                                        <Slider
-                                            sx={{ color: "#3E848C" }}
-                                            min={0}
-                                            max={30}
-                                            step={1}
-                                            valueLabelDisplay="auto"
-                                            aria-label="walkToBuilding"
-                                            name='walkToBuilding'
-                                            marks={sliderMarks}
-                                            value={getObjNameForMode(index, "walkToBuilding")}
-                                            onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
-                                        // valueLabelFormat={getAgeValueLabel}
-                                        // marks={ageMarks}
-                                        />
-
-                                    </div>
-                                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                                </FormControl>
-                            </div>
-                            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-                        </div>
-                }
-            </div>
-            {index == surveyObject.length - 1 ?
-                <div className={styles.dividerDiv}>
-                    <Divider color="#3F858C" sx={{ borderBottomWidth: 3 }} />
-                </div>
-                :
-
-                <div className={styles.increaseOdLine}>
-                    <Button onClick={() => handleInsertButton(index)}>
-                        <AddIcon />
-                        <p className={styles.increaseOdLineText}>按此插入行程 </p>
+                <div className={styles.odHeader}>
+                    <div ref={listRef}></div>
+                    <p className={styles.odHeaderP}>第{index + 1}個行程</p>
+                    <Button className={styles.odHeaderButton} onClick={() => handleRemove(d.id, index)}>
+                        <DeleteIcon />
                     </Button>
                 </div>
-            }
+                <div
+                    className={styles.question}
+                    key={d.id}
+                    draggable
+                    onDragStart={() => (dragItem.current = index)}
+                    onDragEnter={() => (draggedOverItem.current = index)}
+                    onDragEnd={handleSort}
+                    onDragOver={(e) => e.preventDefault()}
+                >
+                    <div className={styles.inlineQuestion}>
+                        <FormControl>
+                            <FormLabel id="startPoint">1) 出行地點</FormLabel>
+                            <Button>
+                                touch and choose loaction
+                            </Button>
+                        </FormControl>
+                    </div>
+                    <FormHelperText sx={{ color: 'red' }}>aa</FormHelperText>
+                    <div className={styles.inlineQuestion}>
+                        <FormControl>
+                            <FormLabel id="startTime">2) 出發時間</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <DesktopTimePicker
+                                        onAccept={() => {checkTimeWhenClose(d.id, index)}}
+                                        closeOnSelect={true}
+                                        name='startTime'
+                                        ampm={false}
+                                        value={dayjs(surveyObject[index].startTime)}
+                                        onChange={(newValue) => {handleTimeChange(newValue, 'startTime', d.id) }}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                            {renderGetpreviousEndTime(index)}
+                        </FormControl>
+                    </div>
 
+                    <FormHelperText sx={{ color: 'red' }}>{helpText[index].startTime}</FormHelperText>
+
+                    <div className={styles.inlineQuestion}>
+                        <FormControl>
+                            <FormLabel id="endPoint">3) 出行目的地</FormLabel>
+                            <Button>
+                                touch and choose loaction
+                            </Button>
+                        </FormControl>
+                    </div>
+                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+                    <div className={styles.inlineQuestion}>
+                        <FormControl>
+                            <FormLabel id="endTime">4) 到達時間</FormLabel>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer className={styles.question} components={['TimePicker']}>
+                                    <DesktopTimePicker
+                                        onAccept={() => {checkTimeWhenClose(d.id, index)}}
+                                        closeOnSelect={true}
+                                        ampm={false}
+                                        value={dayjs(surveyObject[index].endTime)}
+                                        onChange={(newValue) => { handleTimeChange(newValue, 'endTime', d.id) }}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </FormControl>
+                    </div>
+
+                    <p>
+                        {JSON.stringify(surveyObject[index].startTime)}<br />
+                        {JSON.stringify(surveyObject[index].endTime)}
+                    </p>
+
+                    <FormHelperText sx={{ color: 'red' }}>{helpText[index].endTime}</FormHelperText>
+
+                    <div className={styles.inlineQuestion}>
+                        <FormControl>
+                            <FormLabel id="purposeOfVisit">5) 出行目的</FormLabel>
+                            <Autocomplete
+                                disablePortal
+                                id="purposeOfVisit-box"
+                                sx={{ width: 300 }}
+                                options={purposeOfVisitList}
+                                onChange={(event) => {
+                                    handleChange(event, 'purposeOfVisit', d.id)
+                                }}
+                                freeSolo
+                                value={surveyObject[index].purposeOfVisit}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </FormControl>
+                    </div>
+                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+                    <div className={styles.inlineQuestion}>
+                        <FormControl>
+                            <FormLabel id="mainMode">6) 主要交通方式:</FormLabel>
+                            <Autocomplete
+                                onChange={(event) => {
+                                    handleChange(event, 'mainMode', d.id)
+                                }}
+                                disablePortal
+                                id="mainMode-box"
+                                sx={{ width: 300 }}
+                                options={mainMode}
+                                value={surveyObject[index].mainMode}
+                                freeSolo
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </FormControl>
+                    </div>
+                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+                    {
+                        surveyObject[index].mainMode == "其他" || surveyObject[index].mainMode == "999" || surveyObject[index].mainMode == "步行" || !surveyObject[index].mainMode ?
+                            null
+                            :
+                            <div>
+                                <div className={styles.inlineQuestion}>
+                                    <FormControl className={styles.inlineQuestionFormControl}>
+                                        <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
+                                        <div className={styles.sliderDiv}>
+                                            <Slider
+                                                sx={{ color: "#3E848C" }}
+                                                min={0}
+                                                max={30}
+                                                step={1}
+                                                valueLabelDisplay="auto"
+                                                aria-label="walkToVehicle"
+                                                name='walkToVehicle'
+                                                marks={sliderMarks}
+                                                value={getObjNameForMode(index, "walkToVehicle")}
+                                                onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
+                                            // valueLabelFormat={getAgeValueLabel}
+                                            // marks={ageMarks}
+                                            />
+                                        </div>
+
+                                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                                    </FormControl>
+                                </div>
+                                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+                                <div className={styles.inlineQuestion}>
+                                    <FormControl className={styles.inlineQuestionFormControl}>
+                                        <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
+                                        <div className={styles.sliderDiv}>
+                                            <Slider
+                                                sx={{ color: "#3E848C" }}
+                                                min={0}
+                                                max={30}
+                                                step={1}
+                                                valueLabelDisplay="auto"
+                                                aria-label="waittingTime"
+                                                name='waittingTime'
+                                                marks={sliderMarks}
+                                                value={getObjNameForMode(index, "waittingTime")}
+                                                onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
+                                            // valueLabelFormat={getAgeValueLabel}
+                                            // marks={ageMarks}
+                                            />
+
+                                        </div>
+                                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                                    </FormControl>
+                                </div>
+                                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+                                <div className={styles.inlineQuestion}>
+                                    <FormControl className={styles.inlineQuestionFormControl}>
+                                        <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
+                                        <div className={styles.sliderDiv}>
+                                            <Slider
+                                                sx={{ color: "#3E848C" }}
+                                                min={0}
+                                                max={30}
+                                                step={1}
+                                                valueLabelDisplay="auto"
+                                                aria-label="walkToBuilding"
+                                                name='walkToBuilding'
+                                                marks={sliderMarks}
+                                                value={getObjNameForMode(index, "walkToBuilding")}
+                                                onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
+                                            // valueLabelFormat={getAgeValueLabel}
+                                            // marks={ageMarks}
+                                            />
+
+                                        </div>
+                                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                                    </FormControl>
+                                </div>
+                                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+                            </div>
+                    }
+                </div>
+            </div>
+            <div>
+                {index == surveyObject.length - 1 ?
+                    <div className={styles.dividerDiv}>
+                        <Divider color="#3F858C" sx={{ borderBottomWidth: 3 }} />
+                    </div>
+                    :
+
+                    <div className={styles.increaseOdLine}>
+                        <Button onClick={() => handleInsertButton(index)}>
+                            <AddIcon />
+                            <p className={styles.increaseOdLineText}>按此插入行程 </p>
+                        </Button>
+                    </div>
+                }
+            </div>
         </div>
 
     );

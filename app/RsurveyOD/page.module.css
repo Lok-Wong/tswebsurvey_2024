@@ -28,6 +28,12 @@
   box-shadow:  -2px 0px 5px rgba(122, 184, 191, 0.5);
 }
 
+.selectedDiv {
+  border: 2px solid;
+  border-color: #0cb6ca;
+  border-radius:12px;
+}
+
 .odHeaderP{
   flex:1
 }
