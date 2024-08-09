@@ -150,6 +150,7 @@ function MapSelections(props) {
                     onClose={mapClose}
                     aria-labelledby="map"
                     aria-describedby="map"
+                    sx = {{zIndex:10}}
                 >
                     <Box className={styles.mapBox}>
                         <div className={styles.map}>
