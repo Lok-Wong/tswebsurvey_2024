@@ -7,12 +7,16 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import MapComponent from '../mapTesting/page';
 
-function MapSelections(route, label) {
+function MapSelections(props) {
     const [isClient, setIsClient] = React.useState(false)
 
-    React.useEffect(() => {
-        setIsClient(true)
-    }, [])
+    const [open, setOpen] = React.useState(false);
+    const [key, setKey] = React.useState("start0");
+
+    const mapClose = () => {
+        handleChangeData(props.label);
+        setOpen(false);
+    }
 
     const _initial_value = React.useMemo(() => {
         if (typeof window !== 'undefined') {
@@ -23,18 +27,14 @@ function MapSelections(route, label) {
           }
         }
         // Otherwise use initial_value that was passed to the function
-        return route;
+        return props.route;
     }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value);
 
-    const [open, setOpen] = React.useState(false);
-    const mapClose = () => {
-        handleChangeData(label);
-        setOpen(false);
-    }
-
-    const [key, setKey] = React.useState("start0");
+    React.useEffect(() => {
+        setIsClient(true)
+    }, [])
 
     const handleCustomAddress = (address, type) => {
         setSurvey((prevState) => ({
@@ -81,7 +81,7 @@ function MapSelections(route, label) {
     }
 
     const getMapSelectedText = (location) => {
-        // console.log(location.method);
+        //console.log(props.label);
 
         if (location.method == "input") {
             return (
@@ -117,7 +117,7 @@ function MapSelections(route, label) {
         return;
     }
 
-    function createMapSelection(key) {
+    const createMapSelection = (key) => {
         return (
             <div key={key}>
                 <Button onClick = {() => {
@@ -130,15 +130,15 @@ function MapSelections(route, label) {
         );
     }
 
-    function createMapSelections(label) {
+    const createMapSelections = (props) => {
         //console.log(json);
         return (
-            <div className={styles.mapSelect} key={label}>
+            <div className={styles.mapSelect} key={props.label}>
                 {
                     isClient ?
                         <div>
                             <FormControl>
-                                    {createMapSelection(label)}
+                                    {createMapSelection(props.label)}
                             </FormControl>
                         </div>
                         :
@@ -155,7 +155,7 @@ function MapSelections(route, label) {
                         <div className={styles.map}>
                             <p className={styles.mapHitText}>
                             {
-                                getMapSelectedText(survey[label]) ? "已選擇地址： " + getMapSelectedText(survey[label]) : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
+                                getMapSelectedText(survey[props.label]) ? "已選擇地址： " + getMapSelectedText(survey[props.label]) : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                             }
                             </p>
                             <MapComponent handleCustomAddress={handleCustomAddress}/>
@@ -166,8 +166,8 @@ function MapSelections(route, label) {
         );
     }
 
-    if (label.length > 0) {
-        return (createMapSelections(label));
+    if (typeof(props.label) !== 'undefined') {
+        return (createMapSelections(props));
     }
     else
         return (

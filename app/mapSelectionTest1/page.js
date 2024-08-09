@@ -14,7 +14,7 @@ function App() {
 
   const handleTestButton = () => {
     handleChangeData();
-    console.log(routeRecord);
+    //console.log(routeRecord);
     return;
   }
 
@@ -24,7 +24,27 @@ function App() {
         routeRecord[key] = JSON.parse(sessionStorage[key]);
     })
 
-    // console.log(JSON.parse(routeRecord));
+    console.log(routeRecord["start0"]);
+    return;
+  }
+
+  let props = {
+    route: routeRecord,
+    label: "start0"
+  }
+
+  const handlePlace = (newPlace) => {
+    props.label = newPlace;
+  }
+
+  const getPlace = (place) => {
+    if(routeRecord[place] != 999)
+      return (
+        <div>
+          {routeRecord[place]}
+        </div>
+      )
+
     return;
   }
 
@@ -32,16 +52,19 @@ function App() {
     <main className={styles.main}>
       <div className={styles.question}>
         <div>
-          起點1：{MapSelections(routeRecord, "start0")}
+          起點1：{routeRecord["start0"]}<MapSelections {...props} />
         </div>
         <div>
-          目的地1：{MapSelections(routeRecord, "destination0")}
+          {handlePlace("destination0")}
+          目的地1：<MapSelections {...props} />
         </div>
         <div>
-          起點2{MapSelections(routeRecord, "start1")}
+         {handlePlace("start1")}
+          起點2：<MapSelections {...props} />
         </div>
         <div>
-          目的地2：{MapSelections(routeRecord, "destination1")}
+          {handlePlace("destination1")}
+          目的地2：<MapSelections {...props} />
         </div>
       </div>
       <div>
