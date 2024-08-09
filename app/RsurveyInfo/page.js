@@ -596,7 +596,7 @@ function App() {
 
                         <div className={styles.question}>
                             <FormControl className={styles.inlineQuestionFormControl}>
-                                <FormLabel id="gender-label"><h3>5)  性別：</h3></FormLabel>
+                                <FormLabel id="gender-label"><h3>1)  性別：</h3></FormLabel>
                                 <RadioGroup
                                     aria-labelledby="gender-label"
                                     name="gender"
@@ -639,13 +639,13 @@ function App() {
                                         <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
 
-                                            <div>
+                                            <div key={1}>
                                                 <MapSelections {...props}/>
                                             </div>
 
                                             <FormLabel id="person-od-type-label"><h3>2.2) 工作地點（地標）：</h3></FormLabel>
 
-                                            <div>
+                                            <div key={2}>
                                                 {handlePlace("working")}
                                                 <MapSelections {...props}/>
                                             </div>

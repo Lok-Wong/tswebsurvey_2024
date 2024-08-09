@@ -398,7 +398,7 @@ function App() {
                 return "tourBusMode"
             case "步行":
                 return "walkMode"
-            case "其他":
+            default :
                 return "otherMode"
         }
     }
@@ -449,10 +449,11 @@ function App() {
         return;
     };
 
-    const handleChange = (event, name, index) => {
+    const handleChange = (inputValue, name, index) => {
         const currentListIndex = surveyObject.findIndex((item) => item.id === index);
         const updatedList = Object.assign({}, surveyObject[currentListIndex]);
-        updatedList[name] = event.target.textContent;
+        updatedList[name] = inputValue;
+        console.log("updatedList", updatedList)
         const newList = surveyObject.slice();
         newList[currentListIndex] = updatedList;
         setSurveyObject(newList);
@@ -577,8 +578,150 @@ function App() {
         return;
     }
 
+    const renderDifferModeSlider = (d,index) => {
+        if (surveyObject[index]["mainMode"] == "999"||surveyObject[index]["mainMode"] == "其他" || surveyObject[index]["mainMode"] == "步行" || !surveyObject[index]["mainMode"]) {
+            return null
+        }
+
+        if (surveyObject[index]["mainMode"] == "電單車（駕駛）" || surveyObject[index]["mainMode"] == "私家車（駕駛）") {
+            return (
+                <div>
+                <div className={styles.inlineQuestion}>
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
+                        <div className={styles.sliderDiv}>
+                            <Slider
+                                sx={{ color: "#3E848C" }}
+                                min={0}
+                                max={30}
+                                step={1}
+                                valueLabelDisplay="auto"
+                                aria-label="walkToVehicle"
+                                name='walkToVehicle'
+                                marks={sliderMarks}
+                                value={getObjNameForMode(index, "walkToVehicle")}
+                                onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
+                            // valueLabelFormat={getAgeValueLabel}
+                            // marks={ageMarks}
+                            />
+                        </div>
+
+                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                    </FormControl>
+                </div>
+                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+                <div className={styles.inlineQuestion}>
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
+                        <div className={styles.sliderDiv}>
+                            <Slider
+                                sx={{ color: "#3E848C" }}
+                                min={0}
+                                max={30}
+                                step={1}
+                                valueLabelDisplay="auto"
+                                aria-label="walkToBuilding"
+                                name='walkToBuilding'
+                                marks={sliderMarks}
+                                value={getObjNameForMode(index, "walkToBuilding")}
+                                onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
+                            // valueLabelFormat={getAgeValueLabel}
+                            // marks={ageMarks}
+                            />
+
+                        </div>
+                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                    </FormControl>
+                </div>
+                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+            </div>
+            )
+        }
+
+        return(
+            <div>
+            <div className={styles.inlineQuestion}>
+                <FormControl className={styles.inlineQuestionFormControl}>
+                    <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
+                    <div className={styles.sliderDiv}>
+                        <Slider
+                            sx={{ color: "#3E848C" }}
+                            min={0}
+                            max={30}
+                            step={1}
+                            valueLabelDisplay="auto"
+                            aria-label="walkToVehicle"
+                            name='walkToVehicle'
+                            marks={sliderMarks}
+                            value={getObjNameForMode(index, "walkToVehicle")}
+                            onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
+                        // valueLabelFormat={getAgeValueLabel}
+                        // marks={ageMarks}
+                        />
+                    </div>
+
+                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                </FormControl>
+            </div>
+            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+            <div className={styles.inlineQuestion}>
+                <FormControl className={styles.inlineQuestionFormControl}>
+                    <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
+                    <div className={styles.sliderDiv}>
+                        <Slider
+                            sx={{ color: "#3E848C" }}
+                            min={0}
+                            max={30}
+                            step={1}
+                            valueLabelDisplay="auto"
+                            aria-label="waittingTime"
+                            name='waittingTime'
+                            marks={sliderMarks}
+                            value={getObjNameForMode(index, "waittingTime")}
+                            onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
+                        // valueLabelFormat={getAgeValueLabel}
+                        // marks={ageMarks}
+                        />
+
+                    </div>
+                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                </FormControl>
+            </div>
+            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+            <div className={styles.inlineQuestion}>
+                <FormControl className={styles.inlineQuestionFormControl}>
+                    <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
+                    <div className={styles.sliderDiv}>
+                        <Slider
+                            sx={{ color: "#3E848C" }}
+                            min={0}
+                            max={30}
+                            step={1}
+                            valueLabelDisplay="auto"
+                            aria-label="walkToBuilding"
+                            name='walkToBuilding'
+                            marks={sliderMarks}
+                            value={getObjNameForMode(index, "walkToBuilding")}
+                            onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
+                        // valueLabelFormat={getAgeValueLabel}
+                        // marks={ageMarks}
+                        />
+
+                    </div>
+                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                </FormControl>
+            </div>
+            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+        </div>
+        )
+        
+    }
+
     const listItems = surveyObject.map((d, index) =>
-        <div>
+        <div key={d.id}>
             <div className={selectedDivIndex === index ? styles.selectedDiv : null}
                 key={index}
                 id={"tab" + index}
@@ -673,8 +816,12 @@ function App() {
                                 id="purposeOfVisit-box"
                                 sx={{ width: 300 }}
                                 options={purposeOfVisitList}
-                                onChange={(event) => {
-                                    handleChange(event, 'purposeOfVisit', d.id)
+                                // onChange={(event,inputValue) => {
+                                //     console.log("inputValue", inputValue)
+                                //     // handleChange(event, 'purposeOfVisit', d.id)
+                                // }}
+                                onInputChange={(event,inputValue) => {
+                                    handleChange(inputValue, 'purposeOfVisit', d.id)
                                 }}
                                 freeSolo
                                 value={surveyObject[index].purposeOfVisit}
@@ -688,8 +835,11 @@ function App() {
                         <FormControl>
                             <FormLabel id="mainMode">6) 主要交通方式:</FormLabel>
                             <Autocomplete
-                                onChange={(event) => {
-                                    handleChange(event, 'mainMode', d.id)
+                                // onChange={(event,inputValue) => {
+                                //     // handleChange(inputValue, 'mainMode', d.id)
+                                // }}
+                                onInputChange={(event,inputValue) => {
+                                    handleChange(inputValue, 'mainMode', d.id)
                                 }}
                                 disablePortal
                                 id="mainMode-box"
@@ -702,87 +852,7 @@ function App() {
                         </FormControl>
                     </div>
                     <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-                    {
-                        surveyObject[index].mainMode == "其他" || surveyObject[index].mainMode == "999" || surveyObject[index].mainMode == "步行" || !surveyObject[index].mainMode ?
-                            null
-                            :
-                            <div>
-                                <div className={styles.inlineQuestion}>
-                                    <FormControl className={styles.inlineQuestionFormControl}>
-                                        <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
-                                        <div className={styles.sliderDiv}>
-                                            <Slider
-                                                sx={{ color: "#3E848C" }}
-                                                min={0}
-                                                max={30}
-                                                step={1}
-                                                valueLabelDisplay="auto"
-                                                aria-label="walkToVehicle"
-                                                name='walkToVehicle'
-                                                marks={sliderMarks}
-                                                value={getObjNameForMode(index, "walkToVehicle")}
-                                                onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
-                                            // valueLabelFormat={getAgeValueLabel}
-                                            // marks={ageMarks}
-                                            />
-                                        </div>
-
-                                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                                    </FormControl>
-                                </div>
-                                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-                                <div className={styles.inlineQuestion}>
-                                    <FormControl className={styles.inlineQuestionFormControl}>
-                                        <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
-                                        <div className={styles.sliderDiv}>
-                                            <Slider
-                                                sx={{ color: "#3E848C" }}
-                                                min={0}
-                                                max={30}
-                                                step={1}
-                                                valueLabelDisplay="auto"
-                                                aria-label="waittingTime"
-                                                name='waittingTime'
-                                                marks={sliderMarks}
-                                                value={getObjNameForMode(index, "waittingTime")}
-                                                onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
-                                            // valueLabelFormat={getAgeValueLabel}
-                                            // marks={ageMarks}
-                                            />
-
-                                        </div>
-                                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                                    </FormControl>
-                                </div>
-                                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-                                <div className={styles.inlineQuestion}>
-                                    <FormControl className={styles.inlineQuestionFormControl}>
-                                        <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
-                                        <div className={styles.sliderDiv}>
-                                            <Slider
-                                                sx={{ color: "#3E848C" }}
-                                                min={0}
-                                                max={30}
-                                                step={1}
-                                                valueLabelDisplay="auto"
-                                                aria-label="walkToBuilding"
-                                                name='walkToBuilding'
-                                                marks={sliderMarks}
-                                                value={getObjNameForMode(index, "walkToBuilding")}
-                                                onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
-                                            // valueLabelFormat={getAgeValueLabel}
-                                            // marks={ageMarks}
-                                            />
-
-                                        </div>
-                                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                                    </FormControl>
-                                </div>
-                                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-                            </div>
-                    }
+                    {renderDifferModeSlider(d,index)}
                 </div>
             </div>
             <div>
