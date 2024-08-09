@@ -15,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Slider from '@mui/material/Slider';
 import { Box, TextField } from '@mui/material';
+import MapSelections from "../mapSelection/page";
 
 function App() {
     const router = useRouter();
@@ -41,6 +42,10 @@ function App() {
         OdDayYes: 999,
         OdDayNo: 999,
         startTime: new Date(),
+        location: {
+            living: 999,
+            working: 999,
+        }
     }
 
     const blankHelpText = {
@@ -561,7 +566,24 @@ function App() {
         }
     }
 
+    const handlePlace = (newPlace) => {
+        props.label = newPlace;
+    }
 
+    const handleChangeData = () => {
+        Object.keys(sessionStorage).map(key => {
+            if (survey.location.hasOwnProperty(key))
+                survey.location[key] = JSON.parse(sessionStorage[key]);
+        })
+    
+        console.log(survey.location)
+        return;
+    }
+
+    let props = {
+        route: survey.location,
+        label: "living"
+    }
 
     return (
         <main className={styles.main}>
@@ -617,15 +639,17 @@ function App() {
                                         <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
 
-                                            <p>
-                                                打開地圖，選擇您的居住地點
-                                            </p>
+                                            <div>
+                                                <MapSelections {...props}/>
+                                            </div>
 
                                             <FormLabel id="person-od-type-label"><h3>2.2) 工作地點（地標）：</h3></FormLabel>
 
-                                            <p>
-                                                打開地圖，選擇您的居住地點
-                                            </p>
+                                            <div>
+                                                {handlePlace("working")}
+                                                <MapSelections {...props}/>
+                                            </div>
+                                            <Button onClick={handleChangeData}>測試</Button>
                                         </FormControl>
                                     </div>
 
