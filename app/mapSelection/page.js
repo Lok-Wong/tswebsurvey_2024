@@ -112,7 +112,7 @@ function MapSelections(route, label) {
 
     const handleChangeData = (label) => {
         sessionStorage.setItem(label, JSON.stringify(survey[label]));
-        sessionStorage.setItem("testing", JSON.stringify(survey[label]))
+        //sessionStorage.setItem("testing", JSON.stringify(survey[label]))
         // console.log(sessionStorage);
         return;
     }
