@@ -466,7 +466,7 @@ function App() {
     }
 
     const handleNextButton = () => {
-        console.log(getMapSelectedText(survey.location.living));
+        //console.log(getMapSelectedText(survey.location.living));
 
         checkNotFilled();
 
@@ -694,10 +694,6 @@ function App() {
         }
     }
 
-    const handleLabel = (newLabel) => {
-        props.label = newLabel;
-    }
-
     const handleChangeData = () => {
         Object.keys(sessionStorage).map(key => {
             if (survey.location.hasOwnProperty(key))
@@ -708,6 +704,10 @@ function App() {
         return;
     }
 
+    const handleLabel = (newLabel) => {
+        props.label = newLabel;
+    }
+
     let props = {
         route: survey.location,
         label: "living"
@@ -715,6 +715,11 @@ function App() {
 
     const getMapSelectedText = (location) => {
         //console.log(props.label);
+        if (location == 999) {
+            return (
+                <p>請選擇您的地址</p>
+            )
+        }
 
         if (location.method == "input") {
             return (
@@ -795,22 +800,26 @@ function App() {
                                 <div>
                                     <div className={styles.question}>
                                         <FormControl className={styles.inlineQuestionFormControl}>
-                                            <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
 
-                                            <div key={1} onBlur={handleChangeData}>
-                                                {getMapSelectedText(survey.location.living)}
+                                        <div className={styles.mapLocation}>
+                                            <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
+                                            <div key={1} onBlur={handleChangeData} className={styles.mapSelect}>
+                                                <div className={styles.mapText}>{getMapSelectedText(survey.location.living)}</div>
                                                 <MapSelections {...props}/>
                                             </div>
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.living}</FormHelperText>
+                                        </div>
 
+                                        <div className={styles.mapLocation}>
                                             <FormLabel id="person-od-type-label"><h3>2.2) 工作地點（地標）：</h3></FormLabel>
 
-                                            <div key={2} onBlur={handleChangeData}>
+                                            <div key={2} onBlur={handleChangeData} className={styles.mapSelect}>
                                                 {handleLabel("working")}
-                                                {getMapSelectedText(survey.location.working)}
+                                                <div className={styles.mapText}>{getMapSelectedText(survey.location.working)}</div>
                                                 <MapSelections {...props}/>
                                             </div>
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.working}</FormHelperText>
+                                        </div>
                                         </FormControl>
                                     </div>
 

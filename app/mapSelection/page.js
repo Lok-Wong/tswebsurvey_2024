@@ -119,7 +119,7 @@ function MapSelections(props) {
 
     const createMapSelection = (key) => {
         return (
-            <div key={key}>
+            <div key={key} className={styles.mapButton}>
                 <Button onClick = {() => {
                     setOpen(true);
                     setKey(key);
