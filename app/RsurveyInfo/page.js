@@ -29,9 +29,11 @@ function App() {
 
     const blanksurvey = {
         gender: 999,
+        personOdType: 999,
         age: 999,
         workingStatus: 999,
         degree: 999,
+        jobCategories: 999,
         salary: 999,
         licenseCount: 999,
         commonTransportation: 999,
@@ -48,12 +50,16 @@ function App() {
         }
     }
 
-    const blankHelpText = {
-        classLevel: null,
-        schoolName: null,
-        gender: null,
-        age: null,
-        crossBorder: null,
+    const blankHelpText = {}
+    const [helpText, setHelpText] = React.useState(blankHelpText)
+    const handleHelpText = (eventName, errorText) => {
+        const objectName = eventName
+        setHelpText((prevState) => (
+            {
+                ...prevState,
+                [objectName]: errorText
+            }
+        ))
     }
 
     // const _studentNum = React.useMemo(() => {
@@ -89,7 +95,6 @@ function App() {
     }, []);
 
     const [survey, setSurvey] = React.useState(_initial_value)
-    const [helpText, setHelpText] = React.useState(blankHelpText)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [openAlertBar, setOpenAlertBar] = React.useState(false)
     const [scrollTo, setScrollTo] = React.useState(false);
@@ -153,16 +158,6 @@ function App() {
     };
 
     const [vCodeError, setVCodeError] = React.useState(false)
-
-    const handleHelpText = (eventName, errorText) => {
-        const objectName = eventName
-        setHelpText((prevState) => (
-            {
-                ...prevState,
-                [objectName]: errorText
-            }
-        ))
-    }
 
     const handleChange = (event) => {
         const objectName = event.target.name
@@ -343,13 +338,146 @@ function App() {
         };
     }, [finishStatus]);
 
+    var flag = true;
+
+    const checkNotFilled = () => {
+        if (survey.OdDayType == "有") {
+            if (survey.OdDayYes == 999) {
+                flag = false;
+                handleAlertBarOpen()
+                setVCodeError("11) 請選擇您昨天的日子")
+                handleHelpText("OdDayYes", "請選擇您昨天的日子")
+            }
+        }
+        if (survey.OdDayType == "沒有") {
+            if (survey.OdDayNo == 999) {
+                flag = false;
+                handleAlertBarOpen()
+                setVCodeError("11) 請選擇您昨天沒有行程的原因")
+                handleHelpText("OdDayNo", "請選擇您昨天沒有行程的原因")
+            }
+        }
+
+        if (survey.OdDayType == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("10) 請選擇您昨天的出行狀況")
+            handleHelpText("OdDayType", "請選擇您昨天的出行狀況")
+        }
+
+        if (survey.walkTime == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("9) 請拉動滑桿選擇您可接受的步行時間")
+            handleHelpText("walkTime", "請拉動滑桿選擇您可接受的步行時間")
+        }
+
+        if (survey.commonTransportation == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("8) 請選擇您最常用的出行方式")
+            handleHelpText("commonTransportation", "請選擇您最常用的出行方式")
+        }
+        if (survey.commonTransportation == "其他") {
+            if (survey.otherOfcommonTransportation == "" || survey.otherOfcommonTransportation == 999) {
+                flag = false;
+                handleAlertBarOpen()
+                setVCodeError("8) 請填寫其他出行方式")
+                handleHelpText("commonTransportation", "請填寫其他出行方式")
+            }
+        }
+
+        if (survey.IntentionOfPurchaseCar == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("7) 請選擇您的購車意願")
+            handleHelpText("IntentionOfPurchaseCar", "請選擇您的購車意願")
+        }
+        
+        if (survey.licenseCount == 999) {
+            flag = false;
+            handleAlertBarOpen()
+                setVCodeError("6) 請選擇您的駕照類型")
+            handleHelpText("licenseCount", "請選擇您的駕照類型")
+        }
+
+        if (survey.salary == 999) {
+            flag = false;
+            handleAlertBarOpen()
+                setVCodeError("5) 請拉動滑桿選擇您的月收入範圍")
+            handleHelpText("salary", "請拉動滑桿選擇您的月收入範圍")
+        }
+
+        if (survey.workingStatus == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("4) 請選擇您的就業／就學情況")
+            handleHelpText("workingStatus", "請選擇您的就業／就學情況")
+        }
+        if (survey.workingStatus == "就學") {
+            if (survey.degree == 999) {
+                flag = false;
+                handleAlertBarOpen()
+                setVCodeError("4.1) 請選擇您的程度")
+                handleHelpText("degree", "請選擇您的程度")
+            }
+        }
+        if (survey.workingStatus == "就業") {
+            if (survey.jobCategories == 999) {
+                flag = false;
+                handleAlertBarOpen()
+                setVCodeError("4.1) 請選擇您的程度")
+                handleHelpText("jobCategories", "請選擇您的程度")
+            }
+        }
+
+        if (survey.age == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("3) 請拉動滑桿選擇您的年齡範圍")
+            handleHelpText("age", "請拉動滑桿選擇您的年齡範圍")
+        }
+
+        if (survey.location.working == 999 || survey.location.working == "") {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("2.2) 請填寫您的工作地點")
+            handleHelpText("working", "請填寫您的工作地點")
+        }
+        if (survey.location.living == 999 || survey.location.living == "") {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("2.1) 請填寫您的居住地點")
+            handleHelpText("living", "請填寫您的居住地點")
+        }
+        if (survey.personOdType == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("2) 請選擇出行人群")
+            handleHelpText("personOdType", "請選擇出行人群")
+        }
+        
+        if (survey.gender == 999) {
+            flag = false;
+            handleAlertBarOpen()
+            setVCodeError("1) 請選擇您的性別")
+            handleHelpText("gender", "請選擇您的性別")
+        }
+    }
+
     const handleNextButton = () => {
+        console.log(getMapSelectedText(survey.location.living));
+
+        checkNotFilled();
 
         sessionStorage.setItem("pathList", storedPathList)
 
-        router.push('/RsurveyOD')
-
-
+        if(flag == true) {
+            //console.log(flag);
+            router.push('/RsurveyOD')
+        }
+            
+        return
     }
 
     React.useEffect(() => {
@@ -374,7 +502,7 @@ function App() {
             return (
                 <div className={styles.question}>
                     <FormControl>
-                        <FormLabel id="degree-label"><h3>程度：</h3></FormLabel>
+                        <FormLabel id="degree-label"><h3>4.1) 程度：</h3></FormLabel>
                         <RadioGroup
                             aria-labelledby="degree-label"
                             name="degree"
@@ -398,7 +526,7 @@ function App() {
             return (
                 <div className={styles.question}>
                     <FormControl>
-                        <FormLabel id="job-categories-label"><h3>程度：</h3></FormLabel>
+                        <FormLabel id="job-categories-label"><h3>4.1) 程度：</h3></FormLabel>
                         <RadioGroup
                             aria-labelledby="job-categories-label"
                             name="jobCategories"
@@ -513,7 +641,7 @@ function App() {
                         <FormLabel
                             id="OdDayYes-label">
                             <h3>
-                                11) 昨天是你的甚麼日子?
+                                11) 昨天是您的甚麼日子?
                             </h3>
                         </FormLabel>
                         <RadioGroup
@@ -566,8 +694,8 @@ function App() {
         }
     }
 
-    const handlePlace = (newPlace) => {
-        props.label = newPlace;
+    const handleLabel = (newLabel) => {
+        props.label = newLabel;
     }
 
     const handleChangeData = () => {
@@ -576,13 +704,43 @@ function App() {
                 survey.location[key] = JSON.parse(sessionStorage[key]);
         })
     
-        console.log(survey.location)
+        //console.log(survey.location)
         return;
     }
 
     let props = {
         route: survey.location,
         label: "living"
+    }
+
+    const getMapSelectedText = (location) => {
+        //console.log(props.label);
+
+        if (location.method == "input") {
+            return (
+            location.name
+            )
+        }
+
+        if (location.method == "click") {
+            return (
+            location.regeocode.formattedAddress
+            )
+        }
+
+        if (location.method == "autoComplete") {
+            return (
+            location.poi.name
+            )
+        }
+
+        if (location.method == "geolocation") {
+            return (
+            location.name.formattedAddress
+            )
+        }
+
+        return null
     }
 
     return (
@@ -639,17 +797,20 @@ function App() {
                                         <FormControl className={styles.inlineQuestionFormControl}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
 
-                                            <div key={1}>
+                                            <div key={1} onBlur={handleChangeData}>
+                                                {getMapSelectedText(survey.location.living)}
                                                 <MapSelections {...props}/>
                                             </div>
+                                            <FormHelperText sx={{ color: 'red' }}>{helpText.living}</FormHelperText>
 
                                             <FormLabel id="person-od-type-label"><h3>2.2) 工作地點（地標）：</h3></FormLabel>
 
-                                            <div key={2}>
-                                                {handlePlace("working")}
+                                            <div key={2} onBlur={handleChangeData}>
+                                                {handleLabel("working")}
+                                                {getMapSelectedText(survey.location.working)}
                                                 <MapSelections {...props}/>
                                             </div>
-                                            <Button onClick={handleChangeData}>測試</Button>
+                                            <FormHelperText sx={{ color: 'red' }}>{helpText.working}</FormHelperText>
                                         </FormControl>
                                     </div>
 
@@ -674,7 +835,7 @@ function App() {
                                             </div>
                                             {
                                                 !survey.age || survey.age == "999" ?
-                                                    <p>請拉動選擇你的年齡範位</p>
+                                                    <p>請拉動滑桿選擇您的年齡範位</p>
                                                     :
                                                     <p>已選擇：{survey.age}</p>
                                             }
@@ -725,7 +886,7 @@ function App() {
                                             </div>
                                             {
                                                 !survey.salary || survey.salary == "999" ?
-                                                    <p>請拉動選擇你的月收入範位</p>
+                                                    <p>請拉動滑桿選擇您的月收入範位</p>
                                                     :
                                                     <p>已選擇：{survey.salary}</p>
                                             }
@@ -930,7 +1091,7 @@ function App() {
                                                 }
 
                                             </RadioGroup>
-                                            <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransirtation}</FormHelperText>
+                                            <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransportation}</FormHelperText>
                                         </FormControl>
                                     </div>
                                     <div className={styles.question}>
@@ -953,7 +1114,7 @@ function App() {
                                             </div>
                                             {
                                                 !survey.walkTime || survey.walkTime == "999" ?
-                                                    <p>請拉動選擇你可接受的步行時間</p>
+                                                    <p>請拉動滑桿選擇您可接受的步行時間</p>
                                                     :
                                                     <p>已選擇：{survey.walkTime}</p>
                                             }
@@ -968,7 +1129,7 @@ function App() {
                                                 id="OdDayType-label">
                                                 <h3> 10) {getTime(days)} <br />
                                                     （即昨天凌晨3時 至 今天凌晨3時） <br />
-                                                    你有沒有出行行程?
+                                                    您有沒有出行行程?
                                                 </h3>
                                             </FormLabel>
                                             <RadioGroup
@@ -1032,6 +1193,5 @@ function App() {
     )
 
 }
+
 export default App;
-
-
