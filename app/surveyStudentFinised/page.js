@@ -124,7 +124,6 @@ function App() {
             return
         }
     };
-
     const handleHelpText = (eventName, errorText) => {
         const objectName = eventName
         setHelpText((prevState) => (

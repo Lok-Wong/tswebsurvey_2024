@@ -763,7 +763,7 @@ function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000", marginBottom: "1vh" }}>
-                            二、個人資料
+                            一、個人資料
                         </h1>
 
                         <div className={styles.question}>

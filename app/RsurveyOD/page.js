@@ -79,62 +79,62 @@ function App() {
         otherOfpurposeOfVisit: "999",
         mainMode: "999",
         motoMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         carMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         motoPassengerMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         carPassengerMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         busMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         lightRailMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         taxiMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         onlineTaxiMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         staffBusMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         schoolBusMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         tourBusMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
-        walkMode: "999",
-        otherMode: "999",
+        walkMode: "0",
+        otherMode: "0",
         id: 0,
         ODstartTime: new Date(),
     }]
@@ -202,59 +202,59 @@ function App() {
         otherOfpurposeOfVisit: "999",
         mainMode: "999",
         motoMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         carMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         motoPassengerMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         carPassengerMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         busMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         lightRailMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         taxiMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         onlineTaxiMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         staffBusMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         schoolBusMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         tourBusMode: {
-            walkToVehicle: "999",
-            waittingTime: "999",
-            walkToBuilding: "999",
+            walkToVehicle: "0",
+            waittingTime: "0",
+            walkToBuilding: "0",
         },
         walkMode: "999",
         otherMode: "999",
@@ -312,23 +312,39 @@ function App() {
     }
 
     function checkError() {
-    const checkErrorObj = (name, erroText, id) => {
-        const currentListIndex = helpText.findIndex((item) => item.id === id);
-        const updatedList = Object.assign({}, helpText[currentListIndex]);
-        updatedList[name] = erroText;
-        const newList = helpText.slice();
-        newList[currentListIndex] = updatedList;
-        setHelpText(newList);
-    }
+        const checkErrorObj = (name, erroText, id) => {
+            setHelpText((prevState) => {
+                const currentListIndex = prevState.findIndex((item) => item.id === id);
+                const updatedList = Object.assign({}, prevState[currentListIndex]);
+                updatedList[name] = erroText;
+                const newList = prevState.slice();
+                newList[currentListIndex] = updatedList;
+                return newList;
+            })
+        }
+
         var error = false
         surveyObject.map((d, index) => {
-            if (!d.startTime) {
+            const initialErrorText = () => {
+                checkErrorObj("endTime", "", d.id)
+                checkErrorObj("startTime", "", d.id)
+                checkErrorObj("purposeOfVisit", "", d.id)
+                checkErrorObj("mainMode", "", d.id)
+            }
+
+            initialErrorText()
+
+            if (!d.startTime || d.startTime === "") {
                 error = true
                 checkErrorObj("startTime", "請填寫出發時間", d.id)
             }
             if (!d.endTime) {
                 error = true
                 checkErrorObj("endTime", "請填寫到達時間", d.id)
+            }
+            if (JSON.stringify(dayjs(d.endTime)) === JSON.stringify(dayjs(d.startTime))) {
+                error = true
+                checkErrorObj("endTime", "到達時間不能與出發時間相同", d.id)
             }
             if (dayjs(d.endTime) < dayjs(d.startTime)) {
                 error = true
@@ -347,8 +363,16 @@ function App() {
                     checkErrorObj("", "startTime", d.id)
                 }
             }
-         })
-         return error
+            if (surveyObject[index]["purposeOfVisit"] === "999" || !surveyObject[index]["purposeOfVisit"]) {
+                error = true
+                checkErrorObj("purposeOfVisit", "請填寫出行目的", d.id)
+            }
+            if (surveyObject[index]["mainMode"] === "999" || !surveyObject[index]["mainMode"]) {
+                error = true
+                checkErrorObj("mainMode", "請填寫主要交通方式", d.id)
+            }
+        })
+        return error
     }
 
 
@@ -399,7 +423,7 @@ function App() {
                 return "tourBusMode"
             case "步行":
                 return "walkMode"
-            default :
+            default:
                 return "otherMode"
         }
     }
@@ -554,39 +578,105 @@ function App() {
 
         if (!dayjs(surveyObject[index]["startTime"])) {
             changeObj("請填寫出發時間", "startTime", id)
-        } 
+        }
 
         if (!dayjs(surveyObject[index]["endTime"])) {
             changeObj("請填寫到達時間", "endTime", id)
-        } 
+        }
 
         if (index != 0) {
             if (dayjs(surveyObject[index]["startTime"]) < dayjs(surveyObject[index - 1]["endTime"])) {
-                console.log("abccc")
-                changeObj(`第${index+1}行程出發時間不能早於第${index}行程的到達時間`, "startTime", id)
-            } 
+                changeObj(`第${index + 1}行程出發時間不能早於第${index}行程的到達時間`, "startTime", id)
+            }
+        }
+
+        if (JSON.stringify(surveyObject[index]["endTime"]) === JSON.stringify(surveyObject[index]["startTime"])) {
+            changeObj("到達時間不能與2)出發時間相同", "endTime", id)
         }
 
         if (dayjs(surveyObject[index]["endTime"]) < dayjs(surveyObject[index]["startTime"])) {
             changeObj("到達時間不能早於2)出發時間", "endTime", id)
-        } 
+        }
 
 
-        if (dayjs(surveyObject[index]["endTime"]).diff(dayjs(surveyObject[index]["startTime"]),"minute") >= 120 ) {
-            changeObj(`第${index+1}行程時間不可多於120分鐘`, "endTime", id)
+        if (dayjs(surveyObject[index]["endTime"]).diff(dayjs(surveyObject[index]["startTime"]), "minute") >= 120) {
+            changeObj(`第${index + 1}行程時間不可多於120分鐘`, "endTime", id)
+        }
+
+        if (surveyObject[index]["purposeOfVisit"] === "999") {
+            changeObj("請填寫出行目的", "purposeOfVisit", id)
+        }
+
+        if (surveyObject[index]["mainMode"] === "999") {
+            changeObj("請填寫主要交通方式", "mainMode", id)
         }
 
         return;
     }
 
-    const renderDifferModeSlider = (d,index) => {
-        if (surveyObject[index]["mainMode"] == "999"||surveyObject[index]["mainMode"] == "其他" || surveyObject[index]["mainMode"] == "步行" || !surveyObject[index]["mainMode"]) {
+    const renderDifferModeSlider = (d, index) => {
+        if (surveyObject[index]["mainMode"] == "999" || surveyObject[index]["mainMode"] == "其他" || surveyObject[index]["mainMode"] == "步行" || !surveyObject[index]["mainMode"]) {
             return null
         }
 
         if (surveyObject[index]["mainMode"] == "電單車（駕駛）" || surveyObject[index]["mainMode"] == "私家車（駕駛）") {
             return (
                 <div>
+                    <div className={styles.inlineQuestion}>
+                        <FormControl className={styles.inlineQuestionFormControl}>
+                            <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
+                            <div className={styles.sliderDiv}>
+                                <Slider
+                                    sx={{ color: "#3E848C" }}
+                                    min={0}
+                                    max={30}
+                                    step={1}
+                                    valueLabelDisplay="auto"
+                                    aria-label="walkToVehicle"
+                                    name='walkToVehicle'
+                                    marks={sliderMarks}
+                                    value={getObjNameForMode(index, "walkToVehicle")}
+                                    onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
+                                // valueLabelFormat={getAgeValueLabel}
+                                // marks={ageMarks}
+                                />
+                            </div>
+
+                            {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                        </FormControl>
+                    </div>
+                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+                    <div className={styles.inlineQuestion}>
+                        <FormControl className={styles.inlineQuestionFormControl}>
+                            <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
+                            <div className={styles.sliderDiv}>
+                                <Slider
+                                    sx={{ color: "#3E848C" }}
+                                    min={0}
+                                    max={30}
+                                    step={1}
+                                    valueLabelDisplay="auto"
+                                    aria-label="walkToBuilding"
+                                    name='walkToBuilding'
+                                    marks={sliderMarks}
+                                    value={getObjNameForMode(index, "walkToBuilding")}
+                                    onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
+                                // valueLabelFormat={getAgeValueLabel}
+                                // marks={ageMarks}
+                                />
+
+                            </div>
+                            {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                        </FormControl>
+                    </div>
+                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+                </div>
+            )
+        }
+
+        return (
+            <div>
                 <div className={styles.inlineQuestion}>
                     <FormControl className={styles.inlineQuestionFormControl}>
                         <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
@@ -607,6 +697,31 @@ function App() {
                             />
                         </div>
 
+                        {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
+                    </FormControl>
+                </div>
+                <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+
+                <div className={styles.inlineQuestion}>
+                    <FormControl className={styles.inlineQuestionFormControl}>
+                        <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
+                        <div className={styles.sliderDiv}>
+                            <Slider
+                                sx={{ color: "#3E848C" }}
+                                min={0}
+                                max={30}
+                                step={1}
+                                valueLabelDisplay="auto"
+                                aria-label="waittingTime"
+                                name='waittingTime'
+                                marks={sliderMarks}
+                                value={getObjNameForMode(index, "waittingTime")}
+                                onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
+                            // valueLabelFormat={getAgeValueLabel}
+                            // marks={ageMarks}
+                            />
+
+                        </div>
                         {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
                     </FormControl>
                 </div>
@@ -637,88 +752,8 @@ function App() {
                 </div>
                 <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
             </div>
-            )
-        }
-
-        return(
-            <div>
-            <div className={styles.inlineQuestion}>
-                <FormControl className={styles.inlineQuestionFormControl}>
-                    <FormLabel id="walkToVehicle-label"><h3>6.1) 步行至上車／等待交通工具的地點用了：</h3></FormLabel>
-                    <div className={styles.sliderDiv}>
-                        <Slider
-                            sx={{ color: "#3E848C" }}
-                            min={0}
-                            max={30}
-                            step={1}
-                            valueLabelDisplay="auto"
-                            aria-label="walkToVehicle"
-                            name='walkToVehicle'
-                            marks={sliderMarks}
-                            value={getObjNameForMode(index, "walkToVehicle")}
-                            onChange={(value) => { setScaleNumber(value, "walkToVehicle", d.id, index) }}
-                        // valueLabelFormat={getAgeValueLabel}
-                        // marks={ageMarks}
-                        />
-                    </div>
-
-                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                </FormControl>
-            </div>
-            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-            <div className={styles.inlineQuestion}>
-                <FormControl className={styles.inlineQuestionFormControl}>
-                    <FormLabel id="waittingTime-label"><h3>6.2) 等待交通工具的時間（如適用）用了：</h3></FormLabel>
-                    <div className={styles.sliderDiv}>
-                        <Slider
-                            sx={{ color: "#3E848C" }}
-                            min={0}
-                            max={30}
-                            step={1}
-                            valueLabelDisplay="auto"
-                            aria-label="waittingTime"
-                            name='waittingTime'
-                            marks={sliderMarks}
-                            value={getObjNameForMode(index, "waittingTime")}
-                            onChange={(value) => { setScaleNumber(value, "waittingTime", d.id, index) }}
-                        // valueLabelFormat={getAgeValueLabel}
-                        // marks={ageMarks}
-                        />
-
-                    </div>
-                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                </FormControl>
-            </div>
-            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-
-            <div className={styles.inlineQuestion}>
-                <FormControl className={styles.inlineQuestionFormControl}>
-                    <FormLabel id="walkToBuilding-label"><h3>6.3) 下車後，步行至目的地的時間用了：</h3></FormLabel>
-                    <div className={styles.sliderDiv}>
-                        <Slider
-                            sx={{ color: "#3E848C" }}
-                            min={0}
-                            max={30}
-                            step={1}
-                            valueLabelDisplay="auto"
-                            aria-label="walkToBuilding"
-                            name='walkToBuilding'
-                            marks={sliderMarks}
-                            value={getObjNameForMode(index, "walkToBuilding")}
-                            onChange={(value) => { setScaleNumber(value, "walkToBuilding", d.id, index) }}
-                        // valueLabelFormat={getAgeValueLabel}
-                        // marks={ageMarks}
-                        />
-
-                    </div>
-                    {/* <FormHelperText sx={{ color: 'red' }}>{helpText.walkToVehicle}</FormHelperText> */}
-                </FormControl>
-            </div>
-            <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-        </div>
         )
-        
+
     }
 
     var splitKey;
@@ -825,12 +860,12 @@ function App() {
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer className={styles.question} components={['TimePicker']}>
                                     <DesktopTimePicker
-                                        onAccept={() => {checkTimeWhenClose(d.id, index)}}
+                                        onAccept={() => { checkTimeWhenClose(d.id, index) }}
                                         closeOnSelect={true}
                                         name='startTime'
                                         ampm={false}
                                         value={dayjs(surveyObject[index].startTime)}
-                                        onChange={(newValue) => {handleTimeChange(newValue, 'startTime', d.id) }}
+                                        onChange={(newValue) => { handleTimeChange(newValue, 'startTime', d.id) }}
                                     />
                                 </DemoContainer>
                             </LocalizationProvider>
@@ -857,7 +892,7 @@ function App() {
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DemoContainer className={styles.question} components={['TimePicker']}>
                                     <DesktopTimePicker
-                                        onAccept={() => {checkTimeWhenClose(d.id, index)}}
+                                        onAccept={() => { checkTimeWhenClose(d.id, index) }}
                                         closeOnSelect={true}
                                         ampm={false}
                                         value={dayjs(surveyObject[index].endTime)}
@@ -867,11 +902,6 @@ function App() {
                             </LocalizationProvider>
                         </FormControl>
                     </div>
-
-                    <p>
-                        {JSON.stringify(surveyObject[index].startTime)}<br />
-                        {JSON.stringify(surveyObject[index].endTime)}
-                    </p>
 
                     <FormHelperText sx={{ color: 'red' }}>{helpText[index].endTime}</FormHelperText>
 
@@ -887,16 +917,17 @@ function App() {
                                 //     console.log("inputValue", inputValue)
                                 //     // handleChange(event, 'purposeOfVisit', d.id)
                                 // }}
-                                onInputChange={(event,inputValue) => {
+                                onInputChange={(event, inputValue) => {
+                                    initialErrorMsg(d.id, index)
                                     handleChange(inputValue, 'purposeOfVisit', d.id)
                                 }}
                                 freeSolo
-                                value={surveyObject[index].purposeOfVisit}
+                                value={surveyObject[index].purposeOfVisit === "999" ? "" : surveyObject[index].purposeOfVisit}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </FormControl>
                     </div>
-                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
+                    <FormHelperText sx={{ color: 'red' }}>{helpText[index].purposeOfVisit}</FormHelperText>
 
                     <div className={styles.inlineQuestion}>
                         <FormControl>
@@ -905,21 +936,22 @@ function App() {
                                 // onChange={(event,inputValue) => {
                                 //     // handleChange(inputValue, 'mainMode', d.id)
                                 // }}
-                                onInputChange={(event,inputValue) => {
+                                onInputChange={(event, inputValue) => {
+                                    initialErrorMsg(d.id, index)
                                     handleChange(inputValue, 'mainMode', d.id)
                                 }}
                                 disablePortal
                                 id="mainMode-box"
                                 sx={{ width: 300 }}
                                 options={mainMode}
-                                value={surveyObject[index].mainMode}
+                                value={surveyObject[index].mainMode === "999" ? "" : surveyObject[index].mainMode}
                                 freeSolo
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </FormControl>
                     </div>
-                    <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
-                    {renderDifferModeSlider(d,index)}
+                    <FormHelperText sx={{ color: 'red' }}>{helpText[index].mainMode}</FormHelperText>
+                    {renderDifferModeSlider(d, index)}
                 </div>
             </div>
             <div>
@@ -956,13 +988,66 @@ function App() {
         element?.scrollIntoView({ behavior: "smooth" });
     };
 
+    function initialErrorMsg(id, index) {
+        const changeObj = (erroText, name, id) => {
+            setHelpText((prevState) => {
+                const currentListIndex = prevState.findIndex((item) => item.id === id);
+                const updatedList = Object.assign({}, prevState[currentListIndex]);
+                updatedList[name] = erroText;
+                const newList = prevState.slice();
+                newList[currentListIndex] = updatedList;
+                return newList;
+            })
+        }
+        const initialErrorText = () => {
+            changeObj("", "purposeOfVisit", id)
+            changeObj("", "mainMode", id)
+            changeObj("", "walkToVehicle", id)
+            changeObj("", "waittingTime", id)
+            changeObj("", "walkToBuilding", id)
+            changeObj("", "startTime", id)
+            changeObj("", "endTime", id)
+        }
+
+        initialErrorText()
+    }
+
+    function checkAutoCompelete(id, index) {
+        const changeObj = (erroText, name, id) => {
+            setHelpText((prevState) => {
+                const currentListIndex = prevState.findIndex((item) => item.id === id);
+                const updatedList = Object.assign({}, prevState[currentListIndex]);
+                updatedList[name] = erroText;
+                const newList = prevState.slice();
+                newList[currentListIndex] = updatedList;
+                return newList;
+            })
+        }
+
+        const initialErrorText = () => {
+            changeObj("", "purposeOfVisit", id)
+            changeObj("", "mainMode", id)
+        }
+
+        initialErrorText()
+
+        if (surveyObject[index]["purposeOfVisit"] === "999" || !surveyObject[index]["purposeOfVisit"]) {
+            changeObj("請填寫出行目的", "purposeOfVisit", id)
+        }
+
+        if (surveyObject[index]["mainMode"] === "999" || !surveyObject[index]["mainMode"]) {
+            changeObj("請填寫主要交通方式", "mainMode", id)
+        }
+        return;
+    }
+
     return (
         <main className={styles.main}>
             {
                 isClient ?
                     <div>
                         <h1>
-                            2.	行程表格
+                            二、行程表格
                         </h1>
 
                         <div>
