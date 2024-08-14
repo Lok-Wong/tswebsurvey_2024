@@ -795,11 +795,11 @@ function App() {
 
                         {
                             survey.personOdType == "旅客" ?
-                                <p>不符合，感謝參與。</p>
+                                <p>閣下並不屬於調查的出行人群內，感謝參與。</p>
                                 :
                                 <div>
                                     <div className={styles.question}>
-                                        <FormControl className={styles.inlineQuestionFormControl}>
+                                        <FormControl className={styles.inlineQuestionFormControl} onBlur={handleChange}>
 
                                         <div className={styles.mapLocation}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
@@ -844,7 +844,7 @@ function App() {
                                             </div>
                                             {
                                                 !survey.age || survey.age == "999" ?
-                                                    <p>請拉動滑桿選擇您的年齡範位</p>
+                                                    <p>請拉動滑桿選擇您的年齡範圍</p>
                                                     :
                                                     <p>已選擇：{survey.age}</p>
                                             }
@@ -895,7 +895,7 @@ function App() {
                                             </div>
                                             {
                                                 !survey.salary || survey.salary == "999" ?
-                                                    <p>請拉動滑桿選擇您的月收入範位</p>
+                                                    <p>請拉動滑桿選擇您的月收入範圍</p>
                                                     :
                                                     <p>已選擇：{survey.salary}</p>
                                             }
