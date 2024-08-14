@@ -27,6 +27,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import FormHelperText from '@mui/material/FormHelperText';
+import MapSelections from "../mapSelection/page";
 
 
 function App() {
@@ -720,6 +721,33 @@ function App() {
         
     }
 
+    var splitKey;
+
+    const handleChangeData = () => {
+        Object.keys(sessionStorage).map(key => {
+            if (key.indexOf("startPoint") > 0 || key.indexOf("endPoint") > 0) {
+                splitKey = key.split("-");
+                for (var i = 0; i < surveyObject.length; i++){
+                    if (surveyObject[i].id == splitKey[0])
+                        surveyObject[i][splitKey[1]] = JSON.parse(sessionStorage[key]);
+                }
+            }
+        })
+    
+        //console.log(surveyObject.length)
+        return;
+    }
+
+    const handleProps = (newRoute, newLabel) => {
+        props.route = newRoute;
+        props.label = newLabel;
+    }
+
+    let props = {
+        route: surveyObject[0],
+        label: "startPoint"
+    }
+
     const listItems = surveyObject.map((d, index) =>
         <div key={d.id}>
             <div className={selectedDivIndex === index ? styles.selectedDiv : null}
@@ -745,12 +773,11 @@ function App() {
                     onDragEnd={handleSort}
                     onDragOver={(e) => e.preventDefault()}
                 >
-                    <div className={styles.inlineQuestion}>
+                    <div className={styles.inlineQuestion} onBlur={handleChangeData()}>
                         <FormControl>
                             <FormLabel id="startPoint">1) 出行地點</FormLabel>
-                            <Button>
-                                touch and choose loaction
-                            </Button>
+                            {handleProps(surveyObject[index], "startPoint")}
+                            <MapSelections {...props} />
                         </FormControl>
                     </div>
                     <FormHelperText sx={{ color: 'red' }}>aa</FormHelperText>
@@ -778,9 +805,8 @@ function App() {
                     <div className={styles.inlineQuestion}>
                         <FormControl>
                             <FormLabel id="endPoint">3) 出行目的地</FormLabel>
-                            <Button>
-                                touch and choose loaction
-                            </Button>
+                            {handleProps(surveyObject[index], "endPoint")}
+                            <MapSelections {...props} />
                         </FormControl>
                     </div>
                     <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>

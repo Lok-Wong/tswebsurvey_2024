@@ -111,8 +111,12 @@ function MapSelections(props) {
     }
 
     const handleChangeData = (label) => {
-        sessionStorage.setItem(label, JSON.stringify(survey[label]));
-        //sessionStorage.setItem("testing", JSON.stringify(survey[label]))
+        if (typeof survey.id !== "undefined") {
+            sessionStorage.setItem(survey.id + "-" + label, JSON.stringify(survey[label]));
+        }
+        else {
+            sessionStorage.setItem(label, JSON.stringify(survey[label]));
+        }
         // console.log(sessionStorage);
         return;
     }
@@ -168,6 +172,7 @@ function MapSelections(props) {
     }
 
     if (typeof(props.label) !== 'undefined') {
+        console.log("Survey La",sessionStorage)
         return (createMapSelections(props));
     }
     else
