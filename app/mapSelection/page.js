@@ -154,11 +154,11 @@ function MapSelections(props) {
                 >
                     <Box className={styles.mapBox}>
                         <div className={styles.map}>
-                            <p className={styles.mapHitText}>
+                            <div className={styles.mapHitText}>
                             {
                                 getMapSelectedText(survey[props.label]) ? "已選擇地址： " + getMapSelectedText(survey[props.label]) : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                             }
-                            </p>
+                            </div>
                             <MapComponent handleCustomAddress={handleCustomAddress}/>
                         </div>
                     </Box>

@@ -92,6 +92,11 @@
   font-size: 0.875em;
 }
 
+.mapHitText {
+  margin-bottom: 0.25em;
+}
+
+
  /* Mobile */
  @media (max-width: 700px){
   .question{

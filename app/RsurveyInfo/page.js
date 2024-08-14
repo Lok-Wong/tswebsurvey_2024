@@ -694,11 +694,20 @@ function App() {
         }
     }
 
-    const handleChangeData = () => {
+    const handleChangeData = (event) => {
+        const objectName = event.target.name
         Object.keys(sessionStorage).map(key => {
             if (survey.location.hasOwnProperty(key))
                 survey.location[key] = JSON.parse(sessionStorage[key]);
         })
+
+        setSurvey((prevState) => (
+            {
+                ...prevState,
+                [objectName]: event.target.value
+
+            }
+        ))
     
         //console.log(survey.location)
         return;
