@@ -748,6 +748,41 @@ function App() {
         label: "startPoint"
     }
 
+    const getMapSelectedText = (location) => {
+        //console.log(props.label);
+        if (location == 999) {
+            return (
+                <p>請選擇您的地址</p>
+            )
+        }
+
+        if (location.method == "input") {
+            return (
+            location.name
+            )
+        }
+
+        if (location.method == "click") {
+            return (
+            location.regeocode.formattedAddress
+            )
+        }
+
+        if (location.method == "autoComplete") {
+            return (
+            location.poi.name
+            )
+        }
+
+        if (location.method == "geolocation") {
+            return (
+            location.name.formattedAddress
+            )
+        }
+
+        return null
+    }
+
     const listItems = surveyObject.map((d, index) =>
         <div key={d.id}>
             <div className={selectedDivIndex === index ? styles.selectedDiv : null}
@@ -776,7 +811,10 @@ function App() {
                     <div className={styles.inlineQuestion} onBlur={handleChangeData()}>
                         <FormControl>
                             <FormLabel id="startPoint">1) 出行地點</FormLabel>
-                            {handleProps(surveyObject[index], "startPoint")}
+                            <div className={styles.mapSelect}>
+                                <div className={styles.mapText}>{getMapSelectedText(surveyObject[index].startPoint)}</div>
+                                {handleProps(surveyObject[index], "startPoint")}
+                            </div>
                             <MapSelections {...props} />
                         </FormControl>
                     </div>
@@ -805,7 +843,10 @@ function App() {
                     <div className={styles.inlineQuestion}>
                         <FormControl>
                             <FormLabel id="endPoint">3) 出行目的地</FormLabel>
-                            {handleProps(surveyObject[index], "endPoint")}
+                            <div className={styles.mapSelect}>
+                                <div className={styles.mapText}>{getMapSelectedText(surveyObject[index].endPoint)}</div>
+                                {handleProps(surveyObject[index], "endPoint")}
+                            </div>
                             <MapSelections {...props} />
                         </FormControl>
                     </div>
