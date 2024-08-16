@@ -158,6 +158,8 @@ function App() {
     const [vCodeError, setVCodeError] = React.useState(false)
 
     const handleChange = (event) => {
+        //console.log(survey)
+
         const objectName = event.target.name
         if (objectName === "OdDayType") {
             setScrollTo(true)

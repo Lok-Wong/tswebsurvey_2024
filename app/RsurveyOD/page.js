@@ -811,7 +811,7 @@ function App() {
                     onDragEnd={handleSort}
                     onDragOver={(e) => e.preventDefault()}
                 >
-                    <div className={styles.inlineQuestion} onFocus={handleChangeData()}>
+                    <div className={styles.inlineQuestion} onFocus={handleChangeData}>
                         <FormControl sx={{width: '100%'}}>
                             <FormLabel id="startPoint">1) 出行地點</FormLabel>
                             <div className={styles.mapLocation}>
@@ -842,7 +842,7 @@ function App() {
 
                     <FormHelperText sx={{ color: 'red' }}>{helpText[index].startTime}</FormHelperText>
 
-                    <div className={styles.inlineQuestion} onFocus={handleChangeData()}>
+                    <div className={styles.inlineQuestion} onFocus={handleChangeData}>
                         <FormControl sx={{width: '100%'}}>
                             <FormLabel id="endPoint">3) 出行目的地</FormLabel>
                             <div className={styles.mapLocation}>
