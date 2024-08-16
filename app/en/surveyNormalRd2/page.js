@@ -349,6 +349,13 @@ function App() {
                 return
             }
 
+            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "5) Departure time from school"`)
+                handleHelpText("arivalHomeTime", `The time should not be the same as "5) Departure time from school"`)
+                return
+            }
+
             if (survey.directToHomeYes.arivalHomeTransition == 999) {
                 handleAlertBarOpen()
                 setVCodeError("Please choose the primary mode of transportation to go home")
@@ -363,13 +370,6 @@ function App() {
                     handleHelpText("arivalHomeTransition", "Please fill the other mode of transportation to go home")
                     return
                 }
-            }
-
-            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be the same as "5) Departure time from school"`)
-                handleHelpText("arivalHomeTime", `The time should not be the same as "5) Departure time from school"`)
-                return
             }
         }
 
@@ -394,6 +394,18 @@ function App() {
                 handleHelpText("leaveDestinationTime", "Please fill in the arrival time to the destination")
                 return
             }
+            if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "5) Departure time"`)
+                handleHelpText("leaveDestinationTime", `The time should not be earlier than "5) Departure time"`)
+                return
+            }
+            if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "5) Departure time"`)
+                handleHelpText("leaveDestinationTime", `The time should not be the same as "5) Departure time"`)
+                return
+            }
 
             if (survey.directToHomeNo.leaveDestinationTransition == 999) {
                 handleAlertBarOpen()
@@ -415,20 +427,6 @@ function App() {
                 handleAlertBarOpen()
                 setVCodeError(`Please fill in the travel time from the above location to home`)
                 handleHelpText("destinationBackHomeStartTime", "Please fill in the travel time from the above location to home")
-                return
-            }
-
-            if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be earlier than "5) Departure time"`)
-                handleHelpText("leaveDestinationTime", `The time should not be earlier than "5) Departure time"`)
-                return
-            }
-
-            if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be the same as "5) Departure time"`)
-                handleHelpText("leaveDestinationTime", `The time should not be the same as "5) Departure time"`)
                 return
             }
 

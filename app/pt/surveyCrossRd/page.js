@@ -179,6 +179,18 @@ function App() {
             handleHelpText("TimeEndToMacau", "Seleccione o período de tempo")
             return
         }
+        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) Não pode ser igual à “2) Hora de partida da casa”`)
+            handleHelpText("TimeEndToMacau", `Não pode ser igual à “2) Hora de partida da casa”`)
+            return
+        }
+        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) Não pode ser mais cedo do que a “2) Hora de partida da casa”`)
+            handleHelpText("TimeEndToMacau", `Não pode ser mais cedo do que a “2) Hora de partida da casa”`)
+            return
+        }
 
         if (survey.commonTransirtation == 999) {
             handleAlertBarOpen()
@@ -207,20 +219,6 @@ function App() {
             handleHelpText("arrivalTimeToSchool", "Seleccione o período de tempo")
             return
         }
-
-        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
-            handleAlertBarOpen()
-            setVCodeError(`4) Não pode ser igual à “2) Hora de partida da casa”`)
-            handleHelpText("TimeEndToMacau", `Não pode ser igual à “2) Hora de partida da casa”`)
-            return
-        }
-        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
-            handleAlertBarOpen()
-            setVCodeError(`4) Não pode ser mais cedo do que a “2) Hora de partida da casa”`)
-            handleHelpText("TimeEndToMacau", `Não pode ser mais cedo do que a “2) Hora de partida da casa”`)
-            return
-        }
-
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
             setVCodeError(`6) Não pode ser mais cedo do que a “4) Hora de partida do posto fronteiriço da parte de Macau à escola”`)

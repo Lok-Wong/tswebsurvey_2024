@@ -180,6 +180,18 @@ function App() {
             handleHelpText("TimeEndToMacau", "請選擇時間")
             return
         }
+        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) 時間不能與 "2) 從家出發的時間"相同`)
+            handleHelpText("TimeEndToMacau", `時間不能與 "2) 從家出發的時間"相同`)
+            return
+        }
+        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) 時間不能比 "2) 從家出發的時間"早`)
+            handleHelpText("TimeEndToMacau", `時間不能比 "2) 從家出發的時間"早`)
+            return
+        }
 
         if (survey.commonTransirtation == 999) {
             handleAlertBarOpen()
@@ -208,35 +220,21 @@ function App() {
             handleHelpText("arrivalTimeToSchool", "請選擇時間")
             return
         }
-        
-        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
-            handleAlertBarOpen()
-            setVCodeError(`時間不能與 "2) 從家出發的時間"相同`)
-            handleHelpText("TimeEndToMacau", `時間不能與 "2) 從家出發的時間"相同`)
-            return
-        }
-        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
-            handleAlertBarOpen()
-            setVCodeError(`時間不能比 "2) 從家出發的時間"早`)
-            handleHelpText("TimeEndToMacau", `時間不能比 "2) 從家出發的時間"早`)
-            return
-        }
-
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
-            setVCodeError(`時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
+            setVCodeError(`6) 時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             handleHelpText("arrivalTimeToSchool", `時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             return
         }
         if (dayjs(survey.TimeEndToMacau) > dayjs(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
-            setVCodeError(`時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
+            setVCodeError(`6) 時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             handleHelpText("arrivalTimeToSchool", `時間不能比 "4) 由澳門口岸出發前往學校的時間"早`)
             return
         }
         if (JSON.stringify(survey.TimeEndToMacau) == JSON.stringify(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
-            setVCodeError(`時間不能與 4) "由澳門口岸出發前往學校的時間"相同`)
+            setVCodeError(`6) 時間不能與 4) "由澳門口岸出發前往學校的時間"相同`)
             handleHelpText("arrivalTimeToSchool", `時間不能與 4) "由澳門口岸出發前往學校的時間"相同`)
             return
         }

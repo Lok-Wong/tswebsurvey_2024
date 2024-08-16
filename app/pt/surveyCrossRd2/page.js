@@ -346,8 +346,8 @@ function App() {
         if (survey.portForHome == "其他") {
             if (survey.otherOfportForHome == 999 || survey.otherOfportForHome == "") {
                 handleAlertBarOpen()
-                setVCodeError("9) Does the student go directly to the Border Checkpoint ")
-                handleHelpText("portForHome", "Does the student go directly to the Border Checkpoint ")
+                setVCodeError("9) Does the student go directly to the Border Checkpoint")
+                handleHelpText("portForHome", "Does the student go directly to the Border Checkpoint")
                 return
             }
         }
@@ -367,22 +367,6 @@ function App() {
                 handleHelpText("arrivalPortTime", "Seleccione a hora de chegada")
                 return
             }
-            if (survey.directToPortYes.transirtation == 999) {
-                handleAlertBarOpen()
-                    setVCodeError("Seleccione o meio de transporte")
-                handleHelpText("transirtation", "Seleccione o meio de transporte")
-                return
-            }
-
-            if (survey.directToPortYes.transirtation == "其他") {
-                if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
-                    handleAlertBarOpen()
-                    setVCodeError("Preencha outros meios de transporte")
-                    handleHelpText("transirtation", "Preencha outros meios de transporte")
-                    return
-                }
-            }
-
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
@@ -396,6 +380,21 @@ function App() {
                 return
             }
 
+            if (survey.directToPortYes.transirtation == 999) {
+                handleAlertBarOpen()
+                    setVCodeError("Seleccione o meio de transporte")
+                handleHelpText("transirtation", "Seleccione o meio de transporte")
+                return
+            }
+            if (survey.directToPortYes.transirtation == "其他") {
+                if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
+                    handleAlertBarOpen()
+                    setVCodeError("Preencha outros meios de transporte")
+                    handleHelpText("transirtation", "Preencha outros meios de transporte")
+                    return
+                }
+            }
+
         }
 
         if (survey.directToPort == "否") {
@@ -405,26 +404,38 @@ function App() {
                 handleHelpText("address", `Preencha a morada`)
                 return
             }
-
             if (survey.directToPortNo.address == 999) {
                 handleAlertBarOpen()
                 setVCodeError(`Please fill in the adress and press the "Confirm" button`)
                 handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
                 return
             }
+
             if (survey.directToPortNo.arrivalTime == "") {
                 handleAlertBarOpen()
                 setVCodeError("Seleccione a hora de chegada")
                 handleHelpText("arrivalPortTime", "Seleccione a hora de chegada")
                 return
             }
+            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`Não pode ser igual à “7) Hora de saída da escola”`)
+                handleHelpText("arrivalPortTime", `Não pode ser igual à “7) Hora de saída da escola”`)
+                return
+            }
+            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
+                handleHelpText("arrivalPortTime", `Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
+                return
+            }
+
             if (survey.directToPortNo.transirtation == 999 ) {
                 handleAlertBarOpen()
                 setVCodeError("Seleccione o meio de transporte")
                 handleHelpText("transirtation", "Seleccione o meio de transporte")
                 return
             }
-
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
                     handleAlertBarOpen()
@@ -434,19 +445,6 @@ function App() {
                 }
             }
 
-            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`Não pode ser igual à “7) Hora de saída da escola”`)
-                handleHelpText("arrivalPortTime", `Não pode ser igual à “7) Hora de saída da escola”`)
-                return
-            }
-
-            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
-                handleHelpText("arrivalPortTime", `Não pode ser mais cedo do que a “7) Hora de saída da escola”`)
-                return
-            }
         }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/pt/surveyBadWeather')

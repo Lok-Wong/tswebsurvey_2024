@@ -140,7 +140,6 @@ function App() {
             handleHelpText("pickup", "請選擇一個選項")
             return
         }
-
         if (survey.pickup == "其他") {
             if (survey.otherOfPickup == "999" || survey.otherOfPickup == "") {
                 handleAlertBarOpen()
@@ -163,17 +162,15 @@ function App() {
             handleHelpText("pickupTimeEnd", "請選擇到達時間")
             return
         }
-
         if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
             handleAlertBarOpen()
-            setVCodeError(`時間不能比" 2) 出發時間"早`)
+            setVCodeError(`3) 時間不能比" 2) 出發時間"早`)
             handleHelpText("pickupTimeEnd", `時間不能比" 2) 出發時間"早`)
             return
         }
-
         if (JSON.stringify(survey.pickupTimeStart) === JSON.stringify(survey.pickupTimeEnd)) {
             handleAlertBarOpen()
-            setVCodeError(`時間不能與" 2) 出發時間"相等`)
+            setVCodeError(`3) 時間不能與" 2) 出發時間"相等`)
             handleHelpText("pickupTimeEnd", `時間不能與" 2) 出發時間"相等`)
             return
         }
@@ -184,7 +181,6 @@ function App() {
             handleHelpText("commonTransirtation", "請選擇一個選項")
             return
         }
-
         if (survey.commonTransirtation == "其他") {
             if (survey.otherOfCommonTransirtation == "999" || survey.otherOfCommonTransirtation == "") {
                 handleAlertBarOpen()

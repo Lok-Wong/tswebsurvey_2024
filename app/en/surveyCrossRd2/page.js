@@ -367,6 +367,19 @@ function App() {
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
                 return
             }
+            if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
+                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
+                return
+            }
+            if (JSON.stringify(survey.directToPortYes.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
+                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
+                return
+            }
+
             if (survey.directToPortYes.transirtation == 999) {
                 handleAlertBarOpen()
                     setVCodeError("Please select the mode of transportation")
@@ -383,19 +396,6 @@ function App() {
                 }
             }
 
-            if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
-                return
-            }
-            if (JSON.stringify(survey.directToPortYes.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
-                return
-            }
-
         }
 
         if (survey.directToPort == "否") {
@@ -405,26 +405,38 @@ function App() {
                 handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
                 return
             }
-
             if (survey.directToPortNo.address == 999) {
                 handleAlertBarOpen()
                 setVCodeError(`Please fill in the adress and press the "Confirm" button`)
                 handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
                 return
             }
+
             if (survey.directToPortNo.arrivalTime == "") {
                 handleAlertBarOpen()
                 setVCodeError("Please select the arrival time")
                 handleHelpText("arrivalPortTime", "Please select the arrival time")
                 return
             }
+            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
+                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
+                return
+            }
+            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
+                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
+                return
+            }
+
             if (survey.directToPortNo.transirtation == 999 ) {
                 handleAlertBarOpen()
                 setVCodeError("Please select the mode of transportation")
                 handleHelpText("transirtation", "Please select the mode of transportation")
                 return
             }
-
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
                     handleAlertBarOpen()
@@ -434,19 +446,6 @@ function App() {
                 }
             }
 
-            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be the same as "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be the same as "7) Departure time from school"`)
-                return
-            }
-
-            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`The time should not be earlier than "7) Departure time from school"`)
-                handleHelpText("arrivalPortTime", `The time should not be earlier than "7) Departure time from school"`)
-                return
-            }
         }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/en/surveyBadWeather')

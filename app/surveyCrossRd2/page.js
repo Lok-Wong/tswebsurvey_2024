@@ -366,22 +366,6 @@ function App() {
                 handleHelpText("arrivalPortTime", "請選擇到達時間")
                 return
             }
-            if (survey.directToPortYes.transirtation == 999) {
-                handleAlertBarOpen()
-                setVCodeError("請選擇交通方式")
-                handleHelpText("transirtation", "請選擇交通方式")
-                return
-            }
-
-            if (survey.directToPortYes.transirtation == "其他") {
-                if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
-                    handleAlertBarOpen()
-                    setVCodeError("請填寫其他交通方式")
-                    handleHelpText("transirtation", "請填寫其他交通方式")
-                    return
-                }
-            }
-
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`時間不能比" 7) 離校時間"早`)
@@ -395,6 +379,21 @@ function App() {
                 return
             }
 
+            if (survey.directToPortYes.transirtation == 999) {
+                handleAlertBarOpen()
+                setVCodeError("請選擇交通方式")
+                handleHelpText("transirtation", "請選擇交通方式")
+                return
+            }
+            if (survey.directToPortYes.transirtation == "其他") {
+                if (survey.directToPortYes.othertransirtation == 999 || survey.directToPortYes.othertransirtation == "") {
+                    handleAlertBarOpen()
+                    setVCodeError("請填寫其他交通方式")
+                    handleHelpText("transirtation", "請填寫其他交通方式")
+                    return
+                }
+            }
+
         }
 
         if (survey.directToPort == "否") {
@@ -404,26 +403,38 @@ function App() {
                 handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
-
             if (survey.directToPortNo.address == 999) {
                 handleAlertBarOpen()
                 setVCodeError("請填寫地址及按下確定按鈕")
                 handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
+
             if (!survey.directToPortNo.arrivalTime) {
                 handleAlertBarOpen()
                 setVCodeError("請選擇到達時間")
                 handleHelpText("arrivalPortTime", "請選擇到達時間")
                 return
             }
+            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`時間不能與" 7) 離校時間"相同`)
+                handleHelpText("arrivalPortTime", `時間不能與" 7) 離校時間"相同`)
+                return
+            }
+            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`時間不能比" 7) 離校時間"早`)
+                handleHelpText("arrivalPortTime", `時間不能比" 7) 離校時間"早`)
+                return
+            }
+
             if (survey.directToPortNo.transirtation == 999) {
                 handleAlertBarOpen()
                 setVCodeError("請選擇交通方式")
                 handleHelpText("transirtation", "請選擇交通方式")
                 return
             }
-
             if (survey.directToPortNo.transirtation == "其他") {
                 if (survey.directToPortNo.othertransirtation == 999 || survey.directToPortNo.othertransirtation == "") {
                     handleAlertBarOpen()
@@ -433,19 +444,6 @@ function App() {
                 }
             }
 
-            if (JSON.stringify(survey.directToPortNo.arrivalTime) == JSON.stringify(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`時間不能與" 7) 離校時間"相同`)
-                handleHelpText("arrivalPortTime", `時間不能與" 7) 離校時間"相同`)
-                return
-            }
-
-            if (dayjs(survey.directToPortNo.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`時間不能比" 7) 離校時間"早`)
-                handleHelpText("arrivalPortTime", `時間不能比" 7) 離校時間"早`)
-                return
-            }
         }
         sessionStorage.setItem("pathList", storedPathList)
         router.push('/surveyBadWeather')

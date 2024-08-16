@@ -164,14 +164,12 @@ function App() {
             handleHelpText("pickupTimeEnd", "Please select the arrival time")
             return
         }
-
         if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
             handleAlertBarOpen()
             setVCodeError(`3) The time should not be earlier than the "2) departure time"`)
             handleHelpText("pickupTimeEnd", `The time should not be earlier than the "2) departure time"`)
             return
         }
-
         if (JSON.stringify(survey.pickupTimeStart) === JSON.stringify(survey.pickupTimeEnd)) {
             handleAlertBarOpen()
             setVCodeError(`3) The time should not be the same as "2) Departure time"`)

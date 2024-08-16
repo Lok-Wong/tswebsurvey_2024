@@ -333,18 +333,22 @@ function App() {
                 handleHelpText("leaveSchoolTime", "請填寫到達家時間")
                 return
             }
-
             if (survey.directToHomeYes.arivalHomeTime == "") {
                 handleAlertBarOpen()
                 setVCodeError("請填寫到達家時間")
                 handleHelpText("arivalHomeTime", "請填寫到達家時間")
                 return
             }
-
             if (dayjs(survey.leaveSchoolTime) > dayjs(survey.directToHomeYes.arivalHomeTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`到達家的時間不能比 "5) 離校時間"早`)
                 handleHelpText("arivalHomeTime", `時間不能比 "5) 離校時間"早`)
+                return
+            }
+            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`到達家的時間不能與" 5) 離校時間"相等`)
+                handleHelpText("arivalHomeTime", `時間不能與" 5) 離校時間"相等`)
                 return
             }
 
@@ -354,7 +358,6 @@ function App() {
                 handleHelpText("arivalHomeTransition", "請選擇回家主要的交通方式")
                 return
             }
-
             if (survey.directToHomeYes.arivalHomeTransition == "其他") {
                 if (survey.directToHomeYes.otherarivalHomeTransition == 999 || survey.directToHomeYes.otherarivalHomeTransition == "") {
                     handleAlertBarOpen()
@@ -364,12 +367,6 @@ function App() {
                 }
             }
 
-            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`到達家的時間不能與" 5) 離校時間"相等`)
-                handleHelpText("arivalHomeTime", `時間不能與" 5) 離校時間"相等`)
-                return
-            }
         }
 
         if (survey.directToHomeState == "否") {
@@ -379,7 +376,6 @@ function App() {
                 handleHelpText("address", "請填寫地址及按下確定按鈕")
                 return
             }
-
             if (survey.directToHomeNo.address == 999) {
                 handleAlertBarOpen()
                 setVCodeError(`請填寫地址及按下確定按鈕`)
@@ -400,7 +396,6 @@ function App() {
                 handleHelpText("leaveDestinationTransition", "請選擇回家主要的交通方式")
                 return
             }
-
             if (survey.directToHomeNo.leaveDestinationTransition == "其他") {
                 if (survey.directToHomeNo.otherLeaveDestinationTransition == 999 || survey.directToHomeNo.otherLeaveDestinationTransition == "") {
                     handleAlertBarOpen()
@@ -416,14 +411,12 @@ function App() {
                 handleHelpText("destinationBackHomeStartTime", "請填寫從上述地方出發回家的時間")
                 return
             }
-
             if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`到達時間不能比 "5) 離校時間"早`)
                 handleHelpText("leaveDestinationTime", `時間不能比 "5) 離校時間"早`)
                 return
             }
-
             if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`到達時間不能比 "5) 離校時間"相同`)

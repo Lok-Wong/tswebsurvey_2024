@@ -179,6 +179,18 @@ function App() {
             handleHelpText("TimeEndToMacau", "Please select a time")
             return
         }
+        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) The time should not be the same as "2) Departure time from home"`)
+            handleHelpText("TimeEndToMacau", `The time should not be the same as "2) Departure time from home"`)
+            return
+        }
+        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
+            handleAlertBarOpen()
+            setVCodeError(`4) The time should not be earlier than "2) Departure time from home"`)
+            handleHelpText("TimeEndToMacau", `The time should not be earlier than "2) Departure time from home"`)
+            return
+        }
 
         if (survey.commonTransirtation == 999) {
             handleAlertBarOpen()
@@ -207,20 +219,6 @@ function App() {
             handleHelpText("arrivalTimeToSchool", "Please select a time")
             return
         }
-
-        if (JSON.stringify(survey.TimeStartFromHome) == JSON.stringify(survey.TimeEndToMacau)) {
-            handleAlertBarOpen()
-            setVCodeError(`4) The time should not be the same as "2) Departure time from home"`)
-            handleHelpText("TimeEndToMacau", `The time should not be the same as "2) Departure time from home"`)
-            return
-        }
-        if (dayjs(survey.TimeStartFromHome) > dayjs(survey.TimeEndToMacau)) {
-            handleAlertBarOpen()
-            setVCodeError(`4) The time should not be earlier than "2) Departure time from home"`)
-            handleHelpText("TimeEndToMacau", `The time should not be earlier than "2) Departure time from home"`)
-            return
-        }
-
         if (dayjs(survey.TimeStartFromHome) > dayjs(survey.arrivalTimeToSchool)) {
             handleAlertBarOpen()
             setVCodeError(`6) The time should not be earlier than "4) Departure time from the Border Checkpoint to School"`)
