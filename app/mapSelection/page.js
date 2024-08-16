@@ -83,6 +83,10 @@ function MapSelections(props) {
     const getMapSelectedText = (location) => {
         //console.log(props.label);
 
+        if (location == 999 || location == "") {
+            return "請選擇您的地址"
+        }
+
         if (location.method == "input") {
             return (
             location.name
@@ -123,13 +127,16 @@ function MapSelections(props) {
 
     const createMapSelection = (key) => {
         return (
-            <div key={key} className={styles.mapButton}>
-                <Button onClick = {() => {
-                    setOpen(true);
-                    setKey(key);
-                }}>
-                    展開地圖
-                </Button>
+            <div key={key} className={styles.mapSelect}>
+                <div className={styles.mapText}>{getMapSelectedText(survey[props.label])}</div>
+                <div className={styles.mapButton}>
+                    <Button onClick = {() => {
+                        setOpen(true);
+                        setKey(key);
+                    }}>
+                        展開地圖
+                    </Button>
+                </div>
             </div>
         );
     }
@@ -137,11 +144,11 @@ function MapSelections(props) {
     const createMapSelections = (props) => {
         //console.log(json);
         return (
-            <div className={styles.mapSelect} key={props.label}>
+            <div key={props.label}>
                 {
                     isClient ?
                         <div>
-                            <FormControl>
+                            <FormControl sx={{width: '100%'}}>
                                     {createMapSelection(props.label)}
                             </FormControl>
                         </div>
@@ -172,7 +179,7 @@ function MapSelections(props) {
     }
 
     if (typeof(props.label) !== 'undefined') {
-        console.log("Survey La",sessionStorage)
+        //console.log("Survey La",sessionStorage)
         return (createMapSelections(props));
     }
     else

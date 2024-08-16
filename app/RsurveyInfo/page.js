@@ -30,6 +30,8 @@ function App() {
     const blanksurvey = {
         gender: 999,
         personOdType: 999,
+        living: 999,
+        working: 999,
         age: 999,
         workingStatus: 999,
         degree: 999,
@@ -44,10 +46,6 @@ function App() {
         OdDayYes: 999,
         OdDayNo: 999,
         startTime: new Date(),
-        location: {
-            living: 999,
-            working: 999,
-        }
     }
 
     const blankHelpText = {}
@@ -264,15 +262,16 @@ function App() {
             return
         }
 
-        setSurvey((prevState) => (
-            {
-                ...prevState,
-                [objectName]: event.target.value
+        if (objectName != "") {
+            setSurvey((prevState) => (
+                {
+                    ...prevState,
+                    [objectName]: event.target.value
 
-            }
-        )
-        )
-
+                }
+            )
+            )
+        }
     };
 
     const [isClient, setIsClient] = React.useState(false)
@@ -438,13 +437,13 @@ function App() {
             handleHelpText("age", "請拉動滑桿選擇您的年齡範圍")
         }
 
-        if (survey.location.working == 999 || survey.location.working == "") {
+        if (survey.working == 999 || survey.working == "") {
             flag = false;
             handleAlertBarOpen()
             setVCodeError("2.2) 請填寫您的工作地點")
             handleHelpText("working", "請填寫您的工作地點")
         }
-        if (survey.location.living == 999 || survey.location.living == "") {
+        if (survey.living == 999 || survey.living == "") {
             flag = false;
             handleAlertBarOpen()
             setVCodeError("2.1) 請填寫您的居住地點")
@@ -694,22 +693,19 @@ function App() {
         }
     }
 
-    const handleChangeData = (event) => {
-        const objectName = event.target.name
+    const handleChangeData = () => {
         Object.keys(sessionStorage).map(key => {
-            if (survey.location.hasOwnProperty(key))
-                survey.location[key] = JSON.parse(sessionStorage[key]);
+            if (survey.hasOwnProperty(key)){
+                setSurvey((prevState) => (
+                    {
+                        ...prevState,
+                        [key]: JSON.parse(sessionStorage[key])
+                    }
+                ))
+            }
         })
 
-        setSurvey((prevState) => (
-            {
-                ...prevState,
-                [objectName]: event.target.value
-
-            }
-        ))
-    
-        //console.log(survey.location)
+        console.log(survey)
         return;
     }
 
@@ -718,43 +714,8 @@ function App() {
     }
 
     let props = {
-        route: survey.location,
+        route: survey,
         label: "living"
-    }
-
-    const getMapSelectedText = (location) => {
-        //console.log(props.label);
-        if (location == 999) {
-            return (
-                <p>請選擇您的地址</p>
-            )
-        }
-
-        if (location.method == "input") {
-            return (
-            location.name
-            )
-        }
-
-        if (location.method == "click") {
-            return (
-            location.regeocode.formattedAddress
-            )
-        }
-
-        if (location.method == "autoComplete") {
-            return (
-            location.poi.name
-            )
-        }
-
-        if (location.method == "geolocation") {
-            return (
-            location.name.formattedAddress
-            )
-        }
-
-        return null
     }
 
     return (
@@ -812,19 +773,17 @@ function App() {
 
                                         <div className={styles.mapLocation}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
-                                            <div key={1} onBlur={handleChangeData} className={styles.mapSelect}>
-                                                <div className={styles.mapText}>{getMapSelectedText(survey.location.living)}</div>
+                                            <div key={1} onBlur={handleChangeData} className={styles.mapLocation}>
                                                 <MapSelections {...props}/>
                                             </div>
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.living}</FormHelperText>
                                         </div>
 
-                                        <div className={styles.mapLocation}>
+                                        <div>
                                             <FormLabel id="person-od-type-label"><h3>2.2) 工作地點（地標）：</h3></FormLabel>
 
-                                            <div key={2} onBlur={handleChangeData} className={styles.mapSelect}>
+                                            <div key={2} onBlur={handleChangeData}>
                                                 {handleLabel("working")}
-                                                <div className={styles.mapText}>{getMapSelectedText(survey.location.working)}</div>
                                                 <MapSelections {...props}/>
                                             </div>
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.working}</FormHelperText>

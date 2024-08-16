@@ -108,19 +108,8 @@
   margin-bottom: 0.25em;
 }
 
-.mapSelect {
-  margin-right: 0.75em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mapLocation:not(:last-child) .mapSelect {
-  margin-bottom: 0.5em;
-}
-
-.mapText {
-  vertical-align: middle;
+.mapLocation {
+  width: 100%;
 }
 
 

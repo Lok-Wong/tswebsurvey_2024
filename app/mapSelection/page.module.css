@@ -88,12 +88,34 @@
   padding:5%
 }
 
-.mapButton Button {
-  font-size: 0.875em;
-}
-
 .mapHitText {
   margin-bottom: 0.25em;
+}
+
+.mapSelect {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mapText {
+  margin-left: 0.25em;
+}
+
+.mapButton {
+  margin-right: 0.75em;
+  background-color: #3e848c;
+  border-radius: 0.5em;
+  transition: background-color 150ms ease-in-out;
+}
+
+.mapButton:hover {
+  background-color: #316970;
+}
+
+.mapButton Button {
+  color: #ffffff;
 }
 
 
