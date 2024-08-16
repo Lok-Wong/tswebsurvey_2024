@@ -705,7 +705,7 @@ function App() {
             }
         })
 
-        console.log(survey)
+        // console.log(survey)
         return;
     }
 
@@ -769,11 +769,11 @@ function App() {
                                 :
                                 <div>
                                     <div className={styles.question}>
-                                        <FormControl className={styles.inlineQuestionFormControl} onBlur={handleChange}>
+                                        <FormControl className={styles.inlineQuestionFormControl}>
 
                                         <div className={styles.mapLocation}>
                                             <FormLabel id="person-od-type-label"><h3>2.1) 居住地點（地標）：</h3></FormLabel>
-                                            <div key={1} onBlur={handleChangeData} className={styles.mapLocation}>
+                                            <div key={1} onFocus={handleChangeData} className={styles.mapLocation}>
                                                 <MapSelections {...props}/>
                                             </div>
                                             <FormHelperText sx={{ color: 'red' }}>{helpText.living}</FormHelperText>
@@ -782,7 +782,7 @@ function App() {
                                         <div>
                                             <FormLabel id="person-od-type-label"><h3>2.2) 工作地點（地標）：</h3></FormLabel>
 
-                                            <div key={2} onBlur={handleChangeData}>
+                                            <div key={2} onFocus={handleChangeData}>
                                                 {handleLabel("working")}
                                                 <MapSelections {...props}/>
                                             </div>

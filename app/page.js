@@ -65,11 +65,7 @@ export default function Home() {
   const enterToNext = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
-      if (inputVcode == "9911"){
-        router.push('/RsurveyInfo')
-        return
-      }
-      
+
       if (!infoSaveChecked) {
         handleAlertBarOpen()
         setVCodeError("請先同意收集個人資料聲明")
@@ -106,11 +102,6 @@ export default function Home() {
 
 
   async function handleNextButton(event) {
-
-    if (inputVcode == "9911"){
-      router.push('/RsurveyInfo')
-      return
-    }
 
     if (!infoSaveChecked) {
       handleAlertBarOpen()

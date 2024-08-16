@@ -759,15 +759,18 @@ function App() {
     var splitKey;
 
     const handleChangeData = () => {
-        Object.keys(sessionStorage).map(key => {
-            if (key.indexOf("startPoint") > 0 || key.indexOf("endPoint") > 0) {
-                splitKey = key.split("-");
-                for (var i = 0; i < surveyObject.length; i++){
-                    if (surveyObject[i].id == splitKey[0])
-                        surveyObject[i][splitKey[1]] = JSON.parse(sessionStorage[key]);
+        isClient ?
+            Object.keys(sessionStorage).map(key => {
+                if (key.indexOf("startPoint") > 0 || key.indexOf("endPoint") > 0) {
+                    splitKey = key.split("-");
+                    for (var i = 0; i < surveyObject.length; i++){
+                        if (surveyObject[i].id == splitKey[0])
+                            surveyObject[i][splitKey[1]] = JSON.parse(sessionStorage[key]);
+                    }
                 }
-            }
-        })
+            })
+        :
+        null
     
         //console.log(surveyObject.length)
         return;
@@ -783,41 +786,6 @@ function App() {
         label: "startPoint"
     }
 
-    const getMapSelectedText = (location) => {
-        //console.log(props.label);
-        if (location == 999) {
-            return (
-                <p>請選擇您的地址</p>
-            )
-        }
-
-        if (location.method == "input") {
-            return (
-            location.name
-            )
-        }
-
-        if (location.method == "click") {
-            return (
-            location.regeocode.formattedAddress
-            )
-        }
-
-        if (location.method == "autoComplete") {
-            return (
-            location.poi.name
-            )
-        }
-
-        if (location.method == "geolocation") {
-            return (
-            location.name.formattedAddress
-            )
-        }
-
-        return null
-    }
-
     const listItems = surveyObject.map((d, index) =>
         <div key={d.id}>
             <div className={selectedDivIndex === index ? styles.selectedDiv : null}
@@ -831,7 +799,7 @@ function App() {
                     <div ref={listRef}></div>
                     <p className={styles.odHeaderP}>第{index + 1}個行程</p>
                     <Button className={styles.odHeaderButton} onClick={() => handleRemove(d.id, index)}>
-                        <DeleteIcon />
+                        <DeleteIcon sx={{color: '#ffffff'}}/>
                     </Button>
                 </div>
                 <div
@@ -843,14 +811,13 @@ function App() {
                     onDragEnd={handleSort}
                     onDragOver={(e) => e.preventDefault()}
                 >
-                    <div className={styles.inlineQuestion} onBlur={handleChangeData()}>
-                        <FormControl>
+                    <div className={styles.inlineQuestion} onFocus={handleChangeData()}>
+                        <FormControl sx={{width: '100%'}}>
                             <FormLabel id="startPoint">1) 出行地點</FormLabel>
-                            <div className={styles.mapSelect}>
-                                <div className={styles.mapText}>{getMapSelectedText(surveyObject[index].startPoint)}</div>
+                            <div className={styles.mapLocation}>
                                 {handleProps(surveyObject[index], "startPoint")}
+                                <MapSelections {...props} />
                             </div>
-                            <MapSelections {...props} />
                         </FormControl>
                     </div>
                     <FormHelperText sx={{ color: 'red' }}>aa</FormHelperText>
@@ -875,14 +842,13 @@ function App() {
 
                     <FormHelperText sx={{ color: 'red' }}>{helpText[index].startTime}</FormHelperText>
 
-                    <div className={styles.inlineQuestion}>
-                        <FormControl>
+                    <div className={styles.inlineQuestion} onFocus={handleChangeData()}>
+                        <FormControl sx={{width: '100%'}}>
                             <FormLabel id="endPoint">3) 出行目的地</FormLabel>
-                            <div className={styles.mapSelect}>
-                                <div className={styles.mapText}>{getMapSelectedText(surveyObject[index].endPoint)}</div>
+                            <div className={styles.mapLocation}>
                                 {handleProps(surveyObject[index], "endPoint")}
+                                <MapSelections {...props} />
                             </div>
-                            <MapSelections {...props} />
                         </FormControl>
                     </div>
                     <FormHelperText sx={{ color: 'red' }}>abc</FormHelperText>
