@@ -200,7 +200,9 @@ function App() {
                 <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
 
                     <Button className={styles.buttonStyle}
-                        onClick={() => router.back()}>
+                        onClick={() => router.back()}
+                        disabled = {success}
+                        >
                         上一頁
                     </Button>
 
