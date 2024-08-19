@@ -798,7 +798,7 @@ function App() {
                                             <FormLabel id="age-label"><h3>3)  年齡：</h3></FormLabel>
                                             <div className={styles.sliderDiv}>
                                                 <Slider
-                                                    sx={{ color: "#3E848C" }}
+                                                    sx={{ color: "#3E848C"}}
                                                     min={0}
                                                     max={85}
                                                     step={5}
@@ -1134,7 +1134,7 @@ function App() {
             }
 
             <div className={styles.buttonGroup}>
-                <LinearProgresss values={progressBarValue} />
+                {/* <LinearProgresss values={progressBarValue} /> */}
                 <div style={{ flexDirection: "row", display: "flex", justifyContent: 'space-between', width: '100%' }}>
 
                     <Button className={styles.buttonStyle}

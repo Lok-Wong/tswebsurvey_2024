@@ -31,6 +31,7 @@ import MapSelections from "../mapSelection/page";
 
 
 function App() {
+    const router = useRouter();
     const [progressBarValue, setProgressBarValue] = React.useState(10)
 
     const purposeOfVisitList = ["返工", "返學", "返屋企", "回家午休", "轉換交通工具", "載人", "購物", "飲食", "買餐點", "休閒/社交活動", "私人事務", "工作相關", "其他"]
@@ -449,8 +450,8 @@ function App() {
     }
 
     const handleNextButton = () => {
-        sessionStorage.setItem("pathList", storedPathList)
-        // router.push('/RsurveyCheckOd')
+        // sessionStorage.setItem("pathList", storedPathList)
+        router.push('/RsurveyFinish')
     }
 
     const [scrollTo, setScrollTo] = React.useState(false);

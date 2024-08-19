@@ -9,22 +9,6 @@
   padding-bottom: 7vh;
 }
 
-.inlineQuestionFormControl{
-  display: block;
-}
-
-.question {
-  flex-direction: column;
-  width: 50vw;
-  /* display: flex; */
-  padding: 1rem;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: -1px -3px 5px -1px rgba(122, 184, 191, 0.5);
-  background-color: #ffffff;
-  margin-bottom: 2vh;
-}
-
 .odHeader {
   top: 0px;
   position: sticky;
@@ -72,6 +56,19 @@
 .increaseOdLineText {
   font-size: larger;
   font-weight: bold;
+}
+
+.question {
+  flex-direction: column;
+  width: 50vw;
+  /* display: flex; */
+  background-color: #ffffff;
+  padding: 1rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: -1px -3px 5px -1px rgba(122, 184, 191, 0.5);
+  background-color: #ffffff;
+  margin-bottom: 2vh;
 }
 
 .removeButtomDiv{
@@ -150,7 +147,6 @@
 .sliderDiv {
   padding-right: 8%;
   padding-left: 8%;
-  width: 100%;
 }
 
 .buttonStyle:hover {
