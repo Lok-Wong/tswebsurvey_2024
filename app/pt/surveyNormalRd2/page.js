@@ -341,11 +341,16 @@ function App() {
                 handleHelpText("arivalHomeTime", "Preencha a hora de chegada à casa")
                 return
             }
-
             if (dayjs(survey.leaveSchoolTime) > dayjs(survey.directToHomeYes.arivalHomeTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`Não pode ser mais cedo do que a “5) Hora de saída da escola”`)
                 handleHelpText("arivalHomeTime", `Não pode ser mais cedo do que a “5) Hora de saída da escola”`)
+                return
+            }
+            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`Não pode ser igual à “5) Hora de saída da escola”`)
+                handleHelpText("arivalHomeTime", `Não pode ser igual à “5) Hora de saída da escola”`)
                 return
             }
 
@@ -355,7 +360,6 @@ function App() {
                 handleHelpText("arivalHomeTransition", "Seleccione o meio de transporte principal utilizado para regressar à casa")
                 return
             }
-
             if (survey.directToHomeYes.arivalHomeTransition == "其他") {
                 if (survey.directToHomeYes.otherarivalHomeTransition == 999 || survey.directToHomeYes.otherarivalHomeTransition == "") {
                     handleAlertBarOpen()
@@ -365,12 +369,6 @@ function App() {
                 }
             }
 
-            if (JSON.stringify(survey.directToHomeYes.arivalHomeTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`Não pode ser igual à “5) Hora de saída da escola”`)
-                handleHelpText("arivalHomeTime", `Não pode ser igual à “5) Hora de saída da escola”`)
-                return
-            }
         }
 
         if (survey.directToHomeState == "否") {
@@ -380,7 +378,6 @@ function App() {
                 handleHelpText("address", `Preencha a morada`)
                 return
             }
-
             if (survey.directToHomeNo.address == 999) {
                 handleAlertBarOpen()
                 setVCodeError(`Preencha a morada`)
@@ -394,6 +391,18 @@ function App() {
                 handleHelpText("leaveDestinationTime", "Preencha a hora de chegada ao destino")
                 return
             }
+            if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`Não pode ser mais cedo do que a “5) Hora de saída da escola”`)
+                handleHelpText("leaveDestinationTime", `Não pode ser mais cedo do que a “5) Hora de saída da escola”`)
+                return
+            }
+            if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
+                handleAlertBarOpen()
+                setVCodeError(`Não pode ser igual à “5) Hora de saída da escola”`)
+                handleHelpText("leaveDestinationTime", `Não pode ser igual à “5) Hora de saída da escola”`)
+                return
+            }
 
             if (survey.directToHomeNo.leaveDestinationTransition == 999) {
                 handleAlertBarOpen()
@@ -401,7 +410,6 @@ function App() {
                 handleHelpText("leaveDestinationTransition", "Seleccione o meio de transporte principal utilizado para regressar à casa")
                 return
             }
-
             if (survey.directToHomeNo.leaveDestinationTransition == "其他") {
                 if (survey.directToHomeNo.otherLeaveDestinationTransition == 999 || survey.directToHomeNo.otherLeaveDestinationTransition == "") {
                     handleAlertBarOpen()
@@ -415,20 +423,6 @@ function App() {
                 handleAlertBarOpen()
                 setVCodeError(`Preencha a hora de partida do local acima referido à casa`)
                 handleHelpText("destinationBackHomeStartTime", "Preencha a hora de partida do local acima referido à casa")
-                return
-            }
-
-            if (dayjs(survey.directToHomeNo.leaveDestinationTime) < dayjs(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`Não pode ser mais cedo do que a “5) Hora de saída da escola”`)
-                handleHelpText("leaveDestinationTime", `Não pode ser mais cedo do que a “5) Hora de saída da escola”`)
-                return
-            }
-
-            if (JSON.stringify(survey.directToHomeNo.leaveDestinationTime) === JSON.stringify(survey.leaveSchoolTime)) {
-                handleAlertBarOpen()
-                setVCodeError(`Não pode ser igual à “5) Hora de saída da escola”`)
-                handleHelpText("leaveDestinationTime", `Não pode ser igual à “5) Hora de saída da escola”`)
                 return
             }
 
