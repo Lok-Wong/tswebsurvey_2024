@@ -264,7 +264,7 @@ function App() {
     React.useEffect(() => {
         survey && sessionStorage.setItem((_studentNum + 'badWeather'), JSON.stringify(survey))
         setHelpText(blankHelpText)
-        console.log(survey)
+        // console.log(survey)
     }, [survey])
 
     React.useEffect(() => {

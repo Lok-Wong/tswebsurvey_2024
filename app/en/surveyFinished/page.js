@@ -109,7 +109,7 @@ export default function App() {
                         'content-type': 'application/json'
                     }
                 })
-                console.log('res', res)
+                // console.log('res', res)
                 if (res.ok) {
                     setAlertState("success")
                     handleAlertBarOpen()
@@ -138,7 +138,7 @@ export default function App() {
     }
 
     React.useEffect(() => {
-        console.log('totalObj', totalObj)
+        // console.log('totalObj', totalObj)
     }, [totalObj])
 
 

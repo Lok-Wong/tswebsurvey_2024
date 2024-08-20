@@ -99,7 +99,7 @@ function App() {
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const handleNextButton = () => {
-        console.log("checkStudentNum", checkStudentNum)
+        // console.log("checkStudentNum", checkStudentNum)
 
         if (stillHaveChild == "") {
             handleAlertBarOpen()
@@ -174,7 +174,7 @@ function App() {
         const prevPath = copyArr[copyArr.length - 1]
         copyArr.splice(-1)
         sessionStorage.setItem('pathList', copyArr)
-        console.log("student", _studentNum)
+        // console.log("student", _studentNum)
         router.back()
         //       } else {
         //           window.history.pushState(null, null, window.location.pathname);

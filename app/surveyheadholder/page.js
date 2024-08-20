@@ -267,7 +267,7 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    console.log("storedPathList", _initial_pathListe)
+    // console.log("storedPathList", _initial_pathListe)
 
     if (typeof _initial_pathListe === 'undefined' || _initial_pathListe == null) {
       router.push("./")

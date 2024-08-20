@@ -101,7 +101,7 @@ function App() {
 
 
     const handleChange = (event) => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         const objectName = event.target.name
         setSurvey((prevState) => (
             {
@@ -114,8 +114,8 @@ function App() {
     };
 
     const handleTimeChange = (event, name) => {
-        console.log(event.$d)
-        console.log(event)
+        // console.log(event.$d)
+        // console.log(event)
 
         setSurvey((prevState) => ({
             ...prevState,
@@ -329,7 +329,7 @@ function App() {
     React.useEffect(() => {
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', onBackButtonEvent);
-        console.log('i fire once');
+        // console.log('i fire once');
         return () => {
             window.removeEventListener('popstate', onBackButtonEvent);
         };

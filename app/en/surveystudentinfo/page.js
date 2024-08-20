@@ -323,7 +323,7 @@ function App() {
         }
         if (sessionStorage.getItem("checkschoolName") == value) {
             sessionStorage.setItem("checkschoolName", value)
-            console.log("nochange")
+            // console.log("nochange")
             return
         }
         setSurvey((prevState) => (
@@ -336,7 +336,7 @@ function App() {
             }
         )
         )
-        console.log("changed")
+        // console.log("changed")
         sessionStorage.setItem("checkschoolName", value)
     }
 
