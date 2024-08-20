@@ -134,7 +134,7 @@ export default function App() {
         if (typeof phoneNums != "undefined"){
             if (phoneNums.length>0) {
                 if (phoneNums.length < 8 ) {
-                    handleHelpText("phoneNum", "Please enter your phone number (more than 8 digits)")
+                    handleHelpText("phoneNum", "Please enter your phone number")
                     return
                 }
             }
@@ -184,14 +184,14 @@ export default function App() {
                 isClient ?
                     <div>
                         <h1 style={{ color: "#000000" }}>
-                            Drawing Event
+                        Lucky Draw
                         </h1>
                         <p className={styles.question}>
-                            *By providing the information, you agree to participate the drawing event <br/>
-                            *The provided information is only used for Drawing<br/>
-                            　Phone Number: Used for Drawing and Contact<br/>
-                            　Last 4 digits of ID card: Used for Drawing and Identity Verification<br/>
-                            *All information will be shredded after the drawing event
+                          *Please provide your information below if you want to participate the Lucky Draw <br/>
+                            　*The provided information is only used for the Lucky Draw<br/>
+                            　Phone Number: Used for the Lucky Draw and Contact<br/>
+                            　Last 4 digits of ID card: Used for the Lucky Draw and Identity Verification<br/>
+                            *All information will be shredded after the Lucky Draw
                         </p>
                         <div className={styles.question}>
 
@@ -199,7 +199,7 @@ export default function App() {
                                 m: 1, width: "100%"
                             }}>
                                 <FormLabel id="comment-label"><h3>Please provide your contact number (Optional):</h3></FormLabel>
-                                <p className={styles.remind}>*(If the phone number is not in Macau and Mainland China, please add the area code for the purpose of contacting you to win the prize.)</p>
+                                <p className={styles.remind}>*(Please add the area code for the purpose of contacting you to win the prize if the phone number is not in Macau or not in Mainland China.)</p>
                                 <p className={styles.remind}>*Example : 85261234567</p>
                                 <Box
                                     component="form"
