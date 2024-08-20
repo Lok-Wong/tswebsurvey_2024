@@ -490,39 +490,41 @@ function App() {
                         <div key={2} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-name-label"><h3>2) School Name: (*If there is no suitable option, please enter the school name.)</h3></FormLabel>
-                                <Autocomplete
-                                    sx={{
-                                        m: 1
-                                    }}
-                                    freeSolo
-                                    id="schoolName"
-                                    name='schoolName'
-                                    defaultValue={survey.schoolName}
-                                    value={survey.schoolName == 999 ? "" : survey.schoolName}
-                                    inputValue={shInputValue}
-                                    onChange={(event, newValue) => {
-                                        setShValue(newValue)
-                                        schoolDataFunc(newValue)
-                                        setSchoolNameSelectType("select")
-                                    }}
-                                    onInputChange={(event, newInputValue) => {
-                                        if (newInputValue.length > 150) {
-                                            return
+                                <div className={styles.schoolNameBox}>
+                                    <Autocomplete
+                                        sx={{
+                                            m: 1
+                                        }}
+                                        freeSolo
+                                        id="schoolName"
+                                        name='schoolName'
+                                        defaultValue={survey.schoolName}
+                                        value={survey.schoolName == 999 ? "" : survey.schoolName}
+                                        inputValue={shInputValue}
+                                        onChange={(event, newValue) => {
+                                            setShValue(newValue)
+                                            schoolDataFunc(newValue)
+                                            setSchoolNameSelectType("select")
+                                        }}
+                                        onInputChange={(event, newInputValue) => {
+                                            if (newInputValue.length > 150) {
+                                                return
+                                            }
+                                            setShInputValue(newInputValue);
+                                            schoolDataFunc(newInputValue);
+                                            setSchoolNameSelectType("input")
+                                        }}
+                                        options={getSchoolObject(survey.schoolArea) ? getSchoolObject(survey.schoolArea) : []}
+                                        renderInput={(params) =>
+                                            <TextField
+                                                inputProps={{ maxLength: 3 }}
+                                                name='schoolName'
+                                                {...params}
+                                            >
+                                            </TextField>
                                         }
-                                        setShInputValue(newInputValue);
-                                        schoolDataFunc(newInputValue);
-                                        setSchoolNameSelectType("input")
-                                    }}
-                                    options={getSchoolObject(survey.schoolArea) ? getSchoolObject(survey.schoolArea) : []}
-                                    renderInput={(params) =>
-                                        <TextField
-                                            inputProps={{ maxLength: 3 }}
-                                            name='schoolName'
-                                            {...params}
-                                        >
-                                        </TextField>
-                                    }
-                                />
+                                    />
+                                </div>
                                 {/* </Box> */}
                                 <p style={{ color: "#000000" }}>
                                     {adress[shInputValue] ?

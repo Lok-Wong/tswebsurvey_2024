@@ -95,6 +95,11 @@
   flex-wrap: wrap;
 }
 
+.schoolNameBox {
+  width: 44.25em;
+  max-width: 100%;
+}
+
 
  /* Mobile */
  @media (max-width: 700px){
