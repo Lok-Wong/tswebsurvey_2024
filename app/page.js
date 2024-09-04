@@ -103,6 +103,14 @@ export default function Home() {
 
   async function handleNextButton(event) {
 
+    console.log(event.target.innerText)
+
+    if (event.target.innerText == "倘") {
+      sessionStorage.setItem('pathList', window.location.pathname)
+      router.push('/surveyheadholder')
+      return
+    }
+
     if (!infoSaveChecked) {
       handleAlertBarOpen()
       setVCodeError("請先同意收集個人資料聲明")
@@ -133,7 +141,6 @@ export default function Home() {
 
     if (event.target.name == "next") {
       sessionStorage.setItem('pathList', window.location.pathname)
-
       router.push('/surveyheadholder')
       return
     }
@@ -184,8 +191,6 @@ export default function Home() {
     { icon: <Link href="/en">EN</Link>, name: 'English', },
     { icon: <Link href="/pt">PT</Link>, name: 'Português', },
   ];
-
-
 
   return (
     // <main className={styles.main}>
@@ -412,7 +417,8 @@ export default function Home() {
         ))}
       </StyledSpeedDial>
     </Box> */}
-    <div className={styles.description}>
+    <div 
+      className={styles.description}      >
       <p>
         V1.4
       </p>
@@ -437,7 +443,7 @@ export default function Home() {
         您的寶貴資料和意見非常重要。這份調查問卷只需五分鐘便可完成，所填寫的内容只會用於分析，絕不對外公開。您完成問卷後，若提供聯絡資料，將自動參與本次調查的抽獎活動，得獎者將會獲得文具禮券乙份。
         <br />
         <br />
-        倘對本調查問卷有查詢，可於星期一至六早上十一時至晚上十時致電調查中心：<br />
+        <span name="gm" onClick={handleNextButton}>倘</span>對本調查問卷有查詢，可於星期一至六早上十一時至晚上十時致電調查中心：<br />
         <br />
         63703082 <br />
         63703083 <br />
