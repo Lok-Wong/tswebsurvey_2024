@@ -108,6 +108,7 @@ export const schoolName = {
     "Colégio Diocesano de São José (6) (Secção Nocturna)",
     "Colégio do Sagrado Coração de Jesus(Jardim de Infância)",
     "Escola Oficial da Flora",
+    "Escola Seong Fan da Associação Comercial de Macau",
   ],
   taipa: [
     "Escola Dom João Paulino",
@@ -131,6 +132,7 @@ export const schoolName = {
     "Escola Dom Luís Versíglia",
     "Escola Oficial de Seac Pai Van",
     "Gerações - Escola Internacional",
+    "Escola Secundária Pui Ching (Coloane Campus)",
   ],
 }
 
@@ -320,7 +322,7 @@ export const schoolLevel = {
 "Centro de Educação Infantil Santo António":["Kindergarten"],
 "Escola Fukien":["Kindergarten","Primary School"],
 "Escola Kai Chi":["Special Education","Kindergarten"],
-"Jardim de Infância D. José da Costa Nunes":["Special Education","Kindergarten"],
+"Jardim de Infância D.José da Costa Nunes":["Special Education","Kindergarten"],
 "Escola Luso-Chinesa da Taipa":["Special Education","Kindergarten","Primary School"],
 "Escola Primaria Oficial Luso-Chinesa Sir Robert Ho Tung":["Special Education","Kindergarten","Primary School"],
 "Escola Secundária Luso-Chinesa de Luís Gonzaga Gomes":["Secondary School"],
@@ -452,7 +454,7 @@ export const schoolType = {
 "Centro de Educação Infantil Santo António":"Formal Education",
 "Escola Fukien":"Formal Education",
 "Escola Kai Chi":"Formal Education",
-"Jardim de Infância D. José da Costa Nunes":"Formal Education",
+"Jardim de Infância D.José da Costa Nunes":"Formal Education",
 "Escola Luso-Chinesa da Taipa":"Formal Education",
 "Escola Primaria Oficial Luso-Chinesa Sir Robert Ho Tung":"Formal Education",
 "Escola Secundária Luso-Chinesa de Luís Gonzaga Gomes":"Formal Education",
