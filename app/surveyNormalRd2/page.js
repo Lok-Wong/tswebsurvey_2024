@@ -315,16 +315,12 @@ function App() {
             return
         }
 
-        console.log(dayjs(prevEndTime).$d)
-        console.log(dayjs(survey.leaveSchoolTime).$d)
-
         if (dayjs(survey.leaveSchoolTime) < dayjs(prevEndTime)){
             handleAlertBarOpen()
             setVCodeError(`到達時間不能比上一頁的到達學校時間早`)
             handleHelpText("leaveSchoolTime", `到達時間不能比上一頁的到達學校時間早`)
             return
         }
-
 
         if (survey.leavePickUp == 999) {
             handleAlertBarOpen()
