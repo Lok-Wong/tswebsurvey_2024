@@ -82,6 +82,19 @@ function App() {
         }
     }, []);
 
+    const _getPrevEndTime = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_value_str = sessionStorage.getItem((_studentNum + 'normalRd'));
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str).pickupTimeEnd;
+            }
+        }
+        return null;
+    }, []);
+
+    const [prevEndTime, setPrevEndTime] = React.useState(_getPrevEndTime)
+
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [key, setKey] = React.useState(0)
@@ -299,6 +312,16 @@ function App() {
             handleAlertBarOpen()
             setVCodeError("5) 請填寫離校時間")
             handleHelpText("leaveSchoolTime", "請填寫離校時間")
+            return
+        }
+
+        console.log(dayjs(prevEndTime).$d)
+        console.log(dayjs(survey.leaveSchoolTime).$d)
+
+        if (dayjs(survey.leaveSchoolTime) < dayjs(prevEndTime)){
+            handleAlertBarOpen()
+            setVCodeError(`到達時間不能比上一頁的到達學校時間早`)
+            handleHelpText("leaveSchoolTime", `到達時間不能比上一頁的到達學校時間早`)
             return
         }
 

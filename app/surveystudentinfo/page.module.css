@@ -12,6 +12,7 @@
   .question{
     display: flex;
     flex-direction: row;
+    /* display: flex; */
     background-color: #ffffff;
     padding: 1rem;
     margin-top: 10px;
@@ -21,7 +22,6 @@
     justify-content: space-between;
     box-shadow: -1px -3px 5px -1px rgba(131,127,123,0.5);
   }
-  
 
 .inlineQuestion{
   margin-right: 3rem;
@@ -90,10 +90,10 @@
   flex-wrap: wrap;
 }
 
-.schoolNameBox {
-  width: 26em;
+/* .schoolNameBox {
+  width: 20vw;
   max-width: 100%;
-}
+} */
 
 
  /* Mobile */

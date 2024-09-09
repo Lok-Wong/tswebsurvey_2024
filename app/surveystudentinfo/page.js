@@ -490,7 +490,7 @@ function App() {
                         <div key={2} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-name-label"><h3>2)  學校名稱：(*如無合適選項，請輸入學校名稱。)</h3></FormLabel>
-                                <div className={styles.schoolNameBox}>
+                                <div>
                                     <Autocomplete
                                         sx={{
                                             m: 1

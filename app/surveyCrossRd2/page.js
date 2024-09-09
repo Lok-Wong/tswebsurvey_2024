@@ -233,6 +233,20 @@ function App() {
         }
     }, []);
 
+    const _getPrevEndTime = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_value_str = sessionStorage.getItem((_studentNum + 'crossRd'));
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str).arrivalTimeToSchool;
+            }
+        }
+        return null;
+    }, []);
+
+    const [prevEndTime, setPrevEndTime] = React.useState(_getPrevEndTime)
+
+
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const [survey, setSurvey] = React.useState(_initial_value)
@@ -318,6 +332,16 @@ function App() {
             setVCodeError("7) 請選擇離校時間")
             handleHelpText("leaveShcoolTime", "請選擇離校時間")
             return
+        }
+
+        console.log(dayjs(survey.leaveShcoolTime))
+        console.log(prevEndTime)
+
+
+        if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
+            handleAlertBarOpen()
+            setVCodeError("時間不能比上一頁的到校時間早")
+            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
         }
         if (survey.pickup == 999) {
             handleAlertBarOpen()
