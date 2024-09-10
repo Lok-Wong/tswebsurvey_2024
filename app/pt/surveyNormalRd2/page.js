@@ -83,6 +83,19 @@ function App() {
         }
     }, []);
 
+    const _getPrevEndTime = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_value_str = sessionStorage.getItem((_studentNum + 'normalRd'));
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str).pickupTimeEnd;
+            }
+        }
+        return null;
+    }, []);
+
+    const [prevEndTime, setPrevEndTime] = React.useState(_getPrevEndTime)
+
     const [survey, setSurvey] = React.useState(_initial_value)
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
     const [key, setKey] = React.useState(0)
@@ -310,6 +323,22 @@ function App() {
             handleHelpText("leavePickUp", "Seleccione a pessoa que acompanha o aluno")
             return
         }
+
+        if (dayjs(survey.leaveSchoolTime) < dayjs(prevEndTime)){
+            handleAlertBarOpen()
+            setVCodeError(`O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
+            handleHelpText("leaveSchoolTime", `O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
+            return
+        }
+
+        
+        if (JSON.stringify(dayjs(survey.leaveSchoolTime)) === JSON.stringify(dayjs(prevEndTime))){
+            handleAlertBarOpen()
+            setVCodeError(`O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
+            handleHelpText("leaveSchoolTime", `O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
+            return
+        }
+
 
         if (survey.leavePickUp == "其他") {
             if (survey.otherleavePickUp == 999 || survey.otherleavePickUp == "") {
@@ -632,6 +661,7 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="Ninguém" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Pais" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="Avós" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Trabalhador doméstico" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Pessoal de centro de explicações/centro de recepção de alunos" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Outros" />

@@ -234,6 +234,19 @@ function App() {
         }
     }, []);
 
+    const _getPrevEndTime = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_value_str = sessionStorage.getItem((_studentNum + 'crossRd'));
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str).arrivalTimeToSchool;
+            }
+        }
+        return null;
+    }, []);
+
+    const [prevEndTime, setPrevEndTime] = React.useState(_getPrevEndTime)
+
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const [survey, setSurvey] = React.useState(_initial_value)
@@ -320,6 +333,20 @@ function App() {
             handleHelpText("leaveShcoolTime", "Seleccione a hora de saída da escola")
             return
         }
+
+        if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
+            handleAlertBarOpen()
+            setVCodeError("時間不能比上一頁的到校時間早")
+            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
+            return
+        }
+        if (JSON.stringify(dayjs(survey.leaveShcoolTime)) === JSON.stringify(dayjs(prevEndTime))) {
+            handleAlertBarOpen()
+            setVCodeError("時間不能比上一頁的到校時間早")
+            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
+            return
+        }
+
         if (survey.pickup == 999) {
             handleAlertBarOpen()
             setVCodeError("8) Seleccione se o aluno é acompanhado")
@@ -618,6 +645,7 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="Ninguém" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Pais" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="Avós" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Trabalhador doméstico" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Pessoal de centro de explicações/centro de recepção de alunos" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Outros" />

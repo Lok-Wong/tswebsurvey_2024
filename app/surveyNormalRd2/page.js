@@ -322,6 +322,15 @@ function App() {
             return
         }
 
+        
+        if (JSON.stringify(dayjs(survey.leaveSchoolTime)) === JSON.stringify(dayjs(prevEndTime))){
+            handleAlertBarOpen()
+            setVCodeError(`到達時間不能比上一頁的到達學校時間早`)
+            handleHelpText("leaveSchoolTime", `到達時間不能比上一頁的到達學校時間早`)
+            return
+        }
+
+
         if (survey.leavePickUp == 999) {
             handleAlertBarOpen()
             setVCodeError("6) 請選擇接送人")
@@ -649,6 +658,7 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="學生自行離校" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="父母" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="（外）祖父母" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="工人" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="補習社/託管中心" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="其他" />

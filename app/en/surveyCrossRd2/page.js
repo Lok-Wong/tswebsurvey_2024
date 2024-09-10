@@ -234,6 +234,19 @@ function App() {
         }
     }, []);
 
+    const _getPrevEndTime = React.useMemo(() => {
+        if (typeof window !== 'undefined') {
+            const local_storage_value_str = sessionStorage.getItem((_studentNum + 'crossRd'));
+            // If there is a value stored in localStorage, use that
+            if (local_storage_value_str) {
+                return JSON.parse(local_storage_value_str).arrivalTimeToSchool;
+            }
+        }
+        return null;
+    }, []);
+
+    const [prevEndTime, setPrevEndTime] = React.useState(_getPrevEndTime)
+
     const [storedPathList, setStoredPathList] = React.useState(_initial_pathListe)
 
     const [survey, setSurvey] = React.useState(_initial_value)
@@ -320,6 +333,20 @@ function App() {
             handleHelpText("leaveShcoolTime", "Please select the departure time from school")
             return
         }
+
+        if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
+            handleAlertBarOpen()
+            setVCodeError("The time cannot be earlier than the arrival time on the previous page")
+            handleHelpText("leaveShcoolTime", "The time cannot be earlier than the arrival time on the previous page")
+            return
+        }
+        if (JSON.stringify(dayjs(survey.leaveShcoolTime)) === JSON.stringify(dayjs(prevEndTime))) {
+            handleAlertBarOpen()
+            setVCodeError("The time cannot be earlier than the arrival time on the previous page")
+            handleHelpText("leaveShcoolTime", "The time cannot be earlier than the arrival time on the previous page")
+            return
+        }
+
         if (survey.pickup == 999) {
             handleAlertBarOpen()
             setVCodeError("8) Is the student picked up or dropped off")
@@ -619,6 +646,7 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行離校" control={<Radio />} label="Student leaving school on his/her own" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Parents" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="Grandparents" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Domestic Helper" />
                                     <FormControlLabel sx={{ color: "black" }} value="補習社/託管中心" control={<Radio />} label="Tutorial center / After School Care Centre" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Others (e.g., Guardians, Relatives, etc.)" />
