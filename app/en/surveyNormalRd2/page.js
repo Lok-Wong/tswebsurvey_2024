@@ -308,25 +308,21 @@ function App() {
             handleHelpText("leaveSchoolTime", "Please fill in the departure time from school again")
             return
         }
-
         if (survey.leaveSchoolTime == "") {
             handleAlertBarOpen()
             setVCodeError("5) Please fill in the departure time from school")
             handleHelpText("leaveSchoolTime", "Please fill in the departure time from school")
             return
         }
-
         if (dayjs(survey.leaveSchoolTime) < dayjs(prevEndTime)){
             handleAlertBarOpen()
-            setVCodeError(`The time cannot be earlier than the arrival time on the previous page`)
+            setVCodeError(`5) The time cannot be earlier than the arrival time on the previous page`)
             handleHelpText("leaveSchoolTime", `The time cannot be earlier than the arrival time on the previous page`)
             return
         }
-
-        
         if (JSON.stringify(dayjs(survey.leaveSchoolTime)) === JSON.stringify(dayjs(prevEndTime))){
             handleAlertBarOpen()
-            setVCodeError(`The time cannot be earlier than the arrival time on the previous page`)
+            setVCodeError(`5) The time cannot be earlier than the arrival time on the previous page`)
             handleHelpText("leaveSchoolTime", `The time cannot be earlier than the arrival time on the previous page`)
             return
         }

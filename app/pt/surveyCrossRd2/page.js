@@ -336,14 +336,14 @@ function App() {
 
         if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
             handleAlertBarOpen()
-            setVCodeError("時間不能比上一頁的到校時間早")
-            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
+            setVCodeError("7) O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior")
+            handleHelpText("leaveShcoolTime", "O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior")
             return
         }
         if (JSON.stringify(dayjs(survey.leaveShcoolTime)) === JSON.stringify(dayjs(prevEndTime))) {
             handleAlertBarOpen()
-            setVCodeError("時間不能比上一頁的到校時間早")
-            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
+            setVCodeError("7) O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior")
+            handleHelpText("leaveShcoolTime", "O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior")
             return
         }
 
@@ -365,16 +365,16 @@ function App() {
 
         if (survey.portForHome == "999") {
             handleAlertBarOpen()
-            setVCodeError("9) Please select a Border Checkpoint")
-            handleHelpText("portForHome", "Please select a Border Checkpoint")
+            setVCodeError("9) Seleccione se posto fronteiriço")
+            handleHelpText("portForHome", "Seleccione se posto fronteiriço")
             return
         }
         
         if (survey.portForHome == "其他") {
             if (survey.otherOfportForHome == 999 || survey.otherOfportForHome == "") {
                 handleAlertBarOpen()
-                setVCodeError("9) Does the student go directly to the Border Checkpoint")
-                handleHelpText("portForHome", "Does the student go directly to the Border Checkpoint")
+                setVCodeError("9) O aluno vai diretamente para o posto fronteiriço")
+                handleHelpText("portForHome", "O aluno vai diretamente para o posto fronteiriço")
                 return
             }
         }
@@ -433,8 +433,8 @@ function App() {
             }
             if (survey.directToPortNo.address == 999) {
                 handleAlertBarOpen()
-                setVCodeError(`Please fill in the adress and press the "Confirm" button`)
-                handleHelpText("address", `Please fill in the adress and press the "Confirm" button`)
+                setVCodeError(`Preencha a morada`)
+                handleHelpText("address", `Preencha a morada`)
                 return
             }
 

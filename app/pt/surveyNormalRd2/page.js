@@ -316,17 +316,9 @@ function App() {
             return
         }
 
-
-        if (survey.leavePickUp == 999) {
-            handleAlertBarOpen()
-            setVCodeError("6) Seleccione a pessoa que acompanha o aluno")
-            handleHelpText("leavePickUp", "Seleccione a pessoa que acompanha o aluno")
-            return
-        }
-
         if (dayjs(survey.leaveSchoolTime) < dayjs(prevEndTime)){
             handleAlertBarOpen()
-            setVCodeError(`O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
+            setVCodeError(`5) O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
             handleHelpText("leaveSchoolTime", `O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
             return
         }
@@ -334,11 +326,18 @@ function App() {
         
         if (JSON.stringify(dayjs(survey.leaveSchoolTime)) === JSON.stringify(dayjs(prevEndTime))){
             handleAlertBarOpen()
-            setVCodeError(`O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
+            setVCodeError(`5) O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
             handleHelpText("leaveSchoolTime", `O tempo de chegada não pode ser mais cedo do que o horário de chegada à escola na página anterior`)
             return
         }
 
+
+        if (survey.leavePickUp == 999) {
+            handleAlertBarOpen()
+            setVCodeError("6) Seleccione a pessoa que acompanha o aluno")
+            handleHelpText("leavePickUp", "Seleccione a pessoa que acompanha o aluno")
+            return
+        }
 
         if (survey.leavePickUp == "其他") {
             if (survey.otherleavePickUp == 999 || survey.otherleavePickUp == "") {
