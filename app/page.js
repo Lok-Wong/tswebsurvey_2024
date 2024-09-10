@@ -119,7 +119,7 @@ export default function Home() {
     //   return
     // }
 
-    if (inputVcode === "67S7") {
+    if (inputVcode === "67S7" || inputVcode === "67s7") {
       sessionStorage.setItem('pathList', window.location.pathname)
       router.push('/surveyheadholder')
       return
