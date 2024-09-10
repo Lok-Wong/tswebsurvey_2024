@@ -47,13 +47,13 @@ function App() {
         startTime: 999,
         pickup: 999,
         otherOfPickup: 999,
-        TimeStartFromHome: 999,
+        TimeStartFromHome: "",
         portForShcool: 999,
         otherOfpPortForShcool: 999,
-        TimeEndToMacau: 999,
+        TimeEndToMacau: "",
         commonTransirtation: 999,
         otherOfCommonTransirtation: 999,
-        arrivalTimeToSchool: 999,
+        arrivalTimeToSchool: "",
     }
 
     const blankSurveyCrd2 = {
@@ -81,20 +81,20 @@ function App() {
         startTime: 999,
         pickup: 999,
         otherOfPickup: 999,
-        pickupTimeStart: 999,
-        pickupTimeEnd: 999,
+        pickupTimeStart: "",
+        pickupTimeEnd: "",
         commonTransirtation: 999,
         otherOfCommonTransirtation: 999,
     }
 
     const blanksurveyRd2 = {
         startTime: 999,
-        leaveSchoolTime: 999,
+        leaveSchoolTime: "",
         otherleavePickUp: 999,
         leavePickUp: 999,
         directToHomeState: 999,
         directToHomeYes: {
-            arivalHomeTime: 999,
+            arivalHomeTime: "",
             arivalHomeTransition: 999,
             otherarivalHomeTransition: 999
         },

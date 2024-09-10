@@ -375,6 +375,7 @@ function App() {
                                 >
                                     <FormControlLabel sx={{ color: "black" }} value="學生自行上學" control={<Radio />} label="Ninguém" />
                                     <FormControlLabel sx={{ color: "black" }} value="父母" control={<Radio />} label="Pais" />
+                                    <FormControlLabel sx={{ color: "black" }} value="（外）祖父母" control={<Radio />} label="Avós" />
                                     <FormControlLabel sx={{ color: "black" }} value="工人" control={<Radio />} label="Trabalhador doméstico" />
                                     <FormControlLabel sx={{ color: "black" }} value="其他" control={<Radio />} label="Outros" />
                                     {survey.pickup === "其他" ?
