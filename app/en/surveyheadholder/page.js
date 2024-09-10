@@ -271,16 +271,19 @@ function App() {
     // console.log("storedPathList", _initial_pathListe)
 
     if (typeof _initial_pathListe === 'undefined' || _initial_pathListe == null) {
+      console.log("1")
       router.push("./")
       return
     }
 
     if (sessionStorage.getItem('pathList') === null) {
+      console.log("2")
       router.push("./")
       return
     }
 
-    if (_initial_pathListe[_initial_pathListe.length - 1] != "/") {
+    if (_initial_pathListe[_initial_pathListe.length - 1] != "/en") {
+      console.log("3")
       router.push("./")
     }
   }, [])
