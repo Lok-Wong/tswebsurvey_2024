@@ -76,6 +76,11 @@
   background-color: #0265aa;
 }
 
+.main h1, .main h2 {
+  width: 50vw;
+}
+
+
  /* Mobile */
  @media (max-width: 700px){
   .question{
@@ -85,5 +90,9 @@
 
   .buttonGroup{
     width: 98vw;
+  }
+   
+  .main h1, .main h2 {
+    width: 100%;
   }
  }
