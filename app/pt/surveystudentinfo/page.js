@@ -207,7 +207,7 @@ function App() {
                 {
                     ...prevState,
                     classLevel: event.target.value,
-                    levelType : 999
+                    levelType: 999
                 }
             )
             )
@@ -270,7 +270,7 @@ function App() {
 
     const [finishStatus, setfinishStatus] = React.useState(false);
 
-     const setStudentNum = React.useCallback((num) => {
+    const setStudentNum = React.useCallback((num) => {
         if (typeof num === 'undefined') {
             return (0)
         }
@@ -461,7 +461,7 @@ function App() {
                 isClient ?
                     <div className={styles.pageWidth}>
                         <h1 style={{ color: "#000000", marginBottom: "1vh" }}>
-                        2. Dados pessoais do aluno
+                            2. Dados pessoais do aluno
                         </h1>
 
                         <div key={1} className={styles.question}>
@@ -490,7 +490,7 @@ function App() {
                         <div key={2} className={styles.question}>
                             <FormControl>
                                 <FormLabel id="school-name-label"><h3>2) Designação de escola: (*caso não haja opção adequada, insira a designação de escola)</h3></FormLabel>
-                                    <div className={styles.schoolNameBox}>
+                                <div className={styles.schoolNameBox}>
                                     <Autocomplete
                                         sx={{
                                             m: 1
@@ -605,41 +605,46 @@ function App() {
 
 
 
-                        <div key={5} className={styles.question} >
-                            <FormControl>
-                                <FormLabel id="level-type-label"><h3>4) Ano de escolaridade</h3></FormLabel>
-                                <RadioGroup
-                                    id="level-Type"
-                                    aria-labelledby="level-type-label"
-                                    name="levelType"
-                                    onChange={(event) => {
-                                        setSltValue(event.target.value)
-                                        handleChange(event);
-                                    }}
-                                    value={survey.levelType}
-                                >
-                                    {
-                                        levelTypes[survey.classLevel] ?
-                                            levelTypes[survey.classLevel].map((item, index) => {
-                                                return (
-                                                    <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
-                                                )
-                                            })
-                                            :
-                                            <TextField onChange={(event) => {
-                                                setSltValue(event.target.value);
+                        {
+                            levelTypes[survey.classLevel] ?
+
+                                <div key={5} className={styles.question} >
+                                    <FormControl>
+                                        <FormLabel id="level-type-label"><h3>4) Ano de escolaridade</h3></FormLabel>
+                                        <RadioGroup
+                                            id="level-Type"
+                                            aria-labelledby="level-type-label"
+                                            name="levelType"
+                                            onChange={(event) => {
+                                                setSltValue(event.target.value)
                                                 handleChange(event);
                                             }}
-                                                inputProps={{ maxLength: 6 }}
-                                                sx={{ m: 1 }}
-                                                label={"Insira"}>
-                                            </TextField>
-                                    }
-                                </RadioGroup>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
-                            </FormControl>
-                        </div>
-
+                                            value={survey.levelType}
+                                        >
+                                            {
+                                                levelTypes[survey.classLevel] ?
+                                                    levelTypes[survey.classLevel].map((item, index) => {
+                                                        return (
+                                                            <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
+                                                        )
+                                                    })
+                                                    :
+                                                    <TextField onChange={(event) => {
+                                                        setSltValue(event.target.value);
+                                                        handleChange(event);
+                                                    }}
+                                                        inputProps={{ maxLength: 6 }}
+                                                        sx={{ m: 1 }}
+                                                        label={"Insira"}>
+                                                    </TextField>
+                                            }
+                                        </RadioGroup>
+                                        <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
+                                    </FormControl>
+                                </div>
+                                :
+                                null
+                        }
 
 
                         <div key={6} className={styles.question}>

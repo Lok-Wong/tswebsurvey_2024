@@ -605,41 +605,37 @@ function App() {
 
 
 
-                        <div key={5} className={styles.question} >
-                            <FormControl>
-                                <FormLabel id="level-type-label"><h3>4)  就讀年級：</h3></FormLabel>
-                                <RadioGroup
-                                    id="level-Type"
-                                    aria-labelledby="level-type-label"
-                                    name="levelType"
-                                    onChange={(event) => {
-                                        setSltValue(event.target.value)
-                                        handleChange(event);
-                                    }}
-                                    value={survey.levelType}
-                                >
-                                    {
-                                        levelTypes[survey.classLevel] ?
-                                            levelTypes[survey.classLevel].map((item, index) => {
-                                                return (
-                                                    <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
-                                                )
-                                            })
-                                            :
-                                            <TextField onChange={(event) => {
-                                                setSltValue(event.target.value);
-                                                handleChange(event);
-                                            }}
-                                                inputProps={{ maxLength: 6 }}
-                                                sx={{ m: 1 }}
-                                                label={"請輸入"}>
-                                            </TextField>
-                                    }
-                                </RadioGroup>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
-                            </FormControl>
-                        </div>
-
+                        {levelTypes[survey.classLevel] ?
+                            <div key={5} className={styles.question} >
+                                <FormControl>
+                                    <FormLabel id="level-type-label"><h3>4)  就讀年級：</h3></FormLabel>
+                                    <RadioGroup
+                                        id="level-Type"
+                                        aria-labelledby="level-type-label"
+                                        name="levelType"
+                                        onChange={(event) => {
+                                            setSltValue(event.target.value)
+                                            handleChange(event);
+                                        }}
+                                        value={survey.levelType}
+                                    >
+                                        {
+                                            levelTypes[survey.classLevel] ?
+                                                levelTypes[survey.classLevel].map((item, index) => {
+                                                    return (
+                                                        <FormControlLabel key={index} sx={{ color: "black" }} value={item} control={<Radio />} label={item} />
+                                                    )
+                                                })
+                                                :
+                                                null
+                                        }
+                                    </RadioGroup>
+                                    <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>
+                                </FormControl>
+                            </div>
+                            :
+                            null
+                        }
 
 
                         <div key={6} className={styles.question}>
