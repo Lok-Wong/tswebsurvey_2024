@@ -162,7 +162,7 @@ function App() {
             handleHelpText("pickupTimeEnd", "請選擇到達時間")
             return
         }
-        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
+        if ((dayjs(survey.pickupTimeStart) > dayjs(survey.pickupTimeEnd)) || (dayjs(survey.pickupTimeEnd) < dayjs(survey.pickupTimeStart))) {
             handleAlertBarOpen()
             setVCodeError(`3) 時間不能比" 2) 出發時間"早`)
             handleHelpText("pickupTimeEnd", `時間不能比" 2) 出發時間"早`)
