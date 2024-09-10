@@ -347,11 +347,11 @@ function App() {
                   </h3>
                 </FormLabel>
                 <Box>
-                  <p className={styles.mapHitText}>
+                  <div className={styles.mapHitText}>
                     {
                       getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                     }
-                  </p>
+                  </div>
                 </Box>
 
                 <div style={{ zIndex: 1 }} >

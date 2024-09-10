@@ -310,9 +310,9 @@ function App() {
             router.replace("./")
             return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] == "/surveyNormalRd2"
+        if (_initial_pathListe[_initial_pathListe.length - 1] == "/en/surveyNormalRd2"
             ||
-            _initial_pathListe[_initial_pathListe.length - 1] == "/surveyCrossRd2") {
+            _initial_pathListe[_initial_pathListe.length - 1] == "/en/surveyCrossRd2") {
             return
         } else {
             router.replace("./")

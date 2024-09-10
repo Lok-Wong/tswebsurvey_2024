@@ -222,7 +222,7 @@ function App() {
             router.replace("./")
             return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveystudentinfo") {
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/en/surveystudentinfo") {
             router.replace("./")
         }
     }, [])

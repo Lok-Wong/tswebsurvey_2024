@@ -550,7 +550,7 @@ function App() {
             router.replace("./")
             return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyCrossRd") {
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/pt/surveyCrossRd") {
             router.replace("./")
         }
     }, [])

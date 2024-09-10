@@ -280,7 +280,7 @@ function App() {
       return
     }
 
-    if (_initial_pathListe[_initial_pathListe.length - 1] != "/") {
+    if (_initial_pathListe[_initial_pathListe.length - 1] != "/pt") {
       router.push("./")
     }
   }, [])

@@ -254,9 +254,9 @@ function App() {
             router.replace("./")
             return
         }
-        if ((_initial_pathListe[_initial_pathListe.length - 1] == "/surveyheadholder"
+        if ((_initial_pathListe[_initial_pathListe.length - 1] == "/en/surveyheadholder"
             ||
-            _initial_pathListe[_initial_pathListe.length - 1] == "/surveyStudentFinised")) {
+            _initial_pathListe[_initial_pathListe.length - 1] == "/en/surveyStudentFinised")) {
             return
         } else {
             router.replace("./")

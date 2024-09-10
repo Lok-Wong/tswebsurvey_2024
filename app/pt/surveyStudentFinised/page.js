@@ -158,7 +158,7 @@ function App() {
             router.replace("./")
             return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyBadWeather") {
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/pt/surveyBadWeather") {
             router.replace("./")
             return
         }

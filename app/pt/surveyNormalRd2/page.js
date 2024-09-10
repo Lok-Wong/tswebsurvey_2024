@@ -570,7 +570,7 @@ function App() {
             router.replace("./")
             return
         }
-        if (_initial_pathListe[_initial_pathListe.length - 1] != "/surveyNormalRd") {
+        if (_initial_pathListe[_initial_pathListe.length - 1] != "/pt/surveyNormalRd") {
             router.replace("./")
         }
     }, [])

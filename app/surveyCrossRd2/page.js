@@ -870,11 +870,11 @@ function App() {
                                             <FormControl sx={{ display: 'flex', flex: 1 }}>
                                                 <FormLabel id="address-label"><h3>	放學後去了哪裏（地標）：</h3></FormLabel>
                                                 <Box>
-                                                    <p className={styles.mapHitText}>
+                                                    <div className={styles.mapHitText}>
                                                         {
                                                             getMapSelectedText() ? "已選擇地址： " + getMapSelectedText() : <p style={{ color: "#666666" }}>*請在以下地圖點選目的地或輸入相關地址後按下確定<br />**例子：八角亭</p>
                                                         }
-                                                    </p>
+                                                    </div>
 
 
                                                 </Box>

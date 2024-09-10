@@ -221,7 +221,7 @@ function MapComponent({ handleCustomAddress }) {
                 maxLength="50"
                 style={{alignSelf:'center'}}
                 id="input_test"
-                value={inputValue}
+                value={inputValue || ""}
                 className={styles.tipInput}
                 onChange={(e) => { setInputVale(e.target.value), setCollectMethod("input"), setMapData(e.target.value) }}
               />
