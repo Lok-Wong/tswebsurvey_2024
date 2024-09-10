@@ -67,6 +67,8 @@
   padding: 8px 16px;
   font-size: 16px;
   font-weight: 700;
+  height: 2.5em;
+  margin-top: 0.25em;
 }
 
 .buttonStyle:hover{

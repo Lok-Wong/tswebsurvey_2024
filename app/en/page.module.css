@@ -177,10 +177,20 @@
   .button{
     background-color: #036eb8;
     color:#ffffff;
-    width: 8vw;
-    margin-top: 2%;
+    outline: 0;
+    border: 0;
+    padding: 8px 16px;
     font-size: 16px;
-    font-weight: 700;  }
+    font-weight: 700;
+    line-height: 26px;
+    border-radius: 4px;
+    height: 2.5em;
+    margin-top: calc(0.25em + 10px);
+  }
+
+  .button:hover{
+    background-color: #0265aa;
+  }
 
   .buttonDiv{
     display: flex;
