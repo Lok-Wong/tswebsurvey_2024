@@ -317,16 +317,16 @@ function App() {
 
         if (dayjs(survey.leaveSchoolTime) < dayjs(prevEndTime)){
             handleAlertBarOpen()
-            setVCodeError(`到達時間不能比上一頁的到達學校時間早`)
-            handleHelpText("leaveSchoolTime", `到達時間不能比上一頁的到達學校時間早`)
+            setVCodeError(`離校時間不能比上一頁的到達學校時間早`)
+            handleHelpText("leaveSchoolTime", `離校時間不能比上一頁的到達學校時間早`)
             return
         }
 
         
         if (JSON.stringify(dayjs(survey.leaveSchoolTime)) === JSON.stringify(dayjs(prevEndTime))){
             handleAlertBarOpen()
-            setVCodeError(`到達時間不能比上一頁的到達學校時間早`)
-            handleHelpText("leaveSchoolTime", `到達時間不能比上一頁的到達學校時間早`)
+            setVCodeError(`離校時間不能比上一頁的到達學校時間相同`)
+            handleHelpText("leaveSchoolTime", `離校時間不能比上一頁的到達學校時間相同`)
             return
         }
 

@@ -342,8 +342,8 @@ function App() {
         }
         if (JSON.stringify(dayjs(survey.leaveShcoolTime)) === JSON.stringify(dayjs(prevEndTime))) {
             handleAlertBarOpen()
-            setVCodeError("時間不能比上一頁的到校時間早")
-            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
+            setVCodeError("時間不能比上一頁的到校時間相同")
+            handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間相同")
             return
         }
         
