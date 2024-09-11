@@ -333,10 +333,9 @@ function App() {
             handleHelpText("leaveShcoolTime", "請選擇離校時間")
             return
         }
-
         if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
             handleAlertBarOpen()
-            setVCodeError("時間不能比上一頁的到校時間早")
+            setVCodeError("7) 時間不能比上一頁的到校時間早")
             handleHelpText("leaveShcoolTime", "時間不能比上一頁的到校時間早")
             return
         }

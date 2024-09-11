@@ -336,13 +336,13 @@ function App() {
 
         if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
             handleAlertBarOpen()
-            setVCodeError("The time cannot be earlier than the arrival time on the previous page")
+            setVCodeError("7) The time cannot be earlier than the arrival time on the previous page")
             handleHelpText("leaveShcoolTime", "The time cannot be earlier than the arrival time on the previous page")
             return
         }
         if (JSON.stringify(dayjs(survey.leaveShcoolTime)) === JSON.stringify(dayjs(prevEndTime))) {
             handleAlertBarOpen()
-            setVCodeError("The time cannot be earlier than the arrival time on the previous page")
+            setVCodeError("7) The time cannot be the same as the arrival time on the previous page")
             handleHelpText("leaveShcoolTime", "The time cannot be earlier than the arrival time on the previous page")
             return
         }
