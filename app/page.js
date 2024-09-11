@@ -67,6 +67,14 @@ export default function Home() {
       event.preventDefault();
 
       if (inputVcode === "67S7" || inputVcode === "67s7") {
+        setSurvey((prevState) => ({
+          ...prevState,
+          ip: ip,
+          uuid: uuid,
+          startTime: new Date(),
+        }))
+        sessionStorage.setItem('pathList', window.location.pathname)
+        setCrsf()
         sessionStorage.setItem('pathList', window.location.pathname)
         router.push('/surveyheadholder')
         return
