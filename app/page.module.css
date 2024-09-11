@@ -6,7 +6,7 @@
     padding: 1rem;
     min-height: 100vh;
     background-color: #f8fafe;
-    padding-bottom: 7vh;
+    padding-bottom: max(3.25em, 7vh);
   }
   
   .description {
