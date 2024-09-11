@@ -165,7 +165,7 @@ function App() {
             return
         }
 
-        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
+        if ((dayjs(survey.pickupTimeStart) > dayjs(survey.pickupTimeEnd)) || (dayjs(survey.pickupTimeEnd) < dayjs(survey.pickupTimeStart))) {
             handleAlertBarOpen()
             setVCodeError(`3) Não pode ser mais cedo do que a “2) Hora de partida”`)
             handleHelpText("pickupTimeEnd", `Não pode ser mais cedo do que a “2) Hora de partida”`)

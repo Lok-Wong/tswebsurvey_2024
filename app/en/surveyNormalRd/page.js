@@ -164,7 +164,7 @@ function App() {
             handleHelpText("pickupTimeEnd", "Please select the arrival time")
             return
         }
-        if ((survey.pickupTimeStart > survey.pickupTimeEnd) || (survey.pickupTimeEnd < survey.pickupTimeStart)) {
+        if ((dayjs(survey.pickupTimeStart) > dayjs(survey.pickupTimeEnd)) || (dayjs(survey.pickupTimeEnd) < dayjs(survey.pickupTimeStart))) {
             handleAlertBarOpen()
             setVCodeError(`3) The time should not be earlier than the "2) departure time"`)
             handleHelpText("pickupTimeEnd", `The time should not be earlier than the "2) departure time"`)
