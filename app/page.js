@@ -120,7 +120,13 @@ export default function Home() {
 
 
   async function handleNextButton(event) {
-
+    setSurvey((prevState) => ({
+      ...prevState,
+      ip: ip,
+      uuid: uuid,
+      startTime: new Date(),
+    }))
+    setCrsf()
     // if (event.target.innerText == "倘") {
     //   sessionStorage.setItem('pathList', window.location.pathname)
     //   router.push('/surveyheadholder')
