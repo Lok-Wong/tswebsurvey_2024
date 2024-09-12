@@ -258,10 +258,10 @@ export default function App() {
             }
             <div className={styles.buttonGroup}>
                 <Button className={styles.buttonStyle} onClick={() => router.back()}>
-                    Previous Page
+                    Voltar
                 </Button>
                 <Button className={styles.buttonStyle} onClick={handleNextButton}>
-                    Next Page
+                    Próximo
                 </Button>
             </div>
 

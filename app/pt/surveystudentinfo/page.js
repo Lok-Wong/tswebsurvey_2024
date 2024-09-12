@@ -588,10 +588,10 @@ function App() {
                                             })
                                             :
                                             <div className={styles.columnRadio}>
-                                                <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"Jardim de infância"} />
-                                                <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"Escola primária "} />
-                                                <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"Escola secundária"} />
-                                                <FormControlLabel key={4} sx={{ color: "black" }} value={"特殊教育"} control={<Radio />} label={"Ensino especial"} />
+                                                <FormControlLabel key={1} sx={{ color: "black" }} value={"Kindergarten"} control={<Radio />} label={"Jardim de infância"} />
+                                                <FormControlLabel key={2} sx={{ color: "black" }} value={"Primary School"} control={<Radio />} label={"Escola primária "} />
+                                                <FormControlLabel key={3} sx={{ color: "black" }} value={"Secondary School"} control={<Radio />} label={"Escola secundária"} />
+                                                <FormControlLabel key={4} sx={{ color: "black" }} value={"Special Education"} control={<Radio />} label={"Ensino especial"} />
 
                                             </div>
 
@@ -629,14 +629,7 @@ function App() {
                                                         )
                                                     })
                                                     :
-                                                    <TextField onChange={(event) => {
-                                                        setSltValue(event.target.value);
-                                                        handleChange(event);
-                                                    }}
-                                                        inputProps={{ maxLength: 6 }}
-                                                        sx={{ m: 1 }}
-                                                        label={"Insira"}>
-                                                    </TextField>
+                                                    null
                                             }
                                         </RadioGroup>
                                         <FormHelperText sx={{ color: 'red' }}>{helpText.levelType}</FormHelperText>

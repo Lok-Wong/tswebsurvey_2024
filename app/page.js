@@ -46,7 +46,7 @@ export default function Home() {
   const [isClient, setIsClient] = React.useState(false)
   const [infoSaveChecked, setInfoSaveChecked] = React.useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['Csrf_tokens']);
-
+  const [maintaining, setMaintaining] = React.useState(false);
   const [survey, setSurvey] = React.useState({
     startTime: 999,
     ip: 999,
@@ -226,6 +226,10 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      {
+        !maintaining ?
+      
+      <div>
       {/* <Box sx={{ position: "fixed", right: 0, bottom: 0, zIndex: 100 }}>
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
@@ -431,6 +435,10 @@ export default function Home() {
             </p>
         </Box>
       </Modal>
+      </div>
+      :
+      null
+      }
     </main>
 
   );

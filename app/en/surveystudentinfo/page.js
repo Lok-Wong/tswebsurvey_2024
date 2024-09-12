@@ -588,10 +588,10 @@ function App() {
                                             })
                                             :
                                             <div className={styles.columnRadio}>
-                                                <FormControlLabel key={1} sx={{ color: "black" }} value={"幼稚園"} control={<Radio />} label={"Kindergarten"} />
-                                                <FormControlLabel key={2} sx={{ color: "black" }} value={"小學"} control={<Radio />} label={"Primary School"} />
-                                                <FormControlLabel key={3} sx={{ color: "black" }} value={"中學"} control={<Radio />} label={"Secondary School"} />
-                                                <FormControlLabel key={4} sx={{ color: "black" }} value={"特殊教育"} control={<Radio />} label={"Special Education"} />
+                                                <FormControlLabel key={1} sx={{ color: "black" }} value={"Kindergarten"} control={<Radio />} label={"Kindergarten"} />
+                                                <FormControlLabel key={2} sx={{ color: "black" }} value={"Primary School"} control={<Radio />} label={"Primary School"} />
+                                                <FormControlLabel key={3} sx={{ color: "black" }} value={"Secondary School"} control={<Radio />} label={"Secondary School"} />
+                                                <FormControlLabel key={4} sx={{ color: "black" }} value={"Special Education"} control={<Radio />} label={"Special Education"} />
 
                                             </div>
 

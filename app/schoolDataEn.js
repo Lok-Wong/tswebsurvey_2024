@@ -2,7 +2,7 @@ export const school_type = ["Formal Education", "Recurrent Education"]
 
 export const region = ["Macau", "Taipa", "Coloane"]
 
-export const classLevel = ["Kindergarten", "Primary School", "Secondary school"]
+export const classLevel = ["Kindergarten", "Primary School", "Secondary School"]
 
 
 export const schoolName = {
