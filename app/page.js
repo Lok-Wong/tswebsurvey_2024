@@ -226,10 +226,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {
-        !maintaining ?
-      
-      <div>
       {/* <Box sx={{ position: "fixed", right: 0, bottom: 0, zIndex: 100 }}>
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
@@ -435,10 +431,6 @@ export default function Home() {
             </p>
         </Box>
       </Modal>
-      </div>
-      :
-      null
-      }
     </main>
 
   );
