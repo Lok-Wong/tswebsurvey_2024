@@ -143,7 +143,7 @@ export default function App() {
         if (typeof id4Nums != "undefined"){
             if (id4Nums.length>0) {
                 if (id4Nums.length < 4 ) {
-                    handleHelpText("id4Nums", "Please enter the last 4 digits of your ID card")
+                    handleHelpText("id4Num", "Please enter the last 4 digits of your ID card")
                     return
                 }
             }
@@ -248,7 +248,7 @@ export default function App() {
                                         onChange={(e) => {handleChange(e),setId4Nums(e.target.value)}}
                                     />
                                 </Box>
-                                <FormHelperText sx={{ color: 'red' }}>{helpText.id4Nums}</FormHelperText>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.id4Num}</FormHelperText>
 
                             </FormControl>
                         </div>

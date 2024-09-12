@@ -27,7 +27,7 @@ function App() {
     const [shValue, setShValue] = React.useState('');
     const [shInputValue, setShInputValue] = React.useState('')
     const [progressBarValue, setProgressBarValue] = React.useState(10)
-    const [schoolNameSelectType, setSchoolNameSelectType] = React.useState("")
+    const [schoolNameSelectType, setSchoolNameSelectType] = React.useState("select")
     const [studnetNumbcount, setStudentNumCount] = React.useState()
     const [checkName, setCheckName] = React.useState()
 
@@ -537,7 +537,7 @@ function App() {
                             </FormControl>
                         </div>
 
-                        {schoolNameSelectType == "input" ?
+                        {schoolNameSelectType === "input" ?
                             <div key={323} className={styles.question}>
                                 <FormControl>
                                     <FormLabel id="school-type-label"><h3>2.1)  教育類型：</h3></FormLabel>

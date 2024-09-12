@@ -142,7 +142,7 @@ export default function App() {
         if (typeof id4Nums != "undefined"){
             if (id4Nums.length>0) {
                 if (id4Nums.length < 4 ) {
-                    handleHelpText("id4Nums", "請輸入尾4位的身分證號碼")
+                    handleHelpText("id4Num", "請輸入尾4位的身分證號碼")
                     return
                 }
             }
@@ -247,6 +247,7 @@ export default function App() {
                                         onChange={(e) => {handleChange(e),setId4Nums(e.target.value)}}
                                     />
                                 </Box>
+                                <FormHelperText sx={{ color: 'red' }}>{helpText.id4Num}</FormHelperText>
                             </FormControl>
                         </div>
                     </div>
