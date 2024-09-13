@@ -19,6 +19,7 @@ import { styled } from '@mui/material/styles';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { useCookies } from "react-cookie";
 import Link from "next/link";
+import ConstructionIcon from '@mui/icons-material/Construction';
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
@@ -66,55 +67,55 @@ export default function Home() {
     if (event.keyCode === 13) {
       event.preventDefault();
 
-      if (inputVcode === "67S7" || inputVcode === "67s7") {
-        setSurvey((prevState) => ({
-          ...prevState,
-          ip: ip,
-          uuid: uuid,
-          startTime: new Date(),
-        }))
-        sessionStorage.setItem('pathList', window.location.pathname)
-        setCrsf()
-        sessionStorage.setItem('pathList', window.location.pathname)
-        router.push('/surveyheadholder')
-        return
-      } else {
+      // if (inputVcode === "67S7" || inputVcode === "67s7") {
+      //   setSurvey((prevState) => ({
+      //     ...prevState,
+      //     ip: ip,
+      //     uuid: uuid,
+      //     startTime: new Date(),
+      //   }))
+      //   sessionStorage.setItem('pathList', window.location.pathname)
+      //   setCrsf()
+      //   sessionStorage.setItem('pathList', window.location.pathname)
+      //   router.push('/surveyheadholder')
+      //   return
+      // } else {
+      //   handleAlertBarOpen()
+      //   setVCodeError("調查日期為：2024年9月16日 - 2024年9月30日")
+      //   return
+      // }
+
+      if (!infoSaveChecked) {
         handleAlertBarOpen()
-        setVCodeError("調查日期為：2024年9月16日 - 2024年9月30日")
+        setVCodeError("請先同意收集個人資料聲明")
         return
       }
 
-      // if (!infoSaveChecked) {
-      //   handleAlertBarOpen()
-      //   setVCodeError("請先同意收集個人資料聲明")
-      //   return
-      // }
-
-      // if (!inputVcode) {
-      //   handleAlertBarOpen()
-      //   setVCodeError("未填寫驗證碼！")
-      //   return
-      // }
+      if (!inputVcode) {
+        handleAlertBarOpen()
+        setVCodeError("未填寫驗證碼！")
+        return
+      }
 
 
 
-      // if (vCode != inputVcode.toLocaleUpperCase()) {
-      //   handleAlertBarOpen()
-      //   setVCodeError("驗證碼錯誤！")
-      //   return
-      // }
+      if (vCode != inputVcode.toLocaleUpperCase()) {
+        handleAlertBarOpen()
+        setVCodeError("驗證碼錯誤！")
+        return
+      }
 
-      // setSurvey((prevState) => ({
-      //   ...prevState,
-      //   ip: ip,
-      //   uuid: uuid,
-      //   startTime: new Date(),
-      // }))
-      // sessionStorage.setItem('pathList', window.location.pathname)
+      setSurvey((prevState) => ({
+        ...prevState,
+        ip: ip,
+        uuid: uuid,
+        startTime: new Date(),
+      }))
+      sessionStorage.setItem('pathList', window.location.pathname)
 
-      // setCrsf()
+      setCrsf()
 
-      // router.push('/surveyheadholder')
+      router.push('/surveyheadholder')
     }
   }
 
@@ -133,56 +134,56 @@ export default function Home() {
     //   return
     // }
 
-    if (inputVcode === "67S7" || inputVcode === "67s7") {
-      sessionStorage.setItem('pathList', window.location.pathname)
-      router.push('/surveyheadholder')
-      return
-    } else {
-      handleAlertBarOpen()
-      setVCodeError("調查日期為：2024年9月16日 - 2024年9月30日")
-      return
-    }
-
-    // if (!infoSaveChecked) {
-    //   handleAlertBarOpen()
-    //   setVCodeError("請先同意收集個人資料聲明")
-    //   return
-    // }
-
-    // if (!inputVcode) {
-    //   handleAlertBarOpen()
-    //   setVCodeError("未填寫驗證碼！")
-    //   return
-    // }
-
-    // if (vCode != inputVcode.toLocaleUpperCase()) {
-    //   handleAlertBarOpen()
-    //   setVCodeError("驗證碼錯誤！")
-    //   return
-    // }
-
-
-
-    // setSurvey((prevState) => ({
-    //   ...prevState,
-    //   ip: ip,
-    //   uuid: uuid,
-    //   startTime: new Date(),
-    // }))
-    // setCrsf()
-
-    // if (event.target.name == "next") {
+    // if (inputVcode === "67S7" || inputVcode === "67s7") {
     //   sessionStorage.setItem('pathList', window.location.pathname)
     //   router.push('/surveyheadholder')
     //   return
-    // }
-
-    // if (event.target.name == "Testing") {
-    //   sessionStorage.setItem('pathList', window.location.pathname)
-
-    //   router.push('/mapTesting')
+    // } else {
+    //   handleAlertBarOpen()
+    //   setVCodeError("調查日期為：2024年9月16日 - 2024年9月30日")
     //   return
     // }
+
+    if (!infoSaveChecked) {
+      handleAlertBarOpen()
+      setVCodeError("請先同意收集個人資料聲明")
+      return
+    }
+
+    if (!inputVcode) {
+      handleAlertBarOpen()
+      setVCodeError("未填寫驗證碼！")
+      return
+    }
+
+    if (vCode != inputVcode.toLocaleUpperCase()) {
+      handleAlertBarOpen()
+      setVCodeError("驗證碼錯誤！")
+      return
+    }
+
+
+
+    setSurvey((prevState) => ({
+      ...prevState,
+      ip: ip,
+      uuid: uuid,
+      startTime: new Date(),
+    }))
+    setCrsf()
+
+    if (event.target.name == "next") {
+      sessionStorage.setItem('pathList', window.location.pathname)
+      router.push('/surveyheadholder')
+      return
+    }
+
+    if (event.target.name == "Testing") {
+      sessionStorage.setItem('pathList', window.location.pathname)
+
+      router.push('/mapTesting')
+      return
+    }
   }
 
   const handleAlertBarOpen = () => {
@@ -225,8 +226,19 @@ export default function Home() {
   ];
 
   return (
-    <main className={styles.main}>
-      {/* <Box sx={{ position: "fixed", right: 0, bottom: 0, zIndex: 100 }}>
+    <main>
+     { maintaining ? 
+     <div className={styles.main}>
+        <div style={{textAlign:'center',lineHeight:"1.5"}}>
+          <h1>網站維護中</h1>
+          <h1>Website under maintenance</h1>
+          <h1>Site em manutenção.</h1> 
+          <ConstructionIcon sx={{ fontSize: 100 }} />
+        </div>
+     </div>
+     :
+     <div  className={styles.main}>  
+      <Box sx={{ position: "fixed", right: 0, bottom: 0, zIndex: 100 }}>
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
           icon={<TranslateIcon />}
@@ -241,7 +253,7 @@ export default function Home() {
             />
           ))}
         </StyledSpeedDial>
-      </Box> */}
+      </Box>
       <div className={styles.description}>
         <p>
           V1.4
@@ -431,6 +443,8 @@ export default function Home() {
             </p>
         </Box>
       </Modal>
+      </div>
+      }
     </main>
 
   );
