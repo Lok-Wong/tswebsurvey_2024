@@ -420,7 +420,7 @@ function App() {
                   <FormControlLabel sx={{ color: "black" }} value="私家車及電單車" control={<Radio />} label="私家車及電單車" />
                   <FormControlLabel sx={{ color: "black" }} value="私家車" control={<Radio />} label="私家車" />
                   <FormControlLabel sx={{ color: "black" }} value="電單車" control={<Radio />} label="電單車" />
-                  <FormControlLabel sx={{ color: "black" }} value="都没有" control={<Radio />} label="都没有" />
+                  <FormControlLabel sx={{ color: "black" }} value="都没有" control={<Radio />} label="都沒有" />
 
                 </RadioGroup>
                 <FormHelperText sx={{ color: 'red' }}>{helpText.vehicle}</FormHelperText>
