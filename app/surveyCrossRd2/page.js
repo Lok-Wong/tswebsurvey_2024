@@ -343,12 +343,12 @@ function App() {
         if (dayjs(survey.leaveShcoolTime) < dayjs(prevEndTime)) {
             handleAlertBarOpen()
             setVCodeError("7) 時間不能比上一頁的到校時間早")
-            handleHelpText("leaveShcoolTime", "7) 時間不能與上一頁的到校時間早")
+            handleHelpText("leaveShcoolTime", "7) 時間不能比上一頁的到校時間早")
             return
         }
         if (JSON.stringify(dayjs(survey.leaveShcoolTime)) === JSON.stringify(dayjs(prevEndTime))) {
             handleAlertBarOpen()
-            setVCodeError("7) 時間不能比上一頁的到校時間相同")
+            setVCodeError("7) 時間不能與上一頁的到校時間相同")
             handleHelpText("leaveShcoolTime", "7) 時間不能與上一頁的到校時間相同")
             return
         }
