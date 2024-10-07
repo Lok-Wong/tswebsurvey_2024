@@ -490,32 +490,6 @@ function App() {
                                 <FormHelperText sx={{ color: 'red' }}>{helpText.commonTransirtation}</FormHelperText>
                             </FormControl>
                         </div>
-
-                        {/* <h1>
-                    2.4 學生出行意見和建議
-                </h1>
-
-                <div className={styles.question}>
-                    <FormControl sx={{
-                        m:1, width:"100%"
-                    }}>
-                        <FormLabel id="student-suggestion-label">13)	爲了更好服務學生，您對上下學出行有何意見或建議？（選填）：</FormLabel>
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 1, width: '60%' },
-                            }}
-                            noValidate
-                            >
-                            <TextField 
-                                id="student-suggestion-text" 
-                                label="年級" 
-                                variant="outlined" 
-                                multiline
-                            />
-                        </Box>
-                    </FormControl>
-                </div> */}
                     </div>
                     :
                     null

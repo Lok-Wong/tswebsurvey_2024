@@ -327,6 +327,13 @@ function App() {
 
 
     const handleNextButton = (event) => {
+        if (survey.leaveShcoolTime == "Invalid Date") {
+            handleAlertBarOpen()
+            setVCodeError("7) 請選擇離校時間")
+            handleHelpText("leaveShcoolTime", "請選擇離校時間")
+            return
+        }
+
         if (survey.leaveShcoolTime == "") {
             handleAlertBarOpen()
             setVCodeError("7) 請選擇離校時間")
@@ -393,6 +400,13 @@ function App() {
                 handleHelpText("arrivalPortTime", "請選擇到達時間")
                 return
             }
+
+            if (survey.directToPortYes.arrivalTime == "Invalid Date") {
+                handleAlertBarOpen()
+                setVCodeError("請選擇到達時間")
+                handleHelpText("arrivalPortTime", "請選擇到達時間")
+                return
+            }
             if (dayjs(survey.directToPortYes.arrivalTime) < dayjs(survey.leaveShcoolTime)) {
                 handleAlertBarOpen()
                 setVCodeError(`時間不能比" 7) 離校時間"早`)
@@ -434,6 +448,15 @@ function App() {
                 handleAlertBarOpen()
                 setVCodeError("請填寫地址及按下確定按鈕")
                 handleHelpText("address", "請填寫地址及按下確定按鈕")
+                return
+            }
+
+             
+
+             if (survey.directToPortNo.arrivalTime == "Invalid Date") {
+                handleAlertBarOpen()
+                setVCodeError("請選擇到達時間")
+                handleHelpText("arrivalPortTime", "請選擇到達時間")
                 return
             }
 

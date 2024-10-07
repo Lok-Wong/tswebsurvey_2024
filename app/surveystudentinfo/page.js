@@ -401,6 +401,13 @@ function App() {
             return
         }
 
+        if (survey.schoolType == "999" || survey.schoolType == "") {
+            handleAlertBarOpen()
+            setVCodeError("5) 請選擇教育類型")
+            handleHelpText('schoolType', "請選擇教育類型")
+            return
+        }
+
         if (survey.gender == "999") {
             handleAlertBarOpen()
             setVCodeError("5) 請選擇性別")

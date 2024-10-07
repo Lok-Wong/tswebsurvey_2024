@@ -361,6 +361,7 @@ function App() {
                 handleHelpText("leaveSchoolTime", "請填寫到達家時間")
                 return
             }
+
             if (survey.directToHomeYes.arivalHomeTime == "") {
                 handleAlertBarOpen()
                 setVCodeError("請填寫到達家時間")
@@ -412,6 +413,13 @@ function App() {
             }
 
             if (survey.directToHomeNo.leaveDestinationTime == "") {
+                handleAlertBarOpen()
+                setVCodeError(`請填寫到達目的地時間`)
+                handleHelpText("leaveDestinationTime", "請填寫到達目的地時間")
+                return
+            }
+
+            if (survey.directToHomeNo.leaveDestinationTime == "Invalid Date") {
                 handleAlertBarOpen()
                 setVCodeError(`請填寫到達目的地時間`)
                 handleHelpText("leaveDestinationTime", "請填寫到達目的地時間")
