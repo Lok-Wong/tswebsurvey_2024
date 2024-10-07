@@ -240,7 +240,7 @@ export default function Home() {
             </p>
 
             <p>
-              The online survey regarding the "Macau Students Travel Survey" has concluded. The purpose of this survey was to understand the travel habits of non-higher education students in Macau and to collect relevant data and opinions in order to better understand the related issues.
+              The online survey regarding the Macau Students Travel Survey has concluded. The purpose of this survey was to understand the travel habits of non-higher education students in Macau and to collect relevant data and opinions in order to better understand the related issues.
 
               We would like to express our gratitude to all the parents and students who participated in the survey. Your support and cooperation are essential to our work.
             </p>
