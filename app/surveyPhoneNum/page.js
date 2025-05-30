@@ -74,9 +74,6 @@ export default function App() {
     }
 
     const handleChange = (event) => {
-
-            
-
         const objectName = event.target.name
         if (event.target.value.length == 0) {
             setSurvey((prevState) => (
@@ -109,7 +106,7 @@ export default function App() {
     }, [])
 
     React.useEffect(() => {
-        survey && sessionStorage.setItem(('surveyStudentFinised'), JSON.stringify(survey))
+        (('surveyStudentFinised'), JSON.stringify(survey))
         setHelpText(blankHelpText)
     }, [survey])
 

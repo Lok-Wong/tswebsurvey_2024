@@ -47,7 +47,7 @@ export default function Home() {
   const [isClient, setIsClient] = React.useState(false)
   const [infoSaveChecked, setInfoSaveChecked] = React.useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['Csrf_tokens']);
-  const [maintaining, setMaintaining] = React.useState(true);
+  const [maintaining, setMaintaining] = React.useState(false);
   const [survey, setSurvey] = React.useState({
     startTime: 999,
     ip: 999,
